@@ -1,0 +1,116 @@
+{
+  "code" : 0,
+  "msg" : "",
+  "count" : 10,
+  "data" : [{
+    "id" : 1,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 2,
+    "title" : "New Mind Design",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 3,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 4,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 5,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 6,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 7,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 8,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 9,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  },{
+    "id" : 10,
+    "title" : "Design4u Studio",
+    "boss" : "Daniel Chen",
+    "city" : "四川省 - 成都市",
+    "phone" : "18628077530",
+    "mail" : "together008@gmail.com",
+    "address" : "高新区天府软件园B区",
+    "taxcode" : "91510100792198800C",
+    "bank" : "建设银行高新区支行",
+    "bnumber" : "6217 0038 0002 3254 596"
+  }]
+}

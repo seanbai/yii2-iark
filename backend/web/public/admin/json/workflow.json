@@ -1,0 +1,226 @@
+{
+  "code": 0,
+  "msg": "",
+  "count" : 11,
+  "data": [{
+    "id": 1,
+    "case": "GZL2018101800004",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100001",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€98,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 2,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 2,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 3,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 4,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 5,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 2,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 6,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 7,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 8,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 9,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 10,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  },{
+    "id": 11,
+    "case": "GZL2019063012314",
+    "date": "16/07/2019",
+    "status": "Pending...",
+    "order": {
+      "number": "KHDHD2019070100002",
+      "date": "20/07/2019",
+      "offer": 1,
+      "info": "please review my order"
+    },
+    "offer":{
+      "date": "21/07/2019",
+      "price": "€13,000",
+      "rate": "7.85",
+      "info": "",
+      "confirm": 0,
+      "cdate": ""
+    },
+    "done": 0
+  }]
+}

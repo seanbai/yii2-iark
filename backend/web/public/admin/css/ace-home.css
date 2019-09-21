@@ -1,0 +1,45 @@
+.ace-skin .navbar{
+    box-sizing: border-box;
+    background-color: #fff;
+    border-bottom: 1px solid #E5E9F2;
+}
+.ace-skin .navbar-header-logo{
+    z-index: 1002;
+    width: 220px;
+    height: 66px;
+    background-color: #000 !important;
+    color: #FFF;
+    font-size: 24px;
+    line-height: 66px;
+    text-align: center;
+}
+.ace-skin .navbar-header-logo a {
+    color: #FFFFCC;
+}
+.ace-skin .navbar-header {
+    padding-right: 20px;
+}
+.ace-skin .header-ul{
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.ace-skin .header-ul li {
+    float: left;
+}
+.ace-skin .header-ul li a{
+    size: 16px;
+}
+.ace-skin .header-ul li a {
+    text-decoration:none;
+}
+.ace-skin .sign-out {
+    line-height: 60px !important;
+    padding: 0 20px !important;
+    color: #000;
+    size: 16px;
+    text-decoration:none;
+}
+.ace-skin .navbar-fixed-top+.main-container{
+    padding-top: 66px;
+}

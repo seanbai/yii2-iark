@@ -1,0 +1,42 @@
+.dark{
+  .layui-side-menu,
+  .layadmin-pagetabs .layui-tab-title li:after,
+  .layadmin-pagetabs .layui-tab-title li.layui-this:after,
+  .layui-layer-admin .layui-layer-title,
+  .layadmin-side-shrink .layui-side-menu .layui-nav>.layui-nav-item>.layui-nav-child {
+  	background-color: #313a46 !important;
+  }
+
+  .layui-nav-tree .layui-this,
+  .layui-nav-tree .layui-this>a,
+  .layui-nav-tree .layui-nav-child dd.layui-this,
+  .layui-nav-tree .layui-nav-child dd.layui-this a {
+  	background-color: #727CF5 !important;
+  }
+
+  .layui-layout-admin .layui-logo {
+  	background-color: #000 !important;
+    color: #FFF;
+    font-size: 24px;
+  }
+  .layui-layout-admin .layui-header .layui-nav a{
+    color: #000;
+  }
+  .layui-btn{
+    background-color: #727CF5 !important;
+  }
+  .layui-bg-red {
+    background-color: #727CF5 !important
+  }
+  .layui-nav-tree .layui-nav-bar {
+    width: 5px;
+    height: 0;
+    background-color: #727CF5
+  }
+  .layui-table thead tr,.layui-table-click,.layui-table-header,.layui-table-hover,.layui-table-mend,.layui-table-patch,.layui-table-tool,.layui-table-total,.layui-table-total tr,.layui-table[lay-even] tr:nth-child(even) {
+    background-color: #f1f3fa
+  }
+  .layui-table tbody tr:hover{
+    background-color: #f1f3fa
+  }
+}

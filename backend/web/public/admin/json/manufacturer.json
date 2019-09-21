@@ -1,0 +1,114 @@
+{
+  "code" : 0,
+  "msg" : "",
+  "count" : 12,
+  "data" : [{
+    "id" : 1,
+    "brand" : "AGRESTI",
+    "boss" : "Robert",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "robert@agresti.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "agresti"
+  },{
+    "id" : 2,
+    "brand" : "ALGALA LUX",
+    "boss" : "Daniel",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "daniel@algala-lux.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "algala"
+  },{
+    "id" : 3,
+    "brand" : "Arflex",
+    "boss" : "Jessica",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "jessica@arflex.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "arflex"
+  },{
+    "id" : 4,
+    "brand" : "Angelo Cappellini",
+    "boss" : "Perker",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "parker@angelo-cappellini.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "angelo"
+  },{
+    "id" : 5,
+    "brand" : "Arketipo",
+    "boss" : "Simon",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "simon@arketipo.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "arketipo"
+  },{
+    "id" : 6,
+    "brand" : "Avenanti",
+    "boss" : "Jean",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "jean@arketipo.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "avenanti"
+  },{
+    "id" : 7,
+    "brand" : "AGRESTI",
+    "boss" : "Robert",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "robert@agresti.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "agresti"
+  },{
+    "id" : 8,
+    "brand" : "ALGALA LUX",
+    "boss" : "Daniel",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "daniel@algala-lux.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "algala"
+  },{
+    "id" : 9,
+    "brand" : "Arflex",
+    "boss" : "Jessica",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "jessica@arflex.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "arflex"
+  },{
+    "id" : 10,
+    "brand" : "Angelo Cappellini",
+    "boss" : "Perker",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "parker@angelo-cappellini.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "angelo"
+  },{
+    "id" : 11,
+    "brand" : "Arketipo",
+    "boss" : "Simon",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "simon@arketipo.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "arketipo"
+  },{
+    "id" : 12,
+    "brand" : "Avenanti",
+    "boss" : "Jean",
+    "city" : "Italia - Rome",
+    "phone" : "340-293-393",
+    "mail" : "jean@arketipo.com",
+    "address" : "2635 W 26th St, Erie, PA 16506",
+    "username" : "avenanti"
+  }]
+}
