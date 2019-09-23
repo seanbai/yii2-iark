@@ -68,19 +68,6 @@ $this->registerJsFile($url.'/js/chosen.jquery.min.js', $depends);
                         "bViews": false
                     },
                     {
-                        "title": "头像", "data": "face", "sName": "face", "isHide": true,
-                        "edit": {
-                            "type": "file",
-                            options: {
-                                "id": "file",
-                                "name": "UploadForm[face]",
-                                "input-name": "face",
-                                "input-type": "ace_file",
-                                "file-name": "face"
-                            }
-                        }
-                    },
-                    {
                         "title": "邮箱",
                         "data": "email",
                         "sName": "email",

@@ -67,6 +67,7 @@ $this->registerCssFile($url.'/css/chosen.css', $depends);
         'id' => 'me-buttons'
     ],
 ])?>
+
 <?php $this->beginBlock('javascript') ?>
 <script type="text/javascript">
     var roles = <?=$roles?>,

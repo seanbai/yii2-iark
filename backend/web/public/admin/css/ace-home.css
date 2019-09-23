@@ -1,7 +1,6 @@
 .ace-skin .navbar{
     box-sizing: border-box;
     background-color: #fff;
-    border-bottom: 1px solid #E5E9F2;
 }
 .ace-skin .navbar-header-logo{
     z-index: 1002;
@@ -42,4 +41,84 @@
 }
 .ace-skin .navbar-fixed-top+.main-container{
     padding-top: 66px;
+}
+.ace-skin .sidebar{
+    background-color: #313a46;
+    width: 220px;
+}
+.ace-skin .nav li {
+    text-align: left;
+    height: 45px;
+}
+.ace-skin .nav li:hover {
+    background: #0a6aa1;
+}
+.ace-skin .nav li a{
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 23px;
+    height: 45px;
+    color: rgba(255,255,255,.7);
+}
+.ace-skin .nav li a:hover{
+    background-color: #727CF5;
+}
+.ace-skin .nav li a:after{
+    background-color: #727CF5;
+}
+.ace-skin .nav li a:before{
+    background-color: #727CF5;
+}
+
+.ace-skin .nav .active{
+    background-color: #727CF5;
+}
+.ace-skin .sidebar+.main-content{
+    margin-left: 220px;
+}
+.ace-skin .breadcrumbs{
+    left: 220px !important;
+}
+
+.main-skin {
+    padding: 15px;
+}
+
+.page-header h1{
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.page-content {
+    padding: 8px 20px 10px;
+}
+.layui-fluid {
+    padding: 0px;
+}
+.layui-form-label {
+    width: 200px;
+}
+.layui-input-block{
+    margin-left: 200px;
+}
+.layui-form-item .layui-input-info {
+    width: 30px !important;
+    height: 38px;
+    line-height: 38px;
+}
+
+/***from表单处理*/
+
+#add-modal .modal-dialog {
+    width: 800px;
+}
+#from {
+    z-index: 1002;
+}
+#from .block{
+    display: block;
+}
+#from .none{
+    display: none;
 }

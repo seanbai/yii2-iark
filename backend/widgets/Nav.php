@@ -109,7 +109,7 @@ class Nav extends Widget
         $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
         $label = $encodeLabel ? Html::encode($item[$this->labelName]) : $item[$this->labelName];
         $icons = ArrayHelper::getValue($item, 'icons');
-        $a = $icons ? Html::tag('i', '', ['class' => $icons]) : '';
+        $a =  '';
         $a .= $isRenderSpan ? Html::tag('span', $label, ['class' => 'menu-text']) : $label;
         $options = ArrayHelper::getValue($item, 'options', []);
         $items = ArrayHelper::getValue($item, $this->itemsName);

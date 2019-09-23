@@ -33,8 +33,11 @@ AdminAsset::register($this);
     <script src="/public/assets/js/html5shiv.min.js"></script>
     <script src="/public/assets/js/respond.min.js"></script>
     <![endif]-->
+
+    <link rel="stylesheet" href="/public/admin/ui/css/layui.css" />
+    <link rel="stylesheet" href="/public/admin/css/ace-home.css" />
 </head>
-<body class="no-skin">
+<body class="main-skin">
 <?php $this->beginBody() ?>
 <!-- /section:basics/navbar.layout -->
 <div class="main-container" id="main-container">
@@ -55,18 +58,7 @@ AdminAsset::register($this);
         </div>
     </div>
 
-    <!--尾部信息-->
-    <div class="footer">
-        <div class="footer-inner">
-            <div class="footer-content">
-                <span class="bigger-120"><?=Yii::$app->params['companyName']?></span>
-            </div>
-        </div>
-    </div>
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
 <style>
 ::-webkit-scrollbar-track {
     background-color: #F5F5F5;

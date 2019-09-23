@@ -108,7 +108,9 @@ AppAsset::register($this);
         }
     </style>
     <link rel="stylesheet" href="/public/admin/css/ace-home.css" />
+
 </head>
+
 <body class="ace-skin">
 <?php $this->beginBody() ?>
 <!-- #section:basics/navbar.layout -->
@@ -138,7 +140,7 @@ AppAsset::register($this);
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="header-ul">
                 <li>
-                    <a class="sign-out"  title="个人信息"
+                    <a class="sign-out"  title="My Account"
                        data-url="<?= Url::toRoute(['admin/view']) ?>" href="<?= Url::toRoute(['admin/view']) ?>">
                        My Account
                     </a>
@@ -167,38 +169,6 @@ AppAsset::register($this);
 
     <!-- #section:basics/sidebar -->
     <div id="sidebar" class="sidebar responsive sidebar-fixed">
-        <script type="text/javascript">
-            try {
-                ace.settings.check('sidebar', 'fixed')
-            } catch (e) {
-            }
-        </script>
-
-        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-                <button class="btn btn-success window-iframe" title="我的日程信息" data-id="my-arrange"
-                        data-url="<?= Url::toRoute(['arrange/calendar']) ?>">
-                    <i class="ace-icon fa fa-calendar"></i>
-                </button>
-                <button class="btn btn-info">
-                    <i class="ace-icon fa fa-pencil"></i>
-                </button>
-                <button class="btn btn-warning window-iframe" title="个人信息" data-id="my-info"
-                        data-url="<?= Url::toRoute(['admin/view']) ?>">
-                    <i class="ace-icon glyphicon glyphicon-user"></i>
-                </button>
-                <button class="btn btn-danger window-iframe" title="登录信息" data-id="index"
-                        data-url="<?= Url::toRoute(['site/system']) ?>">
-                    <i class="ace-icon fa fa-cogs"></i>
-                </button>
-            </div>
-            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-                <span class="btn btn-success"></span>
-                <span class="btn btn-info"></span>
-                <span class="btn btn-warning"></span>
-                <span class="btn btn-danger"></span>
-            </div>
-        </div>
         <!--左侧导航栏信息-->
         <?php
         try {
@@ -228,45 +198,11 @@ AppAsset::register($this);
         </script>
     </div>
 
+
+
     <!--主要内容信息-->
     <div class="main-content">
-
         <!--头部可固定导航信息-->
-        <div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
-            <script type="text/javascript">
-                try {
-                    ace.settings.check('breadcrumbs', 'fixed')
-                } catch (e) {
-                }
-            </script>
-            <div class="me-breadcrumb pull-left">
-                <div class="prev options hide" id="window-prev">
-                    <a href="#"><i class="ace-icon fa fa-backward"></i></a>
-                </div>
-                <div class="me-window" id="me-window">
-                    <div class="me-div active" data-id="iframe-index">
-                        <i class="ace-icon fa fa-home home-icon"></i>
-                        <span>首页</span>
-                        <a href="#" class="me-window-close">
-                            <i class="ace-icon fa fa-times "></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="next options hide" id="window-next">
-                    <a href="#"><i class="ace-icon fa fa-forward"></i></a>
-                </div>
-            </div>
-
-            <!--搜索-->
-            <div class="nav-search" id="nav-search">
-                <span class="input-icon">
-                    <a id="window-refresh" href="#">
-                        <i class="ace-icon fa fa-refresh  bigger-110 icon-only"></i>
-                    </a>
-                </span>
-            </div>
-        </div>
-
         <div class="page-content" id="page-content">
             <iframe class="active iframe" name="iframe-index" id="iframe-index" width="100%" height="100%"
                     src="<?= Url::toRoute(['site/system']) ?>" frameborder="0"></iframe>
