@@ -94,7 +94,7 @@
     padding: 8px 20px 10px;
 }
 .layui-fluid {
-    padding: 0px;
+    padding: 0px !important;
 }
 .layui-form-label {
     width: 200px;
@@ -122,3 +122,112 @@
 #from .none{
     display: none;
 }
+
+.create-order-table {
+    width: 100%;
+    height: auto;
+    order-collapse: collapse;
+    border-spacing: 0;
+}
+.create-order-table .alt-12{
+    width: 100%;
+}
+.create-order-table tr td .name{
+    flex: 0 0 auto;
+    font-weight: 700;
+    min-width: 13px;
+    margin: 0;
+    padding: 6px 0 6px 15px;
+    line-height: 20px;
+    font-size: 14px;
+}
+.create-order-table tr td .label_input{
+    border: none;
+    flex: 1 1;
+    text-align: left;
+    width: 80%;
+    min-height: 32px;
+    height: 32px;
+    line-height: 32px;
+}
+
+.create-order-table tr td{
+    border: 1px solid #e0e0e0;
+}
+.create-order-table tr td .textarea {
+    position: relative;
+    height: 80px;
+}
+.create-order-table tr td .textarea .name{
+    position: absolute;
+    top: 10px;
+}
+.create-order-table tr td .erp_textarea{
+     padding-left: 70px;
+     min-height: 23px;
+     line-height: 23px;
+     width: 90%;
+     height: 78px;
+ }
+.create-order-table tr td span{
+    font-weight: 700;
+    line-height: 20px;
+}
+.create-order-table tr td .is_required label:after{
+    content: "*";
+    color: red;
+    font-size: 16px;
+    margin-top: 6px;
+    line-height: 12px;
+    margin-right: 6px;
+}
+
+.create-order-table tr td .select{
+    width: 80%;
+    border: 0px;
+    font-size: 12px;
+}
+.create-order-table tr td .min{
+    font-size: 5px;
+    color: #999999;
+    padding-left: 15px;
+}
+
+.create-product tr {
+    line-height: 40px;
+    text-align: center;
+}
+.create-order {
+    padding-top: 20px;
+}
+.layui-form-item .layui-input-inline {
+    margin-left: 30px;
+}
+
+.file {
+    position: relative;
+    display: inline-block;
+    background: #009688;
+    border: 1px solid #009688;
+    border-radius: 4px;
+    padding: 8px 15px;
+    overflow: hidden;
+    color: #ffffff;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+

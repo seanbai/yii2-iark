@@ -42,6 +42,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/ace-elements.min.js',
         'js/ace.min.js',
+
     ];
 
     /**

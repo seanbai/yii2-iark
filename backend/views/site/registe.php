@@ -10,8 +10,9 @@ $this->title = Yii::t('app', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+
 <?php $form = ActiveForm::begin(); ?>
-<div class="layui-form" id="login">
+<div class="layui-form">
     <div class="layui-form-item" wid100>
         <div class="layui-input-block">
             <?= $form->field($model, 'username')->textInput(['placeholder' => $model->getAttributeLabel('username'),'class'=> 'layui-input'])->label(false) ?>
@@ -29,25 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="layui-form-item" wid100>
         <div class="layui-input-block">
-            <span id="zhuce" style="float: right;">注册</span>
+            注册
         </div>
     </div>
 </div>
-
-
-
-
-<script type="text/javascript">
-
-    $(function(){
-        $(document).on('click', '#zhuce', function () {
-            $('#reg').attr('style','display:block');
-            $('#login').attr('style','display:none');
-        })
-
-    });
-</script>
-
 
 
 <?php ActiveForm::end(); ?>

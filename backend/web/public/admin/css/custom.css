@@ -160,6 +160,10 @@ body {
   padding-right: 10px;
   line-height: 38px; }
 
+.fr {
+  float: right;
+  margin-left: 10px; }
+
 .dark .layui-side-menu,
 .dark .layadmin-pagetabs .layui-tab-title li:after,
 .dark .layadmin-pagetabs .layui-tab-title li.layui-this:after,

@@ -5,17 +5,17 @@ $this->title = 'My Order';
 <?=\backend\widgets\MeTable::widget()?>
 <?php $this->beginBlock('javascript') ?>
 <script type="text/javascript">
-    var user = <?=\yii\helpers\Json::encode($user); ?>
+    var user = <?=\yii\helpers\Json::encode($user); ?>,
+        order_status = <?=\yii\helpers\Json::encode($status); ?>,
+        pay = <?=\yii\helpers\Json::encode($pay); ?>;
+
 
     var m = meTables({
         title: "My Order",
         bCheckbox: false,
         buttons: {
             "updateAll": {bShow: false},
-            "create": {
-                bShow: true,
-            }
-            ,
+            "create": {bShow: false},
             "deleteAll": {bShow: false},
             "export":{bShow: false}
         },
@@ -29,23 +29,38 @@ $this->title = 'My Order';
             "aoColumns": [
                 {"title": "id", "data": "id", "sName": "id", "bSortable": false},
                 {"title": "单据编号", "data": "order_number", "sName": "order_number","edit": {"type": "text"},   "bSortable": false},
-                {"title": "状态", "data": "status", "sName": "status", "bSortable": false},
-                {"title": "进度", "data": "status", "sName": "status", "bSortable": false},
-                {"title": "期望交付时间", "data": "delivery_time", "edit": {"type": "text"}, "sName": "delivery_time", "bSortable": false, "createdCell" : meTables.dateTimeString},
-                {"title": "支付方式", "data": "payment_method",  "edit": {"type": "text"}, "sName": "payment_method", "bSortable": false},
                 {
-                    "title": "制单人",
-                    "data": "order_user",
-                    "sName":  "order_user",
-                    "edit": {"type": "select"},
-                    "search": {"type": "select","id":"order_user"},
+                    "title": "状态",
+                    "data": "order_status",
+                    "sName": "order_status",
+                    "bSortable": false,
+                    "edit": {"type": "text"},
+                    "createdCell": function (td, data) {
+                        $(td).html(mt.valuesString(order_status, [], data, ' '));
+                    }
+                },
+                {"title": "期望交付时间", "data": "date", "edit": {"type": "text"}, "sName": "delivery_time", "bSortable": false},
+                {
+                    "title": "支付方式",
+                    "data": "currency",
+                    "edit": {"type": "text"},
+                    "sName": "currency",
+                    "bSortable": false,
+                    "createdCell": function (td, data) {
+                        $(td).html(mt.valuesString(pay, [], data, ' '));
+                    }
+                },
+                {
+                    "title": "申请人",
+                    "data": "user",
+                    "sName":  "user",
+                    "edit": {"type": "text"},
                     "bSortable": false,
                     "createdCell": function (td, data) {
                         $(td).html(mt.valuesString(user, [], data, ' '));
                     }
-
                 },
-                {"title": "创建时间", "data": "create_time", "sName": "create_time",  "isHide": true, "bSortable": false, "createdCell" : meTables.dateTimeString},
+                {"title": "创建时间", "data": "create_time", "sName": "create_time",  "isHide": false, "bSortable": false, },
             ]       
         },
         sModal: "#add-modal",
@@ -61,20 +76,10 @@ $this->title = 'My Order';
 
     $(function(){
          m.init();
-
-
     });
 </script>
 
 
-<div id="from" class="add-order-from ">
-    <div class="from none">
-        <input name="id" value="1">
-        <input name="name" value="1">
-        <input name="user" value="1">
-        <input name="from" value="1">
-    </div>
-</div>
 
 
 <?php $this->endBlock(); ?>

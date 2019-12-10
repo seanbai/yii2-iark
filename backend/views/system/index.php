@@ -5,10 +5,19 @@ $this->title = 'System Config';
 <?=\backend\widgets\MeTable::widget()?>
 <?php $this->beginBlock('javascript') ?>
 
+    <style>
+        #main-container {
+            display: none;
+        }
+    </style>
+
+
+
     <div class="layui-fluid">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-card">
+                    <div class="layui-card-header">System Config</div>
                     <div class="layui-card-body">
                         <div class="layui-form" wid150>
                             <!-- form item -->
