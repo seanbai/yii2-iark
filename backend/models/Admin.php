@@ -247,4 +247,15 @@ class Admin extends \common\models\Admin
         $data[0] = '请选择用户';
         return $data;
     }
+
+
+    public static function getSupplierUser(){
+        $data = self::find()
+            ->select(['id','username'])
+            ->where(['role'=>'manufacturer'])
+            ->asArray()->all();
+        $data = ArrayHelper::map($data,'id', 'username');
+        $data[0] = '请选择用户';
+        return $data;
+    }
 }

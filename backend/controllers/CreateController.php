@@ -4,7 +4,15 @@ namespace backend\controllers;
 
 use backend\models\Order;
 use backend\models\System;
+use backend\modules\api\messages\ApiMsg;
+use common\helpers\Curl;
+use common\helpers\Dir;
+use common\helpers\Helper;
+use common\helpers\Image;
+use common\models\Log;
+use console\models\ProductPicture;
 use yii\db\Exception;
+use common\models\Create;
 
 /**
  * Class SystemController 系统配置 执行操作控制器
@@ -12,6 +20,7 @@ use yii\db\Exception;
  */
 class CreateController extends Controller
 {
+    private $_type = ['zip','png'];
 
     /**
      * @var string 定义使用的model
@@ -39,64 +48,129 @@ class CreateController extends Controller
 
     public function actionFrom(){
 
-        print_r($_POST);
-        print_r($_FILES);
-        die;
+        //数据验证-电话-地址-付款方式
+        $data = $_POST;
+        $files = $_FILES;
+        $check = $this->checkData($data,$files);
+        $err = [];
+        /** 返回成功数据 */
+        if ($check == 0) return $this->error(201,"请检查您的字段是否填写正确");
+        $upload = $this->files($files['files']);
+        if ($upload == 0) return $this->error(301,"系统异常,请稍后再试");
 
-
-        //数据验证
-        if (empty($_POST['phone']) || empty($_POST['address']) || empty($_POST['currency']))
-        {
-            return 0;
-        }
-
+        $data['files'] = $upload;
 
         try{
-            $number = time().rand(0,10000);
+
+            $number = time().$this->getRand(3);
             $order = [
                 'order_number' => $number,
-                'user' =>  $_POST['user'],
-                'date' => $_POST['date'],
+                'user' =>  $data['userId'],
+                'date' => $data['date'],
                 'order_status' => 1,
-                'name' =>  $_POST['name'],
-                'phone' =>  $_POST['phone'],
-                'address' => $_POST['address'],
-                'currency' => $_POST['currency'],
+                'name' =>  $data['name'],
+                'phone' =>  $data['phone'],
+                'address' => $data['address'],
+                'currency' => $data['currency'],
                 'create_time'=> date("Y:m:d H:i:s",time()),
             ];
             \Yii::$app->db->createCommand()->insert(Order::tableName(),$order)->execute();
             $createId = \Yii::$app->db->getLastInsertID();
-            $data = $_POST['data'];
+
             $orderItem = [];
-            $columns = ['order_id','order_number','brand','number','type','desc','create_time'];
+            $columns = ['order_id','order_number','brand','number','type','desc','files','create_time'];
 
             try{
-                if (!empty($data)){
-                    foreach ($data as $key=>$value){
-                        $orderItem[] = [
-                            'order_id' => $createId,
-                            'order_number' => $number,
-                            'brand' =>  $value['brand'],
-                            'number' => $value['number'],
-                            'type' =>  $value['type'],
-                            'desc' =>  $value['desc'],
-                            'create_time'=> date("Y:m:d H:i:s",time()),
-                        ];
-                    }
-                    \Yii::$app->db->createCommand()->batchInsert(Order::tableItemName(), $columns, $orderItem)->execute();
+                foreach ($data['brand'] as $key=>$value){
+                    if (empty($value)) continue;
+                    $orderItem[] = [
+                        'order_id' => $createId,
+                        'order_number' => $number,
+                        'brand' =>  $data['brand'][$key],
+                        'number' => $data['number'][$key],
+                        'type' =>  $data['type'][$key],
+                        'desc' =>  $data['desc'][$key],
+                        'files' => $data['files'][$key],
+                        'create_time'=> date("Y:m:d H:i:s",time()),
+                    ];
                 }
+                \Yii::$app->db->createCommand()->batchInsert(Order::tableItemName(), $columns, $orderItem)->execute();
             }catch (Exception $exception){
                 Order::deleteAll(['id'=>$createId]);
-                return 0;
+                return $this->error(201,"保存商品信息出错,请稍后在尝试");
             }
             return 1;
         }catch (Exception $exception){
+            return $this->error(300,"系统异常,请稍后再试");
+        }
+    }
+
+    public function checkData($data,$files){
+        if ( empty($data['phone']) || empty($data['address']) || empty($data['currency'])) {
             return 0;
         }
-
-
-
-
-
+        if (empty($data['brand'][0]) || empty($data['type'][0]) || empty($data['number'][0])){
+            return 0;
+        }
+        if (empty($files['files']['name'][0])){
+            return 0;
+        }
+        return 1;
     }
+
+    public function getRand($length = 3,$mess=''){
+        // 密码字符集，可任意添加你需要的字符
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $str = $mess."";
+        for ( $i = 0; $i < $length; $i++ )
+        {
+            $str .= $chars[ mt_rand(0, strlen($chars) - 1) ];
+        }
+        return $str ;
+    }
+
+    public function files($files){
+        $img_root = \Yii::getAlias('@backend/web');
+        $path = (new Dir($img_root))->getPath(\Yii::$app->params['product_download_dir']);
+        $type = $request = [];
+        foreach ($files['name'] as $key=>$value){
+            if (!empty($value)){
+                $ext = explode(".", $value);
+                $ext = $ext[count($ext) - 1];
+                if (!in_array($ext,$this->_type)){
+                    return Create::NOT_UNION_TYPE;
+                }
+                $type[] = $ext;
+            }
+        }
+        foreach ($files['tmp_name'] as $key=>$value){
+            if (!empty($value)){
+                do{
+                    $new_name = $this->getRand(12,"Aa_").uniqid().'.'.$type[$key];
+                }while (file_exists("../" . $img_root.'/'.$path));//检查图片是否存在文件夹，存在返回ture,否则false
+
+                if (move_uploaded_file($value, $img_root.$path.'/'.$new_name)){
+                    $request[] = $path.'/'.$new_name;;
+                }else{
+                    return 0;
+                }
+            }
+        }
+        return $request;
+    }
+
+
+    public function get_file_name($len)//获取一串随机数字，用于做上传到数据库中文件的名字
+    {
+        $new_file_name = 'A_';
+        $chars = "1234567890qwertyuiopasdfghjklzxcvbnm";//随机生成图片名
+        for ($i = 0; $i < $len; $i++) {
+            $new_file_name .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+        return $new_file_name;
+    }
+
+
+
+
 }

@@ -9,7 +9,6 @@ $this->title = 'My Order';
         order_status = <?=\yii\helpers\Json::encode($status); ?>,
         pay = <?=\yii\helpers\Json::encode($pay); ?>;
 
-
     var m = meTables({
         title: "My Order",
         bCheckbox: false,
@@ -62,15 +61,6 @@ $this->title = 'My Order';
                 },
                 {"title": "创建时间", "data": "create_time", "sName": "create_time",  "isHide": false, "bSortable": false, },
             ]       
-        },
-        sModal: "#add-modal",
-        sFormId: "#edit-form-sean",
-        editFormParams: {				// 编辑表单配置
-            bMultiCols: false,          // 是否多列
-            iColsLength: 3,             // 几列
-            aCols: [3, 9],              // label 和 input 栅格化设置
-            sModalClass: "",			// 弹出模块框配置
-            sModalDialogClass: "sean-from"		// 弹出模块的class
         },
     });
 

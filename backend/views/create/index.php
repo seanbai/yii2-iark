@@ -19,9 +19,10 @@ $this->title = 'Create A New Order';
                         <div class="layui-card-header">采购单基本信息</div>
                         <div class="layui-card-body layui-row layui-col-space10">
                             <div class="layui-col-md12">
-                                <input type="text" name="user" lay-verify="title" autocomplete="off"
-                                       value="<?php echo \yii::$app->user->identity->id; ?>" placeholder="订货商"
+                                <input type="text" name="userId" lay-verify="title" autocomplete="off"
+                                       value="<?php echo \yii::$app->user->identity->username; ?>" placeholder="订货商"
                                        class="layui-input" disabled>
+                                <input type="hidden" name="userId" value="<?php echo \yii::$app->user->identity->getId(); ?>">
                             </div>
                             <div class="layui-col-md12">
                                 <input type="text" name="date" lay-verify="date" class="layui-input" id="date"
@@ -63,6 +64,7 @@ $this->title = 'Create A New Order';
                                     <col width="200">
                                     <col width="200">
                                     <col width="100">
+                                    <col width="100">
                                 </colgroup>
                                 <thead>
                                 <tr>
@@ -71,6 +73,7 @@ $this->title = 'Create A New Order';
                                     <th>类型</th>
                                     <th>数量</th>
                                     <th>描述</th>
+                                    <th>附件</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -88,20 +91,8 @@ $this->title = 'Create A New Order';
                                     <td>
                                         <input type="text" name="desc[]" lay-verify="title" class="layui-input">
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name='ckb'/></td>
                                     <td>
-                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
+                                        <input type="file" name="files[]" lay-verify="title" class="layui-file"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -117,6 +108,27 @@ $this->title = 'Create A New Order';
                                     </td>
                                     <td>
                                         <input type="text" name="desc[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="file" name="files[]" lay-verify="title" class="layui-file"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name='ckb'/></td>
+                                    <td>
+                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -133,10 +145,6 @@ $this->title = 'Create A New Order';
                                         <button type="button" class="layui-btn fr" id="delete" onclick="delTr2()">
                                             <i class="layui-icon">&#xe67c;</i>删除行
                                         </button>
-                                        <a href="javascript:;" class="file">选择文件
-                                            <input type="file" name="upload-files" id="coverPhoto-file" class="upload-file"/>
-                                        </a>
-                                        <span class="showFileName"></span>
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -151,100 +159,17 @@ $this->title = 'Create A New Order';
 
     <script type="text/javascript">
         $(function () {
+            $('input[name="files[]"]').change(function(event) {
+                var file = $(this).val();
+                console.log(file);
+            });
             $(document).on('click', '#save', function () {
-
-                data2 = new FormData($('#form1')[0]);
-                console.log(data2);
-                //data2 = $('#form1').serialize();
-                // var user = $("input[name='user']").val();
-                // var date = $("input[name='date']").val();
-                // var name = $("input[name='name']").val();
-                // var phone = $("input[name='phone']").val();
-                // var address = $("input[name='address']").val();
-                // var currency = $("input[name='currency']").val();
-                //
-                // /*整理列表数据*/
-                // from1 = [];
-                // from2 = [];
-                // from3 = [];
-                // from4 = [];
-                // from5 = [];
-                // from6 = [];
-                // from7 = [];
-                // if ($("input[name='brand1']").val() != '') {
-                //     from1 = {
-                //         "brand": $("input[name='brand1']").val(),
-                //         "type": $("input[name='type1']").val(),
-                //         "number": $("input[name='number1']").val(),
-                //         "desc": $("input[name='desc1']").val()
-                //
-                //     }
-                // }
-                // if ($("input[name='brand2']").val() != '') {
-                //     from2 = {
-                //         "brand": $("input[name='brand2']").val(),
-                //         "type": $("input[name='type2']").val(),
-                //         "number": $("input[name='number2']").val(),
-                //         "desc": $("input[name='desc2']").val()
-                //     }
-                // }
-                // if ($("input[name='brand3']").val() != '') {
-                //     from3 = {
-                //         "brand": $("input[name='brand3']").val(),
-                //         "type": $("input[name='type3']").val(),
-                //         "number": $("input[name='number3']").val(),
-                //         "desc": $("input[name='desc3']").val()
-                //     }
-                // }
-                // if ($("input[name='brand4']").val() != '') {
-                //     from4 = {
-                //         "brand": $("input[name='brand4']").val(),
-                //         "type": $("input[name='type4']").val(),
-                //         "number": $("input[name='number4']").val(),
-                //         "desc": $("input[name='desc4']").val()
-                //     }
-                // }
-                // if ($("input[name='brand5']").val() != '') {
-                //     from5 = {
-                //         "brand": $("input[name='brand5']").val(),
-                //         "type": $("input[name='type5']").val(),
-                //         "number": $("input[name='number5']").val(),
-                //         "desc": $("input[name='desc5']").val()
-                //     }
-                // }
-                // if ($("input[name='brand6']").val() != '') {
-                //     from6 = {
-                //         "brand1": $("input[name='brand6']").val(),
-                //         "type1": $("input[name='type6']").val(),
-                //         "number1": $("input[name='number6']").val(),
-                //         "desc1": $("input[name='desc6']").val()
-                //     }
-                // }
-                // if ($("input[name='brand7']").val() != '') {
-                //     from7 = {
-                //         "brand": $("input[name='brand7']").val(),
-                //         "type": $("input[name='type7']").val(),
-                //         "number": $("input[name='number7']").val(),
-                //         "desc": $("input[name='desc7']").val()
-                //     }
-                // }
-                //
-                // data2 = {
-                //     "user": user,
-                //     "date": date,
-                //     "name": name,
-                //     "phone": phone,
-                //     "address": address,
-                //     "currency": 1,
-                //     "data": [
-                //         from1, from2, from3, from4, from5, from6, from7
-                //     ]
-                // }
-
+                var fromdata = new FormData($('#form1')[0]);
+                console.log(fromdata);
                 meTables.ajax({
                     url: 'from',
                     type: 'post',
-                    data: data2,
+                    data: fromdata,
                     async: true,
                     cache: false,
                     contentType: false,
@@ -257,19 +182,8 @@ $this->title = 'Create A New Order';
                         alert("提交失败,请刷新后重试");
                     }
                 });
-            })
-
+            });
         });
-
-        ////////添加一行、删除一行封装方法///////
-        /**
-         * 为table指定行添加一行
-         *
-         * tab 表id
-         * row 行数，如：0->第一行 1->第二行 -2->倒数第二行 -1->最后一行
-         * trHtml 添加行的html代码
-         *
-         */
         function addTr(tab, row, trHtml) {
             var $tr = $("#" + tab + " tbody tr").eq(row);
             if ($tr.size() == 0) {
@@ -278,7 +192,6 @@ $this->title = 'Create A New Order';
             }
             $tr.after(trHtml);
         }
-
         function delTr(ckb) {
             //获取选中的复选框，然后循环遍历删除
             var ckbs = $("input[name=" + ckb + "]:checked");
@@ -290,28 +203,15 @@ $this->title = 'Create A New Order';
                 $(this).parent().parent().remove();
             });
         }
-
-        /**
-         * 全选
-         *
-         * allCkb 全选复选框的id
-         * items 复选框的name
-         */
         function allCheck(allCkb, items) {
             $("#" + allCkb).click(function () {
                 $('[name=' + items + ']:checkbox').attr("checked", this.checked);
             });
         }
-
-        ////////添加一行、删除一行测试方法///////
-        $(function () {
-            //全选
-            allCheck("allCkb", "ckb");
-        });
+        $(function () {allCheck("allCkb", "ckb");});
 
         function addTr2(tab, row) {
-            var trHtml = '<tr><td><input type="checkbox" name="ckb"/></td><td><input type="text" name="brand[]" lay-verify="title" class="layui-input"></td><td><input type="text" name="type[]"   lay-verify="title" class="layui-input"></td><td><input type="text" name="number[]"  lay-verify="title" class="layui-input"></td><td><input type="text" name="desc[]" lay-verify="title" class="layui-input"></td></tr>'
-            // var trHtml="<tr align='center'><td width='30%'><input type='checkbox' name='ckb'/></td><td width='30%'><input></td><td width='30%'><input></td></tr>";
+            var trHtml = '<tr><td><input type="checkbox" name="ckb"/></td><td><input type="text" name="brand[]" lay-verify="title" class="layui-input"></td><td><input type="text" name="type[]"   lay-verify="title" class="layui-input"></td><td><input type="text" name="number[]"  lay-verify="title" class="layui-input"></td><td><input type="text" name="desc[]" lay-verify="title" class="layui-input"></td><td><input type="file" name="files[]" lay-verify="title" class="layui-file files"/></td></tr>'
             addTr(tab, row, trHtml);
         }
 
@@ -320,14 +220,6 @@ $this->title = 'Create A New Order';
         }
 
 
-        $(".file").on("change", "input[type='file']", function () {
-            var filePath = $(this).val();
-            $(".fileerrorTip").html("").hide();
-            var arr = filePath.split('\\');
-            var fileName = arr[arr.length - 1];
-            $(".showFileName").html(fileName);
-
-        })
     </script>
 
 

@@ -13,12 +13,12 @@ use Yii;
  * Class OrderController My Order 执行操作控制器
  * @package backend\controllers
  */
-class OrderController extends Controller
+class OrderItemController extends Controller
 {
     /**
      * @var string 定义使用的model
      */
-    public $modelClass = 'backend\models\Order';
+    public $modelClass = 'backend\models\OrderItem';
      
     /**
      * 查询处理
@@ -28,7 +28,7 @@ class OrderController extends Controller
     public function where($params)
     {
         return [
-            'user' => "=",
+            'order_number' => "=",
         ];
     }
 
@@ -68,11 +68,12 @@ class OrderController extends Controller
     public function actionIndex()
     {
         $data = [
-            'user' => Admin::getUser(),
-            'status' => Order::status(),
-            'pay' => Order::pay(),
+            'user' => Admin::getSupplierUser(),
         ];
 
         return $this->render('index', $data);
     }
+
+
+
 }

@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Admin;
 use backend\models\Auth;
-use backend\models\Order;
+use backend\models\System;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
@@ -13,12 +13,12 @@ use Yii;
  * Class OrderController My Order 执行操作控制器
  * @package backend\controllers
  */
-class OrderController extends Controller
+class ManuController extends Controller
 {
     /**
      * @var string 定义使用的model
      */
-    public $modelClass = 'backend\models\Order';
+    public $modelClass = 'backend\models\Manu';
      
     /**
      * 查询处理
@@ -36,7 +36,7 @@ class OrderController extends Controller
     {
         // 实例化数据显示类
         /* @var $strategy \common\strategy\Strategy */
-        $strategy = Substance::getInstance($this->strategy);
+        $strategy = Substance::getInstance('order_item');
 
         // 获取查询参数
         $search = $strategy->getRequest(); // 处理查询参数
@@ -61,18 +61,13 @@ class OrderController extends Controller
         } else {
             $array = [];
         }
-
         return $this->success($strategy->handleResponse($array, $total));
     }
 
     public function actionIndex()
     {
-        $data = [
-            'user' => Admin::getUser(),
-            'status' => Order::status(),
-            'pay' => Order::pay(),
-        ];
-
+        $data = System::find()->where(['id'=>1])->asArray()->one();
         return $this->render('index', $data);
     }
+
 }
