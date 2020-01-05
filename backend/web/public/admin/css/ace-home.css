@@ -60,6 +60,14 @@
     height: 45px;
     color: rgba(255,255,255,.7);
 }
+.sidebar.menu-min .nav-list>li>a{
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 23px;
+    height: 45px;
+    color: rgba(255,255,255,.7);
+    padding-top: 10px;
+}
 .ace-skin .nav li a:hover{
     background-color: #727CF5;
 }

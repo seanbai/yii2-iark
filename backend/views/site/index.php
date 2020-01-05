@@ -111,9 +111,12 @@ AppAsset::register($this);
 
 </head>
 
-<body class="ace-skin">
+<body class="ace-skin layui-layout-body dark">
+
+
 <?php $this->beginBody() ?>
-<!-- #section:basics/navbar.layout -->
+
+
 <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <script type="text/javascript">
         try {
@@ -133,7 +136,7 @@ AppAsset::register($this);
 
         <div class="navbar-header-logo pull-left">
             <a href="/">
-                <span>i-Ark System</span>
+                <span>Order System</span>
             </a>
         </div>
 
@@ -185,10 +188,10 @@ AppAsset::register($this);
 
         }
         ?>
-        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"
-               data-icon2="ace-icon fa fa-angle-double-right"></i>
-        </div>
+<!--        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">-->
+<!--            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"-->
+<!--               data-icon2="ace-icon fa fa-angle-double-right"></i>-->
+<!--        </div>-->
 
         <script type="text/javascript">
             try {
@@ -227,8 +230,12 @@ AppAsset::register($this);
 <script src="/public/assets/js/bootstrap.min.js"></script>
 <!--[if lte IE 8]>
 <script src="/public/assets/js/excanvas.min.js"></script>
+
+
+
 <![endif]-->
 <?php $this->endBody() ?>
+
 <script type="text/javascript">
     authHeight();
     var $windowDiv = $("#me-window"),

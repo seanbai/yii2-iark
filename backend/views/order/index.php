@@ -4,72 +4,58 @@ $this->title = 'My Order';
 ?>
 <?=\backend\widgets\MeTable::widget()?>
 <?php $this->beginBlock('javascript') ?>
-<script type="text/javascript">
-    var user = <?=\yii\helpers\Json::encode($user); ?>,
-        order_status = <?=\yii\helpers\Json::encode($status); ?>,
-        pay = <?=\yii\helpers\Json::encode($pay); ?>;
 
-    var m = meTables({
-        title: "My Order",
-        bCheckbox: false,
-        buttons: {
-            "updateAll": {bShow: false},
-            "create": {bShow: false},
-            "deleteAll": {bShow: false},
-            "export":{bShow: false}
-        },
-        operations: {
-            buttons: {
-                "update": {"bShow": false},
-                "delete": {"bShow": false}
-            }
-        },
-        table: {
-            "aoColumns": [
-                {"title": "id", "data": "id", "sName": "id", "bSortable": false},
-                {"title": "单据编号", "data": "order_number", "sName": "order_number","edit": {"type": "text"},   "bSortable": false},
-                {
-                    "title": "状态",
-                    "data": "order_status",
-                    "sName": "order_status",
-                    "bSortable": false,
-                    "edit": {"type": "text"},
-                    "createdCell": function (td, data) {
-                        $(td).html(mt.valuesString(order_status, [], data, ' '));
-                    }
-                },
-                {"title": "期望交付时间", "data": "date", "edit": {"type": "text"}, "sName": "delivery_time", "bSortable": false},
-                {
-                    "title": "支付方式",
-                    "data": "currency",
-                    "edit": {"type": "text"},
-                    "sName": "currency",
-                    "bSortable": false,
-                    "createdCell": function (td, data) {
-                        $(td).html(mt.valuesString(pay, [], data, ' '));
-                    }
-                },
-                {
-                    "title": "申请人",
-                    "data": "user",
-                    "sName":  "user",
-                    "edit": {"type": "text"},
-                    "bSortable": false,
-                    "createdCell": function (td, data) {
-                        $(td).html(mt.valuesString(user, [], data, ' '));
-                    }
-                },
-                {"title": "创建时间", "data": "create_time", "sName": "create_time",  "isHide": false, "bSortable": false, },
-            ]       
-        },
-    });
+    <style>
+        #main-container {
+            display: none;
+        }
+    </style>
 
-    $(function(){
-         m.init();
-    });
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space5">
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    Workflow Pending
+                </div>
+                <div class="layui-card-body">
+                    <!-- table black -->
+                    <table id="workflow" lay-filter="flow"></table>
+                    <!-- tool bar -->
+                    <script type="text/html" id="toolbar">
+                        <div class="layui-btn-container">
+                            <button class="layui-btn layui-btn-sm" lay-event="status">Change Status</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="ignore">Ignore the Order</button>
+                        </div>
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!-- -->
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    Order Details - #GZL2018101800004
+                </div>
+                <div class="layui-card-body">
+                    <!-- table black -->
+                    <table id="products" lay-filter="products"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/public/admin/ui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/public/admin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'myorder']);
 </script>
-
-
-
 
 <?php $this->endBlock(); ?>

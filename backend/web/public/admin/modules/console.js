@@ -55,12 +55,13 @@ layui.define(function(exports){
   layui.use(['table','element'], function(){
     var table = layui.table;
     var element = layui.element;
-
+    // pending order
     table.render({
-      elem: '#my-order',
+      elem: '#pending-order',
       url: '../../admin/json/myorder.json', //数据接口
       cellMinWidth: 100,
       skin: 'row',
+      limit: 10,
       even: true,
       cols: [[ //表头
         {field: 'id', title: 'ID', width:80, sort: true},
@@ -74,6 +75,26 @@ layui.define(function(exports){
         element.render();
       }
     });
+    // completed order
+    table.render({
+      elem: '#completed',
+      url: '../../admin/json/completed.json', //数据接口
+      cellMinWidth: 100,
+      skin: 'row',
+      even: true,
+      cols: [[ //表头
+        {field: 'id', title: 'ID', width:80, sort: true},
+        {field: 'ordernum', title: '单据编号'},
+        {field: 'pubdata', title: '创建时间',sort: true},
+        {field: 'truedata', title: '实际交付时间',sort: true},
+        {field: 'fullprice', title: '合计', sort: true},
+        {field: 'address', title: '收货地址'}
+      ]],
+      done: function(res, curr, count){
+        element.render();
+      }
+    });
+
   });
 
 

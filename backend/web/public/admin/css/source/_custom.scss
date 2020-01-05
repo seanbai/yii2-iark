@@ -151,3 +151,14 @@ body{
   float: right;
   margin-left: 10px;
 }
+
+.layui-table tbody{
+  th{
+    background-color: #EEE;
+  }
+}
+//
+#rightCard{
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

@@ -4,18 +4,18 @@
   "count" : 11,
   "data": [{
     "id": 1,
-    "case": "GZL2018101800004",
+    "num": "GZL2018101800004",
     "date": "16/07/2019",
     "status": "Pending...",
+    "ignoreNum": 8,
     "order": {
-      "number": "KHDHD2019070100001",
       "date": "20/07/2019",
-      "offer": 1,
+      "offer": 8,
       "info": "please review my order"
     },
     "offer":{
       "date": "21/07/2019",
-      "price": "€98,000",
+      "price": "",
       "rate": "7.85",
       "info": "",
       "confirm": 0,
@@ -24,18 +24,17 @@
     "done": 0
   },{
     "id": 2,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800005",
     "date": "16/07/2019",
-    "status": "Pending...",
+    "status": "Lgnore",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 2,
       "info": "please review my order"
     },
     "offer":{
       "date": "21/07/2019",
-      "price": "€13,000",
+      "price": "",
       "rate": "7.85",
       "info": "",
       "confirm": 0,
@@ -44,11 +43,10 @@
     "done": 0
   },{
     "id": 3,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800006",
     "date": "16/07/2019",
-    "status": "Pending...",
+    "status": "Quoted",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 1,
       "info": "please review my order"
@@ -64,11 +62,10 @@
     "done": 0
   },{
     "id": 4,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800007",
     "date": "16/07/2019",
-    "status": "Pending...",
+    "status": "Confirm Quote",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 1,
       "info": "please review my order"
@@ -84,11 +81,10 @@
     "done": 0
   },{
     "id": 5,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800008",
     "date": "16/07/2019",
-    "status": "Pending...",
+    "status": "In Production",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 2,
       "info": "please review my order"
@@ -104,11 +100,10 @@
     "done": 0
   },{
     "id": 6,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800009",
     "date": "16/07/2019",
-    "status": "Pending...",
+    "status": "Comfirm Balance Due",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 1,
       "info": "please review my order"
@@ -124,11 +119,10 @@
     "done": 0
   },{
     "id": 7,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800010",
     "date": "16/07/2019",
     "status": "Pending...",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 1,
       "info": "please review my order"
@@ -144,11 +138,10 @@
     "done": 0
   },{
     "id": 8,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800011",
     "date": "16/07/2019",
     "status": "Pending...",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 1,
       "info": "please review my order"
@@ -164,11 +157,10 @@
     "done": 0
   },{
     "id": 9,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800012",
     "date": "16/07/2019",
     "status": "Pending...",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
       "offer": 1,
       "info": "please review my order"
@@ -184,13 +176,12 @@
     "done": 0
   },{
     "id": 10,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800013",
     "date": "16/07/2019",
     "status": "Pending...",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
-      "offer": 1,
+      "offer": 2,
       "info": "please review my order"
     },
     "offer":{
@@ -204,13 +195,12 @@
     "done": 0
   },{
     "id": 11,
-    "case": "GZL2019063012314",
+    "num": "GZL2018101800014",
     "date": "16/07/2019",
     "status": "Pending...",
     "order": {
-      "number": "KHDHD2019070100002",
       "date": "20/07/2019",
-      "offer": 1,
+      "offer": 3,
       "info": "please review my order"
     },
     "offer":{

@@ -3,7 +3,6 @@ layui.define(function(exports){
   layui.use(['table','layer'], function(){
     var table = layui.table;
     var layer = layui.layer;
-    $ = layui.jquery;
     //
     table.render({
       elem: '#purchaser',
@@ -34,10 +33,16 @@ layui.define(function(exports){
         /* add a new user */
         case 'add':
           layer.open({
-            type: 1,
-            content: $('#addBox'),
-            area: '960px'
-          })
+            type: 2,
+            title: 'Add a New Purchaser',
+            area: ['960px', '540px'],
+            content: 'add.html',
+            btn: ['Save','Cancel'],
+            resize: false,
+            yes: function(index, layero){
+              alert("123123");
+            }
+          });
         break;
         /* del user */
         case 'del':

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
+  <link rel="stylesheet" href="../lib/css/layui.css">
+  <link rel="stylesheet" href="../css/custom.css">
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">
+          复杂用法
+        </div>
+        <div class="layui-card-body">
+          <table id="demo" lay-filter="test"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="../lib/layui.js"></script>
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+
+  table.render({
+    elem: '#demo'
+    ,height: 312
+    ,url: '../purchase.json' //数据接口
+    ,cellMinWidth: 150
+    ,page: true //开启分页
+    ,cols: [[ //表头
+      {field: 'id', title: 'ID', width:80, sort: true}
+      ,{field: 'ordernum', title: '单据编号'}
+      ,{field: 'pubdata', title: '创建时间',sort: true}
+      ,{field: 'finishdata', title: '期望交付时间', sort: true}
+      ,{field: 'owner', title: '制单人'}
+      ,{field: 'telphone', title: '电话'}
+      ,{field: 'company', title: '公司'}
+      ,{field: 'address', title: '收货地址'}
+      ,{field: 'statement', title: '结算方式',sort: true}
+    ]]
+  });
+});
+</script>
+</body>
+</html>

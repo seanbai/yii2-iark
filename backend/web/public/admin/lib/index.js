@@ -16,7 +16,7 @@ layui.define(function(exports){
   });
 
   layui.config({
-    base: '../../admin/modules/'
+    base: '/public/admin/modules/'
   });
 
   exports('index');
