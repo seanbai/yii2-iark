@@ -175,7 +175,7 @@ layui.define(function(exports){
             type: 2,
             title: 'Change Status',
             area: ['640px', '610px'],
-            content: 'create.html',
+            content: 'create',
             resize: false
           });
         break;

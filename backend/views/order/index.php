@@ -1,15 +1,3 @@
-<?php
-// 定义标题和面包屑信息
-$this->title = 'My Order';
-?>
-<?=\backend\widgets\MeTable::widget()?>
-<?php $this->beginBlock('javascript') ?>
-
-    <style>
-        #main-container {
-            display: none;
-        }
-    </style>
 
 
 <div class="layui-fluid">
@@ -137,5 +125,3 @@ $this->title = 'My Order';
         index: 'lib/index' //主入口模块
     }).use(['index', 'myorder']);
 </script>
-
-<?php $this->endBlock(); ?>

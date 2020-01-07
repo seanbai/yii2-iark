@@ -1,3 +1,11 @@
+
+
+<style>
+    body{
+        background-color: #FFFFFF;
+    }
+</style>
+
 <div class="layui-fluid">
     <form class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">

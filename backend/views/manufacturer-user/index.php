@@ -3,7 +3,7 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    Purchaser Management
+                    Manufacturer Management
                 </div>
                 <div class="layui-card-body">
                     <!-- table black -->

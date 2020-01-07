@@ -7,11 +7,11 @@
                 </div>
                 <div class="layui-card-body">
                     <!-- table black -->
-                    <table id="manufacturer" lay-filter="manufacturer"></table>
+                    <table id="purchaser" lay-filter="purchaser"></table>
                     <!-- tool bar -->
                     <script type="text/html" id="toolbar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="create">添加供货商账户</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="add">添加采购商账户</button>
                             <button class="layui-btn layui-btn-sm" lay-event="disabled">账户停用</button>
                         </div>
                     </script>

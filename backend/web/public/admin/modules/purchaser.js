@@ -151,17 +151,17 @@ layui.define(function(exports){
     table.on('toolbar(purchaser)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
       switch(obj.event){
-        /* add a new user */
+          /* add a new user */
         case 'add':
           layer.open({
             type: 2,
             title: '添加新的采购商',
             area: ['640px', '500px'],
-            content: 'add.html',
+            content: 'create',
             resize: false
           });
-        break;
-        /* del user */
+          break;
+          /* del user */
         case 'disabled':
           if(checkStatus.data.length === 0){
             layer.msg("您需要先选择一条数据");
@@ -171,7 +171,7 @@ layui.define(function(exports){
               layer.close(index);
             });
           }
-        break;
+          break;
       };
     });
     // 提交表单

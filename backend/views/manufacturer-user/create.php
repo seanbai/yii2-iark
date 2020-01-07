@@ -1,3 +1,10 @@
+
+<style>
+    body{
+        background-color: #FFFFFF;
+    }
+</style>
+
 <div class="layui-fluid">
     <div class="layui-row layui-col-space5">
         <div class="layui-col-md12">
