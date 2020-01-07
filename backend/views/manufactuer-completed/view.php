@@ -5,76 +5,42 @@ $this->title = 'My Order';
 <?=\backend\widgets\MeTable::widget()?>
 <?php $this->beginBlock('javascript') ?>
 
-    <style>
-        #main-container {
-            display: none;
-        }
-    </style>
+<style>
+    #main-container {
+        display: none;
+    }
+    input[readonly] {
+        background: #ffffff!important
+    }
+</style>
 
-
-<div class="layui-fluid">
-    <div class="layui-row layui-col-space5">
-        <div class="layui-col-sm6">
-            <div class="layui-card">
-                <div class="layui-card-header">
-                    Workflow Pending
-                </div>
-                <div class="layui-card-body">
-                    <!-- table black -->
-                    <table id="workflow" lay-filter="flow"></table>
-                    <!-- tool bar -->
-                    <script type="text/html" id="toolbar">
-                        <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="status">Change Status</button>
-                            <button class="layui-btn layui-btn-sm" lay-event="ignore">Ignore the Order</button>
-                        </div>
-                    </script>
-                </div>
-            </div>
-        </div>
-
-        <!-- -->
-        <div class="layui-col-sm6">
-            <div class="layui-card">
-                <div class="layui-card-header">
-                    Order Details - #GZL2018101800004
-                </div>
-                <div class="layui-card-body">
-                    <!-- table black -->
-                    <table id="products" lay-filter="products"></table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="layui-fluid hide" id="order-status">
+<div class="layui-fluid" >
     <div class="layui-row layui-col-space5">
         <div class="layui-col-md12">
-            <form class="layui-form layui-form-pane" action="" method="post">
+            <form class="layui-form layui-form-pane" method="post">
+                <input type="hidden" name="id" value="<?php echo $id?>">
                 <!-- 报价 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">Price Quote</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="Input price quote..." class="layui-input">
+                        <input type="text" name="price" lay-verify="title" autocomplete="off" placeholder="Input price quote..." class="layui-input">
                     </div>
                 </div>
                 <!-- 定金 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">Deposit</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="50,000" class="layui-input" disabled="disabled">
+                        <input type="text" name="deposit" lay-verify="title" autocomplete="off" placeholder="10,000" class="layui-input">
                     </div>
                 </div>
                 <!-- 定金确认 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">Prepayment</label>
                     <div class="layui-input-block">
-                        <select name="interest">
+                        <select name="prepayment"  disabled="disabled">
                             <option value="" selected="">Confirm Prepayment ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </select>
                     </div>
                 </div>
@@ -82,10 +48,10 @@ $this->title = 'My Order';
                 <div class="layui-form-item">
                     <label class="layui-form-label">In Production</label>
                     <div class="layui-input-block">
-                        <select name="interest">
+                        <select name="production"  disabled="disabled">
                             <option value="" selected="">In Production ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </select>
                     </div>
                 </div>
@@ -93,10 +59,10 @@ $this->title = 'My Order';
                 <div class="layui-form-item">
                     <label class="layui-form-label">Balance</label>
                     <div class="layui-input-block">
-                        <select name="interest" disabled="disabled">
+                        <select name="balance" disabled="disabled">
                             <option value="" selected="">Application for balance payment ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </select>
                     </div>
                 </div>
@@ -104,10 +70,10 @@ $this->title = 'My Order';
                 <div class="layui-form-item">
                     <label class="layui-form-label">Delivery</label>
                     <div class="layui-input-block">
-                        <select name="interest" disabled="disabled">
+                        <select name="delivery" disabled="disabled">
                             <option value="" selected="">Permitted delivery ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </select>
                     </div>
                 </div>
@@ -115,10 +81,10 @@ $this->title = 'My Order';
                 <div class="layui-form-item">
                     <label class="layui-form-label">Completed</label>
                     <div class="layui-input-block">
-                        <select name="interest" disabled="disabled">
+                        <select name="completed" disabled="disabled">
                             <option value="" selected="">Order completed ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </select>
                     </div>
                 </div>

@@ -1,110 +1,141 @@
 <?php
 // 定义标题和面包屑信息
-$this->title = 'Purchaser Management';
+$this->title = 'My Order';
 ?>
 <?=\backend\widgets\MeTable::widget()?>
 <?php $this->beginBlock('javascript') ?>
-<script type="text/javascript">
-    var user = <?=\yii\helpers\Json::encode($user); ?>;
 
-    var m = meTables({
-        title: "Purchaser Management",
-        bCheckbox: false,
-        buttons: {
-            "updateAll": {bShow: false},
-            "create": {bShow: false},
-            "deleteAll": {bShow: false},
-            "export":{bShow: false}
-        },
-        operations: {
-            buttons: {
-                "update": {"bShow": true},
-                "delete": {"bShow": false},
-                "img-view": {
-                    "bShow": true,
-                    "title": "查看附件",
-                    "button-title": "查看附件",
-                    "className": "btn-info",
-                    "cClass": "img-view",
-                    "icon": "fa-search-plus",
-                    "sClass": "green"
-                }
-            }
-        },
-        table: {
-            "aoColumns": [
-                {"title": "id", "data": "id", "sName": "id","edit": {"type": "hidden"}, "bSortable": false},
-                {"title": "品牌", "data": "brand", "sName": "brand", "bSortable": false},
-                {"title": "数量", "data": "number", "sName": "number", "bSortable": false},
-                {"title": "类型", "data": "type", "sName": "type", "bSortable": false},
-                {"title": "描述", "data": "desc", "sName": "desc", "bSortable": false},
-                {
-                    "title": "供货商",
-                    "data": "pricing_id",
-                    "sName": "pricing_id",
-                    "value": user,
-                    "edit": {"type": "select"},
-                    "search": {"type": "select"},
-                    "bSortable": false,
-                    "createdCell": function (td, data) {
-                        $(td).html(mt.valuesString(user, [], data, ' '));
-                    }
-                },
-                {"title": "价格", "data": "price", "sName": "price",  "edit": {"type": "text"}, "bSortable": false},
-                {
-                    "title": "附件路径",
-                    "isHide":true,
-                    "data": "files",
-                    "sName": "files",
-                    "bSortable": false,
-                },
-                {"title": "创建时间", "data": "create_time", "sName": "create_time",  "isHide": false, "bSortable": false, },
-            ]       
-        },
-    });
-
-    $(function(){
-         m.init();
-
-        $(document).on('click', '.img-view', function () {
-            var img_data = m.table.data()[$(this).attr('table-data')];
-            if (!img_data) return null;
-            window.open(img_data.files);
-        });
-
-        function printJsonString(obj, prefix=''){
-            var html = '[<br />';
-            for (i in obj) {
-                html = html + prefix + "&emsp;&emsp;" + i + " => ";
-                if(typeof obj[i] == 'object'){
-                    html += printJsonString(obj[i], prefix + '&emsp;&emsp;');
-                }else{
-                    html = html + obj[i] + "<br/>";
-                }
-            }
-            html = html + prefix + ']<br />';
-            return html;
+    <style>
+        #main-container {
+            display: none;
         }
-
-        //日期插件
-        layui.use('laydate', function(){
-            var laydate = layui.laydate;
-            //执行一个laydate实例
-            laydate.render({
-                elem: '#search-input-updated_at'
-                ,type: 'datetime'
-                ,range: true
-                ,format: 'yyyy-MM-dd HH:mm:ss'
-                ,done: function(value, date, endDate){
-                    $('#search-updated_at').val(value);
-                    $('#search-updated_at').blur();
-                }
-            });
-        });
-    });
-</script>
+    </style>
 
 
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space5">
+            <div class="layui-col-sm6">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        Workflow Pending
+                    </div>
+                    <div class="layui-card-body">
+                        <!-- table black -->
+                        <table id="workflow" lay-filter="flow"></table>
+                        <!-- tool bar -->
+                        <script type="text/html" id="toolbar">
+                            <div class="layui-btn-container">
+                                <button class="layui-btn layui-btn-sm" lay-event="status">Change Status</button>
+                                <button class="layui-btn layui-btn-sm" lay-event="ignore">Ignore the Order</button>
+                            </div>
+                        </script>
+                    </div>
+                </div>
+            </div>
 
+            <!-- -->
+            <div class="layui-col-sm6">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        Order Details - #GZL2018101800004
+                    </div>
+                    <div class="layui-card-body">
+                        <!-- table black -->
+                        <table id="products" lay-filter="products"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-fluid hide" id="order-status">
+        <div class="layui-row layui-col-space5">
+            <div class="layui-col-md12">
+                <form class="layui-form layui-form-pane" action="" method="post">
+                    <!-- 报价 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Price Quote</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="Input price quote..." class="layui-input">
+                        </div>
+                    </div>
+                    <!-- 定金 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Deposit</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="50,000" class="layui-input" disabled="disabled">
+                        </div>
+                    </div>
+                    <!-- 定金确认 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Prepayment</label>
+                        <div class="layui-input-block">
+                            <select name="interest">
+                                <option value="" selected="">Confirm Prepayment ?</option>
+                                <option value="0">Yes</option>
+                                <option value="1" >No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 开启生产状态 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">In Production</label>
+                        <div class="layui-input-block">
+                            <select name="interest">
+                                <option value="" selected="">In Production ?</option>
+                                <option value="0">Yes</option>
+                                <option value="1" >No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 尾款申请 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Balance</label>
+                        <div class="layui-input-block">
+                            <select name="interest" disabled="disabled">
+                                <option value="" selected="">Application for balance payment ?</option>
+                                <option value="0">Yes</option>
+                                <option value="1" >No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 允许发货 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Delivery</label>
+                        <div class="layui-input-block">
+                            <select name="interest" disabled="disabled">
+                                <option value="" selected="">Permitted delivery ?</option>
+                                <option value="0">Yes</option>
+                                <option value="1" >No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 订单完成 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Completed</label>
+                        <div class="layui-input-block">
+                            <select name="interest" disabled="disabled">
+                                <option value="" selected="">Order completed ?</option>
+                                <option value="0">Yes</option>
+                                <option value="1" >No</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="/public/admin/ui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '/public/admin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'myorder']);
+    </script>
 
 <?php $this->endBlock(); ?>

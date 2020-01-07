@@ -10,7 +10,9 @@
     "phone" : "340-293-393",
     "mail" : "robert@agresti.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "agresti"
+    "username" : "agresti",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 2,
     "brand" : "ALGALA LUX",
@@ -19,7 +21,9 @@
     "phone" : "340-293-393",
     "mail" : "daniel@algala-lux.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "algala"
+    "username" : "algala",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 3,
     "brand" : "Arflex",
@@ -28,7 +32,9 @@
     "phone" : "340-293-393",
     "mail" : "jessica@arflex.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "arflex"
+    "username" : "arflex",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 4,
     "brand" : "Angelo Cappellini",
@@ -37,7 +43,9 @@
     "phone" : "340-293-393",
     "mail" : "parker@angelo-cappellini.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "angelo"
+    "username" : "angelo",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 5,
     "brand" : "Arketipo",
@@ -46,7 +54,9 @@
     "phone" : "340-293-393",
     "mail" : "simon@arketipo.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "arketipo"
+    "username" : "arketipo",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 6,
     "brand" : "Avenanti",
@@ -55,7 +65,9 @@
     "phone" : "340-293-393",
     "mail" : "jean@arketipo.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "avenanti"
+    "username" : "avenanti",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 7,
     "brand" : "AGRESTI",
@@ -64,7 +76,9 @@
     "phone" : "340-293-393",
     "mail" : "robert@agresti.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "agresti"
+    "username" : "agresti",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 8,
     "brand" : "ALGALA LUX",
@@ -73,7 +87,9 @@
     "phone" : "340-293-393",
     "mail" : "daniel@algala-lux.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "algala"
+    "username" : "algala",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 9,
     "brand" : "Arflex",
@@ -82,7 +98,9 @@
     "phone" : "340-293-393",
     "mail" : "jessica@arflex.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "arflex"
+    "username" : "arflex",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 10,
     "brand" : "Angelo Cappellini",
@@ -91,7 +109,9 @@
     "phone" : "340-293-393",
     "mail" : "parker@angelo-cappellini.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "angelo"
+    "username" : "angelo",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 11,
     "brand" : "Arketipo",
@@ -100,7 +120,9 @@
     "phone" : "340-293-393",
     "mail" : "simon@arketipo.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "arketipo"
+    "username" : "arketipo",
+    "password" : "123456",
+    "contract": "2019-11-30"
   },{
     "id" : 12,
     "brand" : "Avenanti",
@@ -109,6 +131,8 @@
     "phone" : "340-293-393",
     "mail" : "jean@arketipo.com",
     "address" : "2635 W 26th St, Erie, PA 16506",
-    "username" : "avenanti"
+    "username" : "avenanti",
+    "password" : "123456",
+    "contract": "2019-11-30"
   }]
 }

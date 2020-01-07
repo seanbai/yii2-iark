@@ -127,4 +127,25 @@ class OrderController extends Controller
         $data['data'] = $model;
         return json_encode($data);
     }
+
+
+    public function actionStatus()
+    {
+        $id = $_GET['id'];
+
+
+        return $this->render('view', [
+            'id' => $id
+        ]);
+    }
+
+    public function actionUpdate()
+    {
+
+        print_r(123);
+
+        print_r($_POST);die;
+
+
+    }
 }

@@ -1,14 +1,17 @@
 layui.define(function(exports){
   //
-  layui.use(['table','layer'], function(){
+  layui.use(['table','form','jquery'], function(){
     var table = layui.table;
-    var layer = layui.layer;
+    // var layer = layui.layer;
+    var form = layui.form;
+    var $ = layui.jquery;
     //
-    table.render({
+    var tableIns = table.render({
       elem: '#purchaser',
       height: 'full-115',
       toolbar: '#toolbar',
-      url: '../../admin/json/purchaser.json', //数据接口
+      //url: '../../admin/json/purchaser.json', //数据接口
+      where: {limit: 10},
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
@@ -19,12 +22,130 @@ layui.define(function(exports){
         {field: 'boss', title: '负责人'},
         {field: 'phone', title: '电话'},
         {field: 'mail', title: '邮箱'},
-        {field: 'city', title: '省份城市'},
         {field: 'address', title: '地址'},
-        {field: 'taxcode', title: '纳税人识别号'},
-        {field: 'bank', title: '开户行'},
-        {field: 'bnumber', title: '银行账号'}
-      ]]
+        {field: 'username', title: '登录账户'}
+      ]],
+      data : [{
+        "id" : 1,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 2,
+        "title" : "New Mind Design",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 3,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 4,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 5,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 6,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 7,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 8,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 9,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      },{
+        "id" : 10,
+        "title" : "Design4u Studio",
+        "boss" : "Daniel Chen",
+        "phone" : "18628077530",
+        "mail" : "together008@gmail.com",
+        "address" : "高新区天府软件园B区",
+        "taxcode" : "91510100792198800C",
+        "bank" : "建设银行高新区支行",
+        "bnumber" : "6217 0038 0002 3254 596",
+        "username": "danielchen008",
+        "password": "123456"
+      }]
     });
     //
     table.on('toolbar(purchaser)', function(obj){
@@ -34,18 +155,14 @@ layui.define(function(exports){
         case 'add':
           layer.open({
             type: 2,
-            title: 'Add a New Purchaser',
-            area: ['960px', '540px'],
+            title: '添加新的采购商',
+            area: ['640px', '500px'],
             content: 'add.html',
-            btn: ['Save','Cancel'],
-            resize: false,
-            yes: function(index, layero){
-              alert("123123");
-            }
+            resize: false
           });
         break;
         /* del user */
-        case 'del':
+        case 'disabled':
           if(checkStatus.data.length === 0){
             layer.msg("您需要先选择一条数据");
           }else{
@@ -55,20 +172,36 @@ layui.define(function(exports){
             });
           }
         break;
-        /* reset password */
-        case 'reset':
-          if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
-          }else{
-            layer.confirm('Confirm to reset user password?', function(index){
-              obj.del();
-              layer.close(index);
-            });
-          }
-        break;
       };
     });
-    //
+    // 提交表单
+    form.on('submit(create)', function(data){
+      console.log(data.field);
+      // ajax 提交表单
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        data: data.field,
+        url: "....",
+        error: function(){ // 保存错误处理
+          layer.msg('系统错误，请稍后重试');
+        },
+        success: function(){ // 保存成功处理
+          // 成功提示
+          layer.msg('已成功创建新的供应商账户');
+          // 表格重载
+          tableIns.reload({
+            where: {limit: 10},
+            page: {curr: 1}
+          });
+
+          // 关闭弹层
+          // var index = parent.layer.getFrameIndex(window.name);
+          // parent.layer.close(index);
+        }
+      });
+      return false;
+    })
   });
   //
   exports('purchaser', {});

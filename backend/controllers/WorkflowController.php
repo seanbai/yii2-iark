@@ -14,13 +14,13 @@ use Yii;
  * Class OrderController My Order 执行操作控制器
  * @package backend\controllers
  */
-class OrderItemController extends Controller
+class WorkflowController extends Controller
 {
     /**
      * @var string 定义使用的model
      */
-    public $modelClass = 'backend\models\OrderItem';
-
+    public $modelClass = 'backend\models\Order';
+     
     /**
      * 查询处理
      * @param  array $params

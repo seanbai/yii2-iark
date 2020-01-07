@@ -9,6 +9,10 @@ $this->title = 'Create A New Order';
         #main-container {
             display: none;
         }
+
+        .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select{
+            display: block;
+        }
     </style>
 
     <div class="layui-fluid">
@@ -78,7 +82,8 @@ $this->title = 'Create A New Order';
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><input id="allCkb" type="checkbox"/></td>
+                                    <td>
+                                        <input id="allCkb" type="checkbox" lay-verify="title" class="layui-btn-checked" /></td>
                                     <td>
                                         <input type="text" name="brand[]" lay-verify="title" class="layui-input">
                                     </td>
@@ -96,7 +101,7 @@ $this->title = 'Create A New Order';
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="checkbox" name='ckb'/></td>
+                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
                                     <td>
                                         <input type="text" name="brand[]" lay-verify="title" class="layui-input">
                                     </td>
@@ -114,7 +119,7 @@ $this->title = 'Create A New Order';
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="checkbox" name='ckb'/></td>
+                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
                                     <td>
                                         <input type="text" name="brand[]" lay-verify="title" class="layui-input">
                                     </td>
