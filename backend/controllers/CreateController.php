@@ -65,7 +65,7 @@ class CreateController extends Controller
         $data['files'] = $upload;
 
         try{
-            $number = $this->getRand(3).time();
+            $number = $this->getRand(3).date("YmdHis",time());
             $order = [
                 'order_number' => $number,
                 'user' =>  $data['userId'],

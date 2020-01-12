@@ -70,8 +70,6 @@ layui.define(function(exports){
           // 成功提示
           if (e.errCode == 0){
             layer.msg('用户创建成功');
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
           } else {
             layer.msg(e.errMsg);
           }

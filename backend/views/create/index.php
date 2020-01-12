@@ -24,7 +24,7 @@ $this->title = 'Create A New Order';
                         <div class="layui-card-body layui-row layui-col-space10">
                             <div class="layui-col-md12">
                                 <input type="text" name="userId" lay-verify="title" autocomplete="off"
-                                       value="<?php echo \yii::$app->user->identity->username; ?>" placeholder="订货商"
+                                       value="<?php echo \yii::$app->user->identity->name; ?>" placeholder="订货商"
                                        class="layui-input" disabled>
                                 <input type="hidden" name="userId" value="<?php echo \yii::$app->user->identity->getId(); ?>">
                             </div>
@@ -34,7 +34,7 @@ $this->title = 'Create A New Order';
                             </div>
                             <div class="layui-col-md12">
                                 <input type="text" name="name" lay-verify="title" autocomplete="off"
-                                       value="<?php echo \yii::$app->user->identity->username; ?>" placeholder="联系人"
+                                       value="<?php echo \yii::$app->user->identity->contact; ?>" placeholder="联系人"
                                        class="layui-input">
                             </div>
                             <div class="layui-col-md12">

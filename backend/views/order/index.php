@@ -25,7 +25,7 @@
         <div class="layui-col-sm6">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    Order Details - #<span id="orderName">GZL2018101800004</span>
+                    Order Details - #<span id="orderName"></span>
                 </div>
                 <div class="layui-card-body">
                     <!-- table black -->

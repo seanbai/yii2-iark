@@ -4,8 +4,10 @@ namespace backend\controllers;
 
 use backend\models\Admin;
 use backend\models\Auth;
+use backend\models\Create;
 use backend\models\Order;
 use backend\models\OrderItem;
+use backend\models\ProductPushRecord;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
@@ -105,6 +107,11 @@ class WorkflowController extends Controller
         }
 
         $data['count'] = $total;
+
+//        foreach ($array as $key=>$val){
+//            $array[$key]['order_status'] =  Create::getData($val['order_status']);
+//        }
+
         $data['data'] = $array;
         return json_encode($data);
     }
@@ -118,31 +125,96 @@ class WorkflowController extends Controller
         $orderId = $_GET['orderId'];
 
         $model = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->all();
-        $count = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->count();
 
         $data['code'] = 0;
-        $data['count'] = $count;
+        $data['count'] = count($model);
+
         $data['data'] = $model;
+
         return json_encode($data);
     }
 
 
     public function actionStatus()
     {
-        $id = $_GET['id'];
+        try{
+            $id = $_POST['id'];
+            $type = $_POST['status'];
+            $bj = $_POST['bj'];
 
-        return $this->render('view', [
-            'id' => $id
-        ]);
+            if ($type == 1){
+                \Yii::$app->db->createCommand()->update(
+                    'order_status',
+                    [
+                        'status' => 1,
+                        'update_time'=>date('Y:m:d H:i:s',time())
+                    ],
+                    [
+                        'order_id' => $id,
+                        'type' => $type
+                    ]
+                )->execute();
+                \Yii::$app->db->createCommand()->update(
+                    'order',
+                    [
+                        'order_status' => 2,
+                    ],
+                    [
+                        'id'=>$id,
+                    ]
+                )->execute();
+                //bj=1,供货商报价,bj=2,平台报价
+                if ($bj == 2){
+                    \Yii::$app->db->createCommand()->update(
+                        'order_status',
+                        [
+                            'status' => 2,
+                            'money' => $_POST['pPrice'],
+                            'update_time'=>date('Y:m:d H:i:s',time())
+                        ],
+                        [
+                            'order_id' => $id,
+                            'type' => $type
+                        ]
+                    )->execute();
+                    \Yii::$app->db->createCommand()->update(
+                        'order',
+                        [
+                            'order_status' => 3,
+                        ],
+                        [
+                            'id'=>$id,
+                        ]
+                    )->execute();
+                }
+            }elseif ($type == 2){
+                //统计总价后保存
+
+            }elseif ($type == 3){
+
+            }
+
+
+
+
+
+            return $this->success(200,"保存成功");
+        }catch (\Exception $exception){
+            return $this->error(300,"系统异常,请稍后再试");
+        }
+
     }
 
     public function actionUpdate()
     {
+        $data = [];
+        $id = $_GET['id'];
+        $model = Order::find()->where(['id'=>$id])->asArray()->one();
 
-        print_r(123);
-
-        print_r($_POST);die;
-
+        return $this->render('update', [
+            'status' => $model['order_status'],
+            'id' => $id
+        ]);
 
     }
 }

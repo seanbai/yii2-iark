@@ -5,212 +5,94 @@
   "data": [{
     "id": 1,
     "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
+    "contact": "Daniel Chen",
     "date": "16/07/2019",
-    "status": "Pending...",
-    "ignoreNum": 8,
-    "order": {
-      "date": "20/07/2019",
-      "offer": 8,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 1
   },{
     "id": 2,
-    "num": "GZL2018101800005",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Lgnore",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 2,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 2
   },{
     "id": 3,
-    "num": "GZL2018101800006",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Quoted",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 1,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 3
   },{
     "id": 4,
-    "num": "GZL2018101800007",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Confirm Quote",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 1,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 4
   },{
     "id": 5,
-    "num": "GZL2018101800008",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "In Production",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 2,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 5
   },{
     "id": 6,
-    "num": "GZL2018101800009",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Comfirm Balance Due",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 1,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 6
   },{
     "id": 7,
-    "num": "GZL2018101800010",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Pending...",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 1,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 7
   },{
     "id": 8,
-    "num": "GZL2018101800011",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Pending...",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 1,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 8
   },{
     "id": 9,
-    "num": "GZL2018101800012",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Pending...",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 1,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 9
   },{
     "id": 10,
-    "num": "GZL2018101800013",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Pending...",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 2,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 10
   },{
     "id": 11,
-    "num": "GZL2018101800014",
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
     "date": "16/07/2019",
-    "status": "Pending...",
-    "order": {
-      "date": "20/07/2019",
-      "offer": 3,
-      "info": "please review my order"
-    },
-    "offer":{
-      "date": "21/07/2019",
-      "price": "€13,000",
-      "rate": "7.85",
-      "info": "",
-      "confirm": 0,
-      "cdate": ""
-    },
-    "done": 0
+    "orderDate": "16/07/2019",
+    "status": 11
+  },{
+    "id": 12,
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
+    "date": "16/07/2019",
+    "orderDate": "16/07/2019",
+    "status": 12
+  },{
+    "id": 13,
+    "num": "GZL2018101800004",
+    "brand": "Design4u Studio",
+    "date": "16/07/2019",
+    "orderDate": "16/07/2019",
+    "status": 13
   }]
 }

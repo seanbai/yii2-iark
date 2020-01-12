@@ -106,7 +106,7 @@ class OrderController extends Controller
             $data['code'] = 0;
         } else {
             $array = [];
-            $data['code'] = 400;
+            $data['code'] = 0;
         }
 
         //处理订单状态

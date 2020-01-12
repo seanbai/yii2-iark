@@ -103,7 +103,7 @@ class ManufacturerController extends Controller
             $data['code'] = 0;
         } else {
             $array = [];
-            $data['code'] = 400;
+            $data['code'] = 0;
         }
 
         $data['count'] = $total;

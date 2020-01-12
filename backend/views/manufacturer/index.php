@@ -5,7 +5,7 @@
         <div class="layui-col-sm6">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    Workflow Pending
+                    Pending Order
                 </div>
                 <div class="layui-card-body">
                     <!-- table black -->
@@ -25,7 +25,7 @@
         <div class="layui-col-sm6">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    Order Details - #GZL2018101800004
+                    Order Details - #
                 </div>
                 <div class="layui-card-body">
                     <!-- table black -->

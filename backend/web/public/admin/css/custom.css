@@ -171,6 +171,17 @@ body {
   overflow-x: hidden;
   overflow-y: scroll; }
 
+.tag {
+  display: inline-block;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  text-align: center;
+  border: none;
+  border-radius: 2px; }
+
 .dark .layui-side-menu,
 .dark .layadmin-pagetabs .layui-tab-title li:after,
 .dark .layadmin-pagetabs .layui-tab-title li.layui-this:after,
@@ -188,10 +199,6 @@ body {
   font-size: 24px; }
 .dark .layui-layout-admin .layui-header .layui-nav a {
   color: #000; }
-.dark .layui-btn {
-  background-color: #727CF5 !important; }
-.dark .layui-bg-red {
-  background-color: #727CF5 !important; }
 .dark .layui-nav-tree .layui-nav-bar {
   width: 5px;
   height: 0;
