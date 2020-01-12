@@ -100,12 +100,12 @@ class WorkflowController extends Controller
         if ($total) {
             $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
-            $data['code'] = 0;
+
         } else {
             $array = [];
-            $data['code'] = 400;
-        }
 
+        }
+        $data['code'] = 0;
         $data['count'] = $total;
 
 //        foreach ($array as $key=>$val){

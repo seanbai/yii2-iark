@@ -25,7 +25,7 @@ class ManufacturerUserController extends Controller
         if (count($user) > 0){
             $data['code'] = 0;
         }else{
-            $data['code'] = 400;
+            $data['code'] = 0;
         }
         $data['count'] = count($user);
         $data['data'] = $user;
