@@ -27,11 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::submitButton(' Log In', ['class' => 'layui-btn layui-btn-fluid layui-btn-lg']) ?>
         </div>
     </div>
-    <div class="layui-form-item" wid100>
-        <div class="layui-input-block">
-            <span id="zhuce" style="float: right;">注册</span>
-        </div>
-    </div>
+<!--    <div class="layui-form-item" wid100>-->
+<!--        <div class="layui-input-block">-->
+<!--            <span id="zhuce" style="float: right;">注册</span>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
 

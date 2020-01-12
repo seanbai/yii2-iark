@@ -31,7 +31,7 @@
         <div class="layui-row flexbox">
             <div class="layui-col-md5">
                 <div class="layui-card">
-                    <div class="layui-card-header">i-Ark Erp System</div>
+                    <div class="layui-card-header">Order Erp System</div>
                     <div class="layui-card-body">
                         <div class="title">
                             <h3>Sign In</h3>
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="layui-row flexbox powerby">
-            <p>Power by Daniel & Parker. Version 1.0</p>
+            <p>Power by Daniel & Sean. Version 1.0</p>
         </div>
     </div>
 </div>

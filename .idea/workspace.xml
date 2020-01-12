@@ -2,26 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5824577-98cb-4e93-92c2-7c928511913c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/views/workflow/update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/CreateController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/CreateController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/ManufacturerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/ManufacturerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/PurchaserCompletedController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/PurchaserCompletedController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/controllers/WorkflowController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/WorkflowController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/create/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/create/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/manufacturer/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/manufacturer/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/order/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/order/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/views/workflow/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/workflow/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/css/custom.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/css/custom.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/css/source/_custom.scss" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/css/source/_custom.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/css/source/_theme.scss" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/css/source/_theme.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/json/workflow.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/json/workflow.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/modules/manufacturer.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/modules/manufacturer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/modules/purchaser.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/modules/purchaser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/modules/workflow.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/modules/workflow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/web/public/admin/ui/css/layui.css" beforeDir="false" afterPath="$PROJECT_DIR$/backend/web/public/admin/ui/css/layui.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/layouts/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/layouts/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/site/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/site/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/site/registe.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/site/registe.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/views/system/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/views/system/index.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,8 +54,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/web/public/admin/modules/purchaser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
+            <state relative-caret-position="560">
+              <caret line="82" column="26" lean-forward="true" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -87,8 +71,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>user</find>
-      <find>date</find>
       <find>config</find>
       <find>ttl</find>
       <find>$broker_list</find>
@@ -117,12 +99,14 @@
       <find>bj</find>
       <find>editTool</find>
       <find>.layui-form-checkbox i</find>
+      <find>i-Ark</find>
+      <find>Parker</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/backend/views</dir>
       <dir>$PROJECT_DIR$/vendor/yiisoft/yii2-redis</dir>
-      <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/backend</dir>
+      <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -131,9 +115,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/common/config/main-local.php" />
-        <option value="$PROJECT_DIR$/backend/views/site/index.php" />
-        <option value="$PROJECT_DIR$/backend/views/order/view.php" />
         <option value="$PROJECT_DIR$/backend/views/order-item/index.php" />
         <option value="$PROJECT_DIR$/backend/controllers/OrderItemController.php" />
         <option value="$PROJECT_DIR$/backend/views/site/system.php" />
@@ -152,7 +133,6 @@
         <option value="$PROJECT_DIR$/backend/views/purchaser-user/create.php" />
         <option value="$PROJECT_DIR$/backend/web/index.php" />
         <option value="$PROJECT_DIR$/backend/config/main-local.php" />
-        <option value="$PROJECT_DIR$/backend/views/site/login.php" />
         <option value="$PROJECT_DIR$/vendor/yiisoft/yii2/base/Model.php" />
         <option value="$PROJECT_DIR$/backend/models/Admin.php" />
         <option value="$PROJECT_DIR$/backend/views/admin/index.php" />
@@ -182,6 +162,10 @@
         <option value="$PROJECT_DIR$/backend/views/manufacturer/index.php" />
         <option value="$PROJECT_DIR$/backend/web/public/admin/modules/manufacturer.js" />
         <option value="$PROJECT_DIR$/backend/web/public/admin/modules/purchaser.js" />
+        <option value="$PROJECT_DIR$/backend/views/system/index.php" />
+        <option value="$PROJECT_DIR$/backend/views/layouts/login.php" />
+        <option value="$PROJECT_DIR$/backend/views/site/login.php" />
+        <option value="$PROJECT_DIR$/backend/views/site/registe.php" />
       </list>
     </option>
   </component>
@@ -281,47 +265,6 @@
               <item name="yii2" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="yii2" type="2674bda8:ScopeViewTreeModel$GroupNode" />
             </path>
-            <path>
-              <item name="yii2" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yii2" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="backend" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yii2" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yii2" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="backend" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="controllers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yii2" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yii2" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="backend" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="web" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yii2" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yii2" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="backend" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="web" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yii2" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yii2" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="backend" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="web" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="admin" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="yii2" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="yii2" type="2674bda8:ScopeViewTreeModel$GroupNode" />
-              <item name="backend" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="web" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="public" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="admin" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="modules" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -414,16 +357,15 @@
       <workItem from="1578401882548" duration="11164000" />
       <workItem from="1578666028286" duration="14981000" />
       <workItem from="1578756241148" duration="11899000" />
-      <workItem from="1578836921236" duration="8344000" />
+      <workItem from="1578836921236" duration="8789000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="174104000" />
+    <option name="totallyTimeSpent" value="174549000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-1" width="1922" height="1028" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26996806" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -817,8 +759,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/web/public/admin/modules/purchaser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
+        <state relative-caret-position="560">
+          <caret line="82" column="26" lean-forward="true" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
         </state>
       </provider>
     </entry>

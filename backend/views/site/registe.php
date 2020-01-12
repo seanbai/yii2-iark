@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="layui-form-item" wid100>
         <div class="layui-input-block">
-            注册
+<!--            注册-->
         </div>
     </div>
 </div>

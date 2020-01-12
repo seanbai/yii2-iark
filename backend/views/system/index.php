@@ -44,7 +44,7 @@ $this->title = 'System Config';
                                 <div class="layui-input-block">
                                     <input type="text" name="header" lay-verify="title" autocomplete="off"
                                            value="<?= $domain_title ?>"
-                                           placeholder="i-Ark Order System" class="layui-input">
+                                           placeholder="Order Order System" class="layui-input">
                                 </div>
                             </div>
                             <!-- form item -->
