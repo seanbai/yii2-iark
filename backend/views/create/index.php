@@ -11,7 +11,7 @@ $this->title = 'Create A New Order';
         }
 
         .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select{
-            display: block;
+            /*display: block;*/
         }
     </style>
 
@@ -48,9 +48,15 @@ $this->title = 'Create A New Order';
                             </div>
                             <div class="layui-col-md12">
                                 <select name="currency" lay-verify="">
-                                    <option value="0">结算币种选择</option>
-                                    <option value="1" selected="selected">人民币</option>
-                                    <option value="2">欧元</option>
+                                    <option value="">结算币种选择</option>
+                                    <option value="rmb">人民币</option>
+                                    <option value="oy">欧元</option>
+                                </select>
+                            </div>
+                            <div class="layui-col-md12">
+                                <select name="pay" lay-verify="">
+                                    <option value="">支付方式选择</option>
+                                    <option value="1">银行转账</option>
                                 </select>
                             </div>
                         </div>
@@ -116,6 +122,60 @@ $this->title = 'Create A New Order';
                                     </td>
                                     <td>
                                         <input type="file" name="files[]" lay-verify="title" class="layui-file"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
+                                    <td>
+                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
+                                    <td>
+                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
+                                    <td>
+                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -216,7 +276,7 @@ $this->title = 'Create A New Order';
         $(function () {allCheck("allCkb", "ckb");});
 
         function addTr2(tab, row) {
-            var trHtml = '<tr><td><input type="checkbox" name="ckb"/></td><td><input type="text" name="brand[]" lay-verify="title" class="layui-input"></td><td><input type="text" name="type[]"   lay-verify="title" class="layui-input"></td><td><input type="text" name="number[]"  lay-verify="title" class="layui-input"></td><td><input type="text" name="desc[]" lay-verify="title" class="layui-input"></td><td><input type="file" name="files[]" lay-verify="title" class="layui-file files"/></td></tr>'
+            var trHtml = '<tr><td><input type="checkbox" name="ckb" lay-verify="title" class="layui-btn-checked"/><div class="layui-unselect layui-form-checkbox"><i class="layui-icon layui-icon-ok"></i></div></td><td><input type="text" name="brand[]" lay-verify="title" class="layui-input"></td><td><input type="text" name="type[]"   lay-verify="title" class="layui-input"></td><td><input type="text" name="number[]"  lay-verify="title" class="layui-input"></td><td><input type="text" name="desc[]" lay-verify="title" class="layui-input"></td><td><input type="file" name="files[]" lay-verify="title" class="layui-file files"/></td></tr>'
             addTr(tab, row, trHtml);
         }
 
@@ -226,6 +286,16 @@ $this->title = 'Create A New Order';
 
 
     </script>
+
+    <script src="/public/admin/ui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '/public/admin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'createorder']);
+    </script>
+
 
 
 <?php $this->endBlock(); ?>

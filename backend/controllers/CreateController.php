@@ -20,6 +20,10 @@ use common\models\Create;
  */
 class CreateController extends Controller
 {
+
+    private $count = 12;
+
+
     private $_type = ['zip','png'];
 
     /**
@@ -61,8 +65,7 @@ class CreateController extends Controller
         $data['files'] = $upload;
 
         try{
-
-            $number = time().$this->getRand(3);
+            $number = $this->getRand(3).time();
             $order = [
                 'order_number' => $number,
                 'user' =>  $data['userId'],
@@ -79,28 +82,26 @@ class CreateController extends Controller
 
             $orderItem = [];
             $columns = ['order_id','order_number','brand','number','type','desc','files','create_time'];
-
-            try{
-                foreach ($data['brand'] as $key=>$value){
-                    if (empty($value)) continue;
-                    $orderItem[] = [
-                        'order_id' => $createId,
-                        'order_number' => $number,
-                        'brand' =>  $data['brand'][$key],
-                        'number' => $data['number'][$key],
-                        'type' =>  $data['type'][$key],
-                        'desc' =>  $data['desc'][$key],
-                        'files' => $data['files'][$key],
-                        'create_time'=> date("Y:m:d H:i:s",time()),
-                    ];
-                }
-                \Yii::$app->db->createCommand()->batchInsert(Order::tableItemName(), $columns, $orderItem)->execute();
-            }catch (Exception $exception){
-                Order::deleteAll(['id'=>$createId]);
-                return $this->error(201,"保存商品信息出错,请稍后在尝试");
+            foreach ($data['brand'] as $key=>$value){
+                if (empty($value)) continue;
+                $orderItem[] = [
+                    'order_id' => $createId,
+                    'order_number' => $number,
+                    'brand' =>  $data['brand'][$key],
+                    'number' => $data['number'][$key],
+                    'type' =>  $data['type'][$key],
+                    'desc' =>  $data['desc'][$key],
+                    'files' => $data['files'][$key],
+                    'create_time'=> date("Y:m:d H:i:s",time()),
+                ];
             }
+            \Yii::$app->db->createCommand()->batchInsert(Order::tableItemName(), $columns, $orderItem)->execute();
+
+            $this->createStatusList($createId,$number);
+
             return 1;
         }catch (Exception $exception){
+            Order::deleteAll(['order_id'=>$createId]);
             return $this->error(300,"系统异常,请稍后再试");
         }
     }
@@ -120,7 +121,7 @@ class CreateController extends Controller
 
     public function getRand($length = 3,$mess=''){
         // 密码字符集，可任意添加你需要的字符
-        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $str = $mess."";
         for ( $i = 0; $i < $length; $i++ )
         {
@@ -172,5 +173,22 @@ class CreateController extends Controller
 
 
 
+    public function createStatusList($id,$number)
+    {
+        $status = $this->count;
+        $columns = ['order_id','number','type','status','create_time'];
+        $item = [];
+        for ($i=1;$i<=$status;$i++)
+        {
+            $item[] = [
+                'order_id' => $id,
+                'number' => $number,
+                'type' =>  $i,
+                'status' => 0,      //待处理
+                'create_time'=> date("Y:m:d H:i:s",time()),
+            ];
+        }
+        \Yii::$app->db->createCommand()->batchInsert('order_status', $columns, $item)->execute();
+    }
 
 }

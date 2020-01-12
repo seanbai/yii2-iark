@@ -26,6 +26,10 @@ use yii\helpers\ArrayHelper;
  * @property integer $last_time
  * @property string $last_ip
  * @property string $password write-only password
+ * @property string $name
+ * @property string $contact
+ * @property string $phone
+ * @property string $city
  */
 class Admin extends \common\models\Admin
 {
@@ -114,7 +118,7 @@ class Admin extends \common\models\Admin
             [['username', 'email', 'password', 'repassword'], 'trim'],
             [['password', 'repassword'], 'string', 'min' => 6, 'max' => 30],
             // Unique
-            [['username', 'email'], 'unique'],
+            [['username', 'email', 'phone'], 'unique'],
             // Username
             ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/'],
             ['username', 'string', 'min' => 3, 'max' => 30],
@@ -136,8 +140,8 @@ class Admin extends \common\models\Admin
     public function scenarios()
     {
         return [
-            'default' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face'],
-            'create' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face'],
+            'default' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time'],
+            'create' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time'],
             'update' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address']
         ];
     }

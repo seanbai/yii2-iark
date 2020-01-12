@@ -18,6 +18,7 @@ layui.define(function(exports){
       height: 'full-115',
       toolbar: '#completedBar',
       //url: '../../admin/json/completed.json', //数据接口
+      url: 'end',
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
@@ -36,115 +37,6 @@ layui.define(function(exports){
         {field: 'address', title: '收货地址'},
         {field: 'statement', title: '结算方式'}
       ]],
-      data : [{
-        "id" : 1,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "11,8000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 2,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 3,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 4,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 5,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 6,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 7,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 8,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      },{
-        "id" : 9,
-        "pubdata" : "2019-07-10",
-        "finishdata" : "2019-10-10",
-        "truedata" : "2019-10-08",
-        "ordernum" : "KHDHD2019070100001",
-        "preprice" : "10,000",
-        "endprice" : "90,000",
-        "tax" : "18,000",
-        "fullprice" : "10,0000",
-        "address" : "四川省成都市高新区软件园B区",
-        "statement" : "银行转账"
-      }],
       done: function(res, curr, count){
         element.render();
       }

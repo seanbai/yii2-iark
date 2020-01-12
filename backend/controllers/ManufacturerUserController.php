@@ -2,8 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\models\Admin;
+use backend\models\User;
+
 class ManufacturerUserController extends Controller
 {
+
+    const TYPE = 'manufacturer';
+
 
     public function actionIndex()
     {
@@ -11,10 +17,35 @@ class ManufacturerUserController extends Controller
         return $this->render('index',$data);
     }
 
-    public function actionCreate()
+    //用户信息
+    public function actionList()
+    {
+        $user = Admin::find()->where(['role'=>'manufacturer'])->asArray()->all();
+
+        if (count($user) > 0){
+            $data['code'] = 0;
+        }else{
+            $data['code'] = 400;
+        }
+        $data['count'] = count($user);
+        $data['data'] = $user;
+
+        return json_encode($data);
+    }
+
+    public function actionAdd()
     {
         $data = [];
-        return $this->render('create',$data);
+        return $this->render('add',$data);
     }
+
+
+    public function actionStatus()
+    {
+        print_r($_POST);
+
+
+    }
+
 
 }

@@ -43,11 +43,9 @@ class WorkflowController extends Controller
         $search['field'] = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
 
-        if (yii::$app->user->identity->id == 1) {
-            $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
-        }else{
-            $search['where'] = ['user'=> yii::$app->user->identity->id ];
-        }
+
+        $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
+
 
         // 查询数据
         $query = $this->getQuery($search['where']);
@@ -132,7 +130,6 @@ class WorkflowController extends Controller
     public function actionStatus()
     {
         $id = $_GET['id'];
-
 
         return $this->render('view', [
             'id' => $id

@@ -21,7 +21,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">签约时间</label>
                     <div class="layui-input-block">
-                        <input type="text" name="date" lay-verify="date" autocomplete="off" placeholder="请输入供货商名称" class="layui-input" id="date">
+                        <input type="text" name="time" lay-verify="date" autocomplete="off" placeholder="请输入供货商名称" class="layui-input" id="date">
                     </div>
                 </div>
                 <!-- 定金 -->
@@ -35,14 +35,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">联系电话</label>
                     <div class="layui-input-block">
-                        <input type="number" name="tel" lay-verify="required" autocomplete="off" placeholder="联系人电话" class="layui-input">
+                        <input type="number" name="phone" lay-verify="required" autocomplete="off" placeholder="联系人电话" class="layui-input">
                     </div>
                 </div>
                 <!-- 开启生产状态 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">电子邮件</label>
                     <div class="layui-input-block">
-                        <input type="email" name="mail" lay-verify="email" autocomplete="off" placeholder="联系人邮箱" class="layui-input">
+                        <input type="email" name="email" lay-verify="email" autocomplete="off" placeholder="联系人邮箱" class="layui-input">
                     </div>
                 </div>
                 <!-- 尾款申请 -->
@@ -73,6 +73,15 @@
                         <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="登录密码" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">确定密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="repassword" lay-verify="required" autocomplete="off" placeholder="确定密码" class="layui-input">
+                    </div>
+                </div>
+
+                <input type="hidden" name="role" value="manufacturer">
+
                 <!-- 提交表单 -->
                 <div class="layui-form-item">
                     <button class="layui-btn" lay-submit="" lay-filter="create">确认创建新账户</button>

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="layui-form-item" wid100>
         <div class="layui-input-block">
-            <?= $form->field($model, 'password')->textInput(['placeholder' => $model->getAttributeLabel('password'),'class'=> 'layui-input'])->label(false) ?>
+            <?= $form->field($model, 'password')->passwordInput(['placeholder' => $model->getAttributeLabel('password'),'class'=> 'layui-input'])->label(false) ?>
         </div>
     </div>
     <div class="layui-form-item" wid100>

@@ -24,6 +24,10 @@ use common\behaviors\UpdateBehavior;
  * @property integer $updated_id
  * @property integer $updated_time
  * @property string $password write-only password
+ * @property string $name
+ * @property string $contact
+ * @property string $phone
+ * @property string $city
  */
 class Admin extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -83,6 +87,12 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
             'create_id' => '创建用户',
             'update_time' => '修改时间',
             'update_id' => '修改用户',
+            'name'=>'名称',
+            'contact'=>'联系人',
+            'phone'=>'联系电话',
+            'city'=>'城市',
+            'address'=>'地址',
+            'time' => '签约时间',
         ];
     }
 

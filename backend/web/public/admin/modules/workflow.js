@@ -8,7 +8,8 @@ layui.define(function(exports){
       elem: '#workflow',
       height: 'full-115',
       toolbar: '#toolbar',
-      url: '../../admin/json/workflow.json', //数据接口
+      // url: '../../admin/json/workflow.json', //数据接口
+      url: 'list',
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'line',
@@ -16,14 +17,10 @@ layui.define(function(exports){
       even: true,
       cols: [[ //表头
         {type:'radio'},
-        {field: 'case', width: 200, title: 'Case Number'},
-        {field: 'date', title: 'Case Date'},
-        {field: 'status', title: 'Status'},
-        {field: 'link', width: 200, title: 'Link Order', templet:'<div>{{d.order.number}}</div>'},
-        {field: 'orderdate', title: 'Order Date', templet:'<div>{{d.order.date}}</div>'},
-        {field: 'offer', title: 'Offer', templet:'<div>{{d.order.offer}}</div>'},
-        {field: 'info', title: 'Information', templet:'<div>{{d.order.info}}</div>'},
-        {field: 'price', title: 'Price', templet:'<div>{{d.offer.price}}</div>'}
+        {field: 'case', width: 200, title: 'Case Number', templet:'<div>{{d.order_number}}</div>'},
+        {field: 'date', title: 'Case Date',templet:'<div>{{d.date}}</div>'},
+        {field: 'status', title: 'Status',templet:'<div>{{d.order_status}}</div>'},
+        {field: 'orderdate', title: 'Order Date', templet:'<div>{{d.create_time}}</div>'},
       ]],
       done: function(res, curr, count){
         var vheight = $('#leftCard').height();

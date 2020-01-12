@@ -87,6 +87,58 @@ $this->registerJsFile($url.'/js/chosen.jquery.min.js', $depends);
                         }
                     },
                     {
+                        "title": "供货商名称",
+                        "data": "name",
+                        "sName": "name",
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "联系人",
+                        "data": "contact",
+                        "sName": "contact",
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "联系电话",
+                        "data": "phone",
+                        "sName": "phone",
+                        "value": aRoles,
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "所在城市",
+                        "data": "phone",
+                        "sName": "phone",
+                        "value": aRoles,
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "详细地址",
+                        "data": "address",
+                        "sName": "address",
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
                         "title": "状态", "data": "status", "sName": "status", "value": aStatus,
                         "edit": {"type": "radio", "default": 10, "required": true, "number": true},
                         "bSortable": false,

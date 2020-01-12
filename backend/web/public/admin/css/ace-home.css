@@ -50,9 +50,9 @@
     text-align: left;
     height: 45px;
 }
-.ace-skin .nav li:hover {
-    background: #0a6aa1;
-}
+/*.ace-skin .nav li:hover {*/
+/*    background: #0a6aa1;*/
+/*}*/
 .ace-skin .nav li a{
     padding-left: 20px;
     font-size: 14px;
@@ -242,6 +242,5 @@
 /*    padding: 15px;*/
 /*    background-color: #f0f1f7;*/
 /*}*/
-
 
 

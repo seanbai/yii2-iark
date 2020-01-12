@@ -31,6 +31,7 @@ class Order extends \yii\db\ActiveRecord
         return 'order_item';
     }
 
+
     /**
      * {@inheritdoc}
      */

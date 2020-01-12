@@ -10,6 +10,9 @@ use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
 
+use backend\models\Create;
+
+
 /**
  * Class OrderController My Order 执行操作控制器
  * @package backend\controllers
@@ -106,6 +109,11 @@ class OrderController extends Controller
             $data['code'] = 400;
         }
 
+        //处理订单状态
+        foreach ($array as $key=>$val){
+            $array[$key]['order_status'] =  Create::getData($val['order_status']);
+        }
+
         $data['count'] = $total;
         $data['data'] = $array;
         return json_encode($data);
@@ -132,7 +140,6 @@ class OrderController extends Controller
     public function actionStatus()
     {
         $id = $_GET['id'];
-
 
         return $this->render('view', [
             'id' => $id

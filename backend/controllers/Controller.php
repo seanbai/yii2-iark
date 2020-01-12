@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use backend\models\AdminLog;
+use common\models\Log;
+use console\models\User;
 use Yii;
 use common\models\Admin;
 use common\models\UploadForm;
@@ -183,6 +185,7 @@ class Controller extends \common\controllers\UserController
     public function actionCreate()
     {
         $data = Yii::$app->request->post();
+
         if (empty($data)) {
             return $this->error(201);
         }
@@ -466,5 +469,37 @@ class Controller extends \common\controllers\UserController
 
         // 数据导出
         return Helper::excel($strTitle, $arrFields, $query, $this->getExportHandleParams());
+    }
+
+
+    /**
+     * @param $level
+     * @param $description
+     * @param $user
+     * @param int $data_id
+     */
+    public function addLog($level, $data_id=0, $request=null, $response=null){
+
+        if (!empty($data_id)) $data_id = 0;
+
+        $user = new User();
+        $ip = '0.0.0.0';
+        $requestUrl = $this->action->getUniqueId();
+        $requestPath = \Yii::$app->controllerNamespace.'/'.$requestUrl;
+
+        $options = $this->_getOptions($this->action->id);
+
+
+        if ($request === null && !empty($options)){
+            $request = [];
+            foreach ($options as $value)
+                $request[$value] = $this->$value ?? '';
+        }
+
+        if ($response === null)
+            $response = $this->responseData;
+
+
+        Log::add($ip, $level, $this->description, $user, $requestPath, $requestUrl, $data_id, $request, $response);
     }
 }

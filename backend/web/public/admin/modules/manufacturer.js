@@ -14,7 +14,7 @@ layui.define(function(exports){
       elem: '#manufacturer',
       height: 'full-115',
       toolbar: '#toolbar',
-      //url: '../../admin/json/manufacturer.json', //数据接口
+      url: 'list', //数据接口
       where: {limit: 10},
       cellMinWidth: 100,
       page: true, //开启分页
@@ -22,148 +22,15 @@ layui.define(function(exports){
       even: true,
       cols: [[ //表头
         {type:'radio'},
-        {field: 'brand', title: '供货商名称'},
-        {field: 'boss', title: '联系人'},
-        {field: 'phone', title: '联系电话'},
-        {field: 'mail', title: '邮件'},
-        {field: 'city', title: '城市'},
-        {field: 'address', title: '地址'},
-        {field: 'username', title: '用户名'},
-        {field: 'contract', title: '签约时间'}
-      ]],
-      data : [{
-        "id" : 1,
-        "brand" : "AGRESTI",
-        "boss" : "Robert",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "robert@agresti.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "agresti",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 2,
-        "brand" : "ALGALA LUX",
-        "boss" : "Daniel",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "daniel@algala-lux.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "algala",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 3,
-        "brand" : "Arflex",
-        "boss" : "Jessica",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "jessica@arflex.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "arflex",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 4,
-        "brand" : "Angelo Cappellini",
-        "boss" : "Perker",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "parker@angelo-cappellini.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "angelo",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 5,
-        "brand" : "Arketipo",
-        "boss" : "Simon",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "simon@arketipo.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "arketipo",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 6,
-        "brand" : "Avenanti",
-        "boss" : "Jean",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "jean@arketipo.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "avenanti",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 7,
-        "brand" : "AGRESTI",
-        "boss" : "Robert",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "robert@agresti.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "agresti",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 8,
-        "brand" : "ALGALA LUX",
-        "boss" : "Daniel",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "daniel@algala-lux.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "algala",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 9,
-        "brand" : "Arflex",
-        "boss" : "Jessica",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "jessica@arflex.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "arflex",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 10,
-        "brand" : "Angelo Cappellini",
-        "boss" : "Perker",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "parker@angelo-cappellini.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "angelo",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 11,
-        "brand" : "Arketipo",
-        "boss" : "Simon",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "simon@arketipo.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "arketipo",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      },{
-        "id" : 12,
-        "brand" : "Avenanti",
-        "boss" : "Jean",
-        "city" : "Italia - Rome",
-        "phone" : "340-293-393",
-        "mail" : "jean@arketipo.com",
-        "address" : "2635 W 26th St, Erie, PA 16506",
-        "username" : "avenanti",
-        "password" : "123456",
-        "contract": "2019-11-30"
-      }]
+        {field: 'brand', title: '供货商名称',templet:'<div>{{d.name}}</div>'},
+        {field: 'boss', title: '联系人',templet:'<div>{{d.contact}}</div>'},
+        {field: 'phone', title: '联系电话',templet:'<div>{{d.phone}}</div>'},
+        {field: 'mail', title: '邮件',templet:'<div>{{d.email}}</div>'},
+        {field: 'city', title: '城市',templet:'<div>{{d.city}}</div>'},
+        {field: 'address', title: '地址',templet:'<div>{{d.address}}</div>'},
+        {field: 'username', title: '用户名',templet:'<div>{{d.username}}</div>'},
+        {field: 'contract', title: '签约时间',templet:'<div>{{d.time}}</div>'}
+      ]]
     });
     //
     table.on('toolbar(manufacturer)', function(obj){
@@ -175,7 +42,7 @@ layui.define(function(exports){
             type: 2,
             title: 'Change Status',
             area: ['640px', '610px'],
-            content: 'create',
+            content: 'add',
             resize: false
           });
         break;
@@ -186,11 +53,13 @@ layui.define(function(exports){
           }else{
             layer.confirm('确认要停用此账户么？', function(index){
               obj.del();
+              
+
               layer.close(index);
             });
           }
         break;
-      };
+      }
     });
     // 提交表单
     form.on('submit(create)', function(data){
@@ -200,26 +69,30 @@ layui.define(function(exports){
         type: 'post',
         dataType: 'json',
         data: data.field,
-        url: "....",
+        url: "create",
         error: function(){ // 保存错误处理
           layer.msg('系统错误，请稍后重试');
         },
-        success: function(){ // 保存成功处理
+        success: function(e){ // 保存成功处理
           // 成功提示
-          layer.msg('已成功创建新的供应商账户');
+          if (e.errCode == 0){
+            layer.msg('用户创建成功');
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+          } else {
+            layer.msg(e.errMsg);
+          }
           // 表格重载
           tableIns.reload({
             where: {limit: 10},
             page: {curr: 1}
           });
-
           // 关闭弹层
-          // var index = parent.layer.getFrameIndex(window.name);
-          // parent.layer.close(index);
+
         }
       });
       return false;
-    })
+    });
   });
   //
   exports('manufacturer', {});

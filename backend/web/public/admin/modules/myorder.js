@@ -19,8 +19,8 @@ layui.define(function(exports){
         {field: 'num', title: 'Order Number',templet:'<div>{{d.order_number}}</div>'},
         {field: 'phone', title: 'Phone',templet:'<div>{{d.phone}}</div>'},
         {field: 'status', title: 'Status',templet:'<div>{{d.order_status}}</div>'},
-        {field: 'orderdate', title: 'Order Date', templet:'<div>{{d.create_time}}</div>'},
-        {field: 'price', title: 'Price Quote', templet:'<div>{{d.process}}</div>'}
+        {field: 'orderdate', title: 'Order Date', templet:'<div>{{d.create_time}}</div>'}
+        // {field: 'price', title: 'Price Quote', templet:'<div>{{d.process}}</div>'}
       ]],
       done: function(res, curr, count){
         $(".layui-table-view[lay-id='workflow'] .layui-table-body tr[data-index=0] .layui-form-radio").click();
@@ -76,8 +76,10 @@ layui.define(function(exports){
     });
     // 单选左侧行，触发右侧产品数据表格刷新
     workflow.on('radio(flow)', function(obj){
-      console.log(obj.data.id);
+      console.log(obj.data);
       var orderId = obj.data.id;
+      $("#orderName").html(obj.data.order_number);
+
       products.render({
         elem: '#products',
         height: 'full-115',

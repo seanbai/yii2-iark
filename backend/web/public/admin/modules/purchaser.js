@@ -10,7 +10,7 @@ layui.define(function(exports){
       elem: '#purchaser',
       height: 'full-115',
       toolbar: '#toolbar',
-      //url: '../../admin/json/purchaser.json', //数据接口
+      url: 'list', //数据接口
       where: {limit: 10},
       cellMinWidth: 100,
       page: true, //开启分页
@@ -18,134 +18,14 @@ layui.define(function(exports){
       even: true,
       cols: [[ //表头
         {type:'radio'},
-        {field: 'title', title: '采购商名称'},
-        {field: 'boss', title: '负责人'},
-        {field: 'phone', title: '电话'},
-        {field: 'mail', title: '邮箱'},
-        {field: 'address', title: '地址'},
-        {field: 'username', title: '登录账户'}
-      ]],
-      data : [{
-        "id" : 1,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 2,
-        "title" : "New Mind Design",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 3,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 4,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 5,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 6,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 7,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 8,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 9,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      },{
-        "id" : 10,
-        "title" : "Design4u Studio",
-        "boss" : "Daniel Chen",
-        "phone" : "18628077530",
-        "mail" : "together008@gmail.com",
-        "address" : "高新区天府软件园B区",
-        "taxcode" : "91510100792198800C",
-        "bank" : "建设银行高新区支行",
-        "bnumber" : "6217 0038 0002 3254 596",
-        "username": "danielchen008",
-        "password": "123456"
-      }]
+        {field: 'title', title: '采购商名称',templet:'<div>{{d.name}}</div>'},
+        {field: 'boss', title: '联系人',templet:'<div>{{d.contact}}</div>'},
+        {field: 'status', title: '状态',templet:'<div>{{d.status}}</div>'},
+        {field: 'phone', title: '电话',templet:'<div>{{d.phone}}</div>'},
+        {field: 'mail', title: '邮箱',templet:'<div>{{d.email}}</div>'},
+        {field: 'address', title: '地址',templet:'<div>{{d.address}}</div>'},
+        {field: 'username', title: '登录账户',templet:'<div>{{d.username}}</div>'}
+      ]]
     });
     //
     table.on('toolbar(purchaser)', function(obj){
@@ -157,7 +37,7 @@ layui.define(function(exports){
             type: 2,
             title: '添加新的采购商',
             area: ['640px', '500px'],
-            content: 'create',
+            content: 'add',
             resize: false
           });
           break;
@@ -182,13 +62,25 @@ layui.define(function(exports){
         type: 'post',
         dataType: 'json',
         data: data.field,
-        url: "....",
+        url: "create",
         error: function(){ // 保存错误处理
           layer.msg('系统错误，请稍后重试');
         },
-        success: function(){ // 保存成功处理
+        success: function(e){ // 保存成功处理
           // 成功提示
-          layer.msg('已成功创建新的供应商账户');
+          if (e.errCode == 0){
+            layer.msg('用户创建成功');
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+          } else {
+            layer.msg(e.errMsg);
+          }
+          // 表格重载
+          tableIns.reload({
+            where: {limit: 10},
+            page: {curr: 1}
+          });
+
           // 表格重载
           tableIns.reload({
             where: {limit: 10},
