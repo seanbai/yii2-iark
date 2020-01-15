@@ -17,7 +17,6 @@ layui.define(function(exports){
       skin: 'row',
       even: true,
       cols: [[ //表头
-        {type:'radio'},
         {field: 'title', title: '采购商名称',templet:'<div>{{d.name}}</div>'},
         {field: 'boss', title: '联系人',templet:'<div>{{d.contact}}</div>'},
         {field: 'status', title: '账户状态', templet:'#userStatus'},
