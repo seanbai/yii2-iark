@@ -6,70 +6,63 @@
     }
 </style>
 
-<div class="layui-fluid">
-    <form class="layui-form layui-form-pane" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">采购商名称*</label>
-            <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入采购商名称…" class="layui-input">
+<div style="padding: 20px;" id="addForm">
+    <div class="layui-fluid">
+        <form class="layui-form layui-form-pane" id="addUpdate" lay-filter="addUpdate">
+            <div class="layui-form-item">
+                <label class="layui-form-label">采购商名称*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" id="name" lay-verify="required" autocomplete="off" placeholder="请输入采购商名称…" class="layui-input">
+                </div>
             </div>
-        </div>
-        <!--  -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">联系人*</label>
-            <div class="layui-input-block">
-                <input type="text" name="contact" lay-verify="required" autocomplete="off" placeholder="请输入联系人…" class="layui-input">
+            <!-- 用户名 和 默认密码123456 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off" placeholder="登录用户名，密码默认123456，用户登录后自行修改" class="layui-input">
+                    <!-- 隐藏密码，让初始创建默认密码123456 -->
+                    <input type="hidden" name="password" id="password" value="123456">
+                    <input type="hidden" name="repassword" id="repassword" value="123456">
+                    <!-- 隐藏id，用于编辑账户信息时传值 -->
+                    <input type="hidden" name="role" value="buyer">
+                    <input type="hidden" name="id" id="id" value="">
+                </div>
             </div>
-        </div>
-        <!--  -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">联系电话*</label>
-            <div class="layui-input-block">
-                <input type="text" name="phone" lay-verify="required" autocomplete="off" placeholder="联系电话用于订单及时沟通" class="layui-input">
+            <!--  -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">联系人*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="contact" id="contact" lay-verify="required" autocomplete="off" placeholder="请输入采购商名称…" class="layui-input">
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">邮箱</label>
-            <div class="layui-input-block">
-                <input type="text" name="email" lay-verify="email" autocomplete="off" placeholder="联系人邮箱" class="layui-input">
+            <!--  -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">联系电话*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" id="phone" lay-verify="required" autocomplete="off" placeholder="联系电话用于订单及时沟通" class="layui-input">
+                </div>
             </div>
-        </div>
-        <!--  -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">联系地址</label>
-            <div class="layui-input-block">
-                <input type="text" name="address" autocomplete="off" placeholder="联系地址" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户名*</label>
-            <div class="layui-input-block">
-                <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="采购商登录系统时的用户名" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">登录密码*</label>
-            <div class="layui-input-block">
-                <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="登录密码" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">确定密码</label>
-            <div class="layui-input-block">
-                <input type="password" name="repassword" lay-verify="required" autocomplete="off" placeholder="确定密码" class="layui-input">
-            </div>
-        </div>
 
-        <input type="hidden" name="role" value="buyer">
-
-        <!-- 提交表单 -->
-        <div class="layui-form-item">
-            <button class="layui-btn" lay-submit="" lay-filter="create">确认创建新账户</button>
-        </div>
-
-
-
-    </form>
+            <!--  -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" id="email" lay-verify="email" autocomplete="off" placeholder="联系人邮箱" class="layui-input">
+                </div>
+            </div>
+            <!--  -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">通讯地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" id="address" autocomplete="off" placeholder="请输入采购商名称…" class="layui-input">
+                </div>
+            </div>
+            <!-- 提交表单 -->
+            <div class="layui-form-item">
+                <button class="layui-btn" lay-submit="" lay-filter="update">保存</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 

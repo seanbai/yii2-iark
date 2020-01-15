@@ -50,9 +50,6 @@ AdminAsset::register($this);
         <div class="page-content">
             <!--主要内容信息-->
             <div class="page-content-area">
-<!--                <div class="page-header">-->
-<!--                    <h1>--><?//= $this->title; ?><!--</h1>-->
-<!--                </div>-->
                 <div class="row">
                     <div class="col-xs-12">
                         <?= $content ?>

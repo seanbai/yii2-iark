@@ -2,8 +2,8 @@ layui.define(function(exports){
   //
   layui.use(['table','form','jquery'], function(){
     var table = layui.table;
-    // var layer = layui.layer;
     var form = layui.form;
+    var Uform = layui.form;
     var $ = layui.jquery;
     //
     var tableIns = table.render({
@@ -20,66 +20,31 @@ layui.define(function(exports){
         {type:'radio'},
         {field: 'title', title: '采购商名称',templet:'<div>{{d.name}}</div>'},
         {field: 'boss', title: '联系人',templet:'<div>{{d.contact}}</div>'},
-        {field: 'status', title: '状态',templet:'<div>{{d.status}}</div>'},
+        {field: 'status', title: '账户状态', templet:'#userStatus'},
         {field: 'phone', title: '电话',templet:'<div>{{d.phone}}</div>'},
         {field: 'mail', title: '邮箱',templet:'<div>{{d.email}}</div>'},
         {field: 'address', title: '地址',templet:'<div>{{d.address}}</div>'},
-        {field: 'username', title: '登录账户',templet:'<div>{{d.username}}</div>'}
+        {field: 'username', title: '登录账户',templet:'<div>{{d.username}}</div>'},
+        {fixed: 'right', title:'操作', toolbar: '#editTool', width:140}
       ]]
     });
-    //
+    //展开新建窗口
     table.on('toolbar(purchaser)', function(obj){
-      var checkStatus = table.checkStatus(obj.config.id);
-      var jsonData = checkStatus.data;
-
       switch(obj.event){
-          /* add a new user */
         case 'add':
           layer.open({
-            type: 2,
-            title: '添加新的采购商',
+            type: 1,
+            title: '采购商账户信息',
             area: ['640px', '500px'],
-            content: 'add',
-            resize: false
+            content: $('#addForm'),
+            resize: false,
           });
           break;
-          /* del user */
-        case 'disabled':
-          if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
-          }else{
-            layer.confirm('确定是否停用？', {
-              btn: ['确定','取消'] //按钮
-            }, function(){
-              $.ajax({
-                type: 'post',
-                data: {
-                  id : jsonData[0].id
-                },
-                url: "status",
-                error: function(){ // 保存错误处理
-                  layer.msg('系统错误，请稍后重试');
-                },
-                success: function(e){ // 保存成功处理
-                  // 成功提示
-                  if (e == 0){
-                    layer.msg('禁用成功');
-                    tableIns.reload();
-                  } else {
-                    layer.msg('禁用失败');
-                  }
-                }
-              });
-            }, function(){
-              layer.msg('取消');
-            });
-          }
-          break;
-      };
+      }
     });
-    // 提交表单
+
+    // 创建表单
     form.on('submit(create)', function(data){
-      console.log(data.field);
       // ajax 提交表单
       $.ajax({
         type: 'post',
@@ -90,27 +55,96 @@ layui.define(function(exports){
           layer.msg('系统错误，请稍后重试');
         },
         success: function(e){ // 保存成功处理
-          // 成功提示
           if (e.errCode == 0){
-            layer.msg('用户创建成功');
+            layer.msg('用户新增成功',{
+              icon: 1,
+              time: 1000 //2秒关闭（如果不配置，默认是3秒）
+            }, function(){
+              layer.closeAll();
+              $('#addNew')[0].reset();
+              // 表格重载
+              tableIns.reload();
+            });
           } else {
             layer.msg(e.errMsg);
           }
-          // 表格重载
-          tableIns.reload({
-            where: {limit: 10},
-            page: {curr: 1}
-          });
-
-          // 表格重载
-          tableIns.reload({
-            where: {limit: 10},
-            page: {curr: 1}
-          });
         }
       });
       return false;
-    })
+    });
+
+    // 创建表单
+    form.on('submit(update)', function(data){
+      // ajax 提交表单
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        data: data.field,
+        url: "status",
+        error: function(){ // 保存错误处理
+          layer.msg('系统错误，请稍后重试');
+        },
+        success: function(data){ // 保存成功处理
+          if (data.errCode == 0){
+            layer.msg('用户修改成功',{
+              icon: 1,
+              time: 1000 //2秒关闭（如果不配置，默认是3秒）
+            }, function(){
+              layer.closeAll();
+              $('#addNew')[0].reset();
+              // 表格重载
+              tableIns.reload();
+            });
+          } else {
+            layer.msg(data.errMsg);
+          }
+        }
+      });
+      return false;
+    });
+
+    // 行编辑事件
+    table.on('tool(purchaser)', function(obj){
+      var data = obj.data;
+      var id = data.id;
+      // 行工具事件
+      if(obj.event === 'edit'){
+        // 编辑事件
+        layer.open({
+          type: 1,
+          title: '采购商账户信息',
+          area: ['640px', '500px'],
+          content: $('#addForm'),
+          resize: false,
+          success: function(){
+            // 弹层打开成功将行数据赋值给表单
+            form.val("addNew",data);
+            $('#username').attr("disabled","disabled").addClass('layui-disabled');
+            console.log($('#layui-btn').attr("lay-filter"));
+            $('#layui-btn').attr("lay-filter",'update');
+          }
+        });
+      }else if(obj.event === 'disable'){
+        // 禁用事件
+        layer.confirm('确认要禁用此账户？<br>禁用的账户不能登录系统，但历史订单将保留', function(index){
+          $.ajax({
+            type: 'post',
+            url: 'status?id=' + id,
+            success: function(){
+              layer.msg('用户停用成功',{
+                icon: 1,
+                time: 1000
+              }, function(){
+                tableIns.reload();
+              });
+            },
+            error: function(){
+              layer.msg('操作失败请稍后重试');
+            }
+          });
+        });
+      }
+    });
   });
   //
   exports('purchaser', {});
