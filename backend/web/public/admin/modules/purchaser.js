@@ -63,8 +63,12 @@ layui.define(function(exports){
                 },
                 success: function(e){ // 保存成功处理
                   // 成功提示
+                  if (e == 0){
                     layer.msg('禁用成功');
                     tableIns.reload();
+                  } else {
+                    layer.msg('禁用失败');
+                  }
                 }
               });
             }, function(){

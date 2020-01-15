@@ -47,19 +47,16 @@ class ManufacturerUserController extends Controller
 
     public function actionStatus()
     {
-        $data = [];
         $id = $_POST['id'];
         $model = Admin::findOne(['id'=>$id]);
         $model->status = 20;
 
         if ($model->save()){
-            $data['code'] = 0;
-            $data['msg'] = '禁用成功';
+            return 0;
         }else{
-            $data['code'] = 400;
-            $data['msg'] = '禁用失败';
+            return 400;
         }
-        return json_encode($data);
+
 
 
     }
