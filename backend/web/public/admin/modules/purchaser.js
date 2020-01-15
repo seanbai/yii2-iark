@@ -31,7 +31,6 @@ layui.define(function(exports){
     table.on('toolbar(purchaser)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
       var jsonData = checkStatus.data;
-      console.log(jsonData[0].id);
 
       switch(obj.event){
           /* add a new user */
