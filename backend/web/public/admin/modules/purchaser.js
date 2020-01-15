@@ -30,6 +30,9 @@ layui.define(function(exports){
     //
     table.on('toolbar(purchaser)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
+      var jsonData = checkStatus.data;
+      console.log(jsonData[0].id);
+
       switch(obj.event){
           /* add a new user */
         case 'add':
@@ -46,9 +49,26 @@ layui.define(function(exports){
           if(checkStatus.data.length === 0){
             layer.msg("您需要先选择一条数据");
           }else{
-            layer.confirm('Confirm?', function(index){
-              obj.del();
-              layer.close(index);
+            layer.confirm('确定是否停用？', {
+              btn: ['确定','取消'] //按钮
+            }, function(){
+              $.ajax({
+                type: 'post',
+                data: {
+                  id : jsonData[0].id
+                },
+                url: "status",
+                error: function(){ // 保存错误处理
+                  layer.msg('系统错误，请稍后重试');
+                },
+                success: function(e){ // 保存成功处理
+                  // 成功提示
+                    layer.msg('禁用成功');
+                    tableIns.reload();
+                }
+              });
+            }, function(){
+              layer.msg('取消');
             });
           }
           break;
@@ -84,10 +104,6 @@ layui.define(function(exports){
             where: {limit: 10},
             page: {curr: 1}
           });
-
-          // 关闭弹层
-          // var index = parent.layer.getFrameIndex(window.name);
-          // parent.layer.close(index);
         }
       });
       return false;

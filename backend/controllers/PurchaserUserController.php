@@ -21,9 +21,21 @@ class PurchaserUserController extends Controller
     }
 
     //状态变更
-    public function actionstatus()
+    public function actionStatus()
     {
+        $data = [];
+        $id = $_POST['id'];
+        $model = Admin::findOne(['id'=>$id]);
+        $model->status = 20;
 
+        if ($model->save()){
+            $data['code'] = 0;
+            $data['msg'] = '禁用成功';
+        }else{
+            $data['code'] = 400;
+            $data['msg'] = '禁用失败';
+        }
+        return json_encode($data);
     }
 
     /***
@@ -33,11 +45,18 @@ class PurchaserUserController extends Controller
     {
         $user = Admin::find()->where(['role'=>'buyer'])->asArray()->all();
 
-
         $data['code'] = 0;
         $data['count'] = count($user);
-        $data['data'] = $user;
 
+
+        foreach ($user as $key=>$value){
+            if ($value['status'] == '20'){
+                $user[$key]['status'] = '禁用';
+            }else{
+                $user[$key]['status'] = '有效';
+            }
+        }
+        $data['data'] = $user;
         return json_encode($data);
     }
 

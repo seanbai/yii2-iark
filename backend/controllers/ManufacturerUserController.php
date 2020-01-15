@@ -22,12 +22,17 @@ class ManufacturerUserController extends Controller
     {
         $user = Admin::find()->where(['role'=>'manufacturer'])->asArray()->all();
 
-        if (count($user) > 0){
-            $data['code'] = 0;
-        }else{
-            $data['code'] = 0;
-        }
+
+        $data['code'] = 0;
         $data['count'] = count($user);
+
+        foreach ($user as $key=>$value){
+            if ($value['status'] == '20'){
+                $user[$key]['status'] = '禁用';
+            }else{
+                $user[$key]['status'] = '有效';
+            }
+        }
         $data['data'] = $user;
 
         return json_encode($data);
@@ -42,7 +47,19 @@ class ManufacturerUserController extends Controller
 
     public function actionStatus()
     {
-        print_r($_POST);
+        $data = [];
+        $id = $_POST['id'];
+        $model = Admin::findOne(['id'=>$id]);
+        $model->status = 20;
+
+        if ($model->save()){
+            $data['code'] = 0;
+            $data['msg'] = '禁用成功';
+        }else{
+            $data['code'] = 400;
+            $data['msg'] = '禁用失败';
+        }
+        return json_encode($data);
 
 
     }

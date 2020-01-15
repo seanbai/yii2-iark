@@ -25,6 +25,7 @@ layui.define(function(exports){
         {field: 'brand', title: '供货商名称',templet:'<div>{{d.name}}</div>'},
         {field: 'boss', title: '联系人',templet:'<div>{{d.contact}}</div>'},
         {field: 'phone', title: '联系电话',templet:'<div>{{d.phone}}</div>'},
+        {field: 'status', title: '状态',templet:'<div>{{d.status}}</div>'},
         {field: 'mail', title: '邮件',templet:'<div>{{d.email}}</div>'},
         {field: 'city', title: '城市',templet:'<div>{{d.city}}</div>'},
         {field: 'address', title: '地址',templet:'<div>{{d.address}}</div>'},
@@ -35,6 +36,8 @@ layui.define(function(exports){
     //
     table.on('toolbar(manufacturer)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
+      var jsonData = checkStatus.data;
+      console.log(jsonData[0].id);
       switch(obj.event){
         /* del user */
         case 'create':
@@ -51,11 +54,26 @@ layui.define(function(exports){
           if(checkStatus.data.length === 0){
             layer.msg("您需要先选择一条数据");
           }else{
-            layer.confirm('确认要停用此账户么？', function(index){
-              obj.del();
-              
-
-              layer.close(index);
+            layer.confirm('确定是否停用？', {
+              btn: ['确定','取消'] //按钮
+            }, function(){
+              $.ajax({
+                type: 'post',
+                data: {
+                  id : jsonData[0].id
+                },
+                url: "status",
+                error: function(){ // 保存错误处理
+                  layer.msg('系统错误，请稍后重试');
+                },
+                success: function(e){ // 保存成功处理
+                  // 成功提示
+                  layer.msg('禁用成功');
+                  tableIns.reload();
+                }
+              });
+            }, function(){
+              layer.msg('取消');
             });
           }
         break;
