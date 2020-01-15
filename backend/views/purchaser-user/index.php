@@ -59,7 +59,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名*</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off" placeholder="登录用户名，密码默认123456，用户登录后自行修改" class="layui-input">
+                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off" placeholder="登录用户名，密码默认123456" class="layui-input">
                     <!-- 隐藏密码，让初始创建默认密码123456 -->
                     <input type="hidden" name="password" id="password" value="123456">
                     <input type="hidden" name="repassword" id="repassword" value="123456">
@@ -94,7 +94,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">通讯地址</label>
                 <div class="layui-input-block">
-                    <input type="text" name="address" id="address" autocomplete="off" placeholder="请输入采购商名称…" class="layui-input">
+                    <input type="text" name="address" id="address" autocomplete="off" placeholder="联系地址…" class="layui-input">
                 </div>
             </div>
             <!-- 提交表单 -->

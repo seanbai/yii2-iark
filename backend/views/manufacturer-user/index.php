@@ -51,7 +51,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off" placeholder="供货商登录系统时的用户名" class="layui-input">
+                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off" placeholder="登录用户名，密码默认123456" class="layui-input">
                     <input type="hidden" name="password" value="123456">
                     <input type="hidden" name="repassword"  value="123456">
                     <input type="hidden" name="id" value="">
