@@ -132,7 +132,7 @@ class Admin extends \common\models\Admin
             //['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             // Status
-            ['role', 'in', 'range' => array_keys(self::getArrayRole(false))],
+            //['role', 'in', 'range' => array_keys(self::getArrayRole(false))],
         ];
     }
 
