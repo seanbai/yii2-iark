@@ -26,21 +26,21 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">供货商报价</label>
                     <div class="layui-input-block">
-                        <input type="text" name="gPrice" id="gPrice" lay-verify="title" autocomplete="off" class="layui-input layui-disabled" <?php if ($status != 2) echo 'disabled' ?> >
+                        <input type="text" name="gPrice" id="gPrice" lay-verify="title" autocomplete="off" class="layui-input layui-disabled" disabled >
                     </div>
                 </div>
                 <!-- 平台方报价 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">平台方报价</label>
                     <div class="layui-input-block">
-                        <input type="text" name="pPrice" id="pPrice" lay-verify="title" autocomplete="off" class="layui-input" <?php if ($status != 2) echo 'disabled' ?>>
+                        <input type="text" name="pPrice" id="pPrice" lay-verify="title" autocomplete="off" class="layui-input" <?php if ($status != 4 && $status != 3) echo 'disabled' ?>>
                     </div>
                 </div>
                 <!-- 定金确认 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">定金确认</label>
                     <div class="layui-input-block">
-                        <select name="deposit" <?php if ($status != 3) echo 'disabled' ?>>
+                        <select name="deposit" <?php if ($status != 6) echo 'disabled' ?>>
                             <option value="0">定金已到账</option>
                             <option value="1" >未到账</option>
                         </select>
@@ -50,7 +50,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">尾款待收</label>
                     <div class="layui-input-block">
-                        <select name="balance" <?php if ($status != 4) echo 'disabled' ?>>
+                        <select name="balance" <?php if ($status != 8) echo 'disabled' ?>>
                             <option value="1">Yes</option>
                             <option value="2" >No</option>
                         </select>
@@ -60,7 +60,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">尾款确认</label>
                     <div class="layui-input-block">
-                        <select name="balanceEnd" <?php if ($status != 5) echo 'disabled' ?>>
+                        <select name="balanceEnd" <?php if ($status != 10) echo 'disabled' ?>>
                             <option value="0">尾款已到账</option>
                             <option value="1" >未到账</option>
                         </select>
@@ -70,7 +70,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">报关单号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="shut" id="shut" lay-verify="title" autocomplete="off" class="layui-input" <?php if ($status != 6) echo 'disabled' ?>>
+                        <input type="text" name="shut" id="shut" lay-verify="title" autocomplete="off" class="layui-input" <?php if ($status != 12) echo 'disabled' ?>>
                     </div>
                 </div>
                 <!-- 允许状态 -->

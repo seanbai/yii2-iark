@@ -119,11 +119,34 @@ layui.define(function (exports) {
                                 $.ajax({
                                     type: 'post',
                                     url: 'update-status?status=3&id=' + oid,
-                                    success: function () {
-                                        layer.msg('操作已成功');
+                                    success: function (e) {
+                                        if (e.errCode == 0){
+                                            layer.msg('保存成功',{
+                                                icon: 1,
+                                                time: 1000
+                                            }, function(){
+                                                layer.close(normal);
+                                                tableIns.reload();
+                                            });
+                                        } else {
+                                            layer.msg(e.errMsg ,{
+                                                icon: 1,
+                                                time: 3000
+                                            }, function(){
+                                                layer.close(normal);
+                                                tableIns.reload();
+                                            });
+                                        }
+
                                     },
                                     error: function () {
-                                        layer.msg('操作已成功');
+                                        layer.msg('保存失败',{
+                                            icon: 1,
+                                            time: 1000
+                                        }, function(){
+                                            layer.close();
+                                            tableIns.reload();
+                                        });
                                     }
                                 });
                             },
@@ -131,7 +154,7 @@ layui.define(function (exports) {
                                 loadItemsEdit(oid);
                             }
                         });
-                    } else if (data.order_status == 4) {  //自己报价后分配
+                    } else if (data.order_status == 5) {  //自己报价后分配
                         layer.open({
                             type: 1,
                             title: '修改订单状态',
@@ -146,7 +169,23 @@ layui.define(function (exports) {
                                     type: 'post',
                                     url: 'status?status=6&id=' + oid,
                                     success: function () {
-                                        layer.msg('操作已成功');
+                                        if (e.errCode == 0){
+                                            layer.msg('保存成功',{
+                                                icon: 1,
+                                                time: 1000
+                                            }, function(){
+                                                layer.close();
+                                                tableIns.reload();
+                                            });
+                                        } else {
+                                            layer.msg(e.errMsg ,{
+                                                icon: 1,
+                                                time: 1000
+                                            }, function(){
+                                                layer.close();
+                                                tableIns.reload();
+                                            });
+                                        }
                                     },
                                     error: function () {
                                         layer.msg('操作失败');

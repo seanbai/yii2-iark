@@ -306,16 +306,7 @@
     </div>
 </div>
 
-<
 
-<script src="/public/admin/ui/layui.js"></script>
-<script>
-    layui.config({
-        base: '/public/admin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'workflow']);
-</script>
 
 <!-- 数据表格状态格式化 -->
 <script type="text/html" id="orderStatus">
@@ -387,3 +378,13 @@
     </div>
 </div>
 
+
+
+<script src="/public/admin/ui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/public/admin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'workflow']);
+</script>
