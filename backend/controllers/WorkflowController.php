@@ -78,7 +78,14 @@ class WorkflowController extends Controller
         $model = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->all();
         $data['code'] = 0;
         $data['count'] = count($model);
+
+        //数据转换一下
+        foreach ($model as $key=>$value){
+            if (empty($value['supplier_id'])) $model[$key]['supplier_id'] = ' ';
+            if (empty($value['supplier_name'])) $model[$key]['supplier_name'] = ' ';
+        }
         $data['data'] = $model;
+
         return json_encode($data);
     }
 

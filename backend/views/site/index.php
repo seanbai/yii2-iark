@@ -143,10 +143,7 @@ AppAsset::register($this);
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="header-ul">
                 <li>
-                    <a class="sign-out"  title="My Account"
-                       data-url="<?= Url::toRoute(['admin/view']) ?>" href="<?= Url::toRoute(['admin/view']) ?>">
-                       My Account
-                    </a>
+                    <a class="sign-out"  title="My Account"> My Account</a>
                 </li>
                 <li>
                     <?= Html::beginForm(['/site/logout'], 'post'); ?>

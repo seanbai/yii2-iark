@@ -9,7 +9,6 @@
 <div class="layui-fluid">
     <div class="layui-row layui-col-space5">
         <div class="layui-col-md12">
-
             <form class="layui-form layui-form-pane" method="post">
                 <input type="hidden" name="id" value="<?php echo $id ?>">
                 <input type="hidden" name="status" value="<?php echo $status ?>">

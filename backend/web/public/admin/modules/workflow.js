@@ -86,7 +86,7 @@ layui.define(function (exports) {
                             time: 1000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
                             parent.layer.closeAll();
-                            tableIns.reload();
+                            parent.location.reload();
                         });
                     } else {
                         layer.msg(e.errMsg);
