@@ -18,6 +18,8 @@ use Yii;
  * @property string $create_time
  * @property string $price
  * @property string $pricing_id
+ * @property int $supplier_id
+ * @property string $supplier_name
  */
 class OrderItem extends \yii\db\ActiveRecord
 {
@@ -36,8 +38,8 @@ class OrderItem extends \yii\db\ActiveRecord
     {
         return [
             [['order_id','pricing_id'], 'integer'],
-            [['order_number', 'desc', 'files', 'create_time'], 'string', 'max' => 255],
-            [['brand', 'number', 'type', 'price'], 'string', 'max' => 45],
+            [['order_number', 'desc', 'files', 'create_time','supplier_id'], 'string', 'max' => 255],
+            [['brand', 'number', 'type', 'price', 'supplier_name'], 'string', 'max' => 45],
         ];
     }
 
@@ -58,6 +60,8 @@ class OrderItem extends \yii\db\ActiveRecord
             'pricing_id' => 'Pricing Id',
             'price' => 'Price',
             'create_time' => 'Create Time',
+            'supplier_id' => '供货商ID',
+            'supplier_name' => '供货商名称',
         ];
     }
 }

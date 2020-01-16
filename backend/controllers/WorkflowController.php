@@ -22,48 +22,7 @@ class WorkflowController extends Controller
      * @var string 定义使用的model
      */
     public $modelClass = 'backend\models\Order';
-     
-    /**
-     * 查询处理
-     * @param  array $params
-     * @return array 返回数组
-     */
-    public function where($params)
-    {
-        return [
-            'user' => "=",
-        ];
-    }
 
-    public function actionSearch()
-    {
-        // 实例化数据显示类
-        /* @var $strategy \common\strategy\Strategy */
-        $strategy = Substance::getInstance($this->strategy);
-        // 获取查询参数
-        $search = $strategy->getRequest(); // 处理查询参数
-        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
-        $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
-
-
-        $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
-
-
-        // 查询数据
-        $query = $this->getQuery($search['where']);
-        if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
-
-        // 查询数据条数
-        $total = $query->count();
-        if ($total) {
-            $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
-            if ($array) $this->afterSearch($array);
-        } else {
-            $array = [];
-        }
-
-        return $this->success($strategy->handleResponse($array, $total));
-    }
 
     public function actionIndex()
     {
@@ -75,7 +34,6 @@ class WorkflowController extends Controller
 
         return $this->render('index', $data);
     }
-
 
     public function actionList()
     {
@@ -100,18 +58,12 @@ class WorkflowController extends Controller
         if ($total) {
             $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
-
         } else {
             $array = [];
-
         }
+
         $data['code'] = 0;
         $data['count'] = $total;
-
-//        foreach ($array as $key=>$val){
-//            $array[$key]['order_status'] =  Create::getData($val['order_status']);
-//        }
-
         $data['data'] = $array;
         return json_encode($data);
     }
@@ -123,98 +75,100 @@ class WorkflowController extends Controller
     public function actionProducts()
     {
         $orderId = $_GET['orderId'];
-
         $model = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->all();
-
         $data['code'] = 0;
         $data['count'] = count($model);
-
         $data['data'] = $model;
-
         return json_encode($data);
     }
 
 
+    /***
+     * @return mixed|string
+     * 订单状态变更
+     */
     public function actionStatus()
     {
-        try{
-            $id = $_POST['id'];
-            $type = $_POST['status'];
-            $bj = $_POST['bj'];
 
-            if ($type == 1){
-                \Yii::$app->db->createCommand()->update(
-                    'order_status',
-                    [
-                        'status' => 1,
-                        'update_time'=>date('Y:m:d H:i:s',time())
-                    ],
-                    [
-                        'order_id' => $id,
-                        'type' => $type
-                    ]
-                )->execute();
-                \Yii::$app->db->createCommand()->update(
-                    'order',
-                    [
-                        'order_status' => 2,
-                    ],
-                    [
-                        'id'=>$id,
-                    ]
-                )->execute();
-                //bj=1,供货商报价,bj=2,平台报价
-                if ($bj == 2){
-                    \Yii::$app->db->createCommand()->update(
-                        'order_status',
-                        [
-                            'status' => 2,
-                            'money' => $_POST['pPrice'],
-                            'update_time'=>date('Y:m:d H:i:s',time())
-                        ],
-                        [
-                            'order_id' => $id,
-                            'type' => $type
-                        ]
-                    )->execute();
-                    \Yii::$app->db->createCommand()->update(
-                        'order',
-                        [
-                            'order_status' => 3,
-                        ],
-                        [
-                            'id'=>$id,
-                        ]
-                    )->execute();
-                }
-            }elseif ($type == 2){
-                //统计总价后保存
+        $data = $_POST;
+        $model = Order::findOne(['id'=>$data['id']]);
+        if (empty($data['pPrice'])){
+            $status = 2;
+            $model->order_status = $status;
+        } else {
+            $model->order_status = 5;
+        }
 
-            }elseif ($type == 3){
-
-            }
-
-
-
-
-
-            return $this->success(200,"保存成功");
-        }catch (\Exception $exception){
-            return $this->error(300,"系统异常,请稍后再试");
+        if ($model->save()){
+            return $this->success('保存成功');
+        } else {
+            return $this->error(300, Helper::arrayToString($model->getErrors()));
         }
 
     }
 
+
+    /***
+     * 保存制定用户信息
+     */
+    public function actionUpdateStatus()
+    {
+        $data = $_GET;
+        $model = Order::findOne(['id'=>$data['id']]);
+        $model->order_status = $data['status'];
+
+        if ($model->save()){
+            return $this->success('保存成功');
+        } else {
+            return $this->error(300, Helper::arrayToString($model->getErrors()));
+        }
+    }
+
+
+    /***
+     * @return mixed|string
+     * 订单状态修改页面
+     */
     public function actionUpdate()
     {
-        $data = [];
-        $id = $_GET['id'];
-        $model = Order::find()->where(['id'=>$id])->asArray()->one();
 
+        $id = $_GET['id'];
+        $model = Order::findOne(['id'=>$id]);
         return $this->render('update', [
             'status' => $model['order_status'],
             'id' => $id
         ]);
+    }
+
+
+    /**
+     * @return mixed|string
+     * 用户信息所有页面
+     */
+    public function actionUser()
+    {
+        $user = Admin::find()->select(['id','name'])->where(['role'=>'manufacturer'])->asArray()->all();
+        return $this->success($user);
+
+    }
+
+
+    /***
+     * @return mixed|string
+     * 指定商品保存供货商
+     */
+    public function actionUpdateUser()
+    {
+        $model = OrderItem::findOne(['id'=>$_POST['id']]);
+        $model->supplier_id = $_POST['userId'];
+        $model->supplier_name = $_POST['name'];
+
+        if ($model->save()){
+            return $this->success();
+        }else{
+            return $this->error($model->getErrors());
+        }
+
 
     }
 }

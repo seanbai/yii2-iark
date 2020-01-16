@@ -10,11 +10,9 @@ use yii\helpers\ArrayHelper;
  *
  * @property int $id
  * @property string $order_number
- * @property string $status
- * @property string $delivery_time
  * @property string $payment_method
- * @property string $order_user
  * @property string $create_time
+ * @property int $order_status
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -38,8 +36,8 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_number', 'payment_method', 'order_user'], 'integer'],
-            [['delivery_time','status' ,'create_time'], 'string', 'max' => 255],
+            [['order_status'], 'integer'],
+            [['create_time'], 'string', 'max' => 255],
         ];
     }
 
@@ -51,11 +49,9 @@ class Order extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'order_number' => 'Order Number',
-            'status' => 'Status',
-            'delivery_time' => 'Delivery Time',
             'payment_method' => 'Payment Method',
-            'order_user' => 'Order User',
             'create_time' => 'Create Time',
+            'order_status' => '订单状态',
         ];
     }
 

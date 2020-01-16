@@ -10,11 +10,9 @@
     <div class="layui-row layui-col-space5">
         <div class="layui-col-md12">
 
-            <form class="layui-form layui-form-pane" id="form-submit" enctype="multipart/form-data"   method="post">
-
+            <form class="layui-form layui-form-pane" method="post">
                 <input type="hidden" name="id" value="<?php echo $id ?>">
                 <input type="hidden" name="status" value="<?php echo $status ?>">
-
                 <!-- 报价 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否需要报价</label>
@@ -96,7 +94,7 @@
                 </div>
                 <!-- 提交表单 -->
                 <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit="" lay-filter="create">保存信息</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="update">保存信息</button>
                 </div>
 
             </form>
