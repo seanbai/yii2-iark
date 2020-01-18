@@ -99,11 +99,18 @@ class WorkflowController extends Controller
 
         $data = $_POST;
         $model = Order::findOne(['id'=>$data['id']]);
-        if (empty($data['pPrice'])){
+
+        //是否需要报价
+        if (empty($data['pPrice']) && $data['bj'] == 1){
             $status = 2;
             $model->order_status = $status;
-        } else {
+        } else if (!empty($data['pPrice']) && $data['bj'] ==2) {
             $model->order_status = 5;
+            $model->product_amount = $data['pPrice'];
+        } else if ($data['status'] == 7 && !empty($data['deposit'])){
+            $model->order_status = 9;
+        } else if ($data['status'] == 9){
+            $model->order_status = 10;
         }
 
         if ($model->save()){
@@ -122,7 +129,11 @@ class WorkflowController extends Controller
     {
         $data = $_GET;
         $model = Order::findOne(['id'=>$data['id']]);
-        $model->order_status = $data['status'];
+        if ($data['status'] == 2){
+            $model->order_status = 3;
+        } else if ($data['status'] == 9){
+            $model->order_status = 10;
+        }
 
         if ($model->save()){
             return $this->success('保存成功');

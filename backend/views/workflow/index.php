@@ -325,11 +325,11 @@
     {{#  }else if(d.order_status == 7){ }}
     <span class="tag layui-bg-red">定金待收取</span>
     {{#  }else if(d.order_status == 8){ }}
-    <span class="tag layui-bg-red">定金待确认</span>
+    <span class="tag layui-bg-red">定金已确认</span>
     {{#  }else if(d.order_status == 9){ }}
-    <span class="tag layui-bg-cyan">供货商定金已支付</span>
+    <span class="tag layui-bg-cyan">待分配供货商生产</span>
     {{#  }else if(d.order_status == 10){ }}
-    <span class="tag layui-bg-cyan">生产中</span>
+    <span class="tag layui-bg-cyan">待供货商确定订金</span>
     {{#  }else if(d.order_status == 11){ }}
     <span class="tag layui-bg-red">尾款待支付</span>
     {{#  }else if(d.order_status == 12){ }}

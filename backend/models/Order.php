@@ -13,6 +13,10 @@ use yii\helpers\ArrayHelper;
  * @property string $payment_method
  * @property string $create_time
  * @property int $order_status
+ * @property int $product_amount
+ * @property string $deposit_amount
+ * @property string $balance
+ * @property string $tax
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -36,8 +40,8 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_status'], 'integer'],
-            [['create_time'], 'string', 'max' => 255],
+            [['order_status','product_amount'], 'integer'],
+            [['create_time','deposit_amount','balance','tax'], 'string', 'max' => 255],
         ];
     }
 
@@ -52,6 +56,10 @@ class Order extends \yii\db\ActiveRecord
             'payment_method' => 'Payment Method',
             'create_time' => 'Create Time',
             'order_status' => '订单状态',
+            'product_amount' => '报价金额',
+            'deposit_amount' => '订金金额',
+            'balance' => '尾款',
+            'tax' => '税金',
         ];
     }
 

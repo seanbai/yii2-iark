@@ -14,6 +14,8 @@ class PurchaserCompletedController extends Controller
     }
 
 
+
+
     public function actionEnd()
     {
         $data = Order::find()->where(['order_status'=>13])->asArray()->all();
@@ -23,8 +25,6 @@ class PurchaserCompletedController extends Controller
         $model['data'] = $data;
 
         return json_encode($model);
-
-
     }
 
 }

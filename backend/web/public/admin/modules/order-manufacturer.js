@@ -10,7 +10,7 @@ layui.define(function(exports){
 
     //执行一个laydate实例
     laydate.render({
-      elem: '#processList' //指定元素
+      elem: '#order' //指定元素
     });
 
     order.render({
@@ -26,9 +26,6 @@ layui.define(function(exports){
         {field: 'id', title: 'ID', width:80, sort: true},
         {field: 'num', title: '订单号',templet:'<div>{{d.order_number}}</div>'},
         {field: 'status', title: '订单状态',templet:'#orderStatus'},
-        {field: 's_price', title: '报价金额', sort: true, templet:'<div>{{d.product_amount}}</div>'},
-        {field: 'dj', title: '税金和运费', templet:'<div>{{d.tax}}</div>'},
-        {field: 'orderDate', title: '创建时间', templet:'<div>{{d.create_time}}</div>'},
         {field: 'date', title: '期望交付时间', templet:'<div>{{d.date}}</div>'},
       ]],
     });
@@ -56,25 +53,6 @@ layui.define(function(exports){
             });
           }
           break;
-          // cancel order
-        case 'cancel':
-          if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
-          }else{
-            layer.confirm('是否确定作废?', function(index){
-              if (checkStatus.data[0].order_status != 1){
-                layer.msg("订单已无法作废");
-              }else{
-                layer.msg('执行作废操作',{
-                  icon: 1,
-                  time: 1000
-                }, function(){
-                  layer.close(index);
-                });
-              }
-            });
-          }
-          break;
           // track order
         case 'status':
           if(checkStatus.data.length === 0){
@@ -83,7 +61,7 @@ layui.define(function(exports){
             layer.open({
               type: 2,
               title: '修改订单状态',
-              area: ['640px', '360px'],
+              area: ['640px', '560px'],
               content: 'status?id='+checkStatus.data[0].id,
               // btn: ['Save','Close'],
               resize: false,
@@ -100,23 +78,21 @@ layui.define(function(exports){
       });
     });
 
-
-
     // 提交表单,改变订单状态操作
     form.on('submit(update)', function(data){
       console.log(data.field);
       var formData = data.field;
-      if (formData.status == 5 && formData.quote == '0'){
-        layer.msg('请选择是否确定报价',{
-          icon: 0,
-          time: 1000 //2秒关闭（如果不配置，默认是3秒）
-        });
-        return false;
-      }
+      // if (formData.status == 5 && formData.quote == '0'){
+      //   layer.msg('请选择是否确定报价',{
+      //     icon: 0,
+      //     time: 1000 //2秒关闭（如果不配置，默认是3秒）
+      //   });
+      //   return false;
+      // }
       $.ajax({
         type: 'post',
         dataType: 'json',
-        data: data.field,
+        data: formData,
         url: "update",
         error: function(){ // 保存错误处理
           layer.msg('系统错误，请稍后重试');
@@ -137,6 +113,8 @@ layui.define(function(exports){
       });
       return false;
     });
+
+
 
 
 

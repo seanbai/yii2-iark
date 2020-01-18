@@ -103,19 +103,19 @@ class OrderController extends Controller
         if ($total) {
             $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
-            $data['code'] = 0;
         } else {
             $array = [];
-            $data['code'] = 0;
         }
-
-        //处理订单状态
-        foreach ($array as $key=>$val){
-            $array[$key]['order_status'] =  Create::getData($val['order_status']);
-        }
-
+        $data['code'] = 0;
         $data['count'] = $total;
+
+
+        foreach ($array as $key=>$value){
+            if (empty($value['product_amount'])) $array[$key]['product_amount'] = '';
+            if (empty($value['tax'])) $array[$key]['tax'] = '';
+        }
         $data['data'] = $array;
+
         return json_encode($data);
     }
 
@@ -128,31 +128,39 @@ class OrderController extends Controller
         $orderId = $_GET['orderId'];
 
         $model = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->all();
-        $count = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->count();
-
-        $data['code'] = 0;
-        $data['count'] = $count;
-        $data['data'] = $model;
-        return json_encode($data);
+        return $this->render('products', [
+            'products' => $model,
+        ]);
     }
 
 
     public function actionStatus()
     {
         $id = $_GET['id'];
+        $model = Order::findOne(['id'=>$id]);
 
         return $this->render('view', [
-            'id' => $id
+            'id' => $id,
+            'status' => $model['order_status']
         ]);
     }
 
     public function actionUpdate()
     {
-
-        print_r(123);
-
-        print_r($_POST);die;
-
-
+        $data = $_POST;
+        $model = Order::findOne(['id'=>$data['id']]);
+        if ($data['status'] == 5 && $data['quote'] == 1){
+            $model->order_status = 6;   //确定报价
+        }else{
+            $model->order_status = 23;   //拒绝报价
+        }
+        if ($data['status'] == 6){
+            $model->order_status = 7;   //支付订金完成
+        }
+        if ($model->save()){
+            return $this->success();
+        }else{
+            return $this->error(400, Helper::arrayToString($model->getErrors()));
+        }
     }
 }

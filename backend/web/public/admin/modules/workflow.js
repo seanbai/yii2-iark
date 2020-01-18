@@ -67,10 +67,23 @@ layui.define(function (exports) {
         });
 
 
-        // 提交表单
+        // 提交表单,改变订单状态操作
         form.on('submit(update)', function(data){
             console.log(data.field);
-            // ajax 提交表单
+            var formData = data.field;
+            if (formData.status == 1 && formData.bj == '请报价'){
+                layer.msg('请选择报价方式',{
+                    icon: 0,
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return false;
+            } else if (formData.status == 1 && formData.bj == '2' && formData.pPrice == '0'){
+                layer.msg('无需供货商报价则需填写报价金额',{
+                    icon: 0,
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return false;
+            }
             $.ajax({
                 type: 'post',
                 dataType: 'json',
@@ -154,8 +167,8 @@ layui.define(function (exports) {
                                 loadItemsEdit(oid);
                             }
                         });
-                    } else if (data.order_status == 5) {  //自己报价后分配
-                        layer.open({
+                    } else if (data.order_status == 9) {    //收到订金后进行分配
+                        var normal = layer.open({
                             type: 1,
                             title: '修改订单状态',
                             content: $('.popList'),
@@ -167,14 +180,14 @@ layui.define(function (exports) {
                             yes: function () {
                                 $.ajax({
                                     type: 'post',
-                                    url: 'status?status=6&id=' + oid,
-                                    success: function () {
+                                    url: 'update-status?status=9&id=' + oid,
+                                    success: function (e) {
                                         if (e.errCode == 0){
                                             layer.msg('保存成功',{
                                                 icon: 1,
                                                 time: 1000
                                             }, function(){
-                                                layer.close();
+                                                layer.close(normal);
                                                 tableIns.reload();
                                             });
                                         } else {
@@ -182,7 +195,7 @@ layui.define(function (exports) {
                                                 icon: 1,
                                                 time: 1000
                                             }, function(){
-                                                layer.close();
+                                                layer.close(normal);
                                                 tableIns.reload();
                                             });
                                         }
@@ -226,7 +239,6 @@ layui.define(function (exports) {
             });
             return false;
         }
-
 
         // 浏览模式
         function loadItemsReadonly(oid) {
@@ -273,7 +285,6 @@ layui.define(function (exports) {
                 // 点击数据行取出行数据的 ID
                 var row_data = obj.data;
                 var row_id = row_data.id;
-
                 if (obj.event === 'set') {
                     var fp = layer.open({
                         type: 1,
@@ -283,6 +294,11 @@ layui.define(function (exports) {
                         yes: function (index) {
                             var n_name = $("#manuList").find("option:selected").text();
                             var n_bid = $("#manuList").val();
+
+                            if (n_bid == 0){
+                                layer.msg('请选择供货商');
+                                return false;
+                            }
                             // 点击确定后 AJAX 更新数据
                             $.ajax({
                                 type: 'post',

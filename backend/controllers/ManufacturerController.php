@@ -120,12 +120,9 @@ class ManufacturerController extends Controller
         $orderId = $_GET['orderId'];
 
         $model = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->all();
-        $count = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->count();
-
-        $data['code'] = 0;
-        $data['count'] = $count;
-        $data['data'] = $model;
-        return json_encode($data);
+        return $this->render('products', [
+            'products' => $model,
+        ]);
     }
 
 

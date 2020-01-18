@@ -1,35 +1,19 @@
 
-
 <div class="layui-fluid">
-    <div class="layui-row layui-col-space5">
-        <div class="layui-col-sm6">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12">
             <div class="layui-card">
-                <div class="layui-card-header">
-                    Pending Order
-                </div>
+                <div class="layui-card-header">Pending Order</div>
                 <div class="layui-card-body">
                     <!-- table black -->
-                    <table id="workflow" lay-filter="flow"></table>
+                    <table id="order" lay-filter="order"></table>
                     <!-- tool bar -->
-                    <script type="text/html" id="toolbar">
+                    <script type="text/html" id="toolbarDemo">
                         <div class="layui-btn-container">
+                            <button class="layui-btn layui-btn-sm" lay-event="details">Product Details</button>
                             <button class="layui-btn layui-btn-sm" lay-event="status">Change Status</button>
-                            <button class="layui-btn layui-btn-sm" lay-event="ignore">Ignore the Order</button>
                         </div>
                     </script>
-                </div>
-            </div>
-        </div>
-
-        <!-- -->
-        <div class="layui-col-sm6">
-            <div class="layui-card">
-                <div class="layui-card-header">
-                    Order Details - #
-                </div>
-                <div class="layui-card-body">
-                    <!-- table black -->
-                    <table id="products" lay-filter="products"></table>
                 </div>
             </div>
         </div>
@@ -115,13 +99,11 @@
     </div>
 </div>
 
-
-
 <script src="/public/admin/ui/layui.js"></script>
 <script>
     layui.config({
         base: '/public/admin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'myorder']);
+    }).use(['index', 'order-manufacturer']);
 </script>

@@ -88,6 +88,10 @@ $this->title = 'My Order';
                         </select>
                     </div>
                 </div>
+                <!-- 提交表单 -->
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit="" lay-filter="update">保存信息</button>
+                </div>
             </form>
         </div>
     </div>
