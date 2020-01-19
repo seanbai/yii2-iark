@@ -335,9 +335,9 @@
     {{#  }else if(d.order_status == 12){ }}
     <span class="tag layui-bg-red">采购方尾款发起</span>
     {{#  }else if(d.order_status == 13){ }}
-    <span class="tag layui-bg-red">尾款已支付</span>
+    <span class="tag layui-bg-red">供货商尾款发起</span>
     {{#  }else if(d.order_status == 14){ }}
-    <span class="tag layui-bg-red">供货商尾款已支付</span>
+    <span class="tag layui-bg-red">尾款已支付,待确认</span>
     {{#  }else if(d.order_status == 15){ }}
     <span class="tag layui-bg-red">待提货</span>
     {{#  }else if(d.order_status == 16){ }}

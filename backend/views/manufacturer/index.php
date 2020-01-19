@@ -21,83 +21,7 @@
 </div>
 
 
-<div class="layui-fluid hide" id="order-status">
-    <div class="layui-row layui-col-space5">
-        <div class="layui-col-md12">
-            <form class="layui-form layui-form-pane" action="" method="post">
-                <!-- 报价 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">Price Quote</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="Input price quote..." class="layui-input">
-                    </div>
-                </div>
-                <!-- 定金 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">Deposit</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="50,000" class="layui-input" disabled="disabled">
-                    </div>
-                </div>
-                <!-- 定金确认 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">Prepayment</label>
-                    <div class="layui-input-block">
-                        <select name="interest">
-                            <option value="" selected="">Confirm Prepayment ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- 开启生产状态 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">In Production</label>
-                    <div class="layui-input-block">
-                        <select name="interest">
-                            <option value="" selected="">In Production ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- 尾款申请 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">Balance</label>
-                    <div class="layui-input-block">
-                        <select name="interest" disabled="disabled">
-                            <option value="" selected="">Application for balance payment ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- 允许发货 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">Delivery</label>
-                    <div class="layui-input-block">
-                        <select name="interest" disabled="disabled">
-                            <option value="" selected="">Permitted delivery ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- 订单完成 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">Completed</label>
-                    <div class="layui-input-block">
-                        <select name="interest" disabled="disabled">
-                            <option value="" selected="">Order completed ?</option>
-                            <option value="0">Yes</option>
-                            <option value="1" >No</option>
-                        </select>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 <script src="/public/admin/ui/layui.js"></script>
 <script>
@@ -106,4 +30,59 @@
     }).extend({
         index: 'lib/index' //主入口模块
     }).use(['index', 'order-manufacturer']);
+</script>
+
+
+
+<!-- 数据表格状态格式化 -->
+<script type="text/html" id="orderStatus">
+    {{#  if(d.order_status == 1){ }}
+    <span class="tag layui-bg-cyan">等待处理</span>
+    {{#  }else if(d.order_status == 2){ }}
+    <span class="tag layui-bg-cyan">订单已确认</span>
+    {{#  }else if(d.order_status == 3){ }}
+    <span class="tag layui-bg-cyan">等待报价</span>
+    {{#  }else if(d.order_status == 4){ }}
+    <span class="tag layui-bg-cyan">等待报价</span>
+    {{#  }else if(d.order_status == 5){ }}
+    <span class="tag layui-bg-red">报价待确认</span>
+    {{#  }else if(d.order_status == 6){ }}
+    <span class="tag layui-bg-cyan">报价已确认</span>
+    {{#  }else if(d.order_status == 7){ }}
+    <span class="tag layui-bg-red">定金待收取</span>
+    {{#  }else if(d.order_status == 8){ }}
+    <span class="tag layui-bg-cyan">定金已确认</span>
+    {{#  }else if(d.order_status == 9){ }}
+    <span class="tag layui-bg-cyan">定金已确认</span>
+    {{#  }else if(d.order_status == 10){ }}
+    <span class="tag layui-bg-cyan">定金待收取</span>
+    {{#  }else if(d.order_status == 11){ }}
+    <span class="tag layui-bg-cyan">订金已确定,待生产</span>
+    {{#  }else if(d.order_status == 12){ }}
+    <span class="tag layui-bg-red">生产中</span>
+    {{#  }else if(d.order_status == 13){ }}
+    <span class="tag layui-bg-cyan">尾款申请</span>
+    {{#  }else if(d.order_status == 14){ }}
+    <span class="tag layui-bg-cyan">尾款待确认</span>
+    {{#  }else if(d.order_status == 15){ }}
+    <span class="tag layui-bg-cyan">尾款待确认</span>
+    {{#  }else if(d.order_status == 16){ }}
+    <span class="tag layui-bg-cyan">报关</span>
+    {{#  }else if(d.order_status == 17){ }}
+    <span class="tag layui-bg-red">税金待支付</span>
+    {{#  }else if(d.order_status == 18){ }}
+    <span class="tag layui-bg-cyan">税金已支付</span>
+    {{#  }else if(d.order_status == 19){ }}
+    <span class="tag layui-bg-cyan">国际物流运输中</span>
+    {{#  }else if(d.order_status == 20){ }}
+    <span class="tag layui-bg-cyan">入库等待发货</span>
+    {{#  }else if(d.order_status == 21){ }}
+    <span class="tag layui-bg-cyan">物流运输中</span>
+    {{#  }else if(d.order_status == 22){ }}
+    <span class="tag layui-bg-cyan">订单已完成</span>
+    {{#  }else if(d.order_status == 23){ }}
+    <span class="tag layui-bg-cyan">报价已拒绝</span>
+    {{# }else { }}
+    <span class="tag layui-bg-cyan">订单状态异常</span>
+    {{# } }}
 </script>

@@ -83,6 +83,12 @@ layui.define(function (exports) {
                     time: 1000 //2秒关闭（如果不配置，默认是3秒）
                 });
                 return false;
+            } else if (formData.status == 15 && formData.bj == '2' && formData.pPrice == '0'){
+                layer.msg('无需供货商报价则需填写报价金额',{
+                    icon: 0,
+                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                });
+                return false;
             }
             $.ajax({
                 type: 'post',

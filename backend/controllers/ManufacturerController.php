@@ -129,19 +129,41 @@ class ManufacturerController extends Controller
     public function actionStatus()
     {
         $id = $_GET['id'];
-
+        $model = Order::findOne(['id'=>$id]);
 
         return $this->render('view', [
-            'id' => $id
+            'id' => $id,
+            'model'=>$model
         ]);
     }
 
     public function actionUpdate()
     {
 
-        print_r(123);
+        $data = $_POST;
+        $model = Order::findOne(['id'=>$data['id']]);
+        if ($data['status'] == 10 && $data['prepayment'] == 1){
+            $model->order_status = 11;    //供货商收到定金
+        }else{
+            $model->order_status = 23;    //供货商未收到定金
+        }
+        if ($data['status'] == 11){
+            $model->order_status = 12;    //支付订金完成
+        }
+        if ($data['status'] == 12){
+            $model->order_status = 13;    //尾款申请
+        }
+        if ($data['status'] == 13){
+            $model->order_status = 14;    //支付订金完成
+        }
 
-        print_r($_POST);die;
+
+        if ($model->save()){
+            return $this->success();
+        }else{
+            return $this->error(400, Helper::arrayToString($model->getErrors()));
+        }
+
 
 
     }

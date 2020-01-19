@@ -111,6 +111,8 @@ class WorkflowController extends Controller
             $model->order_status = 9;
         } else if ($data['status'] == 9){
             $model->order_status = 10;
+        } else if ($data['status'] == 14){
+            $model->order_status = 15;          //尾款已确认
         }
 
         if ($model->save()){

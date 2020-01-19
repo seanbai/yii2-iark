@@ -149,7 +149,7 @@ class OrderController extends Controller
     {
         $data = $_POST;
         $model = Order::findOne(['id'=>$data['id']]);
-        if ($data['status'] == 5 && $data['quote'] == 1){
+        if ($data['status'] == 10 && $data['quote'] == 1){
             $model->order_status = 6;   //确定报价
         }else{
             $model->order_status = 23;   //拒绝报价
@@ -157,6 +157,13 @@ class OrderController extends Controller
         if ($data['status'] == 6){
             $model->order_status = 7;   //支付订金完成
         }
+        if ($data['status'] == 13){
+            $model->order_status = 14;   //尾款支付完成
+        }
+
+
+
+
         if ($model->save()){
             return $this->success();
         }else{

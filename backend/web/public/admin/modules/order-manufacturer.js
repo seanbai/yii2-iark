@@ -61,7 +61,7 @@ layui.define(function(exports){
             layer.open({
               type: 2,
               title: '修改订单状态',
-              area: ['640px', '560px'],
+              area: ['640px', '420px'],
               content: 'status?id='+checkStatus.data[0].id,
               // btn: ['Save','Close'],
               resize: false,
@@ -82,13 +82,46 @@ layui.define(function(exports){
     form.on('submit(update)', function(data){
       console.log(data.field);
       var formData = data.field;
-      // if (formData.status == 5 && formData.quote == '0'){
-      //   layer.msg('请选择是否确定报价',{
-      //     icon: 0,
-      //     time: 1000 //2秒关闭（如果不配置，默认是3秒）
-      //   });
-      //   return false;
-      // }
+      //收取定金
+      if (formData.status == 10 && formData.prepayment == '0'){
+        layer.msg('请确定是否收取到定金',{
+          icon: 0,
+          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+        return false;
+      }
+      //开始生成
+      if (formData.status == 11 && formData.in_production == '0'){
+        layer.msg('请选择是否开始生成',{
+          icon: 0,
+          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+        return false;
+      }
+      //尾款申请
+      if (formData.status == 12 && formData.balance == '0'){
+        layer.msg('请选择是否开始申请尾款',{
+          icon: 0,
+          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+        return false;
+      }
+      //尾款确认
+      if (formData.status == 13 && formData.final == '0'){
+        layer.msg('请选择尾款是否到账',{
+          icon: 0,
+          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+        return false;
+      }
+      if (formData.status == 14 && formData.pick == '0'){
+        layer.msg('请确认是否可以提货',{
+          icon: 0,
+          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+        return false;
+      }
+
       $.ajax({
         type: 'post',
         dataType: 'json',
@@ -113,11 +146,6 @@ layui.define(function(exports){
       });
       return false;
     });
-
-
-
-
-
   });
   //
   exports('myorder', {});

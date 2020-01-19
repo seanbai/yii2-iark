@@ -57,11 +57,11 @@
     {{#  }else if(d.order_status == 11){ }}
     <span class="tag layui-bg-cyan">生产中</span>
     {{#  }else if(d.order_status == 12){ }}
-    <span class="tag layui-bg-red">尾款待支付</span>
+    <span class="tag layui-bg-red">生产中</span>
     {{#  }else if(d.order_status == 13){ }}
-    <span class="tag layui-bg-cyan">尾款已支付</span>
+    <span class="tag layui-bg-cyan">尾款待支付</span>
     {{#  }else if(d.order_status == 14){ }}
-    <span class="tag layui-bg-cyan">货物处理中</span>
+    <span class="tag layui-bg-cyan">尾款支付完成</span>
     {{#  }else if(d.order_status == 15){ }}
     <span class="tag layui-bg-cyan">货物处理中</span>
     {{#  }else if(d.order_status == 16){ }}

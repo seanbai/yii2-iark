@@ -45,7 +45,7 @@ $this->title = 'My Order';
                     <div class="layui-form-item">
                         <label class="layui-form-label">尾款</label>
                         <div class="layui-input-block">
-                            <select id="balance" name="balance" <?php if ($status != 5) echo 'disabled' ?>>
+                            <select id="balance" name="balance" <?php if ($status != 13) echo 'disabled' ?>>
                                 <option value="0">尾款待支付</option>
                                 <option value="1">尾款已支付</option>
                             </select>

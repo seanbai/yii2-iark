@@ -42,20 +42,9 @@
                     <label class="layui-form-label">定金确认</label>
                     <div class="layui-input-block">
                         <select name="deposit" <?php if ($status != 7) echo 'disabled' ?>>
-                            <option >定金是否到账</option>
+                            <option value="0" >定金是否到账</option>
                             <option value="1">定金已到账</option>
                             <option value="2" >未到账</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- 尾款申请 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">尾款待收</label>
-                    <div class="layui-input-block">
-                        <select name="balance" <?php if ($status != 12) echo 'disabled' ?>>
-                            <option >进行尾款催收</option>
-                            <option value="1">Yes</option>
-                            <option value="2" >No</option>
                         </select>
                     </div>
                 </div>
@@ -63,10 +52,21 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">尾款确认</label>
                     <div class="layui-input-block">
-                        <select name="balanceEnd" <?php if ($status != 12) echo 'disabled' ?>>
-                            <option >尾款是否到账</option>
-                            <option value="1">尾款已到账</option>
-                            <option value="2" >未到账</option>
+                        <select name="balanceEnd" <?php if ($status != 14) echo 'disabled' ?>>
+                            <option value="0">尾款是否到账</option>
+                            <option value="1">已到账</option>
+                            <option value="2">未到账</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- 尾款确认 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">支付供货商尾款</label>
+                    <div class="layui-input-block">
+                        <select name="balanceEnd" <?php if ($status != 15) echo 'disabled' ?>>
+                            <option value="0">待支付供货商尾款</option>
+                            <option value="1">已支付</option>
+                            <option value="2">未支付</option>
                         </select>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     <label class="layui-form-label">订单完成</label>
                     <div class="layui-input-block">
                         <select name="orderEnd"  <?php if ($status != 8) echo 'disabled' ?>>
-                            <option value="" selected="">订单已完成 ?</option>
+                            <option value="0">订单已完成 ?</option>
                             <option value="1">是</option>
                             <option value="2">否</option>
                         </select>

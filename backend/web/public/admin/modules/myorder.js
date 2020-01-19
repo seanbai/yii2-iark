@@ -113,6 +113,21 @@ layui.define(function(exports){
         });
         return false;
       }
+      if (formData.status == 6 && formData.deposit == '0'){
+        layer.msg('请确定订金是否支付',{
+          icon: 0,
+          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+        return false;
+      }
+      if (formData.status == 13 && formData.balance == '0'){
+        layer.msg('请确定尾款是否支付',{
+          icon: 0,
+          time: 1000 //2秒关闭（如果不配置，默认是3秒）
+        });
+        return false;
+      }
+
       $.ajax({
         type: 'post',
         dataType: 'json',
