@@ -1,301 +1,154 @@
 <?php
-// 定义标题和面包屑信息
-$this->title = 'Create A New Order';
+$this->title = 'Create New Order';
 ?>
-<?= \backend\widgets\MeTable::widget() ?>
+<?=\backend\widgets\MeTable::widget()?>
 <?php $this->beginBlock('javascript') ?>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
 
-    <style>
-        #main-container {
-            display: none;
-        }
-
-        .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select{
-            /*display: block;*/
-        }
-    </style>
-
-    <div class="layui-fluid">
-        <div class="layui-row layui-col-space15 create-order">
-            <form id="form1" enctype="multipart/form-data"  method="post">
-                <div class="layui-col-md4">
-                    <div class="layui-card layui-form">
-                        <div class="layui-card-header">采购单基本信息</div>
-                        <div class="layui-card-body layui-row layui-col-space10">
-                            <div class="layui-col-md12">
-                                <input type="text" name="userId" lay-verify="title" autocomplete="off"
-                                       value="<?php echo \yii::$app->user->identity->name; ?>" placeholder="订货商"
-                                       class="layui-input" disabled>
-                                <input type="hidden" name="userId" value="<?php echo \yii::$app->user->identity->getId(); ?>">
-                            </div>
-                            <div class="layui-col-md12">
-                                <input type="text" name="date" lay-verify="date" class="layui-input" id="date"
-                                       placeholder="期望交货时间" autocomplete="off">
-                            </div>
-                            <div class="layui-col-md12">
-                                <input type="text" name="name" lay-verify="title" autocomplete="off"
-                                       value="<?php echo \yii::$app->user->identity->contact; ?>" placeholder="联系人"
-                                       class="layui-input">
-                            </div>
-                            <div class="layui-col-md12">
-                                <input type="text" name="phone" lay-verify="title" autocomplete="off" placeholder="电话"
-                                       class="layui-input">
-                            </div>
-                            <div class="layui-col-md12">
-                                <input type="text" name="address" lay-verify="title" autocomplete="off"
-                                       placeholder="收货地址"
-                                       class="layui-input">
-                            </div>
-                            <div class="layui-col-md12">
-                                <select name="currency" lay-verify="">
-                                    <option value="">结算币种选择</option>
-                                    <option value="rmb">人民币</option>
-                                    <option value="oy">欧元</option>
-                                </select>
-                            </div>
-                            <div class="layui-col-md12">
-                                <select name="pay" lay-verify="">
-                                    <option value="">支付方式选择</option>
-                                    <option value="1">银行转账</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="layui-col-md8">
-                    <div class="layui-card layui-form">
-                        <div class="layui-card-header">产品清单</div>
-                        <div class="layui-card-body layui-row layui-col-space10">
-                            <!-- 产品列表 -->
-                            <table class="layui-table" lay-skin="line" id="tab">
-                                <colgroup>
-                                    <col width="80">
-                                    <col width="200">
-                                    <col width="200">
-                                    <col width="100">
-                                    <col width="100">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th>序号</th>
-                                    <th>品牌</th>
-                                    <th>类型</th>
-                                    <th>数量</th>
-                                    <th>描述</th>
-                                    <th>附件</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <input id="allCkb" type="checkbox" lay-verify="title" class="layui-btn-checked" /></td>
-                                    <td>
-                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="file" name="files[]" lay-verify="title" class="layui-file"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
-                                    <td>
-                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="file" name="files[]" lay-verify="title" class="layui-file"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
-                                    <td>
-                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
-                                    <td>
-                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
-                                    <td>
-                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name='ckb' lay-verify="title" class="layui-btn-checked"/></td>
-                                    <td>
-                                        <input type="text" name="brand[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="type[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="number[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="desc[]" lay-verify="title" class="layui-input">
-                                    </td>
-                                    <td>
-                                        <input type="file" name="files[]" lay-verify="title"  class="layui-file"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="5">
-                                        <button type="button" class="layui-btn fr" id="save">
-                                            <i class="layui-icon">&#xe605;</i>提交采购单
-                                        </button>
-                                        <button type="button" class="layui-btn fr" id="addline"
-                                                onclick="addTr2('tab', -1)">
-                                            <i class="layui-icon">&#xe654;</i>增加行
-                                        </button>
-                                        <button type="button" class="layui-btn fr" id="delete" onclick="delTr2()">
-                                            <i class="layui-icon">&#xe67c;</i>删除行
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </form>
+    <!-- 产品信息 -->
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">产品信息</div>
+        <div class="layui-card-body">
+            <table class="items" id="items" lay-filter="items"></table>
+            <!-- 顶部工具栏 -->
+            <script type="text/html" id="createOrder">
+              <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="create">添加</button>
+              </div>
+            </script>
+            <!-- 删除 -->
+            <script type="text/html" id="delete">
+              <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="del">删除</a>
+            </script>
         </div>
-
+      </div>
     </div>
+    <!-- 订单基本信息 -->
+    <form class="layui-col-md12 layui-form">
+      <div class="layui-card">
+        <div class="layui-card-header">基本信息</div>
+        <div class="layui-card-body layui-row layui-col-space10">
+          <div class="layui-col-md3">
+            <input type="text" name="project" placeholder="项目名称" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-col-md3">
+            <input type="text" name="delivery" placeholder="预计交付期" autocomplete="off" class="layui-input" id="delivery">
+          </div>
+          <div class="layui-col-md3">
+            <input type="text" name="package" placeholder="包装要求" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-col-md3">
+            <input type="text" name="contact" placeholder="提货联系人" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-col-md12">
+            <input type="text" name="address" placeholder="交付地址" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-col-md12">
+            <button class="layui-btn"  id="createOrder" lay-submit="" lay-filter="component-form-demo1">提交订单</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+          </div>
+        </div>
+      </div>
+    </form >
+  </div>
+</div>
+<script src="/public/admin/ui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/public/admin/' //静态资源所在路径
+    }).extend({
+        newindex: 'lib/newindex' //主入口模块
+    }).use(['newindex', 'newcreateorder']);
+    window.orderItems = [];
+</script>
+<script>
+    //Demo
+    layui.use(['form','jquery'], function(){
+        var form = layui.form;
+        var $ = layui.jquery;
 
-    <script type="text/javascript">
-        $(function () {
-            $('input[name="files[]"]').change(function(event) {
-                var file = $(this).val();
-                console.log(file);
-            });
-            $(document).on('click', '#save', function () {
-                var fromdata = new FormData($('#form1')[0]);
-                console.log(fromdata);
-                meTables.ajax({
-                    url: 'from',
-                    type: 'post',
-                    data: fromdata,
-                    async: true,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                }).success(function (rsp) {
-                    if (rsp == 1) {
-                        alert("提交成功");
-                        top.location.href = "/";
-                    } else {
-                        alert("提交失败,请刷新后重试");
-                    }
-                });
+        //监听提交
+        form.on('submit(component-form-demo1)', function(data){
+            var $postData = data.field;
+            $postData._csrf = $('meta[name=csrf-token]').attr('content');
+            $.post('<?= \yii\helpers\Url::toRoute(['create/from'])?>', $postData, function (res) {
+                if(res.errCode == 0){
+                    layer.alert(res.errMsg,{icon:1,ok: function () {
+                            layer.close();
+                            window.location.reload;
+                     }});
+                }else{
+                    layer.msg(res.errMsg);
+                }
             });
         });
-        function addTr(tab, row, trHtml) {
-            var $tr = $("#" + tab + " tbody tr").eq(row);
-            if ($tr.size() == 0) {
-                alert("指定的table id或行数不存在！");
-                return;
-            }
-            $tr.after(trHtml);
-        }
-        function delTr(ckb) {
-            //获取选中的复选框，然后循环遍历删除
-            var ckbs = $("input[name=" + ckb + "]:checked");
-            if (ckbs.size() == 0) {
-                alert("要删除指定行，需选中要删除的行！");
-                return;
-            }
-            ckbs.each(function () {
-                $(this).parent().parent().remove();
-            });
-        }
-        function allCheck(allCkb, items) {
-            $("#" + allCkb).click(function () {
-                $('[name=' + items + ']:checkbox').attr("checked", this.checked);
-            });
-        }
-        $(function () {allCheck("allCkb", "ckb");});
+    });
+</script>
+<!-- 将表格里的图片路径转化为图片显示 -->
+<script type="text/html" id="itemImage">
+  <a href="{{d.image}}" target="_blank"><img src="{{d.image}}"></a>
+</script>
 
-        function addTr2(tab, row) {
-            var trHtml = '<tr><td><input type="checkbox" name="ckb" lay-verify="title" class="layui-btn-checked"/><div class="layui-unselect layui-form-checkbox"><i class="layui-icon layui-icon-ok"></i></div></td><td><input type="text" name="brand[]" lay-verify="title" class="layui-input"></td><td><input type="text" name="type[]"   lay-verify="title" class="layui-input"></td><td><input type="text" name="number[]"  lay-verify="title" class="layui-input"></td><td><input type="text" name="desc[]" lay-verify="title" class="layui-input"></td><td><input type="file" name="files[]" lay-verify="title" class="layui-file files"/></td></tr>'
-            addTr(tab, row, trHtml);
-        }
-
-        function delTr2() {
-            delTr('ckb');
-        }
-
-
-    </script>
-
-    <script src="/public/admin/ui/layui.js"></script>
-    <script>
-        layui.config({
-            base: '/public/admin/' //静态资源所在路径
-        }).extend({
-            index: 'lib/index' //主入口模块
-        }).use(['index', 'createorder']);
-    </script>
-
-
-
+<!-- 添加产品清单的弹层 -->
+<div style="display:none" id="addItem">
+  <div class="layui-fluid">
+    <form class="layui-form layui-form-pane" id="addItems" lay-filter="edit">
+      <!-- 品牌 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">品牌*</label>
+        <div class="layui-input-block">
+          <input type="text" name="brand" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <!-- 型号名称 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">型号名称*</label>
+        <div class="layui-input-block">
+          <input type="text" name="model" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <!-- 上传图片 -->
+      <!--<div class="layui-form-item">
+        <label class="layui-form-label">样式图片</label>
+        <div class="layui-input-block">
+          <button type="button" class="layui-btn layui-btn-primary" id="test3"><i class="layui-icon"></i>上传文件</button>
+        </div>
+      </div>-->
+      <!-- 尺寸 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">尺寸*</label>
+        <div class="layui-input-block">
+          <input type="text" name="size" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <!-- 材质 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">材质</label>
+        <div class="layui-input-block">
+          <input type="text" name="material" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <!-- 数量 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">数量*</label>
+        <div class="layui-input-block">
+          <input type="text" name="qty" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <!-- 备注 -->
+      <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+          <input type="text" name="desc" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <!-- 提交表单 -->
+      <div class="layui-form-item">
+        <button class="layui-btn" lay-submit="" lay-filter="addItem">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
 <?php $this->endBlock(); ?>

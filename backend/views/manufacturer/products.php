@@ -25,7 +25,7 @@
                 <td><?php echo $value['type'] ?></td>
                 <td><?php echo $value['number'] ?></td>
                 <td><?php echo $value['desc'] ?></td>
-                <td><a href="<?php echo $value['files'] ?>" class="layui-btn layui-btn-xs layui-btn-warm">附件</a></td>
+                <td><img width="16" height="16" src="<?php echo $value['files'] ?>" class="layui-btn layui-btn-xs layui-btn-warm"/></td>
             </tr>
         <?php } ?>
 

@@ -2,7 +2,9 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminLog;
 use backend\models\Order;
+use backend\models\Product;
 use backend\models\System;
 use backend\modules\api\messages\ApiMsg;
 use common\helpers\Curl;
@@ -49,8 +51,151 @@ class CreateController extends Controller
         return $this->render('index', $data);
     }
 
+    /**
+     * 删除
+     *
+     *  auth rule: create/delete
+     *
+     * @return mixed|string
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionDelete()
+    {
+        // 接收参数判断
+        $data = \Yii::$app->request->post();
+        $model = Product::findOne($data['id']);
+        if (!$model) {
+            return $this->returnJson();
+        }
 
-    public function actionFrom(){
+        // 删除数据成功
+        if ($model->delete()) {
+            AdminLog::create(AdminLog::TYPE_DELETE, $data, $this->pk . '=' . $data[$this->pk]);
+            return $this->success($model);
+        } else {
+            return $this->error(1004, Helper::arrayToString($model->getErrors()));
+        }
+    }
+
+
+    /**
+     * 订单产品
+     * auth rule: create/items
+     * @return mixed|string
+     */
+    public function actionItems()
+    {
+        $items = Product::find()
+        ->where(['user_id' =>  \Yii::$app->user->id])
+        ->asArray()
+        ->all();
+        foreach ($items as $key => &$item){
+            $item['pid'] = $item['id'];
+            $item['id'] = $key + 1;
+        }
+        return $this->returnJson([
+            'code' => 0,
+            'msg' => '',
+            'count' => count($items),
+            'data' => $items
+        ]);
+    }
+
+    /**
+     * 添加产品
+     *  auth rule: create/product
+     * @noinspection DuplicatedCode
+     */
+    public function actionProduct()
+    {
+        $data = \Yii::$app->request->post();
+        if(!$data['brand'] || !$data['model'] || !$data['size'] || !$data['qty']){
+            return $this->error(201,"请检查您的字段是否填写正确");
+        }
+        unset($data['_csrf']);
+        $product = new Product();
+        $data['create_time'] = date('Y-m-d H:i:s');
+        $data['user_id'] = \Yii::$app->user->id;
+        if (!$product->load($data, '')) {
+            return $this->error(205);
+        }
+        // 判断修改返回数据
+        if ($product->save()) {
+            $this->handleJson($product);
+            $pk = $this->pk;
+            AdminLog::create(AdminLog::TYPE_CREATE, $data, $this->pk . '=' . $product->$pk);
+            return $this->returnJson([
+                'errCode' => 200,
+                'errMsg' => '',
+                'data' => []
+            ]);
+        } else {
+            return $this->error(1001, Helper::arrayToString($product->getErrors()));
+        }
+    }
+
+    /**
+     * 创建订单
+     * @return mixed|string
+     * @throws Exception
+     */
+    public function actionFrom()
+    {
+        $postData = \Yii::$app->request->post();
+        $orderItems  = Product::find()
+            ->where(['user_id' =>  \Yii::$app->user->id])
+            ->asArray()
+            ->all();
+        if(empty($orderItems)){
+            return $this->error(300,"请先添加产品");
+        }
+        if(!$postData['delivery'] || !$postData['address'] || !$postData['contact']
+         || !$postData['project']) {
+            return $this->error(300,"订单信息不完整，请检查后再下单。");
+        }
+        $transaction = \Yii::$app->db->beginTransaction();
+        try{
+            $number = $this->getRand(3).date("YmdHis",time());
+            $order = [
+                'order_number' => $number,
+                'user' => \Yii::$app->user->id,
+                'date' => $postData['delivery'],
+                'package' => $postData['package'],
+                'address' => $postData['address'],
+                'name' => $postData['contact'],
+                'project_name' => $postData['project'],
+            ];
+            \Yii::$app->db->createCommand()->insert(Order::tableName(),$order)->execute();
+            $createId = \Yii::$app->db->getLastInsertID();
+            $columns = ['order_id','order_number','brand','number','type','desc','files','create_time'];
+            $purchaseItems = [];
+            foreach ($orderItems as $_orderItem){
+                $purchaseItems[] = [
+                    'order_id' => $createId,
+                    'order_number' => $number,
+                    'brand'  =>  $_orderItem['brand'],
+                    'number' =>  $_orderItem['qty'],
+                    'type'   =>  $_orderItem['model'],
+                    'desc'   =>  $_orderItem['desc'],
+                    'files'  =>  $_orderItem['image'],
+                    'create_time'=> date("Y:m:d H:i:s",time()),
+                ];
+            }
+            \Yii::$app->db->createCommand()->batchInsert(Order::tableItemName(), $columns,  $purchaseItems)->execute();
+
+            $this->createStatusList($createId,$number);
+            $transaction->commit();
+        }catch (\Exception $exception){
+            $transaction->rollBack();
+            return $this->error(300,"系统异常,请稍后再试");
+        }
+        //下单完成删除临时产品表
+        Product::deleteAll(['user_id' =>  \Yii::$app->user->id]);
+        return $this->success([],"订单创建成功！");
+    }
+
+    public function actionFromBackUp(){
 
         //数据验证-电话-地址-付款方式
         $data = $_POST;
