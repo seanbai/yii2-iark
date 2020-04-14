@@ -37,6 +37,7 @@ class Product extends ActiveRecord
     {
         return [
             [['qty', 'user_id'], 'integer'],
+            [['brand', 'model', 'size', 'material','qty'], 'required'],
             [['brand','model','desc','size', 'image', 'package','material','create_time'], 'string', 'max' => 255],
         ];
     }
