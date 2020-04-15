@@ -54,11 +54,15 @@ class PurchaserUserController extends Controller
      */
     public function actionList()
     {
-        $user = Admin::find()->where(['role'=>'buyer'])->asArray()->all();
+
+        $limit = $_GET['limit'];
+        $page = $_GET['page'];
+        $offset = ($page - 1) * $limit;
+
+        $user = Admin::find()->where(['role'=>'buyer'])->asArray()->limit($limit)->offset($offset)->all();
 
         $data['code'] = 0;
-        $data['count'] = count($user);
-
+        $data['count'] = Admin::find()->where(['role'=>'buyer'])->asArray()->count();
 
         foreach ($user as $key=>$value){
             if ($value['status'] == '20'){

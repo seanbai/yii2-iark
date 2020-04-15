@@ -75,7 +75,7 @@ layui.define(function(exports){
         // cancel order
         case 'cancel':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据")
+            layer.msg("您需要先选择一条数据");
           }else{
             layer.confirm('Confirm cancel ?', function(index){
               obj.del();
@@ -86,7 +86,7 @@ layui.define(function(exports){
         // track order
         case 'track':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据")
+            layer.msg("您需要先选择一条数据");
           }else{
             
           }

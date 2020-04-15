@@ -7,7 +7,7 @@ layui.define(function(exports){
     var $ = layui.jquery;
 
     laydate.render({
-      elem: '#date'
+      elem: '#fromdate2'
     });
     //
     var tableIns = table.render({
@@ -67,6 +67,8 @@ layui.define(function(exports){
               icon: 1,
               time: 1000 //2秒关闭（如果不配置，默认是3秒）
             }, function(){
+              $("#edit")[0].reset();
+              layui.form.render();
               layer.closeAll();
               tableIns.reload();
             });
