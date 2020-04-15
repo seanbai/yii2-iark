@@ -98,7 +98,7 @@ $this->title = 'Create New Order';
 </script>
 
 <!-- 添加产品清单的弹层 -->
-<div style="display:none" id="addItem">
+<div style="display:none; padding: 20px;" id="addItem">
   <div class="layui-fluid">
     <form class="layui-form layui-form-pane" id="addItems" lay-filter="edit">
       <!-- 品牌 -->
