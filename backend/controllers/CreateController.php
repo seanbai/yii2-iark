@@ -113,7 +113,7 @@ class CreateController extends Controller
      */
     public function actionProduct()
     {
-        if(strtolower(\Yii::$app->request->method ) != 'psot'){
+        if(strtolower(\Yii::$app->request->method ) != 'post'){
             return $this->error(201,"请求资源错误，请稍后再试！");
         }
         $data = \Yii::$app->request->post();
