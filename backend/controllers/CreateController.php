@@ -72,6 +72,7 @@ class CreateController extends Controller
 
         // 删除数据成功
         if ($model->delete()) {
+            @unlink(\Yii::$app->basePath . '/web/'. $model->image);
             AdminLog::create(AdminLog::TYPE_DELETE, $data, $this->pk . '=' . $data[$this->pk]);
             return $this->success($model);
         } else {
@@ -112,9 +113,12 @@ class CreateController extends Controller
      */
     public function actionProduct()
     {
+        if(strtolower(\Yii::$app->request->method ) != 'psot'){
+            return $this->error(201,"请求资源错误，请稍后再试！");
+        }
         $data = \Yii::$app->request->post();
         if(!$data['brand'] || !$data['model'] || !$data['size'] || !$data['qty']){
-            return $this->error(201,"请检查您的字段是否填写正确");
+            return $this->error(201,"请检查您的字段是否填写正确！");
         }
         unset($data['_csrf']);
         $product = new Product();
