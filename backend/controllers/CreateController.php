@@ -15,6 +15,7 @@ use common\models\Log;
 use console\models\ProductPicture;
 use yii\db\Exception;
 use common\models\Create;
+use yii\web\Response;
 
 /**
  * Class SystemController 系统配置 执行操作控制器
@@ -94,12 +95,14 @@ class CreateController extends Controller
             $item['pid'] = $item['id'];
             $item['id'] = $key + 1;
         }
-        return $this->returnJson([
+        $data = [
             'code' => 0,
             'msg' => '',
             'count' => count($items),
             'data' => $items
-        ]);
+        ];
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return$data;
     }
 
     /**
@@ -126,7 +129,7 @@ class CreateController extends Controller
             $pk = $this->pk;
             AdminLog::create(AdminLog::TYPE_CREATE, $data, $this->pk . '=' . $product->$pk);
             return $this->returnJson([
-                'errCode' => 200,
+                'errCode' => 0,
                 'errMsg' => '',
                 'data' => []
             ]);
@@ -165,7 +168,7 @@ class CreateController extends Controller
                 'address' => $postData['address'],
                 'name' => $postData['contact'],
                 'project_name' => $postData['project'],
-                'create_time'=> date("Y:m:d H:i:s",time()),'create_time'=> date("Y:m:d H:i:s",time()),
+                'create_time'=> date("Y:m:d H:i:s",time()),
             ];
             \Yii::$app->db->createCommand()->insert(Order::tableName(),$order)->execute();
             $createId = \Yii::$app->db->getLastInsertID();

@@ -62,13 +62,15 @@ layui.define(function(exports){
             '_csrf': $('meta[name=csrf-token]').attr('content'),
           },
           error: function(){ // 保存错误处理
-            layer.msg('系统错误,请稍后重试.');
+             layer.msg('系统错误,请稍后重试.',{icon:6});
           },
-          success: function(){ // 保存成功处理
-            // 成功提示
-            layer.msg('删除成功');
-            // 表格重载
-            tableIns.reload();
+          success: function(res){ // 保存成功处理
+            if(res.errCode == 0){
+              layer.msg('删除成功');
+              tableIns.reload();// 表格重载
+            }else{
+              layer.msg(res.errMsg,{icon:6});
+            }
           }
         })
       }else{
@@ -106,16 +108,31 @@ layui.define(function(exports){
         data: $post,
         url: "product",
         error: function(){ // 保存错误处理
-          layer.msg('系统错误,请稍后重试.');
+          layer.msg('系统错误,请稍后重试.',{
+            icon: 2,
+            time: 2000
+          });
         },
-        success: function(){ // 保存成功处理
-          // 成功提示
-          layer.msg('保存成功!您可以继续添加产品.');
-          // 保留弹层同时清空表单缓存
-          $('#addItems')[0].reset();
-          layer.closeAll();
-          // 表格重载
-          tableIns.reload();
+        success: function(res){
+           if(res.errCode == 1001){
+             //验证信息异常
+             layer.msg(res.errMsg,{
+               icon: 2,
+               time: 2000
+             });
+             $('#addItems')[0].reset();
+           }else{
+             // 成功提示
+             layer.msg('保存成功!您可以继续添加产品.',{
+               icon: 6,
+               time: 2000
+             });
+             // 保留弹层同时清空表单缓存
+             $('#addItems')[0].reset();
+             //layer.closeAll();
+             // 表格重载
+             tableIns.reload();
+           }
         }
       });
       return false;

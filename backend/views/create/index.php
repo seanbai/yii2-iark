@@ -46,7 +46,7 @@ $this->title = 'Create New Order';
             <input type="text" name="address" placeholder="交付地址" autocomplete="off" class="layui-input">
           </div>
           <div class="layui-col-md12">
-            <button class="layui-btn"  id="createOrder" lay-submit="" lay-filter="component-form-demo1">提交订单</button>
+            <button class="layui-btn" type="button"  id="createOrder" lay-submit="" lay-filter="component-form-demo1">提交订单</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
@@ -54,6 +54,7 @@ $this->title = 'Create New Order';
     </form >
   </div>
 </div>
+<!--suppress HtmlUnknownTarget -->
 <script src="/public/admin/ui/layui.js"></script>
 <script>
     layui.config({
@@ -75,12 +76,17 @@ $this->title = 'Create New Order';
             $postData._csrf = $('meta[name=csrf-token]').attr('content');
             $.post('<?= \yii\helpers\Url::toRoute(['create/from'])?>', $postData, function (res) {
                 if(res.errCode == 0){
-                    layer.alert(res.errMsg,{icon:1,ok: function () {
-                            layer.close();
-                            window.location.reload;
-                     }});
+                    layer.msg(res.errMsg, {
+                        icon: 6,
+                        time: 2000
+                    }, function(){
+                        window.location.reload();
+                    });
                 }else{
-                    layer.msg(res.errMsg);
+                    layer.msg(res.errMsg,{
+                        icon: 2,
+                        time: 2000
+                    });
                 }
             });
         });
