@@ -165,10 +165,11 @@ class CreateController extends Controller
                 'address' => $postData['address'],
                 'name' => $postData['contact'],
                 'project_name' => $postData['project'],
+                'create_time'=> date("Y:m:d H:i:s",time()),'create_time'=> date("Y:m:d H:i:s",time()),
             ];
             \Yii::$app->db->createCommand()->insert(Order::tableName(),$order)->execute();
             $createId = \Yii::$app->db->getLastInsertID();
-            $columns = ['order_id','order_number','brand','number','type','desc','files','create_time'];
+            $columns = ['order_id','order_number','brand','number','type','desc','size','material','files','create_time'];
             $purchaseItems = [];
             foreach ($orderItems as $_orderItem){
                 $purchaseItems[] = [
@@ -178,6 +179,8 @@ class CreateController extends Controller
                     'number' =>  $_orderItem['qty'],
                     'type'   =>  $_orderItem['model'],
                     'desc'   =>  $_orderItem['desc'],
+                    'size'   =>  $_orderItem['size'],
+                    'material' => $_orderItem['material'],
                     'files'  =>  $_orderItem['image'],
                     'create_time'=> date("Y:m:d H:i:s",time()),
                 ];

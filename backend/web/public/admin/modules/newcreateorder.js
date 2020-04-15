@@ -83,9 +83,14 @@ layui.define(function(exports){
       data: {
         "_csrf": $('meta[name=csrf-token]').attr('content')
       },
-      done: function(res){
-        console.log(res);
-        layer.msg('上传成功');
+      done: function(res, index, upload){
+         if (res.code == 200) {
+           //将图片添加到input
+           $('#image').attr('value',res.data);
+           layer.msg('上传成功');
+         } else {
+           layer.msg('上传失败');
+         }
       }
     });
 

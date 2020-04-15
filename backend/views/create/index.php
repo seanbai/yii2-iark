@@ -110,12 +110,15 @@ $this->title = 'Create New Order';
         </div>
       </div>
       <!-- 上传图片 -->
-      <!--<div class="layui-form-item">
+      <div class="layui-form-item">
         <label class="layui-form-label">样式图片</label>
         <div class="layui-input-block">
-          <button type="button" class="layui-btn layui-btn-primary" id="test3"><i class="layui-icon"></i>上传文件</button>
+          <button type="button" class="layui-btn layui-btn-primary" id="test3">
+              <i class="layui-icon"></i>上传图片
+              <input type="hidden" id="image" name="image"/>
+          </button>
         </div>
-      </div>-->
+      </div>
       <!-- 尺寸 -->
       <div class="layui-form-item">
         <label class="layui-form-label">尺寸*</label>
