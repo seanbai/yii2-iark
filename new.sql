@@ -6,8 +6,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for product_copy
 -- ----------------------------
-DROP TABLE IF EXISTS `product_copy`;
-CREATE TABLE `product_copy` (
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `brand` varchar(45) DEFAULT NULL,
   `qty` smallint(5) DEFAULT NULL,
