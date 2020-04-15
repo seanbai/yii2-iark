@@ -20,11 +20,13 @@ class ManufacturerUserController extends Controller
     //用户信息
     public function actionList()
     {
-        $user = Admin::find()->where(['role'=>'manufacturer'])->asArray()->all();
+        $limit = $_GET['limit'];
+        $page = $_GET['page'];
+        $offset = ($page - 1) * $limit;
 
-
+        $user = Admin::find()->where(['role'=>'manufacturer'])->asArray()->limit($limit)->offset($offset)->all();
         $data['code'] = 0;
-        $data['count'] = count($user);
+        $data['count'] = Admin::find()->where(['role'=>'manufacturer'])->asArray()->count();
 
         foreach ($user as $key=>$value){
             if ($value['status'] == '20'){

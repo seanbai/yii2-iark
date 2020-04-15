@@ -25,7 +25,15 @@
     </div>
 </div>
 
+<script src="/public/admin/ui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/public/admin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'manufacturer']);
 
+</script>
 
 
 <script type="text/html" id="userStatus">
@@ -61,7 +69,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">签约时间</label>
                 <div class="layui-input-block">
-                    <input type="text" name="time" id="time" lay-verify="date" autocomplete="off" placeholder="请输入供货商名称" class="layui-input" id="date">
+                    <input type="text" name="time" lay-verify="date" autocomplete="off" placeholder="请输入签约时间" class="layui-input" id="fromdate2">
                 </div>
             </div>
             <!-- 定金 -->
@@ -111,11 +119,3 @@
 </div>
 
 
-<script src="/public/admin/ui/layui.js"></script>
-<script>
-    layui.config({
-        base: '/public/admin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'manufacturer']);
-</script>
