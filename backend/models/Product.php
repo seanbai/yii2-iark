@@ -16,6 +16,8 @@ use yii\db\ActiveRecord;
  * @property string $image
  * @property string $size
  * @property string $package
+ * @property string $att
+ * @property string $supplier_name
  * @property string $material
  * @property int $user_id
  * @property string $create_time
@@ -37,8 +39,9 @@ class Product extends ActiveRecord
     {
         return [
             [['qty', 'user_id'], 'integer'],
-            [['brand', 'model', 'size', 'material','qty'], 'required'],
-            [['brand','model','desc','size', 'image', 'package','material','create_time'], 'string', 'max' => 255],
+            [['brand','supplier_name','model', 'size','qty'], 'required'],
+            [['att', 'image'], 'safe'],
+            [['brand','model','desc','size', 'att', 'image', 'package','material','create_time'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,6 +53,8 @@ class Product extends ActiveRecord
         return [
             'id' => 'ID',
             'brand' => '名称',
+            'supplier_name' => '供应商',
+            'att' => '附件',
             'qty'  => '数量',
             'model' => '型号',
             'desc' => '备注',

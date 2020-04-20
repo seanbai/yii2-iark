@@ -20,6 +20,7 @@ $this->title = 'Create New Order';
             </script>
             <!-- 删除 -->
             <script type="text/html" id="delete">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
               <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="del">删除</a>
             </script>
         </div>
@@ -98,66 +99,88 @@ $this->title = 'Create New Order';
 </script>
 
 <!-- 添加产品清单的弹层 -->
-<div style="display:none; padding: 20px;" id="addItem">
-  <div class="layui-fluid">
-    <form class="layui-form layui-form-pane" id="addItems" lay-filter="edit">
-      <!-- 品牌 -->
-      <div class="layui-form-item">
-        <label class="layui-form-label">品牌*</label>
-        <div class="layui-input-block">
-          <input type="text" name="brand" lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <!-- 型号名称 -->
-      <div class="layui-form-item">
-        <label class="layui-form-label">型号名称*</label>
-        <div class="layui-input-block">
-          <input type="text" name="model" lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <!-- 上传图片 -->
-      <div class="layui-form-item">
-        <label class="layui-form-label">样式图片</label>
-        <div class="layui-input-block">
-          <button type="button" class="layui-btn layui-btn-primary" id="test3">
-              <i class="layui-icon"></i>上传图片
-              <input type="hidden" id="image" name="image"/>
-          </button>
-        </div>
-      </div>
-      <!-- 尺寸 -->
-      <div class="layui-form-item">
-        <label class="layui-form-label">尺寸*</label>
-        <div class="layui-input-block">
-          <input type="text" name="size" lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <!-- 材质 -->
-      <div class="layui-form-item">
-        <label class="layui-form-label">材质</label>
-        <div class="layui-input-block">
-          <input type="text" name="material" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <!-- 数量 -->
-      <div class="layui-form-item">
-        <label class="layui-form-label">数量*</label>
-        <div class="layui-input-block">
-          <input type="text" name="qty" lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <!-- 备注 -->
-      <div class="layui-form-item">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
-          <input type="text" name="desc" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <!-- 提交表单 -->
-      <div class="layui-form-item">
-        <button class="layui-btn" lay-submit="" lay-filter="addItem">保存</button>
-      </div>
-    </form>
-  </div>
+<div style="display:none" id="addItem">
+    <div class="layui-fluid">
+        <form class="layui-form layui-form-pane" id="addItems" lay-filter="edit">
+            <!-- 型号名称 -->
+            <input type="hidden" name="pid" value="" />
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="brand" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 数量 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">数量*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="qty" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 上传图片 -->
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">样式图片</label>
+                    <div class="layui-input-block">
+                        <input type="hidden" name="image" id="image">
+                        <button type="button" class="layui-btn layui-btn-primary" id="image-up"><i class="layui-icon"></i>上传图片</button>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <img src="" id="demo1" height="38">
+                </div>
+            </div>
+            <!-- 品牌 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">供应商*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="supplier_name" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 型号 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">型号*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="model" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 图纸尺寸 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">图纸尺寸*</label>
+                <div class="layui-input-block">
+                    <input type="text" name="size" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 材质 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">材质</label>
+                <div class="layui-input-block">
+                    <input type="text" name="material" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 上传图片 -->
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">附件</label>
+                    <div class="layui-input-block">
+                        <input type="hidden" name="att" id="att">
+                        <button type="button" class="layui-btn layui-btn-primary" id="attachment"><i class="layui-icon"></i>上传附件</button>
+                        <small>仅支持 zip|rar|7z 格式压缩包文件</small>
+                    </div>
+                </div>
+            </div>
+            <!-- 备注 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="desc" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 提交表单 -->
+            <div class="layui-form-item">
+                <button class="layui-btn" lay-submit="" lay-filter="addItem">保存</button>
+            </div>
+        </form>
+    </div>
 </div>
 <?php $this->endBlock(); ?>

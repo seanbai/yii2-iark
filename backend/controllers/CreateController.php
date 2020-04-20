@@ -117,16 +117,25 @@ class CreateController extends Controller
             return $this->error(1001,"请求资源错误，请稍后再试！");
         }
         $data = \Yii::$app->request->post();
+        $pid  = $data['pid'] ?? null;
+        unset($data['file']);
+        unset($data['pid']);
         if(!$data['brand'] || !$data['model'] || !$data['size'] || !$data['qty']){
             return $this->error(1001,"请检查您的字段是否填写正确！");
         }
         unset($data['_csrf']);
-        $product = new Product();
-        $data['create_time'] = date('Y-m-d H:i:s');
-        $data['user_id'] = \Yii::$app->user->id;
-        if (!$product->load($data, '')) {
-            return $this->error(1001);
+        if(!$pid){
+            $product = new Product();
+            $data['create_time'] = date('Y-m-d H:i:s');
+            $data['user_id'] = \Yii::$app->user->id;
+            if (!$product->load($data, '')) {
+                return $this->error(1001);
+            }
+        }else{
+            $product = Product::find()->where(['id' => $pid])->one();
+            $product->updateAttributes($data);
         }
+
         // 判断修改返回数据
         if ($product->save()) {
             $this->handleJson($product);
