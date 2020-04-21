@@ -78,7 +78,7 @@ layui.define(function(exports){
     // 按钮事件
     items.on('toolbar(items)', function(obj){
       switch (obj.event) {
-        // create
+          // create
         case 'create':
           layer.open({
             type: 1,
@@ -87,10 +87,12 @@ layui.define(function(exports){
             content: $('#addItem'),
             resize: false,
             success: function(){
+              $('input[name=pid]').val('');
+              $('#demo1').attr('src','');
               $('#addItems')[0].reset();
             }
           });
-        break;
+          break;
       }
     });
 
@@ -107,7 +109,7 @@ layui.define(function(exports){
             '_csrf': $('meta[name=csrf-token]').attr('content'),
           },
           error: function(){ // 保存错误处理
-             layer.msg('系统错误,请稍后重试.',{icon:6});
+            layer.msg('系统错误,请稍后重试.',{icon:6});
           },
           success: function(res){ // 保存成功处理
             if(res.errCode == 0){
@@ -153,12 +155,12 @@ layui.define(function(exports){
       },
       done: function(res, index, upload){
         layer.closeAll('loading');
-         if (res.code == 200) {
-           //将图片添加到input
-           $('#image').attr('value',res.data);
-         } else {
-           layer.msg('上传失败');
-         }
+        if (res.code == 200) {
+          //将图片添加到input
+          $('#image').attr('value',res.data);
+        } else {
+          layer.msg('上传失败');
+        }
       }
     });
 
@@ -206,25 +208,27 @@ layui.define(function(exports){
           });
         },
         success: function(res){
-           if(res.errCode == 1001){
-             //验证信息异常
-             layer.msg(res.errMsg,{
-               icon: 2,
-               time: 2000
-             });
-             $('#addItems')[0].reset();
-           }else{
-             // 成功提示
-             layer.msg('保存成功!您可以继续添加产品.',{
-               icon: 6,
-               time: 2000
-             });
-             // 保留弹层同时清空表单缓存
-             $('#addItems')[0].reset();
-             //layer.closeAll();
-             // 表格重载
-             tableIns.reload();
-           }
+          $('input[name=pid]').val('');
+          $('#demo1').attr('src','');
+          if(res.errCode == 1001){
+            //验证信息异常
+            layer.msg(res.errMsg,{
+              icon: 2,
+              time: 2000
+            });
+            $('#addItems')[0].reset();
+          }else{
+            // 成功提示
+            layer.msg('保存成功!您可以继续添加产品.',{
+              icon: 6,
+              time: 2000
+            });
+            // 保留弹层同时清空表单缓存
+            $('#addItems')[0].reset();
+            //layer.closeAll();
+            // 表格重载
+            tableIns.reload();
+          }
         }
       });
       return false;
