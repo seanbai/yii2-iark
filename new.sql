@@ -22,3 +22,12 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 alter table `order` add column project_name varchar(255);
+alter table order_item modify size varchar(255);
+alter table order_item modify type varchar(255);
+alter table order_item modify brand varchar(255);
+alter table product modify size varchar(255);
+alter table product modify brand varchar(255);
+ALTER TABLE `order_item` CHANGE COLUMN `DESC` `desc` TEXT NULL DEFAULT NULL ;
+--add by owen 4-20
+alter table product add (supplier_name varchar(255),att varchar(255));
+alter table `order_item` add column att varchar(255);

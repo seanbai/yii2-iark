@@ -18,6 +18,7 @@ class UploadsController extends Controller
     public $modelClass = 'common\models\Uploads';
 
     private $_type = ['jpeg','png','jpg','gif'];
+    protected $_type2 = ['zip','rar','7z'];
     /**
      * 查询处理
      * @param  array $params
@@ -40,6 +41,37 @@ class UploadsController extends Controller
         }
 
     }
+    public function actionUploads()
+    {
+        $files  = $_FILES;
+        $upload = $this->files2($files['file']);
+        if ($upload) {
+            return json_encode(['code'=>200,'data'=>$upload]);
+        } else {
+            return json_encode(['code'=>400,'data'=>$upload]);
+        }
+
+    }
+    public function files2($files){
+        $img_root = \Yii::getAlias('@backend/web');
+        $path = (new Dir($img_root))->getPath(\Yii::$app->params['product_download_dir']);
+        $request = [];
+        $ext = explode(".", $files['name']);
+        $ext = $ext[count($ext) - 1];
+        if (!in_array($ext,$this->_type2)){
+            return '';
+        }
+        $type = $ext;
+        $new_name = $this->getRand(12,"Aa_").uniqid().'.'.$type;
+        $up_dir = $img_root.$path;
+        if (!is_dir($up_dir)) {
+            mkdir($up_dir, 0777, true);
+        }
+        if (move_uploaded_file($files['tmp_name'], $img_root.$path.'/'.$new_name)) {
+            return $path.'/'.$new_name;
+        }
+        return '';
+    }
     public function files($files){
         $img_root = \Yii::getAlias('@backend/web');
         $path = (new Dir($img_root))->getPath(\Yii::$app->params['product_download_dir']);
@@ -47,7 +79,7 @@ class UploadsController extends Controller
         $ext = explode(".", $files['name']);
         $ext = $ext[count($ext) - 1];
         if (!in_array($ext,$this->_type)){
-            return Create::NOT_UNION_TYPE;
+            return '';
         }
         $type = $ext;
         $new_name = $this->getRand(12,"Aa_").uniqid().'.'.$type;

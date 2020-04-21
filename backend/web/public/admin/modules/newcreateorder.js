@@ -165,10 +165,10 @@ layui.define(function(exports){
     // 附件上传事件
     upload.render({
       elem: '#attachment',
-      url: '/uploads/upload?',
+      url: '/uploads/uploads?',
       // 只允许压缩包格式
       accept: 'file',
-      exts: 'zip|rar',
+      exts: 'zip|rar|7z',
       choose: function(obj){
         // 上传时加载 Loading
         layer.load();
