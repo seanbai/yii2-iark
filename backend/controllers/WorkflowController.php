@@ -8,6 +8,8 @@ use backend\models\Create;
 use backend\models\Order;
 use backend\models\OrderItem;
 use backend\models\ProductPushRecord;
+use backend\models\SupplierOrder;
+use backend\models\SupplierOrderItem;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
@@ -130,11 +132,25 @@ class WorkflowController extends Controller
     public function actionUpdateStatus()
     {
         $data = $_GET;
+        $splitOrder = false;
         $model = Order::findOne(['id'=>$data['id']]);
-        if ($data['status'] == 2){
+        //订单是完成分配工作
+        $completeAssign = $model->hasCompleteAssignation();
+        if ($data['status'] == 2 && $completeAssign) {
             $model->order_status = 3;
         } else if ($data['status'] == 9){
             $model->order_status = 10;
+        }else if($data['status'] == 3 && $completeAssign){
+            //所有item都已分配,状态变更为 => 等待供货商报价
+            $model->order_status = 3;
+            $splitOrder = true;
+        }
+        if($splitOrder){
+            try{
+                $this->splitOrder($model);
+            }catch (\Exception $exception){
+                return $this->error(300, $exception->getMessage());
+            }
         }
 
         if ($model->save()){
@@ -144,6 +160,49 @@ class WorkflowController extends Controller
         }
     }
 
+
+    /**
+     * 按供应商拆分订单
+     *
+     * @param Order $order
+     */
+    private function splitOrder(Order $order)
+    {
+        $supplierOrder = new SupplierOrder;
+        $supplierOrderItem = new SupplierOrderItem;
+        $orderItems = $order->hasMany(OrderItem::class, ['order_id' => 'id'])->all();
+        $splitItems = [];
+        foreach ($orderItems as $orderItem){
+            /* @var $orderItem OrderItem */
+            $supplierOrderItemAttributes = $orderItem->getAttributes(null, [
+                    'create_time','supplier_id', 'supplier_name', 'pricing_id', 'order_number', 'order_id', 'id'
+                ]);
+            $supplierOrderItemAttributes['order_item_id'] = $orderItem->id;
+            $splitItems[$orderItem->supplier_id][] = $supplierOrderItemAttributes;
+            $suppliers[$orderItem->supplier_id] = $orderItem->supplier_name;
+        }
+        $supplierOrderAttributes['order_id'] = $order->id;
+        $supplierOrderAttributes['date'] = $order->date;
+        $supplierOrderAttributes['order_status'] = $order->order_status;
+        $supplierOrderAttributes['order_number'] = $order->order_number;
+        foreach ($suppliers as $supplierId => $supplierName){
+            //save supplier order
+            $_supplierOrder = clone  $supplierOrder;
+            $supplierOrderAttributes['supplier_id'] = $supplierId;
+            $supplierOrderAttributes['supplier_name'] = $supplierName;
+            $_supplierOrder->setAttributes($supplierOrderAttributes, false);
+            $_supplierOrder->save();
+
+            //save supplier order items
+            $supplierItems = $splitItems[$supplierId];
+            foreach ($supplierItems as $supplierItemAttributes){
+                $supplierItemAttributes['supplier_order_id'] = $_supplierOrder->id;
+                $_supplierOrderItem = clone $supplierOrderItem;
+                $_supplierOrderItem->setAttributes($supplierItemAttributes, false);
+                $_supplierOrderItem->save();
+            }
+        }
+    }
 
     /***
      * @return mixed|string

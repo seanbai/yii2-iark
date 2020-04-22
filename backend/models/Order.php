@@ -41,7 +41,8 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['order_status','product_amount'], 'integer'],
-            [['create_time','deposit_amount','balance','tax'], 'string', 'max' => 255],
+            [['tax'], 'safe'],
+            [['create_time','deposit_amount','balance',], 'string', 'max' => 255],
         ];
     }
 
@@ -79,5 +80,21 @@ class Order extends \yii\db\ActiveRecord
         ];
 
         return $rtn;
+    }
+
+    /**
+     * 订单是否完成供应商分配工作
+     *
+     * @return bool
+     */
+    public function hasCompleteAssignation()
+    {
+       $items =  OrderItem::findAll(['order_id' => $this->id]);
+       foreach ($items as $orderItem){
+           if(!$orderItem->supplier_id){
+               return false;
+           }
+       }
+       return true;
     }
 }

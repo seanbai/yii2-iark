@@ -185,7 +185,7 @@ class CreateController extends Controller
             ];
             \Yii::$app->db->createCommand()->insert(Order::tableName(),$order)->execute();
             $createId = \Yii::$app->db->getLastInsertID();
-            $columns = ['order_id','order_number','brand','number','type','desc','size','material','files','create_time','att','supplier_name'];
+            $columns = ['order_id','order_number','brand','number','type','desc','size','material','files','create_time','att','product_supplier'];
             $purchaseItems = [];
             foreach ($orderItems as $_orderItem){
                 $purchaseItems[] = [
@@ -200,7 +200,7 @@ class CreateController extends Controller
                     'files'  =>  $_orderItem['image'],
                     'create_time'=> date("Y:m:d H:i:s",time()),
                     'att'    => $_orderItem['att'],
-                    'supplier_name' => $_orderItem['supplier_name'],
+                    'product_supplier' => $_orderItem['product_supplier'],
                 ];
             }
             \Yii::$app->db->createCommand()->batchInsert(Order::tableItemName(), $columns,  $purchaseItems)->execute();

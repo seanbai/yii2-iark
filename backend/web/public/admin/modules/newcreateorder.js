@@ -30,7 +30,7 @@ layui.define(function(exports){
             return '<div onclick="showImg(this)"><img src="'+d.image+'"></div>';
           }
         },
-        {field: 'supplier_name', title: '供应商'},
+        {field: 'product_supplier', title: '供应商'},
         {field: 'model', title: '型号'},
         {field: 'size', title: '图纸尺寸'},
         {field: 'material', title: '材质'},

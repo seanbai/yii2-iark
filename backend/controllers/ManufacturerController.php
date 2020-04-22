@@ -6,9 +6,12 @@ use backend\models\Admin;
 use backend\models\Auth;
 use backend\models\Order;
 use backend\models\OrderItem;
+use backend\models\SupplierOrder;
+use backend\models\SupplierOrderItem;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
+use yii\db\Query;
 
 /**
  * Class OrderController My Order 执行操作控制器
@@ -87,12 +90,16 @@ class ManufacturerController extends Controller
 
         if (yii::$app->user->identity->id == 1) {
             $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
+            // 查询数据
+            $query = $this->getQuery($search['where']);
         }else{
-            $search['where'] = ['user'=> yii::$app->user->identity->id ];
+            //供应商订单信息
+            $search['where'] = ['supplier_id'=> yii::$app->user->identity->id ];
+            // 查询数据
+            $query =  (new Query())->from(SupplierOrder::tableName())->where($search['where']);
         }
 
-        // 查询数据
-        $query = $this->getQuery($search['where']);
+
         if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
 
         // 查询数据条数
