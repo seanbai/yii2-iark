@@ -74,3 +74,10 @@ CREATE TABLE `supplier_order_item` (
   FOREIGN KEY fk_supplier_order_id(supplier_order_id) REFERENCES supplier_order(id) ON UPDATE NO ACTION ON DELETE CASCADE,
   FOREIGN KEY fk_order_item_id(order_item_id) REFERENCES order_item(id) ON UPDATE NO ACTION ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+
+-- 新sql
+alter table `supplier_order` add column create_time varchar(255);
+alter table `supplier_order` add column total decimal(10, 4);
+alter table `supplier_order` add column quote_time varchar(255);
+alter table `supplier_order_item` add column production_status enum(0,1) comment "产品生产状态";

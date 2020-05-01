@@ -12,6 +12,7 @@ use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
 use yii\db\Query;
+use yii\web\Response;
 
 /**
  * Class OrderController My Order 执行操作控制器
@@ -23,10 +24,10 @@ class ManufacturerController extends Controller
      * @var string 定义使用的model
      */
     public $modelClass = 'backend\models\Order';
-     
+
     /**
      * 查询处理
-     * @param  array $params
+     * @param array $params
      * @return array 返回数组
      */
     public function where($params)
@@ -42,14 +43,14 @@ class ManufacturerController extends Controller
         /* @var $strategy \common\strategy\Strategy */
         $strategy = Substance::getInstance($this->strategy);
         // 获取查询参数
-        $search = $strategy->getRequest(); // 处理查询参数
-        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
+        $search            = $strategy->getRequest(); // 处理查询参数
+        $search['field']   = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
 
         if (yii::$app->user->identity->id == 1) {
             $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
-        }else{
-            $search['where'] = ['user'=> yii::$app->user->identity->id ];
+        } else {
+            $search['where'] = ['user' => yii::$app->user->identity->id];
         }
 
         // 查询数据
@@ -71,12 +72,12 @@ class ManufacturerController extends Controller
     public function actionIndex()
     {
         $data = [
-            'user' => Admin::getUser(),
+            'user'   => Admin::getUser(),
             'status' => Order::status(),
-            'pay' => Order::pay(),
+            'pay'    => Order::pay(),
         ];
 
-        return $this->render('index', $data);
+        return $this->render('quoteation', $data);
     }
 
 
@@ -84,19 +85,21 @@ class ManufacturerController extends Controller
     {
         $strategy = Substance::getInstance($this->strategy);
         // 获取查询参数
-        $search = $strategy->getRequest(); // 处理查询参数
-        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
+        $search            = $strategy->getRequest(); // 处理查询参数
+        $search['field']   = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
 
+        $query = (new Query())->from(SupplierOrder::tableName());
         if (yii::$app->user->identity->id == 1) {
             $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
             // 查询数据
-            $query = $this->getQuery($search['where']);
-        }else{
+            //$query = $this->getQuery($search['where']);
+            $query->where($search['where']);
+        } else {
             //供应商订单信息
-            $search['where'] = ['supplier_id'=> yii::$app->user->identity->id ];
+            $search['where'] = ['supplier_id' => yii::$app->user->identity->id];
             // 查询数据
-            $query =  (new Query())->from(SupplierOrder::tableName())->where($search['where']);
+            $query->where($search['where']);
         }
 
 
@@ -109,14 +112,89 @@ class ManufacturerController extends Controller
             if ($array) $this->afterSearch($array);
             $data['code'] = 0;
         } else {
-            $array = [];
+            $array        = [];
             $data['code'] = 0;
         }
 
         $data['count'] = $total;
-        $data['data'] = $array;
+        $data['data']  = $array;
         return json_encode($data);
     }
+
+    //供应商订单详情
+    public function actionItems()
+    {
+        $supplierOrderId = \Yii::$app->request->get('id');
+        $supplierOrder = SupplierOrder::findOne($supplierOrderId);
+        $items = $supplierOrder->hasMany(SupplierOrderItem::class,['supplier_order_id' => 'id'])
+                ->asArray()->all();
+        foreach ($items as $key => &$item){
+            $item['pid'] = $item['id'];
+            $item['id'] = $key + 1;
+        }
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($items),
+            'data' => $items
+        ];
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return$data;
+    }
+
+
+    //订单item修改
+    public function actionUpdateItem()
+    {
+        $itemId = \Yii::$app->request->get('id');
+        $attribute = \Yii::$app->request->get('attr');
+        $value = \Yii::$app->request->get('value');
+        if(!$attribute || !$value){
+            $data = [
+                'code' => 400,
+                'msg' => 'invalid input params'
+            ];
+        }else{
+            $supplierOrderItem = SupplierOrderItem::findOne($itemId);
+            if(!$supplierOrderItem){
+                $data = [
+                    'code' => 400,
+                    'msg' => 'invalid input params'
+                ];
+            }else{
+                $supplierOrderItem ->setAttribute($attribute, $value);
+                $supplierOrderItem->save();
+                $data = [
+                    'code' => 200,
+                ];
+            }
+        }
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return $data;
+    }
+
+
+    //生产中订单列表
+    public function actionProduction()
+    {
+        if(\Yii::$app->request->isAjax){
+            $userId = Yii::$app->user->id;
+            $status = 5;// 报价完成的
+            $orders = SupplierOrder::find()
+                ->where(['supplier_id'=>$userId, 'order_status'=>$status])
+                ->asArray()->all();
+            $data = [
+                'code' => 0,
+                'msg' => '',
+                'count' => count($orders),
+                'data' => $orders
+            ];
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            return$data;
+        }
+        return $this->render('production');
+    }
+
 
     /****
      * 产品列表页面
@@ -174,5 +252,25 @@ class ManufacturerController extends Controller
 
 
 
+    }
+
+
+    public function actionQuote()
+    {
+        $supplierOrderId = \Yii::$app->request->post('id');
+        $supplierOrder = SupplierOrder::findOne($supplierOrderId);
+        try{
+            $supplierOrder->quote();
+            $msg = "订单已报价";
+            $code = 200;
+        }catch (\Exception $exception){
+            $code = 400;
+            $msg = "暂时无法报价";
+        }
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'code' => $code,
+            'msg' => $msg
+        ];
     }
 }

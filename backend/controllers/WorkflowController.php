@@ -184,6 +184,7 @@ class WorkflowController extends Controller
         $supplierOrderAttributes['order_id'] = $order->id;
         $supplierOrderAttributes['date'] = $order->date;
         $supplierOrderAttributes['order_status'] = $order->order_status;
+        $supplierOrderAttributes['create_time'] = $order->create_time;
         $supplierOrderAttributes['order_number'] = $order->order_number;
         foreach ($suppliers as $supplierId => $supplierName){
             //save supplier order

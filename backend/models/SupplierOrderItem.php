@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
  * @property string $material
  * @property string $att
  * @property string $product_supplier
+ * @property string $production_status
  * Class SupplierOrder
  * @package backend\models
  */

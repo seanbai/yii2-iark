@@ -182,6 +182,12 @@ body {
   border: none;
   border-radius: 2px; }
 
+#manuList {
+  width: 100%;
+  min-width: 200px;
+  padding: 5px 10px;
+  border: 1px solid #EEE; }
+
 .dark .layui-side-menu,
 .dark .layadmin-pagetabs .layui-tab-title li:after,
 .dark .layadmin-pagetabs .layui-tab-title li.layui-this:after,
@@ -197,6 +203,14 @@ body {
   background-color: #000 !important;
   color: #FFF;
   font-size: 24px; }
+.dark .layui-btn {
+  background-color: #727CF5; }
+  .dark .layui-btn.layui-btn-primary {
+    background-color: #EEE; }
+    .dark .layui-btn.layui-btn-primary:hover {
+      border-color: #000;
+      background-color: #121212;
+      color: #FFF; }
 .dark .layui-layout-admin .layui-header .layui-nav a {
   color: #000; }
 .dark .layui-nav-tree .layui-nav-bar {
@@ -207,5 +221,7 @@ body {
   background-color: #f1f3fa; }
 .dark .layui-table tbody tr:hover {
   background-color: #f1f3fa; }
+.dark .layui-laypage .layui-laypage-curr .layui-laypage-em {
+  background-color: #727CF5; }
 
 /*# sourceMappingURL=custom.css.map */

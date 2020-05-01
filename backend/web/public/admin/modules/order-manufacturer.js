@@ -42,9 +42,9 @@ layui.define(function(exports){
           }else{
             layer.open({
               type: 2,
-              title: '产品清单',
+              title: '产品报价',
               area: ['960px', '540px'],
-              content: 'products?orderId='+checkStatus.data[0].id,
+              content: 'products?orderId='+checkStatus.data[0].pid,
               btn: ['Close'],
               resize: false,
               yes: function(index, layero){
@@ -62,7 +62,7 @@ layui.define(function(exports){
               type: 2,
               title: '修改订单状态',
               area: ['640px', '420px'],
-              content: 'status?id='+checkStatus.data[0].id,
+              content: 'status?id='+checkStatus.data[0].pid,
               // btn: ['Save','Close'],
               resize: false,
             });
