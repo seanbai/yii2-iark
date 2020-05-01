@@ -128,10 +128,6 @@ class ManufacturerController extends Controller
         $supplierOrder = SupplierOrder::findOne($supplierOrderId);
         $items = $supplierOrder->hasMany(SupplierOrderItem::class,['supplier_order_id' => 'id'])
                 ->asArray()->all();
-        foreach ($items as $key => &$item){
-            $item['pid'] = $item['id'];
-            $item['id'] = $key + 1;
-        }
         $data = [
             'code' => 0,
             'msg' => '',
@@ -162,8 +158,13 @@ class ManufacturerController extends Controller
                     'msg' => 'invalid input params'
                 ];
             }else{
-                $supplierOrderItem ->setAttribute($attribute, $value);
+                $supplierOrderItem->setAttribute($attribute, $value);
                 $supplierOrderItem->save();
+                if($attribute == 'production_status'){
+                    //订单生产状态
+                    $supplierOrder = SupplierOrder::findOne($supplierOrderItem->supplier_order_id);
+                    $supplierOrder->checkProductionStatus();
+                }
                 $data = [
                     'code' => 200,
                 ];

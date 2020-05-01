@@ -11,6 +11,7 @@ use yii\db\Exception;
  * @property int $id
  * @property string $order_number
  * @property string $date
+ * @property string $order_id
  * @property int    $supplier_id
  * @property string $order_status
  * @property string $supplier_name
@@ -28,6 +29,46 @@ class SupplierOrder extends ActiveRecord
     public static function tableName()
     {
         return 'supplier_order';
+    }
+
+    public function checkProductionStatus()
+    {
+        $items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id'])
+            ->all();
+        $itemCount = count($items);
+        $updateComplete = true;
+        foreach ($items as $item) {
+            /* @var $item SupplierOrderItem */
+            if($item->production_status == 1){
+                $updateComplete = false;
+                break;
+            }
+        }
+
+        if($updateComplete){
+            $this->setAttribute('order_status', 7);
+            $this->save();//完成生产
+
+            //更改父订单状态
+            $this->parentOrderStatus(7);
+        }
+    }
+
+    public function parentOrderStatus($status)
+    {
+        $order = Order::findOne($this->order_id);
+        $childOrders = $order->hasMany(SupplierOrder::class, ['order_id' => 'id'])
+            ->all();
+        $update = true;
+        foreach ($childOrders as $childOrder){
+            if($childOrder->order_status != $status){
+                $update = true;
+                break;
+            }
+        }
+        if($update){
+            $order->setAttribute('order_status', $status);
+        }
     }
 
     /**
