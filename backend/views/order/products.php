@@ -11,10 +11,13 @@
         <tr>
             <th>序号</th>
             <th>品牌</th>
-            <th>类型</th>
             <th>数量</th>
-            <th>描述</th>
+            <th width="100">样式图片</th>
+            <th>型号</th>
+            <th>图纸尺寸</th>
+            <th>材质</th>
             <th width="100">附件</th>
+            <th>备注</th>
         </tr>
         </thead>
         <tbody>
@@ -22,10 +25,13 @@
             <tr>
                 <td><?php echo $key ?></td>
                 <td><?php echo $value['brand'] ?></td>
-                <td><?php echo $value['type'] ?></td>
                 <td><?php echo $value['number'] ?></td>
+                <td><img width="75" height="16" src="<?php echo $value['files'] ?>" class="layui-btn layui-btn-xs layui-btn-warm"/></td>
+                <td><?php echo $value['type'] ?></td>
+                <td><?php echo $value['size'] ?></td>
+                <td><?php echo $value['material'] ?></td>
+                <td><a href="<?php echo $value['att']?>"><?php echo $value['att']?></a></td>
                 <td><?php echo $value['desc'] ?></td>
-                <td><img width="16" height="16" src="<?php echo $value['files'] ?>" class="layui-btn layui-btn-xs layui-btn-warm"/></td>
             </tr>
         <?php } ?>
 
