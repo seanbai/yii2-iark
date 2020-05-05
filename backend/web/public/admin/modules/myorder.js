@@ -65,10 +65,37 @@ layui.define(function(exports){
               if (checkStatus.data[0].order_status != 1){
                 layer.msg("订单已无法作废");
               }else{
+
                 layer.msg('执行作废操作',{
                   icon: 1,
                   time: 1000
                 }, function(){
+
+                    $.ajax({
+                        type: 'post',
+                        dataType: 'json',
+                        data:  'id='+checkStatus.data[0].id,
+                        url: "cancel",
+                        error: function(){ // 保存错误处理
+                            layer.msg('系统错误，请稍后重试');
+                        },
+                        success: function(e){ // 保存成功处理
+                            if (e.errCode == 0){
+                                layer.msg('保存成功',{
+                                    icon: 1,
+                                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    parent.layer.closeAll();
+                                    parent.location.reload();
+                                });
+                            } else {
+                                layer.msg(e.errMsg);
+                            }
+                        }
+                    });
+
+
+
                   layer.close(index);
                 });
               }
