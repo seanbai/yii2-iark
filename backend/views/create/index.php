@@ -134,7 +134,7 @@ $this->title = 'Create New Order';
             <div class="layui-form-item">
                 <label class="layui-form-label">供应商*</label>
                 <div class="layui-input-block">
-                    <input type="text" name="supplier_name" lay-verify="required" autocomplete="off" class="layui-input">
+                    <input type="text" name="product_supplier" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <!-- 型号 -->

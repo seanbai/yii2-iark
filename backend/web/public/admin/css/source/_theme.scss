@@ -19,6 +19,17 @@
     color: #FFF;
     font-size: 24px;
   }
+  .layui-btn{
+    background-color: #727CF5;
+    &.layui-btn-primary{
+      background-color: #EEE;
+      &:hover{
+        border-color: #000;
+        background-color: #121212;
+        color: #FFF;
+      }
+    }
+  }
   .layui-layout-admin .layui-header .layui-nav a{
     color: #000;
   }
@@ -32,5 +43,8 @@
   }
   .layui-table tbody tr:hover{
     background-color: #f1f3fa
+  }
+  .layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: #727CF5;
   }
 }
