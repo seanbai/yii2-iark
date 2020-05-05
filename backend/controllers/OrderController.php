@@ -47,11 +47,10 @@ class OrderController extends Controller
         $search = $strategy->getRequest(); // 处理查询参数
         $search['field'] = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
+        $search['where'] = ['<>', 'order_status', 0];
 
-        if (yii::$app->user->identity->id == 1){
-            $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
-        } else {
-            $search['where'] = ['user' => yii::$app->user->identity->id];
+        if (yii::$app->user->identity->id != 1){
+            $search['andWhere'] = ['user' => yii::$app->user->identity->id];
         }
 
         // 查询数据
@@ -89,12 +88,11 @@ class OrderController extends Controller
         $search = $strategy->getRequest(); // 处理查询参数
         $search['field'] = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
+        $search['where'] = ['<>', 'order_status', 0];
 
         if (yii::$app->user->identity->id != 1){
-            $search['where'] = ['user' => yii::$app->user->identity->id];
+            $search['andWhere'] = ['user' => yii::$app->user->identity->id];
         }
-
-        $search['where'] = ['<>', 'order_status', 0];
 
         // 查询数据
         $query = $this->getQuery($search['where']);
