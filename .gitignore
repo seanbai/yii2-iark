@@ -1,1 +1,8 @@
 .idea/*
+
+# netbeans project files
+nbproject
+
+/vendor
+/backend/web/resource/files/
+/common/config/main.php
