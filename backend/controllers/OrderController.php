@@ -40,6 +40,9 @@ class OrderController extends Controller
 
     public function actionSearch()
     {
+        $limit = $_GET['limit'];
+        $page = $_GET['page'];
+
         // 实例化数据显示类
         /* @var $strategy \common\strategy\Strategy */
         $strategy = Substance::getInstance($this->strategy);
@@ -48,6 +51,8 @@ class OrderController extends Controller
         $search['field'] = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
         $search['where'] = ['<>', 'order_status', 0];
+        $search['offset'] = ($page - 1) * $limit;
+        $search['limit'] = $limit;
 
         if (yii::$app->user->identity->id != 1){
             $search['andWhere'] = ['user' => yii::$app->user->identity->id];
@@ -83,12 +88,17 @@ class OrderController extends Controller
 
     public function actionList()
     {
+        $limit = $_GET['limit'];
+        $page = $_GET['page'];
+
         $strategy = Substance::getInstance($this->strategy);
         // 获取查询参数
         $search = $strategy->getRequest(); // 处理查询参数
         $search['field'] = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
         $search['where'] = ['<>', 'order_status', 0];
+        $search['offset'] = ($page - 1) * $limit;
+        $search['limit'] = $limit;
 
         if (yii::$app->user->identity->id != 1){
             $search['andWhere'] = ['user' => yii::$app->user->identity->id];
@@ -106,13 +116,14 @@ class OrderController extends Controller
         } else {
             $array = [];
         }
+        if (!empty($array)) {
+            foreach ($array as $key => $value) {
+                if (empty($value['product_amount'])) $array[$key]['product_amount'] = '';
+                if (empty($value['tax'])) $array[$key]['tax'] = '';
+            }
+        }
         $data['code'] = 0;
         $data['count'] = $total;
-
-        foreach ($array as $key => $value) {
-            if (empty($value['product_amount'])) $array[$key]['product_amount'] = '';
-            if (empty($value['tax'])) $array[$key]['tax'] = '';
-        }
         $data['data'] = $array;
 
         return json_encode($data);
