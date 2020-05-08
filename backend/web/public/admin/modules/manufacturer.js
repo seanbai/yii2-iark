@@ -21,14 +21,14 @@ layui.define(function(exports){
       skin: 'row',
       even: true,
       cols: [[ //表头
-        {field: 'brand', title: '供货商名称',templet:'<div>{{d.name}}</div>'},
-        {field: 'boss', title: '联系人',templet:'<div>{{d.contact}}</div>'},
-        {field: 'phone', title: '联系电话',templet:'<div>{{d.phone}}</div>'},
-        {field: 'status', title: '账户状态', templet:'#userStatus'},
-        {field: 'mail', title: '邮件',templet:'<div>{{d.email}}</div>'},
-        {field: 'city', title: '城市',templet:'<div>{{d.city}}</div>'},
-        {field: 'address', title: '地址',templet:'<div>{{d.address}}</div>'},
         {field: 'username', title: '用户名',templet:'<div>{{d.username}}</div>'},
+        {field: 'brand', title: '供应品牌',templet:'<div>{{d.name}}</div>'},
+        {field: 'boss', title: '订单员',templet:'<div>{{d.contact}}</div>'},
+        {field: 'phone', title: '联系电话',templet:'<div>{{d.phone}}</div>'},
+        {field: 'mail', title: '邮件',templet:'<div>{{d.email}}</div>'},
+        {field: 'status', title: '账户状态', templet:'#userStatus'},
+        {field: 'city', title: '城市',templet:'<div>{{d.city}}</div>'},
+        {field: 'address', title: '提货地址',templet:'<div>{{d.address}}</div>'},
         {field: 'contract', title: '签约时间',templet:'<div>{{d.time}}</div>'},
         {fixed: 'right', title:'操作', toolbar: '#editTool', width:140}
       ]]
