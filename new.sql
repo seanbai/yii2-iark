@@ -81,3 +81,12 @@ alter table `supplier_order` add column create_time varchar(255);
 alter table `supplier_order` add column total decimal(10, 4);
 alter table `supplier_order` add column quote_time varchar(255);
 alter table `supplier_order_item` add column production_status enum(0,1) comment "产品生产状态";
+
+
+--sean- 0508- 创建供货商用户信息新增字段
+alter table `admin` ADD COLUMN `main` VARCHAR(255);
+alter table `admin` ADD COLUMN `url` VARCHAR(255);
+alter table `admin` ADD COLUMN `contact2` VARCHAR(100);
+alter table `admin` ADD COLUMN `phone2` VARCHAR(100);
+alter table `admin` ADD COLUMN `email2` VARCHAR(100);
+alter table `admin` ADD COLUMN `off` int(3);

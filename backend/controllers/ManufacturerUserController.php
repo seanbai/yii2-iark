@@ -65,6 +65,13 @@ class ManufacturerUserController extends Controller
             $model->phone = $_POST['phone'];
             $model->email = $_POST['email'];
             $model->address = $_POST['address'];
+            $model->main = $_POST['main'];
+            $model->url = $_POST['url'];
+            $model->contact2 = $_POST['contact2'];
+            $model->phone2 = $_POST['phone2'];
+            $model->email2 = $_POST['email2'];
+            $model->off = $_POST['off'];
+
             if ($model->save()){
                 return $this->success(0);
             }else{

@@ -41,9 +41,13 @@ layui.define(function(exports){
           layer.open({
             type: 1,
             title: '供货商账户信息',
-            area: ['640px', '600px'],
+            area: ['800px', '900px'],
             content: $("#editForm"),
-            resize: false
+            resize: false,
+            success: function(){
+              $('input[name=username]').removeAttr('disabled');
+              $('#edit')[0].reset();
+            }
           });
         break;
       }
@@ -51,7 +55,8 @@ layui.define(function(exports){
 
     // 提交表单
     form.on('submit(create)', function(data){
-      console.log(data.field);
+      alert(1);
+
       // ajax 提交表单
       $.ajax({
         type: 'post',
@@ -80,7 +85,7 @@ layui.define(function(exports){
       return false;
     });
 
-    // 创建表单
+    // 账号修改
     form.on('submit(update)', function(data){
       // ajax 提交表单
       $.ajax({
@@ -109,7 +114,7 @@ layui.define(function(exports){
       return false;
     });
 
-    // 行编辑事件
+    // 禁用账号
     table.on('tool(manufacturer)', function(obj){
       var data = obj.data;
       var id = data.id;
@@ -119,7 +124,7 @@ layui.define(function(exports){
         layer.open({
           type: 1,
           title: '采购商账户信息',
-          area: ['640px', '600px'],
+          area: ['800px', '900px'],
           content: $('#editForm'),
           resize: false,
           success: function(){
