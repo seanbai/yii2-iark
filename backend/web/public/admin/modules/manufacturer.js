@@ -52,6 +52,7 @@ layui.define(function(exports){
             resize: false,
             success: function(){
               $('input[name=username]').removeAttr('disabled');
+              $('input[name=id]').val('');
               $('#edit')[0].reset();
             }
           });
