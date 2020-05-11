@@ -64,8 +64,6 @@ layui.define(function(exports){
 
     // 提交表单
     form.on('submit(create)', function(data){
-      alert(1);
-
       // ajax 提交表单
       $.ajax({
         type: 'post',
