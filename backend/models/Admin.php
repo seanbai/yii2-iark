@@ -118,7 +118,7 @@ class Admin extends \common\models\Admin
             [['username', 'email', 'password', 'repassword'], 'trim'],
             [['password', 'repassword'], 'string', 'min' => 6, 'max' => 30],
             // Unique
-            [['username', 'email', 'phone'], 'unique'],
+            [['username'], 'unique'],
             // Username
             ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_-]+$/'],
             ['username', 'string', 'min' => 3, 'max' => 30],
@@ -131,8 +131,6 @@ class Admin extends \common\models\Admin
             ['repassword', 'compare', 'compareAttribute' => 'password'],
             //['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            // Status
-            //['role', 'in', 'range' => array_keys(self::getArrayRole(false))],
         ];
     }
 
