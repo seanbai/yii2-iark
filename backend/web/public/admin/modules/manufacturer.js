@@ -53,6 +53,8 @@ layui.define(function(exports){
             success: function(){
               $('input[name=username]').removeAttr('disabled');
               $('input[name=id]').val('');
+              $('#layui-btn').removeAttr('lay-filter');
+              $('#layui-btn').attr('lay-filter', 'create');
               $('#edit')[0].reset();
             }
           });
