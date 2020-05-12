@@ -207,7 +207,7 @@ class CreateController extends Controller
 
             $this->createStatusList($createId,$number);
             $transaction->commit();
-        }catch (\Exception $exception){var_dump($exception->getMessage());die;
+        }catch (\Exception $exception){
             $transaction->rollBack();
             return $this->error(300,"系统异常,请稍后再试");
         }

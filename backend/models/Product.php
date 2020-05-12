@@ -41,7 +41,8 @@ class Product extends ActiveRecord
             [['qty', 'user_id'], 'integer'],
             [['brand','product_supplier','model', 'size','qty'], 'required'],
             [['att', 'image'], 'safe'],
-            [['brand','model', 'product_supplier','desc','size', 'att', 'image', 'package','material','create_time'], 'string', 'max' => 255],
+            [['brand','model', 'product_supplier','desc','size', 'att', 'image', 'package','create_time'], 'string', 'max' => 255],
+            [['material'] , 'string', 'max' => 65530]
         ];
     }
 

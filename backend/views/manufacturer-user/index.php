@@ -48,63 +48,109 @@
 <div id="editForm" style="display:none;padding: 20px;">
     <div class="layui-fluid">
         <form class="layui-form layui-form-pane" id="edit" lay-filter='edit'>
-            <!-- 供货商名称 -->
-            <div class="layui-form-item">
-                <label class="layui-form-label">供货商名称</label>
-                <div class="layui-input-block">
-                    <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入供货商名称" class="layui-input">
-                </div>
-            </div>
-            <!-- 登录用户名 -->
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off" placeholder="登录用户名，密码默认123456" class="layui-input">
+                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off"
+                           placeholder="登录用户名，密码默认123456" class="layui-input">
                     <input type="hidden" name="password" value="123456">
-                    <input type="hidden" name="repassword"  value="123456">
-                    <input type="hidden" name="id" value="">
+                    <input type="hidden" name="repassword" value="123456">
+                    <input type="hidden" id="id" name="id" value="">
                 </div>
             </div>
-            <!-- 报价 -->
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">供应品牌</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
             <div class="layui-form-item">
                 <label class="layui-form-label">签约时间</label>
                 <div class="layui-input-block">
-                    <input type="text" name="time" lay-verify="date" autocomplete="off" placeholder="请输入签约时间" class="layui-input" id="fromdate2">
+                    <input type="text" name="time" lay-verify="date" autocomplete="off" placeholder="请输入签约时间"
+                           class="layui-input" id="fromdate2">
                 </div>
             </div>
-            <!-- 定金 -->
+
             <div class="layui-form-item">
-                <label class="layui-form-label">联系人</label>
+                <label class="layui-form-label">签约主体</label>
                 <div class="layui-input-block">
-                    <input type="text" name="contact" lay-verify="required" autocomplete="off" placeholder="供货商联系人" class="layui-input">
+                    <input type="text" name="main" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">官方网站</label>
+                <div class="layui-input-block">
+                    <input type="text" name="url" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">所在城市</label>
+                <div class="layui-input-block">
+                    <input type="text" name="city" lay-verify="required" autocomplete="off" placeholder="供货商所在城市"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">提货地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" lay-verify="required" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">供货折扣</label>
+                <div class="layui-input-block">
+                    <input type="number" name="off" autocomplete="off" placeholder="折扣指百分比OFF，只填写数字不加%"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">订单员</label>
+                <div class="layui-input-block">
+                    <input type="text" name="contact" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <!-- 定金确认 -->
             <div class="layui-form-item">
                 <label class="layui-form-label">联系电话</label>
                 <div class="layui-input-block">
-                    <input type="number" name="phone" lay-verify="required" autocomplete="off" placeholder="联系人电话" class="layui-input">
+                    <input type="number" name="phone" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <!-- 开启生产状态 -->
             <div class="layui-form-item">
-                <label class="layui-form-label">电子邮件</label>
+                <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="email" name="email" lay-verify="email" autocomplete="off" placeholder="联系人邮箱" class="layui-input">
+                    <input type="email" name="email" lay-verify="email" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <!-- 尾款申请 -->
+
             <div class="layui-form-item">
-                <label class="layui-form-label">所在城市</label>
+                <label class="layui-form-label">备用人</label>
                 <div class="layui-input-block">
-                    <input type="text" name="city" lay-verify="required" autocomplete="off" placeholder="供货商所在城市" class="layui-input">
+                    <input type="text" name="contact2" lay-verify="required"  autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <!-- 允许发货 -->
+            <!-- 签约电话 -->
             <div class="layui-form-item">
-                <label class="layui-form-label">详细地址</label>
+                <label class="layui-form-label">备用人电话</label>
                 <div class="layui-input-block">
-                    <input type="text" name="address" lay-verify="required" autocomplete="off" placeholder="详细地址" class="layui-input">
+                    <input type="number" name="phone2" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!-- 法定邮箱 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">备用人邮箱</label>
+                <div class="layui-input-block">
+                    <input type="email" name="email2" lay-verify="email"  autocomplete="off" class="layui-input">
                 </div>
             </div>
 

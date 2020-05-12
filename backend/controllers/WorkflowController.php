@@ -70,6 +70,83 @@ class WorkflowController extends Controller
         return json_encode($data);
     }
 
+    /**
+     * @return string
+     */
+    public function actionNewOrder()
+    {
+        return $this->render('newOrder', []);
+    }
+
+    /**
+     * 新订单-待平台确认
+     */
+    public function actionNewOrderList()
+    {
+        $strategy = Substance::getInstance($this->strategy);
+        // 获取查询参数
+        $search = $strategy->getRequest(); // 处理查询参数
+        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
+        $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
+        $search['limit'] = $_GET['limit'];
+        $search['offset'] = ($_GET['page'] - 1) * 10;
+
+        $search['where'] = ['order_status'=> 0];
+        // 查询数据
+        $query = $this->getQuery($search['where']);
+        // 查询数据条数
+        $total = $query->count();
+        if ($total) {
+            $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
+            if ($array) $this->afterSearch($array);
+        } else {
+            $array = [];
+        }
+
+        $data['code'] = 0;
+        $data['count'] = $total;
+        $data['data'] = $array;
+        return json_encode($data);
+    }
+
+
+    /**
+     * 已取消订单
+     */
+    public function actionCancelOrder()
+    {
+        return $this->render('cancel', []);
+    }
+
+    public function actionCancelOrderList()
+    {
+        $strategy = Substance::getInstance($this->strategy);
+        // 获取查询参数
+        $search = $strategy->getRequest(); // 处理查询参数
+        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
+        $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
+        $search['limit'] = $_GET['limit'];
+        $search['offset'] = ($_GET['page'] - 1) * 10;
+
+        $search['where'] = ['order_status'=> 40];
+        // 查询数据
+        $query = $this->getQuery($search['where']);
+        // 查询数据条数
+        $total = $query->count();
+        if ($total) {
+            $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
+            if ($array) $this->afterSearch($array);
+        } else {
+            $array = [];
+        }
+
+        $data['code'] = 0;
+        $data['count'] = $total;
+        $data['data'] = $array;
+        return json_encode($data);
+    }
+
+
     /****
      * 产品列表页面
      * @return false|string
@@ -161,6 +238,7 @@ class WorkflowController extends Controller
     }
 
 
+
     /**
      * 按供应商拆分订单
      *
@@ -211,7 +289,6 @@ class WorkflowController extends Controller
      */
     public function actionUpdate()
     {
-
         $id = $_GET['id'];
         $model = Order::findOne(['id'=>$id]);
         return $this->render('update', [
@@ -229,9 +306,44 @@ class WorkflowController extends Controller
     {
         $user = Admin::find()->select(['id','name'])->where(['role'=>'manufacturer'])->asArray()->all();
         return $this->success($user);
-
     }
 
+    /**
+     * @return mixed|string
+     * 获取单个采购商信息
+     */
+    public function actionOrderUser()
+    {
+        $user = Admin::find()->where(['id'=>$_GET['id']])->asArray()->one();
+        return $this->success($user);
+    }
+
+    /**
+     * 单个订单进行确认
+     */
+    public function actionConfirmOrder()
+    {
+        $id = $_GET['id'];
+        $model = Order::findOne(['id'=>$id]);
+        $model->order_status = 1;
+        if (!$model->save()){
+            return $this->error(201,"确定订单失败");
+        }
+        return $this->success();
+    }
+    /**
+     * 单个订单进行取消
+     */
+    public function actionCancelOneOrder()
+    {
+        $id = $_GET['id'];
+        $model = Order::findOne(['id'=>$id]);
+        $model->order_status = 40;
+        if (!$model->save()){
+            return $this->error(201,"取消订单失败");
+        }
+        return $this->success();
+    }
 
     /***
      * @return mixed|string
@@ -248,7 +360,5 @@ class WorkflowController extends Controller
         }else{
             return $this->error($model->getErrors());
         }
-
-
     }
 }

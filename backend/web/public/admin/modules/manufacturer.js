@@ -21,14 +21,20 @@ layui.define(function(exports){
       skin: 'row',
       even: true,
       cols: [[ //表头
-        {field: 'brand', title: '供货商名称',templet:'<div>{{d.name}}</div>'},
-        {field: 'boss', title: '联系人',templet:'<div>{{d.contact}}</div>'},
-        {field: 'phone', title: '联系电话',templet:'<div>{{d.phone}}</div>'},
-        {field: 'status', title: '账户状态', templet:'#userStatus'},
-        {field: 'mail', title: '邮件',templet:'<div>{{d.email}}</div>'},
-        {field: 'city', title: '城市',templet:'<div>{{d.city}}</div>'},
-        {field: 'address', title: '地址',templet:'<div>{{d.address}}</div>'},
         {field: 'username', title: '用户名',templet:'<div>{{d.username}}</div>'},
+        {field: 'brand', title: '供应品牌',templet:'<div>{{d.name}}</div>'},
+        {field: 'main', title: '签约主体',templet:'<div>{{d.main}}</div>'},
+        {field: 'url', title: '官方网站',templet:'<div>{{d.url}}</div>'},
+        {field: 'boss', title: '订单员',templet:'<div>{{d.contact}}</div>'},
+        {field: 'phone', title: '联系电话',templet:'<div>{{d.phone}}</div>'},
+        {field: 'mail', title: '邮箱',templet:'<div>{{d.email}}</div>'},
+        {field: 'boss2', title: '备用联系人',templet:'<div>{{d.contact2}}</div>'},
+        {field: 'phone2', title: '备用联系电话',templet:'<div>{{d.phone2}}</div>'},
+        {field: 'mail2', title: '备用邮箱',templet:'<div>{{d.email2}}</div>'},
+        {field: 'status', title: '账户状态', templet:'#userStatus'},
+        {field: 'city', title: '城市',templet:'<div>{{d.city}}</div>'},
+        {field: 'address', title: '提货地址',templet:'<div>{{d.address}}</div>'},
+        {field: 'off', title: '供货折扣',templet:'<div>{{d.off}}</div>'},
         {field: 'contract', title: '签约时间',templet:'<div>{{d.time}}</div>'},
         {fixed: 'right', title:'操作', toolbar: '#editTool', width:140}
       ]]
@@ -41,9 +47,17 @@ layui.define(function(exports){
           layer.open({
             type: 1,
             title: '供货商账户信息',
-            area: ['640px', '600px'],
+            area: ['700px', '800px'],
             content: $("#editForm"),
-            resize: false
+            resize: false,
+            success: function(){
+              $('input[name=username]').removeAttr('disabled');
+              $('input[name=id]').val('');
+              $('input[name=username]').removeClass('layui-disabled');
+              $('#layui-btn').removeAttr('lay-filter');
+              $('#layui-btn').attr('lay-filter', 'create');
+              $('#edit')[0].reset();
+            }
           });
         break;
       }
@@ -51,7 +65,6 @@ layui.define(function(exports){
 
     // 提交表单
     form.on('submit(create)', function(data){
-      console.log(data.field);
       // ajax 提交表单
       $.ajax({
         type: 'post',
@@ -80,7 +93,7 @@ layui.define(function(exports){
       return false;
     });
 
-    // 创建表单
+    // 账号修改
     form.on('submit(update)', function(data){
       // ajax 提交表单
       $.ajax({
@@ -109,7 +122,7 @@ layui.define(function(exports){
       return false;
     });
 
-    // 行编辑事件
+    // 禁用账号
     table.on('tool(manufacturer)', function(obj){
       var data = obj.data;
       var id = data.id;
@@ -119,7 +132,7 @@ layui.define(function(exports){
         layer.open({
           type: 1,
           title: '采购商账户信息',
-          area: ['640px', '600px'],
+          area: ['700px', '800px'],
           content: $('#editForm'),
           resize: false,
           success: function(){
