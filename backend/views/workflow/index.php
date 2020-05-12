@@ -312,7 +312,11 @@
 <script type="text/html" id="orderStatus">
     {{#  if(d.order_status == 1){ }}
     <span class="tag layui-bg-red">新订单</span>
-    {{#  }else if(d.order_status == 2){ }}
+    {{#  if(d.order_status == 11){ }}
+    <span class="tag layui-bg-cyan">平台直接报价</span>
+    {{#  if(d.order_status == 12){ }}
+    <span class="tag layui-bg-cyan">供货商负责报价</span>
+    {{#  }else if(d.order_status == 12 o 11){ }}
     <span class="tag layui-bg-red">等待指派</span>
     {{#  }else if(d.order_status == 3){ }}
     <span class="tag layui-bg-cyan">等待供货商报价</span>
