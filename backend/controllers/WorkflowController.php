@@ -91,7 +91,7 @@ class WorkflowController extends Controller
         $search['limit'] = $_GET['limit'];
         $search['offset'] = ($_GET['page'] - 1) * 10;
 
-        $search['where'] = ['order_status'=> 0];
+        $search['where'] = ['order_status'=> 1];
         // 查询数据
         $query = $this->getQuery($search['where']);
         // 查询数据条数
@@ -325,9 +325,9 @@ class WorkflowController extends Controller
     {
         $id = $_GET['id'];
         $model = Order::findOne(['id'=>$id]);
-        $model->order_status = 1;
+        $model->order_status = 2;
         if (!$model->save()){
-            return $this->error(201,"确定订单失败");
+            return $this->error(201,"确认订单失败");
         }
         return $this->success();
     }
@@ -338,7 +338,7 @@ class WorkflowController extends Controller
     {
         $id = $_GET['id'];
         $model = Order::findOne(['id'=>$id]);
-        $model->order_status = 40;
+        $model->order_status = 401;
         if (!$model->save()){
             return $this->error(201,"取消订单失败");
         }

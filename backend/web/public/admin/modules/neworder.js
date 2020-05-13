@@ -28,7 +28,7 @@ layui.define(function(exports){
         {field: 'create', title: '创建时间', templet:'<div>{{d.create_time}}</div>'},
         {field: 'delivery', title: '期望交付时间', templet:'<div>{{d.date}}</div>'},
         {field: 'package', title: '包装要求', templet:'<div>{{d.package}}</div>'},
-        {field: 'contact', title: '提货联系人', templet:'<div>{{d.contact}}</div>'},
+        {field: 'name', title: '提货联系人', templet:'<div>{{d.name}}</div>'},
         {field: 'address', title: '交付地址', templet:'<div>{{d.address}}</div>'},
         {field: 'owner', title: '采购商', templet:'<div>{{d.user}}</div>'}
       ]]
@@ -119,8 +119,8 @@ layui.define(function(exports){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'supplier', title: '供应商',  templet:'<div>{{d.supplier_name}}</div>'},
-          {field: 'model', title: '型号',  templet:'<div>{{d.model}}</div>'},
+          //{field: 'supplier', title: '供应商',  templet:'<div>{{d.supplier_name}}</div>'},
+          {field: 'type', title: '型号',  templet:'<div>{{d.type}}</div>'},
           {field: 'size', title: '图纸尺寸',  templet:'<div>{{d.size}}</div>'},
           {field: 'material', title: '材质',  templet:'<div>{{d.material}}</div>'},
           {field: 'att', title: '附件',
