@@ -138,9 +138,9 @@ class Admin extends \common\models\Admin
     public function scenarios()
     {
         return [
-            'default' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off'],
-            'create' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off'],
-            'update' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off']
+            'default' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text'],
+            'create' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text'],
+            'update' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text']
         ];
     }
 
