@@ -62,7 +62,10 @@ layui.define(function(exports){
                 $.ajax({
                   type: 'post',
                   // 同步接口，传数据ID和修改后的金额值
-                  url: 'quote?id=' + id,
+                  url: 'submit-quote',
+                  data: {
+                    id: id
+                  },
                   success: function(res){
                     if(res.code === 200){
                       layer.msg('Quote has been saved!');
@@ -127,7 +130,10 @@ layui.define(function(exports){
         $.ajax({
           type: 'POST',
           // 同步接口，传数据ID和修改后的金额值
-          url: 'update-item?id=' + itemId + '&attr=price&value=' + value,
+          url: 'quote-item',
+          data: {
+            id: itemId, price: value
+          },
           success: function(){
             layer.msg('Quote has been saved!');
             table.reload('items',{}); // 重载数据表格
