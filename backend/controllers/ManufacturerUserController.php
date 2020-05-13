@@ -24,9 +24,9 @@ class ManufacturerUserController extends Controller
         $page = $_GET['page'];
         $offset = ($page - 1) * $limit;
 
-        $user = Admin::find()->where(['role'=>'manufacturer'])->asArray()->limit($limit)->offset($offset)->all();
+        $user = Admin::find()->where(['role'=>'manufacturer'])->asArray()->limit($limit)->offset($offset)->orderBy('id desc')->all();
         $data['code'] = 0;
-        $data['count'] = Admin::find()->where(['role'=>'manufacturer'])->asArray()->count();
+        $data['count'] = Admin::find()->where(['role'=>'manufacturer'])->count();
 
         foreach ($user as $key=>$value){
             if ($value['status'] == '20'){
@@ -71,6 +71,7 @@ class ManufacturerUserController extends Controller
             $model->phone2 = $_POST['phone2'];
             $model->email2 = $_POST['email2'];
             $model->off = $_POST['off'];
+            $model->text = $_POST['text'];
 
             if ($model->save()){
                 return $this->success(0);

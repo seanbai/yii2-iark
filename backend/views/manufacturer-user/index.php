@@ -154,6 +154,13 @@
                 </div>
             </div>
 
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="text" autocomplete="off" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
             <input type="hidden" name="role" value="manufacturer">
 
             <!-- 提交表单 -->
