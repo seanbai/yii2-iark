@@ -115,7 +115,8 @@ class SupplierOrder extends ActiveRecord
     public function quote()
     {
         $total = 0;
-        $items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id']);
+        $items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id'])
+                ->all();
         foreach ($items as $item){
             /* @var $item SupplierOrderItem */
             $price = (float) $item->price;
@@ -123,6 +124,7 @@ class SupplierOrder extends ActiveRecord
         }
         $orderStatus = 41; //子订单完成报价
         $this->total = $total;
+        $this->quote_time = date('Y-m-d H:i:s');
         $this->setStatus($orderStatus); //所有子订单报价完成，更改主订单的状态为‘报价完成’
     }
 }

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\helpers\OrderStatus;
 use backend\models\Admin;
 use backend\models\Auth;
 use backend\models\Order;
@@ -11,6 +12,7 @@ use common\strategy\Substance;
 use Yii;
 
 use backend\models\Create;
+use yii\web\Response;
 
 
 /**
@@ -122,11 +124,16 @@ class OrderController extends Controller
                 if (empty($value['tax'])) $array[$key]['tax'] = '';
             }
         }
+        array_walk($array, function (&$value){
+            //订单状态输出
+            $value['status_label'] = OrderStatus::get($value['order_status']);
+        });
         $data['code'] = 0;
         $data['count'] = $total;
         $data['data'] = $array;
 
-        return json_encode($data);
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return $data;
     }
 
     /****
@@ -184,11 +191,44 @@ class OrderController extends Controller
     }
 
 
+    /**
+     * 订单产品信息
+     *
+     * @acl order/items
+     */
+    public function actionItems()
+    {
+        $orderId = \Yii::$app->request->get('id', null);
+        try{
+            $order = Order::findOne($orderId);
+            if(!$order){
+                return $this->error(400, 'The order does not exist');
+            }
+            $items = $order->items;
+        }catch (\Exception $exception){
+            return $this->error(400, $exception->getMessage());
+        }
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'code' => 0,
+            'count' => count($items),
+            'data'  => $items
+        ];
+    }
+
+    /**
+     * 取消采购
+     * @acl  order/cancel
+     * @return mixed|string
+     */
     public function actionCancel()
     {
         $id = $_POST['id'];
         $model = Order::findOne(['id' => $id]);
-        $model->order_status = 0;   //订单已取消
+        if($model->order_status >= 5){
+            return $this->error(400,'The order has been submit quote, can not cancel.');
+        }
+        $model->order_status = 403;   //必须在确认报价前
         if ($model->save()){
             return $this->success();
         } else {
@@ -214,7 +254,7 @@ class OrderController extends Controller
     {
         $userId = yii::$app->user->identity->id;
 
-        $model = Order::find()->where(['order_status' => 0]);
+        $model = Order::find()->where(['order_status' => 403]);
         if ($userId != 1)
         {
             $model->andWhere(['user' => $userId]);
