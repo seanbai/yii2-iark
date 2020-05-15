@@ -10,6 +10,7 @@ use backend\models\OrderItem;
 use backend\models\ProductPushRecord;
 use backend\models\SupplierOrder;
 use backend\models\SupplierOrderItem;
+use backend\models\User;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
@@ -91,13 +92,17 @@ class WorkflowController extends Controller
         $search['limit'] = $_GET['limit'];
         $search['offset'] = ($_GET['page'] - 1) * 10;
 
-        $search['where'] = ['order_status'=> 0];
+        $search['where'] = ['order_status'=> 1];
         // 查询数据
-        $query = $this->getQuery($search['where']);
+        $query = $this->getQuery($search['where'])->leftJoin(
+            'admin u',
+            'u.id = order.user'
+        );
         // 查询数据条数
         $total = $query->count();
         if ($total) {
-            $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
+            $columns = ['order.*','u.username as owner'];
+            $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
         } else {
             $array = [];

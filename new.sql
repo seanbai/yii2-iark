@@ -91,3 +91,6 @@ alter table `admin` ADD COLUMN `phone2` VARCHAR(100);
 alter table `admin` ADD COLUMN `email2` VARCHAR(100);
 alter table `admin` ADD COLUMN `off` int(3);
 alter table `admin` ADD COLUMN `text` text;
+
+--订单表新增字段 5/15/2020
+alter table `order` add column quote decimal(10, 4) comment "订单报价";
