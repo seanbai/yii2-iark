@@ -521,19 +521,29 @@ class WorkflowController extends Controller
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
         if(!$orderStatus){
+            $total = 0;
             $orders = [];
         }else{
             $where = new Expression('order_status = :order_status', [':order_status' => $orderStatus]);
-            $orders = Order::find()
-                ->leftJoin('admin u','u.id = order.user')
-                ->select('order.*, u.username as owner')->where($where)->asArray()->all();
-            if($callBack && is_callable($callBack)){
-                $orders = call_user_func_array($callBack, $orders);
+            try{
+                $query = Order::find()
+                    ->leftJoin('admin u','u.id = order.user')
+                    ->select('order.*, u.username as owner')->where($where);
+                $total = $query->count('order.id');
+                $limit = $_GET['limit'];
+                $offset = ($_GET['page'] - 1) * 10;
+                $query->limit($limit)->offset($offset);
+                $orders = $query->asArray()->all();
+                if($callBack && is_callable($callBack)){
+                    $orders = call_user_func_array($callBack, $orders);
+                }
+            }catch (\Exception $exception){
+                echo $exception->getMessage();die;
             }
         }
         $data = [
             'code'  => 0,
-            'count' => count($orders),
+            'count' => $total,
             'data'  => $orders
         ];
         return $data;

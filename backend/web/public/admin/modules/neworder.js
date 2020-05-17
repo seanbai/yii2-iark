@@ -112,14 +112,14 @@ layui.define(function(exports){
         even: true,
         totalRow: true, //开启合计行
         cols: [[
-          {field: 'item', title: '名称', templet:'<div>{{d.brand}}</div>'},
-          {field: 'qty', title: '数量', totalRow: true, templet:'<div>{{d.number}}</div>'},
-          {field: 'image', title: '样式图片',
+          {field: 'brand', title: '名称', templet:'<div>{{d.brand}}</div>'},
+          {field: 'number', title: '数量', totalRow: true, templet:'<div>{{d.number}}</div>'},
+          {field: 'files', title: '样式图片',
             templet: function(d){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          //{field: 'supplier', title: '供应商',  templet:'<div>{{d.supplier_name}}</div>'},
+          {field: 'supplier_name', title: '供应商',  templet:'<div>{{d.supplier_name}}</div>'},
           {field: 'type', title: '型号',  templet:'<div>{{d.type}}</div>'},
           {field: 'size', title: '图纸尺寸',  templet:'<div>{{d.size}}</div>'},
           {field: 'material', title: '材质',  templet:'<div>{{d.material}}</div>'},
@@ -133,7 +133,7 @@ layui.define(function(exports){
               }
             }
           },
-          {field: 'des', title: '备注',  templet:'<div>{{d.desc}}</div>'}
+          {field: 'desc', title: '备注',  templet:'<div>{{d.desc}}</div>'}
         ]]
       })
     };
