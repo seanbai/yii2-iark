@@ -332,7 +332,7 @@ class WorkflowController extends Controller
     {
         $id = $_GET['id'];
         $model = Order::findOne(['id'=>$id]);
-        $model->order_status = 1;
+        $model->order_status = 2; //订单已确认
         if (!$model->save()){
             return $this->error(201,"确定订单失败");
         }
@@ -387,7 +387,7 @@ class WorkflowController extends Controller
      */
     public function actionAssignOrders()
     {
-        $status = null;
+        $status = 2; //已确认的订单，等待报价
         return $this->getOrders($status);
     }
 

@@ -79,7 +79,7 @@ layui.define(function(exports){
       var items = table.render({
         id: 'itemsList',
         elem: '#items',
-        url: 'items?id'+id, //数据接口
+        url: 'items?id='+id, //数据接口
         toolbar: '#showItemsBar',
         totalRow: true,
         skin: 'row',
@@ -117,7 +117,7 @@ layui.define(function(exports){
       var subOrder = table.render({
         elem: '#subOrder',
         toolbar: '#toolbar',
-        url: 'child-orders?parent_id'+id, //数据接口
+        url: 'child-orders?parent_id='+id, //数据接口
         skin: 'row',
         even: true,
         cols: [[ //表头

@@ -97,7 +97,7 @@ layui.define(function(exports){
       var items = table.render({
         id: 'itemsList',
         elem: '#items',
-        url: 'assign-detail?id'+id, //数据接口
+        url: 'items?id='+id, //数据接口
         toolbar: '#showItemsBar',
         skin: 'row',
         even: true,

@@ -86,7 +86,7 @@ layui.define(function(exports){
       var items = table.render({
         id: 'itemsList',
         elem: '#items',
-        url: 'quote-detail?id'+id, //数据接口
+        url: 'items?id='+id, //数据接口
         toolbar: '#showItemsBar',
         totalRow: true, //自动合计
         skin: 'row',
