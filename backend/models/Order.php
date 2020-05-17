@@ -106,4 +106,17 @@ class Order extends \yii\db\ActiveRecord
         return OrderItem::find()->where('order_id = :order_id', [':order_id' =>$this->id])
                 ->asArray()->all();
     }
+
+    /**
+     * @param bool $toArray
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getChildOrders($toArray = true)
+    {
+        $childOrders = $this->hasMany(SupplierOrder::class,['order_id' => 'id'])->asArray();
+        if($toArray){
+            $childOrders->asArray();
+        }
+        return $childOrders->all();
+    }
 }

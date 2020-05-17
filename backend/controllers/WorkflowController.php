@@ -14,6 +14,8 @@ use backend\models\User;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
+use yii\db\Expression;
+use yii\web\Response;
 
 /**
  * Class OrderController My Order 执行操作控制器
@@ -365,5 +367,175 @@ class WorkflowController extends Controller
         }else{
             return $this->error($model->getErrors());
         }
+    }
+
+    /**
+     * 供应商报价与分配
+     *
+     * @acl： workflow/assign
+     * @return string
+     */
+    public function actionAssign()
+    {
+        return $this->render('assign');
+    }
+
+    /**
+     * 供应商报价与分配-订单列表
+     * @acl：workflow/assign-orders
+     * @return array
+     */
+    public function actionAssignOrders()
+    {
+        $status = null;
+        return $this->getOrders($status);
+    }
+
+    /**
+     * 报价中
+     *
+     * @acl： workflow/quote
+     * @return string
+     */
+    public function actionQuote()
+    {
+        return $this->render('quote');
+    }
+
+    /**
+     * 报价中-订单列表
+     * @acl：workflow/quote-orders
+     * @return array
+     */
+    public function actionQuoteOrders()
+    {
+        $status = null;
+        return $this->getOrders($status);
+    }
+
+    /**
+     * 财务收款
+     *
+     * @acl： workflow/receive
+     * @return string
+     */
+    public function actionReceive()
+    {
+        return $this->render('receive');
+    }
+
+    /**
+     * 财务收款-订单列表
+     * @acl：workflow/receive-items
+     * @return array
+     */
+    public function actionReceiveOrders()
+    {
+        $status = null;
+        return $this->getOrders($status);
+    }
+
+
+    /**
+     * 财务付款
+     *
+     * @acl： workflow/pay
+     * @return string
+     */
+    public function actionPay()
+    {
+        return $this->render('pay');
+    }
+
+    /**
+     * 财务收款-订单列表
+     * @acl：workflow/pay-items
+     * @return array
+     */
+    public function actionPayOrders()
+    {
+        $status = null;
+        return $this->getOrders($status);
+    }
+
+
+    public function actionChildOrders()
+    {
+        $parentId = Yii::$app->request->get('parent_id');
+        $childOrders = [];
+        $order = Order::findOne($parentId);
+        if($order){
+            $childOrders = $order->getChildOrders();
+        }
+        //todo 处理数据成如下面结构
+        //  $data[] = [
+        //            'supplier_name',
+        //            'quote_time', //报价时间
+        //            'total', //总价
+        //            'deposit', //定金
+        //            'depositDate',//定金支付时间
+        //            'balance', //尾款
+        //            'balanceDate' //尾款支付时间
+        //        ];
+
+        \Yii::$app->response->format = 'json';
+        return [
+            'code' => 0,
+            'count' => count($childOrders),
+            'data'  => $childOrders
+        ];
+    }
+
+    /**
+     * 订单详情
+     *
+     * @acl workflow/items
+     * @return array
+     */
+    private function actionItems()
+    {
+        $orderId = \Yii::$app->request->get('id', null);
+        $order = Order::findOne($orderId);
+        if($order){
+            $items = $order->items;
+        }else{
+            $items = [];
+        }
+        \Yii::$app->response->format = 'json';
+        $data = [
+            'code'  => 0,
+            'count' => count($items),
+            'data'  => $items
+        ];
+        return $data;
+    }
+
+    /**
+     * 订单列表
+     *
+     * @param null $orderStatus
+     * @param null $callBack
+     * @return array
+     */
+    private function getOrders($orderStatus = null, $callBack = null)
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        if(!$orderStatus){
+            $orders = [];
+        }else{
+            $where = new Expression('order_status = :order_status', [':order_status' => $orderStatus]);
+            $orders = Order::find()
+                ->leftJoin('admin u','u.id = order.user')
+                ->select('order.*, u.username as owner')->where($where)->asArray()->all();
+            if($callBack && is_callable($callBack)){
+                $orders = call_user_func_array($callBack, $orders);
+            }
+        }
+        $data = [
+            'code'  => 0,
+            'count' => count($orders),
+            'data'  => $orders
+        ];
+        return $data;
     }
 }

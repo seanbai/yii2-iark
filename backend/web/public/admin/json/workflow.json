@@ -5,94 +5,18 @@
   "data": [{
     "id": 1,
     "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "contact": "Daniel Chen",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 1
-  },{
-    "id": 2,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 2
-  },{
-    "id": 3,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 3
-  },{
-    "id": 4,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 4
-  },{
-    "id": 5,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 5
-  },{
-    "id": 6,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 6
-  },{
-    "id": 7,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 7
-  },{
-    "id": 8,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 8
-  },{
-    "id": 9,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 9
-  },{
-    "id": 10,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 10
-  },{
-    "id": 11,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 11
-  },{
-    "id": 12,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 12
-  },{
-    "id": 13,
-    "num": "GZL2018101800004",
-    "brand": "Design4u Studio",
-    "date": "16/07/2019",
-    "orderDate": "16/07/2019",
-    "status": 13
+    "project_name": "宁波侯府",
+    "status": 1,
+    "create_time": "2020-05-12 12:30:00",
+    "date": "2020-06-12",
+    "quotation": "2020-05-14 12:30:00",
+    "package": "纸箱",
+    "name": "侯总",
+    "address": "浙江省宁波市XX路",
+    "ownerid": 1,
+    "owner": "Design4u Studio",
+    "contact": "王某某",
+    "tel": "18628077530",
+    "total": "20,000"
   }]
 }
