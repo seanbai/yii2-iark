@@ -204,12 +204,12 @@ layui.define(function(exports){
       $.ajax({
         type: 'get',
         async: false,
-        url: '../../admin/json/manufacturer.json',
+        url: 'user',
         success: function(res){
           var list = res.data;
           $.each(list, function(i,n){
             var id = n.id;
-            var name = n.brand;
+            var name = n.name;
             $("#manuList").append("<option value='" + id + "'>" + name + "</option>");
           });
         }
