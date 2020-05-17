@@ -139,13 +139,17 @@ class ManufacturerController extends Controller
     }
 
 
-    //订单item修改
-    public function actionUpdateItem()
+    /**
+     * 产品报价
+     *
+     * @acl manufacturer/quote-item
+     * @return array
+     */
+    public function actionQuoteItem()
     {
-        $itemId = \Yii::$app->request->get('id');
-        $attribute = \Yii::$app->request->get('attr');
-        $value = \Yii::$app->request->get('value');
-        if(!$attribute || !$value){
+        $itemId = \Yii::$app->request->post('id');
+        $value = \Yii::$app->request->post('price');
+        if(!$itemId || !$value){
             $data = [
                 'code' => 400,
                 'msg' => 'invalid input params'
@@ -155,16 +159,11 @@ class ManufacturerController extends Controller
             if(!$supplierOrderItem){
                 $data = [
                     'code' => 400,
-                    'msg' => 'invalid input params'
+                    'msg' => 'the product info is invalid'
                 ];
             }else{
-                $supplierOrderItem->setAttribute($attribute, $value);
+                $supplierOrderItem->setAttribute('price', $value);
                 $supplierOrderItem->save();
-                if($attribute == 'production_status'){
-                    //订单生产状态
-                    $supplierOrder = SupplierOrder::findOne($supplierOrderItem->supplier_order_id);
-                    $supplierOrder->checkProductionStatus();
-                }
                 $data = [
                     'code' => 200,
                 ];
@@ -180,7 +179,7 @@ class ManufacturerController extends Controller
     {
         if(\Yii::$app->request->isAjax){
             $userId = Yii::$app->user->id;
-            $status = 5;// 报价完成的
+            $status = 91;
             $orders = SupplierOrder::find()
                 ->where(['supplier_id'=>$userId, 'order_status'=>$status])
                 ->asArray()->all();
@@ -256,17 +255,49 @@ class ManufacturerController extends Controller
     }
 
 
-    public function actionQuote()
+    /**
+     * 提价订单报价
+     *
+     * @acl manufacturer/submit-quote
+     * @return array
+     */
+    public function actionSubmitQuote()
     {
         $supplierOrderId = \Yii::$app->request->post('id');
         $supplierOrder = SupplierOrder::findOne($supplierOrderId);
         try{
             $supplierOrder->quote();
-            $msg = "订单已报价";
+            $msg = "The order has been submit quote.";
             $code = 200;
         }catch (\Exception $exception){
             $code = 400;
-            $msg = "暂时无法报价";
+            $msg = "The order submit quote failed.";
+        }
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'code' => $code,
+            'msg' => $msg
+        ];
+    }
+
+
+    /**
+     * 订单完成生产
+     *
+     * @acl manufacturer/complete-product
+     * @return array
+     */
+    public function actionCompleteProduction()
+    {
+        $supplierOrderId = \Yii::$app->request->post('id');
+        $supplierOrder = SupplierOrder::findOne($supplierOrderId);
+        try{
+            $supplierOrder->setStatus(101);
+            $msg = '';
+            $code = 200;
+        }catch (\Exception $exception){
+            $code = 400;
+            $msg = $exception->getMessage();
         }
         \Yii::$app->response->format = Response::FORMAT_JSON;
         return [

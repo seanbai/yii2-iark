@@ -5,6 +5,7 @@ namespace backend\models;
 
 
 use yii\db\ActiveRecord;
+use yii\db\StaleObjectException;
 
 /**
  *
@@ -33,5 +34,34 @@ class SupplierOrderItem extends ActiveRecord
     public static function tableName()
     {
         return 'supplier_order_item';
+    }
+
+
+    /**
+     * @param bool $insert
+     *
+     * /**
+     * $changedAttributes = [
+     *     $attribute  => $value
+     * ]
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        if(isset($changedAttributes['price']) && $changedAttributes['price']){
+            if($orderItem = $this->getOrderItem()){
+                $orderItem->setAttribute('price', $this->price);
+                $orderItem->save(false);
+            }
+        }
+    }
+
+    /**
+     * @return OrderItem|null
+     */
+    public function getOrderItem()
+    {
+        return OrderItem::findOne($this->order_item_id);
     }
 }

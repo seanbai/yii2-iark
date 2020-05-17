@@ -4,6 +4,7 @@
 namespace backend\models;
 
 
+use backend\helpers\OrderStatus;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
 
@@ -24,6 +25,13 @@ use yii\db\Exception;
 class SupplierOrder extends ActiveRecord
 {
     /**
+     * @var array 不需要同步到主订单的状态列表
+     */
+    private $_noChangeToOrderStatus = [
+        81,
+    ];
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -31,43 +39,70 @@ class SupplierOrder extends ActiveRecord
         return 'supplier_order';
     }
 
-    public function checkProductionStatus()
+    /**
+     * 主订单状态
+     *
+     * @param $status
+     * @return mixed
+     */
+    private function getMainOrderStatus($status)
     {
-        $items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id'])
-            ->all();
-        $itemCount = count($items);
-        $updateComplete = true;
-        foreach ($items as $item) {
-            /* @var $item SupplierOrderItem */
-            if($item->production_status == 1){
-                $updateComplete = false;
-                break;
+        $statusMapping = OrderStatus::getMapping();
+        return $statusMapping[$status];
+    }
+
+    /**
+     * 子订单状态更改
+     *
+     * @param int $status  子订单状态
+     * @param bool $checkFirst 一个子订单状态变更，就更新主订单状态， 默认false
+     * @throws Exception
+     * @throws \Exception
+     */
+    public function setStatus($status, $checkFirst = false)
+    {
+        $db = self::getDb()->beginTransaction();
+        try{
+            $this->setAttribute('order_status', $status);
+            $this->save();
+            if(!in_array($status, $this->_noChangeToOrderStatus)){
+                //更新对应的主订单状态
+                $mainOrderStatus = $this->getMainOrderStatus($status);
+                $this->changeParentOrderStatus($status, $mainOrderStatus, $checkFirst);
             }
-        }
-
-        if($updateComplete){
-            $this->setAttribute('order_status', 7);
-            $this->save();//完成生产
-
-            //更改父订单状态
-            $this->parentOrderStatus(7);
+            $db->commit();
+        }catch (\Exception $e){
+            $db->rollBack();
+            throw $e;
         }
     }
 
-    public function parentOrderStatus($status)
+
+    /**
+     * 更新主订单的状态
+     *
+     * @param int $childStatus 子订单状态
+     * @param int  $orderStatus 主订单状态
+     * @param bool $checkFirst 一个子订单状态变更，就更新主订单状态， 默认false
+     */
+    public function changeParentOrderStatus($childStatus, $orderStatus, $checkFirst = false)
     {
         $order = Order::findOne($this->order_id);
-        $childOrders = $order->hasMany(SupplierOrder::class, ['order_id' => 'id'])
+        $supplierOrders = $order->hasMany(SupplierOrder::class, ['order_id' => 'id'])
             ->all();
         $update = true;
-        foreach ($childOrders as $childOrder){
-            if($childOrder->order_status != $status){
+        foreach ($supplierOrders as $supplierOrder){
+            /* @var $supplierOrder $this*/
+            $condition = $checkFirst ? $supplierOrder->order_status == $childStatus :
+                         $supplierOrder->order_status != $childStatus;
+            if($condition){
                 $update = true;
                 break;
             }
         }
-        if($update){
-            $order->setAttribute('order_status', $status);
+        if($update && ($order->order_status != $orderStatus)){
+            $order->setAttribute('order_status', $orderStatus);
+            $order->save();
         }
     }
 
@@ -80,21 +115,16 @@ class SupplierOrder extends ActiveRecord
     public function quote()
     {
         $total = 0;
-        $items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id']);
-        $db = self::getDb()->beginTransaction();
-        try{
-            foreach ($items as $item){
-                /* @var $item SupplierOrderItem */
-                $price = (float) $item->price;
-                $total += $price;
-            }
-            $this->total = $total;
-            $this->order_status = 5; //已报价
-            $this->save();
-            $db->commit();
-        }catch (\Exception $e){
-            $db->rollBack();
-            throw $e;
+        $items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id'])
+                ->all();
+        foreach ($items as $item){
+            /* @var $item SupplierOrderItem */
+            $price = (float) $item->price;
+            $total += $price;
         }
+        $orderStatus = 41; //子订单完成报价
+        $this->total = $total;
+        $this->quote_time = date('Y-m-d H:i:s');
+        $this->setStatus($orderStatus); //所有子订单报价完成，更改主订单的状态为‘报价完成’
     }
 }

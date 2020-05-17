@@ -1,105 +1,178 @@
 layui.define(function(exports){
 
   //
-  layui.use(['table','element','form','laydate'], function(){
+  layui.use(['table','form','laydate','jquery'], function(){
 
     var table = layui.table;
-    var element = layui.element;
     var form = layui.form;
     var laydate = layui.laydate;
+    var $ = layui.jquery;
 
     //执行一个laydate实例
     laydate.render({
       elem: '#processList' //指定元素
     })
 
-    table.render({
-      elem: '#processList',
+    var order = table.render({
+      elem: '#order',
       height: 'full-115',
-      toolbar: '#toolbarDemo',
-      url: '../../admin/json/purchase.json', //数据接口
+      toolbar: '#pendingOrderBar',
+      url: 'list', //数据接口
       cellMinWidth: 100,
       page: true, //开启分页
-      skin: 'row',
+      // skin: 'line',
       even: true,
       cols: [[ //表头
         {type:'radio'},
-        {field: 'id', title: 'ID', width:80, sort: true},
-        {field: 'ordernum', title: '单据编号'},
-        {field: 'status', title: '状态',width:80},
-        {
-          field: 'process',
-          width: 300,
-          sort: true,
-          title: '进度',
-          templet: function(d){
-            var html = '<div class="table-process"><div class="layui-progress">';
-            html += '<div class="layui-progress-bar layui-bg-red" lay-percent="'+d.process+'%"></div>';
-            html += '</div></div>';
-            return html;
-          }
-        },
-        {field: 'pubdata', title: '创建时间',sort: true},
-        {field: 'finishdata', title: '期望交付时间', sort: true},
-        {field: 'owner', title: '制单人'},
-        {field: 'telphone', title: '电话'},
-        {field: 'address', title: '收货地址'},
-        {field: 'statement', title: '结算方式',sort: true}
-      ]],
-      done: function(res, curr, count){
-        element.render();
-      }
+        {field: 'order_number', title: '订单号'},
+        {field: 'project_name', title: '项目名称'},
+        {field: 'status', title: '订单状态',templet: function (row) {
+            return '<span class="tag layui-bg-cyan">'+row.status_label+'</span>'
+          }},
+        {field: 'create_time', title: '创建时间'},
+        {field: 'date', title: '期望交付时间'},
+        {field: 'package', title: '包装要求'},
+        {field: 'name', title: '提货联系人'},
+        {field: 'address', title: '交付地址'},
+        {field: 'quote', title: '报价', sort: true}
+      ]]
     });
     // 表格菜单事件
-    table.on('toolbar(processList)', function(obj){
+    table.on('toolbar(order)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
+
       switch(obj.event){
         // show details
         case 'details':
           if(checkStatus.data.length === 0){
             layer.msg("您需要先选择一条数据");
           }else{
+            // 取订单ID 和 项目名称
+            var data = checkStatus.data;
+            var id = data[0].id;
+            var project = data[0].project;
+
             layer.open({
-              type: 2,
-              title: 'Products List',
-              area: ['960px', '540px'],
-              content: 'items_list.html',
-              btn: ['Close'],
+              type: 1,
+              title: '项目名称 - ' + project,
+              area: ['90%', '80%'],
+              content: $('#showItems'),
               resize: false,
-              yes: function(index, layero){
-                layer.closeAll();
-              }
+              success: showItems(id)
             });
           }
         break;
         // cancel order
         case 'cancel':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
+            layer.msg("您需要先选择一条数据")
           }else{
-            layer.confirm('Confirm cancel ?', function(index){
-              obj.del();
-              layer.close(index);
+            // 取订单ID 和 项目名称
+            var data = checkStatus.data;
+            var id = data[0].id;
+
+            layer.confirm('确认取消此订单?', function(index){
+              cancel(id);
+              // layer.close(index);
             });
           }
         break;
         // track order
-        case 'track':
+        case 'status':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
+            layer.msg("您需要先选择一条数据")
           }else{
-            
+            layer.open({
+              type: 2,
+              title: '修改订单状态',
+              area: ['640px', 'auto'],
+              content: 'status.html',
+              btn: ['Save','Close'],
+              resize: false
+            });
           }
       };
     });
-    // 表格行单击事件
-    table.on('rowDouble(processList)',function(obj){
-      console.log(obj.tr);
-      var data = obj.data;
-      layer.alert(JSON.stringify(data), {
-        title: '当前行数据：'
+
+    // 显示产品清单方法
+    window.showItems = function(id){
+
+      table.render({
+        elem: '#items',
+        url: 'items?id=' + id, //数据接口
+        toolbar: '#showItemsBar',
+        skin: 'row',
+        even: true,
+        totalRow: true, //开启合计行
+        cols: [[
+          {field: 'brand', title: '名称'},
+          {field: 'number', title: '数量', totalRow: true},
+          {field: 'files', title: '样式图片',
+            templet: function(d){
+              return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
+            }
+          },
+          {field: 'supplier_name', title: '供应商'},
+          {field: 'type', title: '型号'},
+          {field: 'size', title: '图纸尺寸'},
+          {field: 'material', title: '材质'},
+          {field: 'att', title: '附件',
+            templet: function(d){
+              var att = d.att;
+              if(att.length === 0){
+                return ''
+              }else{
+                return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
+              }
+            }
+          },
+          {field: 'desc', title: '备注'},
+          {field: 'price', title: '价格', totalRow: true}
+        ]]
+      })
+    }
+
+    // 取消订单方法
+    window.cancel = function(id){
+      $.ajax({
+        type: 'POST',
+        url: 'cancel',
+        data: {
+          id: id
+        },
+        error: function(){ // 保存错误处理
+          layer.msg('系统错误,请稍后重试.');
+        },
+        success: function(response){ // 保存成功处理
+          // 成功提示
+          if(response.code === 200){
+            layer.msg('订单已取消，您可以在已取消订单的列表里找到它。');
+            // 表格重载
+            order.reload();
+          }else{
+            layer.msg(response.msg);
+          }
+        }
       });
-    });
+    }
+    // 产品图片预览
+    window.showImg = function(t){
+      var t = $(t).find("img");
+      console.log(t);
+      // 图片 lightbox
+      layer.open({
+        type: 1,
+        title: false,
+        skin: 'layui-layer-rim',
+        area: ['auto'],
+        shadeClose: true,
+        end: function(index, layero){
+          return false;
+        },
+        content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
+      });
+    }
+
   });
   //
   exports('purchase', {});

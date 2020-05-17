@@ -28,9 +28,9 @@ layui.define(function(exports){
         {field: 'create', title: '创建时间', templet:'<div>{{d.create_time}}</div>'},
         {field: 'delivery', title: '期望交付时间', templet:'<div>{{d.date}}</div>'},
         {field: 'package', title: '包装要求', templet:'<div>{{d.package}}</div>'},
-        {field: 'name', title: '提货联系人', templet:'<div>{{d.name}}</div>'},
+        {field: 'contact', title: '提货联系人', templet:'<div>{{d.name}}</div>'},
         {field: 'address', title: '交付地址', templet:'<div>{{d.address}}</div>'},
-        {field: 'owner', title: '采购商', templet:'<div>{{d.user}}</div>'}
+        {field: 'owner', title: '采购商', templet:'<div>{{d.owner}}</div>'}
       ]]
     });
     // 表格菜单事件

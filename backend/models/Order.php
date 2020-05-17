@@ -89,12 +89,21 @@ class Order extends \yii\db\ActiveRecord
      */
     public function hasCompleteAssignation()
     {
-       $items =  OrderItem::findAll(['order_id' => $this->id]);
+       $items = $this->getItems();
        foreach ($items as $orderItem){
-           if(!$orderItem->supplier_id){
+           if(!$orderItem['supplier_id']){
                return false;
            }
        }
        return true;
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getItems()
+    {
+        return OrderItem::find()->where('order_id = :order_id', [':order_id' =>$this->id])
+                ->asArray()->all();
     }
 }
