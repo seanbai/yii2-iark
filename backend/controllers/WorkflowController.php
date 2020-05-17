@@ -492,7 +492,7 @@ class WorkflowController extends Controller
      * @acl workflow/items
      * @return array
      */
-    private function actionItems()
+    public function actionItems()
     {
         $orderId = \Yii::$app->request->get('id', null);
         $order = Order::findOne($orderId);
