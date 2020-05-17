@@ -125,7 +125,15 @@ layui.define(function(exports){
           },
           {field: 'desc', title: '备注'},
           {field: 'price', title: '单价(欧元)'},
-          {field: 'quoteOwner', title: '报价方'},
+          {field: 'quote_type', title: '报价方', templet:function (d) {
+              if(d.quote_type == 1){
+                return "供货商"
+              }else if (d.quote_type == 2){
+                return "平台"
+              }else{
+                return  '';
+              }
+            }},
           {field: 'supplier_name', title: '供应商'},
           {fixed: 'right', title:'操作', toolbar: '#action', width:90}
         ]],
@@ -162,11 +170,19 @@ layui.define(function(exports){
             content: $('.manuList'),
             yes: function(){
               // 取供货商ID
-              var bid = $("#manuList").val();
+              var bid   = $("#manuList").val();
+              var bName = $("#manuList").find("option:selected").text();
+              var price = $('#priceInput').val();
               // 更新单条产品数据
               $.ajax({
                 type: 'POST',
-                url: '/api/items/update?id=' + id + '&ghs=' + bid
+                url: 'update-user',
+                data:{
+                    id: id,
+                    userId: bid,
+                    name: bName,
+                    price: price
+                }
               });
             }
           });
@@ -219,13 +235,17 @@ layui.define(function(exports){
     // 改变订单状态
     window.changeStatus = function(id){
       $.ajax({
-        type: 'POST',
-        url: '/api/order/status?id=' + id,
+        type: 'GET',
+        url: 'update-status?id=' + id+'&status=3',
         error: function(){
-          layer.msg('error...');
+          layer.msg('request error',{icon:6});
         },
-        success: function(){
-          layer.msg('error...');
+        success: function(response){
+          if(response.errCode == 0){
+            layer.msg(response.errMsg)
+          }else{
+            layer.msg(response.errMsg,{icon:6})
+          }
         }
       });
     }
