@@ -94,3 +94,7 @@ alter table `admin` ADD COLUMN `text` text;
 
 --订单表新增字段 5/15/2020
 alter table `order` add column quote decimal(10, 4) comment "订单报价";
+
+--订单表新增报价状态 5/17/2020 0表示供应商报价，1表示平台方报价
+alter table `order` add column quote_status smallint (1) default 0;
+alter table `supplier_order` add column quote_status smallint (1) default 0;

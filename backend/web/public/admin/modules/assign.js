@@ -109,7 +109,6 @@ layui.define(function(exports){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'supplier', title: '供应商'},
           {field: 'type', title: '型号'},
           {field: 'size', title: '图纸尺寸'},
           {field: 'material', title: '材质'},
@@ -126,9 +125,9 @@ layui.define(function(exports){
           {field: 'desc', title: '备注'},
           {field: 'price', title: '单价(欧元)'},
           {field: 'quote_type', title: '报价方', templet:function (d) {
-              if(d.quote_type == 1){
+              if(d.quote_type == 0){
                 return "供货商"
-              }else if (d.quote_type == 2){
+              }else if (d.quote_type == 1){
                 return "平台"
               }else{
                 return  '';

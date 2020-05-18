@@ -218,8 +218,9 @@ class WorkflowController extends Controller
         $data = $_GET;
         $splitOrder = false;
         $model = Order::findOne(['id'=>$data['id']]);
-        //订单是完成分配工作
+        //订单是完成正确分配工作 是否出现部分报价是平台部分报价是供货商
         $completeAssign = $model->hasCompleteAssignation();
+        $isWrongQuote = $model->getWrongOrderItem();
         if ($data['status'] == 2 && $completeAssign) {
             $model->order_status = 3;
         } else if ($data['status'] == 9){
@@ -358,13 +359,15 @@ class WorkflowController extends Controller
      */
     public function actionUpdateUser()
     {
-        $model = OrderItem::findOne(['id'=>$_POST['id']]);
+        $model = OrderItem::findOne(['id'=>intval($_POST['id'])]);
         $model->supplier_id = $_POST['userId'];
         $model->supplier_name = $_POST['name'];
-
+        if (isset($_POST['price']) && !empty($_POST['price'])) {
+            $model->price = $_POST['price'];
+        }
         if ($model->save()){
             return $this->success();
-        }else{
+        }else{var_dump($model->getErrors());die;
             return $this->error($model->getErrors());
         }
     }
@@ -498,6 +501,9 @@ class WorkflowController extends Controller
         $order = Order::findOne($orderId);
         if($order){
             $items = $order->items;
+            foreach ($items as $k => $v) {
+                $items[$k]['quote_type'] = $order['quote_status'];
+            }
         }else{
             $items = [];
         }

@@ -260,8 +260,10 @@ layui.define(function (exports) {
                     {field: 'bid', title: '供应商ID',templet:'<div>{{d.supplier_id}}</div>'},
                     {field: 'manu', title: '供货商名称',templet:'<div>{{d.supplier_name}}</div>'},
                     {field: 'brand', title: '品牌',templet:'<div>{{d.brand}}</div>'},
-                    {field: 'type', title: '型号',templet:'<div>{{d.type}}</div>'},
                     {field: 'qty', title: '数量',templet:'<div>{{d.number}}</div>'},
+                    {field: 'type', title: '型号',templet:'<div>{{d.type}}</div>'},
+                    {field: 'size', title: '图纸尺寸',templet:'<div>{{d.size}}</div>'},
+                    {field: 'material', title: '材质',templet:'<div>{{d.material}}</div>'},
                     {field: 'des', title: '描述',templet:'<div>{{d.desc}}</div>'},
                 ]]
             });

@@ -90,14 +90,36 @@ class Order extends \yii\db\ActiveRecord
     public function hasCompleteAssignation()
     {
        $items = $this->getItems();
-       foreach ($items as $orderItem){
+       $quote_status = '';
+       foreach ($items as $k => $orderItem){
            if(!$orderItem['supplier_id']){
                return false;
+           }
+           if ($k == 0) {
+               $quote_status = $orderItem['price'];
+           } else {
+               if ($quote_status != $orderItem['price']) {
+                   return false;
+               }
            }
        }
        return true;
     }
-
+    /**
+     * 同一订单所有item报价是否一致
+     *
+     * @return bool
+     */
+    public function getWrongOrderItem()
+    {
+        $items = $this->getItems();
+        foreach ($items as $orderItem){
+            if(!$orderItem['supplier_id']){
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * @return array|\yii\db\ActiveRecord[]
      */
