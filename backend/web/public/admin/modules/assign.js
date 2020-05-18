@@ -167,7 +167,7 @@ layui.define(function(exports){
             area: ['720px','auto'],
             btn: ['保存','取消'],
             content: $('.manuList'),
-            yes: function(){
+            yes: function(index,layero){
               // 取供货商ID
               var bid   = $("#manuList").val();
               var bName = $("#manuList").find("option:selected").text();
@@ -181,6 +181,13 @@ layui.define(function(exports){
                     userId: bid,
                     name: bName,
                     price: price
+                },
+                success: function (response) {
+                  if(response.errCode == 0){
+                    layer.close(index);
+                  }else{
+                    layer.msg(response.errMsg,{icon: 6})
+                  }
                 }
               });
             }

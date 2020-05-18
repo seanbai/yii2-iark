@@ -10,7 +10,7 @@ layui.define(function(exports){
       elem: '#cancelled',
       height: 'full-115',
       toolbar: '#cancelledBar',
-      url: 'purchaser-cancel-list', //数据接口
+      url: 'cancel-order-list', //数据接口
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
@@ -51,15 +51,44 @@ layui.define(function(exports){
             });
           }
         break;
+          // owner info
+        case 'ownerInfo':
+          if(checkStatus.data.length === 0){
+            layer.msg("您需要先选择一条数据")
+          }else{
+            // 取订单ID 和 项目名称
+            var data = checkStatus.data;
+            var id = data[0].user;
+            ownerInfo(id);
+          }
+          break;
       };
     });
+
+    // 查看采购商详情
+    window.ownerInfo = function(id){
+      $.ajax({
+        type: 'GET',
+        url: 'order-user?id=' + id,
+        success: function(res){
+          var data = res.data;
+          var name = data.username;
+          var boss = data.name;
+          var phone = data.phone;
+          var mail = data.email;
+          var address = data.address;
+
+          layer.alert('采购商：' + name + '<br>联系人：' + boss + '<br>联系电话：' + phone + '<br>电子邮箱：' + mail + '<br>通讯地址：' + address);
+        }
+      })
+    };
 
     // 显示产品清单方法
     window.showItems = function(id){
 
       table.render({
         elem: '#items',
-        url: 'products?id=' + id, //数据接口
+        url: 'products?orderId=' + id, //数据接口
         toolbar: '#showItemsBar',
         skin: 'row',
         even: true,

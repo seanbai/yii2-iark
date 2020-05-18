@@ -3,11 +3,11 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">New Order</div>
+                <div class="layui-card-header">Canceled Order</div>
                 <div class="layui-card-body">
-                    <table id="neworder" lay-filter="neworder"></table>
+                    <table id="cancelled" lay-filter="cancelled"></table>
                     <!-- tool bar -->
-                    <script type="text/html" id="newOrderBar">
+                    <script type="text/html" id="cancelledBar">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看产品清单</button>
                             <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="ownerInfo">采购商信息</button>
@@ -26,7 +26,7 @@
         base: '/public/admin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'neworder']);
+    }).use(['index', 'workflow-cancel']);
 </script>
 </body>
 </html>

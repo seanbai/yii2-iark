@@ -81,6 +81,7 @@ layui.define(function(exports){
             layer.confirm('确认使订单立即生效?', function(index){
               confirm(id);
               // layer.close(index);
+              order.reload();
             });
           }
         break;
