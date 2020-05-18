@@ -249,6 +249,7 @@ layui.define(function(exports){
         success: function(response){
           if(response.errCode == 0){
             layer.msg(response.errMsg)
+            layer.closeAll()
           }else{
             layer.msg(response.errMsg,{icon:6})
           }

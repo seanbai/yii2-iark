@@ -135,7 +135,7 @@ class WorkflowController extends Controller
         $search['limit'] = $_GET['limit'];
         $search['offset'] = ($_GET['page'] - 1) * 10;
 
-        $search['where'] = ['order_status'=> 40];
+        $search['where'] = ['order_status'=> 401];
         // 查询数据
         $query = $this->getQuery($search['where']);
         // 查询数据条数
@@ -220,29 +220,36 @@ class WorkflowController extends Controller
         $model = Order::findOne(['id'=>$data['id']]);
         //订单是完成正确分配工作 是否出现部分报价是平台部分报价是供货商
         $completeAssign = $model->hasCompleteAssignation();
-        $isWrongQuote = $model->getWrongOrderItem();
-        if ($data['status'] == 2 && $completeAssign) {
-            $model->order_status = 3;
-        } else if ($data['status'] == 9){
-            $model->order_status = 10;
-        }else if($data['status'] == 3 && $completeAssign){
-            //所有item都已分配,状态变更为 => 等待供货商报价
-            $model->order_status = 3;
-            $splitOrder = true;
+        $first_price = '';
+
+        $flag = true;
+        foreach ($model->getItems() as $k => $item) {
+            if ($k == 0) {
+                $first_price = $item['price'];
+            } else {
+                if ($first_price != $item['price']) {
+                    $flag = false;
+                }
+            }
         }
-        if($splitOrder){
+        if ($data['status'] == 3 && $completeAssign && $flag) {
+            $model->order_status = 3;
+            $quote_status = floatval($first_price)>0 ?1:0;
+            $model->quote_status = $quote_status;
             try{
-                $this->splitOrder($model);
+                $this->splitOrder($model,$quote_status);
             }catch (\Exception $exception){
                 return $this->error(300, $exception->getMessage());
             }
+            if ($model->save()){
+                return $this->success('保存成功');
+            } else {
+                return $this->error(300, Helper::arrayToString($model->getErrors()));
+            }
+        } else {
+            return $this->error(300, '所有产品必须都分配，且不能部分产品是平台报价，部分产品是供货商报价');
         }
 
-        if ($model->save()){
-            return $this->success('保存成功');
-        } else {
-            return $this->error(300, Helper::arrayToString($model->getErrors()));
-        }
     }
 
 
@@ -252,7 +259,7 @@ class WorkflowController extends Controller
      *
      * @param Order $order
      */
-    private function splitOrder(Order $order)
+    private function splitOrder(Order $order,$quote_status)
     {
         $supplierOrder = new SupplierOrder;
         $supplierOrderItem = new SupplierOrderItem;
@@ -272,6 +279,7 @@ class WorkflowController extends Controller
         $supplierOrderAttributes['order_status'] = $order->order_status;
         $supplierOrderAttributes['create_time'] = $order->create_time;
         $supplierOrderAttributes['order_number'] = $order->order_number;
+        $supplierOrderAttributes['quote_status'] = $quote_status;
         foreach ($suppliers as $supplierId => $supplierName){
             //save supplier order
             $_supplierOrder = clone  $supplierOrder;
@@ -367,7 +375,7 @@ class WorkflowController extends Controller
         }
         if ($model->save()){
             return $this->success();
-        }else{var_dump($model->getErrors());die;
+        }else{
             return $this->error($model->getErrors());
         }
     }
@@ -391,6 +399,7 @@ class WorkflowController extends Controller
     public function actionAssignOrders()
     {
         $status = 2; //已确认的订单，等待报价
+
         return $this->getOrders($status);
     }
 
@@ -412,7 +421,7 @@ class WorkflowController extends Controller
      */
     public function actionQuoteOrders()
     {
-        $status = null;
+        $status = 3;
         return $this->getOrders($status);
     }
 
@@ -538,7 +547,7 @@ class WorkflowController extends Controller
                 $total = $query->count('order.id');
                 $limit = $_GET['limit'];
                 $offset = ($_GET['page'] - 1) * 10;
-                $query->limit($limit)->offset($offset);
+                $query->orderBy('id desc')->limit($limit)->offset($offset);
                 $orders = $query->asArray()->all();
                 if($callBack && is_callable($callBack)){
                     $orders = call_user_func_array($callBack, $orders);
