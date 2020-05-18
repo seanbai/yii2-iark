@@ -152,8 +152,8 @@ layui.define(function(exports){
       // 报价前先清空价格和供应商名称和ID
       obj.update({
         price: '',
-        quoteOwner: '',
-        quoteOwnerId: ''
+        quote_type: '',
+        supplier_name: ''
       });
 
       switch (obj.event) {
@@ -171,7 +171,10 @@ layui.define(function(exports){
               // 取供货商ID
               var bid   = $("#manuList").val();
               var bName = $("#manuList").find("option:selected").text();
-              var price = $('#priceInput').val();
+              var selectIdex = $('#manuList').prop("selectedIndex");
+              bName = selectIdex > 0 ? bName : '';
+              var price = $('#priceInput').find('input').val();
+              var quote_type = price > 0 ? 1 : 0;
               // 更新单条产品数据
               $.ajax({
                 type: 'POST',
@@ -184,6 +187,13 @@ layui.define(function(exports){
                 },
                 success: function (response) {
                   if(response.errCode == 0){
+                    var newData = {
+                      supplier_name: price > 0 ? '' : bName,
+                      price: price,
+                      quote_type: quote_type
+                    };
+                    console.log(newData);
+                    obj.update(newData);
                     layer.close(index);
                   }else{
                     layer.msg(response.errMsg,{icon: 6})
