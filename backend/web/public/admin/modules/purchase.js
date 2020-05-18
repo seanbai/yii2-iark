@@ -50,7 +50,7 @@ layui.define(function(exports){
             // 取订单ID 和 项目名称
             var data = checkStatus.data;
             var id = data[0].id;
-            var project = data[0].project;
+            var project = data[0].project_name;
 
             layer.open({
               type: 1,

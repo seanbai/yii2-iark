@@ -26,7 +26,7 @@ use yii\helpers\Url;
             <div class="layui-btn-container">
               <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看产品清单</button>
               <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="cancel">取消采购</button>
-              <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="status">订单状态变更</button>
+              <button style="display: none" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="status">订单状态变更</button>
             </div>
           </script>
         </div>

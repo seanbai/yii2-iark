@@ -98,7 +98,7 @@ class OrderController extends Controller
         $search = $strategy->getRequest(); // 处理查询参数
         $search['field'] = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
-        $search['where'] = ['<>', 'order_status', 0];
+        $search['where'] = ['<>', 'order_status', 401];
         $search['offset'] = ($page - 1) * $limit;
         $search['limit'] = $limit;
 
@@ -138,18 +138,24 @@ class OrderController extends Controller
 
     /****
      * 产品列表页面
-     * @return false|string
+     * @return array
      */
     public function actionProducts()
     {
-        $orderId = $_GET['orderId'];
+        $orderId = $_GET['id'];
 
         $model = OrderItem::find()->where(['order_id' => $orderId])->asArray()->all();
-        return $this->render(
+        Yii::$app->response->format = 'json';
+        return [
+            'code' => 0,
+            'count' => count($model),
+            'data' => $model,
+        ];
+       /* return $this->render(
             'products', [
             'products' => $model,
         ]
-        );
+        );*/
     }
 
 
@@ -228,7 +234,7 @@ class OrderController extends Controller
         if($model->order_status >= 5){
             return $this->error(400,'The order has been submit quote, can not cancel.');
         }
-        $model->order_status = 403;   //必须在确认报价前
+        $model->order_status = 401;   //必须在确认报价前
         if ($model->save()){
             return $this->success();
         } else {
@@ -254,7 +260,7 @@ class OrderController extends Controller
     {
         $userId = yii::$app->user->identity->id;
 
-        $model = Order::find()->where(['order_status' => 403]);
+        $model = Order::find()->where(['order_status' => 401]);
         if ($userId != 1)
         {
             $model->andWhere(['user' => $userId]);
