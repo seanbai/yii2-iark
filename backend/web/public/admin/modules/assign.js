@@ -150,11 +150,11 @@ layui.define(function(exports){
       var id = data.id
 
       // 报价前先清空价格和供应商名称和ID
-      obj.update({
-        price: '',
-        quote_type: '',
-        supplier_name: ''
-      });
+      // obj.update({
+      //   price: '',
+      //   quote_type: '',
+      //   supplier_name: ''
+      // });
 
       switch (obj.event) {
         case 'set':

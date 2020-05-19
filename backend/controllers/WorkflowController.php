@@ -220,21 +220,21 @@ class WorkflowController extends Controller
         $model = Order::findOne(['id'=>$data['id']]);
         //订单是完成正确分配工作 是否出现部分报价是平台部分报价是供货商
         $completeAssign = $model->hasCompleteAssignation();
-        $first_price = '';
+        $first_quote = '';
 
         $flag = true;
         foreach ($model->getItems() as $k => $item) {
             if ($k == 0) {
-                $first_price = $item['price'];
+                $first_quote = $item['quote_type'];
             } else {
-                if ($first_price != $item['price']) {
+                if ($first_quote != $item['quote_type']) {
                     $flag = false;
                 }
             }
         }
         if ($data['status'] == 3 && $completeAssign && $flag) {
             $model->order_status = 3;
-            $quote_status = floatval($first_price)>0 ?1:0;
+            $quote_status = $first_quote;
             $model->quote_status = $quote_status;
             try{
                 $this->splitOrder($model,$quote_status);
@@ -370,9 +370,14 @@ class WorkflowController extends Controller
         $model = OrderItem::findOne(['id'=>intval($_POST['id'])]);
         $model->supplier_id = $_POST['userId'];
         $model->supplier_name = $_POST['name'];
+        $quote_type = 0;
         if (isset($_POST['price']) && !empty($_POST['price'])) {
             $model->price = $_POST['price'];
+            $quote_type = 1;
+        } else {
+            $model->price = '0';
         }
+        $model->quote_type = $quote_type;
         if ($model->save()){
             return $this->success();
         }else{
@@ -510,9 +515,6 @@ class WorkflowController extends Controller
         $order = Order::findOne($orderId);
         if($order){
             $items = $order->items;
-            foreach ($items as $k => $v) {
-                $items[$k]['quote_type'] = $order['quote_status'];
-            }
         }else{
             $items = [];
         }
