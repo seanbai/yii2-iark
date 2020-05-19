@@ -119,9 +119,13 @@ layui.define(function(exports){
           type: 'POST',
           // 同步接口，传数据ID和修改后的金额值
           url: 'quote-items?id=' + itemId + '&price=' + value,
-          success: function(){
-            layer.msg('Quote has been saved!');
-            table.reload('items',{}); // 重载数据表格
+          success: function(response){
+            if(response.code == 200){
+              layer.msg('Quote has been saved!');
+              table.reload('items',{}); // 重载数据表格
+            }else {
+              layer.msg(response.msg,{icon: 6});
+            }
           },
           error: function(){
             layer.msg('Error');
