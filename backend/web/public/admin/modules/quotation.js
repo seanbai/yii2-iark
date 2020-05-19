@@ -81,9 +81,10 @@ layui.define(function(exports){
         toolbar: '#itemsBar',
         skin: 'row',
         even: true,
+        totalRow: true,
         cols: [[
           {field: 'brand', title: 'Item'},
-          {field: 'number', title: 'Qty'},
+          {field: 'number', title: 'Qty', totalRow: true},
           {field: 'files', title: 'Image',
             templet: function(d){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
@@ -103,7 +104,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
-          {field: 'price', title: 'Price (EUR)', edit: 'text'}
+          {field: 'price', title: 'Price (EUR)',  totalRow: true, edit: 'text'}
         ]]
       });
       // 价格编辑
