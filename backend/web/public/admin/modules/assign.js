@@ -173,6 +173,10 @@ layui.define(function(exports){
               var bName = $("#manuList").find("option:selected").text();
               var selectIdex = $('#manuList').prop("selectedIndex");
               bName = selectIdex > 0 ? bName : '';
+              if(selectIdex > 0){
+                layer.msg('请选择供货商',{icon: 6});
+                return;
+              }
               var price = $('#priceInput').find('input').val();
               var quote_type = price > 0 ? 1 : 0;
               // 更新单条产品数据

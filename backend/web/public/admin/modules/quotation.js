@@ -2,7 +2,6 @@ layui.define(function(exports){
   //
   layui.use(['table','jquery','form'], function(){
     var table = layui.table;
-    var products = layui.table;
     var $ = layui.jquery;
     //
     var workflow = table.render({
@@ -22,7 +21,7 @@ layui.define(function(exports){
       ]]
     });
 
-    //
+    // 表格工具
     table.on('toolbar(myOrder)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
       var jsonData = checkStatus.data;
@@ -36,49 +35,40 @@ layui.define(function(exports){
             // 取订单ID 和 项目名称
             var data = checkStatus.data;
             var id = data[0].id;
-            var num = data[0].num;
+            var num = data[0].order_number;
             // 打开产品列表弹层
-            layer.open({
+            var itemsbox = layer.open({
               type: 1,
               title: 'Order Number: ' + num,
-              area: ['95%', '65%'],
+              area: ['99%', '98%'],
               content: $('#showItems'),
-              resize: false,
-              success: showItems(id)
-            });
-          }
-        break;
-        // 打开状态修改弹层
-        case 'submit':
-          if(checkStatus.data.length === 0){
-            layer.msg("You should be select an order first!");
-          }else{
-            // 取 Order ID
-            var data = checkStatus.data;
-            var id = data[0].id;
-            // 提交报价
-            layer.confirm('The quotation has been completed and verified?',{
-              btn: ['Confirm', 'Cancel'], title:'Submit Quotation'}, function(index){
-                $.ajax({
-                  type: 'post',
-                  // 同步接口，传数据ID和修改后的金额值
-                  url: 'submit-quote',
-                  data: {
-                    id: id
-                  },
-                  success: function(res){
-                    if(res.code === 200){
-                      layer.msg('Quote has been saved!');
-                      table.reload('items',{}); // 重载数据表格
-                    }else{
-                      layer.msg('Quote error!');
+              btn: ['Submit Quote','Cancel'],
+              success: showItems(id),
+              yes: function(){
+                layer.confirm('The quotation has been completed and verified?', function(index){
+                  $.ajax({
+                    type: 'POST',
+                    url: 'submit-quote',
+                    data: {
+                      id: id
+                    },
+                    error: function(){
+                      layer.msg('the request error!');
+                    },
+                    success: function(response){
+                      if(response.code != 200){
+                        layer.msg(response.msg,{icon: 6});
+                      }else{
+                        // 关闭弹层
+                        layer.close(itemsbox);
+                      }
+                      // 表格重载
+                      workflow.reload();
                     }
-                  },
-                  error: function(){
-                    layer.msg('Error');
-                  }
+                  });
                 })
-              });
+              }
+            });
           }
         break;
       };
@@ -91,7 +81,6 @@ layui.define(function(exports){
         toolbar: '#itemsBar',
         skin: 'row',
         even: true,
-        totalRow: true, //开启合计行
         cols: [[
           {field: 'brand', title: 'Item'},
           {field: 'number', title: 'Qty'},
@@ -114,7 +103,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
-          {field: 'price', title: 'Price (EUR)', totalRow: true, edit: 'text'}
+          {field: 'price', title: 'Price (EUR)', edit: 'text'}
         ]]
       });
       // 价格编辑
@@ -125,15 +114,11 @@ layui.define(function(exports){
         var data = obj.data;
         var itemId = data.id;
 
-        console.log(itemId);
         // 改动完即同步数据库
         $.ajax({
           type: 'POST',
           // 同步接口，传数据ID和修改后的金额值
-          url: 'quote-item',
-          data: {
-            id: itemId, price: value
-          },
+          url: 'quote-items?id=' + itemId + '&price=' + value,
           success: function(){
             layer.msg('Quote has been saved!');
             table.reload('items',{}); // 重载数据表格
