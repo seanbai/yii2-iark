@@ -83,7 +83,7 @@ layui.define(function(exports){
           layer.open({
             type: 1,
             title: '添加产品信息',
-            area: ['640px', '500px'],
+            area: ['1000px', '700px'],
             content: $('#addItem'),
             resize: false,
             success: function(){

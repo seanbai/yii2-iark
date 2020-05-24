@@ -100,7 +100,7 @@ $this->title = 'Create New Order';
 
 <!-- 添加产品清单的弹层 -->
 <div style="display:none" id="addItem">
-    <div class="layui-fluid">
+    <div class="layui-fluids">
         <form class="layui-form layui-form-pane" id="addItems" lay-filter="edit">
             <!-- 型号名称 -->
             <input type="hidden" name="pid" value="" />
@@ -132,7 +132,7 @@ $this->title = 'Create New Order';
             </div>
             <!-- 品牌 -->
             <div class="layui-form-item">
-                <label class="layui-form-label">供应商*</label>
+                <label class="layui-form-label">品牌*</label>
                 <div class="layui-input-block">
                     <input type="text" name="product_supplier" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
@@ -144,9 +144,9 @@ $this->title = 'Create New Order';
                     <input type="text" name="model" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            <!-- 图纸尺寸 -->
+            <!-- 产品尺寸 -->
             <div class="layui-form-item">
-                <label class="layui-form-label">图纸尺寸*</label>
+                <label class="layui-form-label">产品尺寸*</label>
                 <div class="layui-input-block">
                     <input type="text" name="size" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
