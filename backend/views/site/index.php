@@ -107,8 +107,9 @@ AppAsset::register($this);
             padding-left: 0
         }
     </style>
+    <link rel="stylesheet" href="/public/admin/ui/css/layui.css">
+    <link rel="stylesheet" href="/public/admin/css/custom.css" id="main-ace-style"/>
     <link rel="stylesheet" href="/public/admin/css/ace-home.css" />
-
 </head>
 
 <body class="ace-skin layui-layout-body dark">
@@ -116,36 +117,23 @@ AppAsset::register($this);
 
 <?php $this->beginBody() ?>
 
-
-<div id="navbar" class="navbar navbar-default navbar-fixed-top">
-    <script type="text/javascript">
-        try {
-            ace.settings.check('navbar', 'fixed')
-        } catch (e) {
-        }
-    </script>
-
-    <div id="navbar-container">
-        <!-- #section:basics/sidebar.mobile.toggle -->
-        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
-            <span class="sr-only">Toggle sidebar</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-
+<div class="layui-layout layui-layout-admin">
+    <div id="navbar-container" class="layui-header">
         <div class="navbar-header-logo pull-left">
             <a href="/">
                 <span>Order System</span>
             </a>
         </div>
 
-        <div class="navbar-buttons navbar-header pull-right" role="navigation">
-            <ul class="header-ul">
-                <li>
-                    <a class="sign-out"  title="My Account"> My Account</a>
+        <div class="navbar-header pull-right">
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">My Account</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/admin/reset" target="iframe-index">Reset Password</a></dd>
+                    </dl>
                 </li>
-                <li>
+                <li class="layui-nav-item">
                     <?= Html::beginForm(['/site/logout'], 'post'); ?>
                     <?= Html::submitButton(
                         ' Sign Out ',
@@ -160,12 +148,6 @@ AppAsset::register($this);
 
 <!-- /section:basics/navbar.layout -->
 <div class="main-container main-container-fixed" id="main-container">
-    <script type="text/javascript">
-        try {
-            ace.settings.check('main-container', 'fixed')
-        } catch (e) {
-        }
-    </script>
 
     <!-- #section:basics/sidebar -->
     <div id="sidebar" class="sidebar responsive sidebar-fixed">
@@ -185,10 +167,6 @@ AppAsset::register($this);
 
         }
         ?>
-<!--        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">-->
-<!--            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"-->
-<!--               data-icon2="ace-icon fa fa-angle-double-right"></i>-->
-<!--        </div>-->
 
         <script type="text/javascript">
             try {
@@ -227,8 +205,6 @@ AppAsset::register($this);
 <script src="/public/assets/js/bootstrap.min.js"></script>
 <!--[if lte IE 8]>
 <script src="/public/assets/js/excanvas.min.js"></script>
-
-
 
 <![endif]-->
 <?php $this->endBody() ?>
@@ -363,6 +339,15 @@ AppAsset::register($this);
             }
         })
     });
+</script>
+
+<script src="/public/admin/ui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/public/admin/'
+    }).extend({
+        index: 'lib/index'
+    }).use('index');
 </script>
 </body>
 </html>

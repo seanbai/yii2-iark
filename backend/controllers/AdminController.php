@@ -213,4 +213,12 @@ class AdminController extends Controller
         AdminLog::create(AdminLog::TYPE_DELETE, $ids, $this->pk . '=' . $ids);
         return $this->success($arrIds, $message);
     }
+
+    /**
+     * 重置密码
+     */
+    public function actionReset()
+    {
+        return $this->render('reset', []);
+    }
 }

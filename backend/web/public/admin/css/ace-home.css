@@ -23,15 +23,7 @@
     padding-left: 0;
     list-style: none;
 }
-.ace-skin .header-ul li {
-    float: left;
-}
-.ace-skin .header-ul li a{
-    size: 16px;
-}
-.ace-skin .header-ul li a {
-    text-decoration:none;
-}
+
 .ace-skin .sign-out {
     line-height: 60px !important;
     padding: 0 20px !important;
@@ -247,4 +239,26 @@
 
 .layui-fluids {
     padding: 15px;
+}
+
+.layui-layout-admin .layui-header {
+    position: inherit;
+    width: auto;
+}
+.btn.btn-link {
+    color: #000000 !important;
+}
+
+.ace-skin .header-ul li a{
+    text-decoration:none !important;
+}
+.ace-skin .header-ul li a:hover{
+    text-decoration:none !important;
+}
+.ace-skin .header-ul li:hover {
+    line-height: 60px;
+    border-bottom: 5px solid #5FB878;
+}
+.layui-nav .layui-nav-item a {
+    text-decoration:none !important;
 }
