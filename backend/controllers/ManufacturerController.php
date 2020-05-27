@@ -88,8 +88,8 @@ class ManufacturerController extends Controller
         $search            = $strategy->getRequest(); // 处理查询参数
         $search['field']   = $search['field'] ? $search['field'] : $this->sort;
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
-
         $query = (new Query())->from(SupplierOrder::tableName());
+
         if (yii::$app->user->identity->id == 1) {
             $search['where'] = Helper::handleWhere($search['params'], $this->where($search['params']));
             // 查询数据
@@ -101,7 +101,8 @@ class ManufacturerController extends Controller
             // 查询数据
             $query->where($search['where']);
         }
-
+        //只出现子订单为等待报价的
+        $query->where(['order_status'=>31]);
 
         if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
 
@@ -147,8 +148,9 @@ class ManufacturerController extends Controller
      */
     public function actionQuoteItem()
     {
-        $itemId = \Yii::$app->request->post('id');
-        $value = \Yii::$app->request->post('price');
+        $itemId = \Yii::$app->request->get('id');
+        $value = \Yii::$app->request->get('price');
+
         if(!$itemId || !$value){
             $data = [
                 'code' => 400,
@@ -162,8 +164,19 @@ class ManufacturerController extends Controller
                     'msg' => 'the product info is invalid'
                 ];
             }else{
+                $order = SupplierOrder::findOne($supplierOrderItem->supplier_order_id);
+                if (!$order || ($order->quote_status == 1)) {
+                    $data = [
+                        'code' => 400,
+                        'msg' => '平台已经报价,请直接提交'
+                    ];
+                }
                 $supplierOrderItem->setAttribute('price', $value);
                 $supplierOrderItem->save();
+                //保存单个产品的报价到order item
+                $orderItem = OrderItem::findOne($supplierOrderItem->order_item_id);
+                $orderItem->setAttribute('price',$value);
+                $orderItem->save();
                 $data = [
                     'code' => 200,
                 ];

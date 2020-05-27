@@ -276,7 +276,7 @@ class WorkflowController extends Controller
         }
         $supplierOrderAttributes['order_id'] = $order->id;
         $supplierOrderAttributes['date'] = $order->date;
-        $supplierOrderAttributes['order_status'] = $order->order_status;
+        $supplierOrderAttributes['order_status'] = 31;//等待报价
         $supplierOrderAttributes['create_time'] = $order->create_time;
         $supplierOrderAttributes['order_number'] = $order->order_number;
         $supplierOrderAttributes['quote_status'] = $quote_status;

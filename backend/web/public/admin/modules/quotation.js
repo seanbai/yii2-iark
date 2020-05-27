@@ -96,7 +96,7 @@ layui.define(function(exports){
           {field: 'att', title: 'Attachment',
             templet: function(d){
               var att = d.att;
-              if(att.length === 0){
+              if(!att){
                 return ''
               }else{
                 return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
@@ -119,7 +119,7 @@ layui.define(function(exports){
         $.ajax({
           type: 'POST',
           // 同步接口，传数据ID和修改后的金额值
-          url: 'quote-items?id=' + itemId + '&price=' + value,
+          url: 'quote-item?id=' + itemId + '&price=' + value,
           success: function(response){
             if(response.code == 200){
               layer.msg('Quote has been saved!');

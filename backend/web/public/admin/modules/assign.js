@@ -172,12 +172,14 @@ layui.define(function(exports){
               var bid   = $("#manuList").val();
               var bName = $("#manuList").find("option:selected").text();
               var selectIdex = $('#manuList').prop("selectedIndex");
+
               bName = selectIdex > 0 ? bName : '';
-              if(selectIdex > 0){
+              if(selectIdex <= 0){
                 layer.msg('请选择供货商',{icon: 6});
                 return;
               }
               var price = $('#priceInput').find('input').val();
+
               var quote_type = price > 0 ? 1 : 0;
               // 更新单条产品数据
               $.ajax({
@@ -264,6 +266,7 @@ layui.define(function(exports){
           if(response.errCode == 0){
             layer.msg(response.errMsg)
             layer.closeAll()
+            order.reload()
           }else{
             layer.msg(response.errMsg,{icon:6})
           }
