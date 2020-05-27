@@ -1,0 +1,21 @@
+workflow/child-orders	    子订单
+workflow/items	            订单详情
+
+workflow/pay-orders	        付款订单列表
+workflow/receive-orders	    收款订单列表
+workflow/quote-orders	    报价中的订单列表
+workflow/assign-orders	    分配订单列表
+
+workflow/assign	            供应商与报价分配
+workflow/quote	            报价中
+workflow/pay	            财务付款
+workflow/receive	        财务收款
+
+
+//新增页面
+manufacturer/pending-order	    供货商- Pending Order-list
+manufacturer/pending-order-list	    供货商- Pending Order-list
+
+order/watingquote         采购商- 报价待处理
+order/order-pay           采购商- 订单支付
+order/watingquote-list	采购商-报价待处理订单列表

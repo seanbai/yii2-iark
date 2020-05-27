@@ -225,7 +225,7 @@ class ManufacturerController extends Controller
 
     public function actionUpdate()
     {
-
+        //todo 供货商状态更改接口，需要改造，$_POST = ['status' =?, 'id' => ]
         $data = $_POST;
         $model = Order::findOne(['id'=>$data['id']]);
         if ($data['status'] == 10 && $data['prepayment'] == 1){
@@ -304,5 +304,24 @@ class ManufacturerController extends Controller
             'code' => $code,
             'msg' => $msg
         ];
+    }
+
+    public function actionPendingOrder()
+    {
+        return $this->render('pendingorder');
+    }
+
+    public function actionPendingOrderList()
+    {
+        //todo 供货商pengding order
+        $orders = [];
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($orders),
+            'data' => $orders
+        ];
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return$data;
     }
 }

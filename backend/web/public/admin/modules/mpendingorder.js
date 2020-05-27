@@ -10,7 +10,7 @@ layui.define(function(exports){
       elem: '#myOrder',
       height: 'full-115',
       toolbar: '#toolbar',
-      url: 'pending-order', //数据接口
+      url: 'pending-order-list', //数据接口
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
@@ -61,6 +61,11 @@ layui.define(function(exports){
             var id = data[0].id;
             var statusId = data[0].order_status;
 
+            if(statusId !== 91){
+              layer.msg('The order not in production, can not do this action.');
+              return false;
+            }
+
             if( statusId === 1 ){
               // 状态码等于1时执行
               layer.confirm('Confirm receipt of deposit? <br>After confirmation, the order can start production',{
@@ -78,13 +83,12 @@ layui.define(function(exports){
                     }
                   })
               });
-            }else if (statusId === 92) {
+            }else if (statusId === 91) { //生产中
               // 状态码等于2时执行
               layer.confirm('Confirm production completion? <br>After confirmation, the other party will pay the final payment',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
                   $.ajax({
                     type: 'post',
-                    // 同步接口，传数据ID和修改后的金额值
                     url: 'update',
                     data:{
                       id: id,

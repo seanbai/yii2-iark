@@ -12,6 +12,7 @@ use common\strategy\Substance;
 use Yii;
 
 use backend\models\Create;
+use yii\db\Expression;
 use yii\web\Response;
 
 
@@ -176,7 +177,7 @@ class OrderController extends Controller
     {
         $data = $_POST;
         $model = Order::findOne(['id' => $data['id']]);
-        if ($data['status'] == 10 && $data['quote'] == 1){
+        /*if ($data['status'] == 10 && $data['quote'] == 1){
             $model->order_status = 6;   //确定报价
         } else {
             $model->order_status = 23;   //拒绝报价
@@ -186,7 +187,9 @@ class OrderController extends Controller
         }
         if ($data['status'] == 13){
             $model->order_status = 14;   //尾款支付完成
-        }
+        }*/
+        $status = $data['status']; // 5, 确认报价
+        $model->order_status = $status;
 
 
         if ($model->save()){
@@ -285,4 +288,54 @@ class OrderController extends Controller
         return json_encode($data);
     }
 
+    /**
+     * @acl： order/watingquote
+     * @return string
+     */
+    public function actionWatingquote()
+    {
+        return $this->render('watingquote');
+    }
+
+    /**
+     * @acl： order/watingquote-list
+     * @return array
+     */
+    public function actionWatingquoteList()
+    {
+        $orderStatus = [4,5,6]; //todo 更改为报价中的状态列表
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        if(!$orderStatus){
+            $total = 0;
+            $orders = [];
+        }else{
+            try{
+                $query = Order::find()->select('order.*')
+                    ->where(['in', 'order_status', $orderStatus]);
+                $total = $query->count('order.id');
+                $limit = $_GET['limit'];
+                $offset = ($_GET['page'] - 1) * 10;
+                $query->orderBy('id desc')->limit($limit)->offset($offset);
+                $orders = $query->asArray()->all();
+            }catch (\Exception $exception){
+                echo $exception->getMessage();die;
+            }
+        }
+        $data = [
+            'code'  => 0,
+            'count' => $total,
+            'data'  => $orders
+        ];
+        return $data;
+    }
+
+    public function actionOrderPay()
+    {
+        //todo
+        //$_POST['orderId']
+        //$_POST['orderId']
+        //$_POST['pay_deposit'] //定金支付 值为 ‘on’ 代表支付
+        //$_POST['pay_balance'] //支付尾款 值为 ‘on’ 代表支付
+        //$_POST['pay_tax']//支付税金， 值为 ‘on’ 代表支付
+    }
 }
