@@ -96,12 +96,18 @@ class SupplierOrder extends ActiveRecord
             $condition = $checkFirst ? $supplierOrder->order_status == $childStatus :
                          $supplierOrder->order_status != $childStatus;
             if($condition){
-                $update = true;
+                $update = false;
                 break;
             }
         }
         if($update && ($order->order_status != $orderStatus)){
             $order->setAttribute('order_status', $orderStatus);
+            //计算整个订单的总报价
+            $total = 0;
+            foreach ($supplierOrders as $supplierOrder) {
+                $total +=  $supplierOrder->total;
+            }
+            $order->quote = $total;
             $order->save();
         }
     }
@@ -119,7 +125,7 @@ class SupplierOrder extends ActiveRecord
                 ->all();
         foreach ($items as $item){
             /* @var $item SupplierOrderItem */
-            $price = (float) $item->price;
+            $price = (float) $item->price*$item->number;
             $total += $price;
         }
         $orderStatus = 41; //子订单完成报价
