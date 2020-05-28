@@ -324,14 +324,52 @@ class ManufacturerController extends Controller
         return $this->render('pendingorder');
     }
 
+
+    public function actionOrderUpdate()
+    {
+        $post = \Yii::$app->request->post();
+        $id = $post['id'];
+        $status = $post['status'];
+        $childOrder = SupplierOrder::findOne($id);
+        if($childOrder){
+            $code = 0;
+            $msg = '';
+            try{
+                $childOrder->order_status = $status;
+                $childOrder->save(false);
+            }catch (\Exception $exception){
+                $code = 400;
+                $msg  = 'The request error';
+            }
+        }else{
+            $code = 400;
+            $msg  = 'The request error';
+        }
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'code' => $code,
+            'msg' => $msg
+        ];
+    }
+
     public function actionPendingOrderList()
     {
-        //todo 供货商pengding order
-        $orders = [];
+        //  81 => '定金待确认',//当主订单变为8定金已收取的同时，将所有子订单状态变为定金待确认
+        //  91 => '生产中',//当子订单确认收到了定金后，便更改子订单状态为生产中，当第一个子订单状态变为生产中，
+        //          则主订单状态变为生产中
+        //  101 => '生产完成',//子订单状态一定是从生产中变为生产完成，完成后才能去确认收取尾款
+        $orderStatus = [81, 91 , 101];
+        $query = SupplierOrder::find()->select('*')
+            ->where(['in', 'order_status', $orderStatus]);
+        $total = $query->count('id');
+        $limit = $_GET['limit'];
+        $offset = ($_GET['page'] - 1) * 10;
+        $query->orderBy('id desc')->limit($limit)->offset($offset);
+        $orders = $query->asArray()->all();
         $data = [
             'code' => 0,
             'msg' => '',
-            'count' => count($orders),
+            'count' => $total,
             'data' => $orders
         ];
         \Yii::$app->response->format = Response::FORMAT_JSON;

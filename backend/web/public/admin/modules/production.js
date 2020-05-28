@@ -61,17 +61,28 @@ layui.define(function(exports){
             var id = data[0].id;
             var statusId = data[0].order_status;
 
-            if( statusId === 1 ){
+            if( statusId === 81 ){
               // 状态码等于1时执行
               layer.confirm('Confirm receipt of deposit? <br>After confirmation, the order can start production',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
                   $.ajax({
                     type: 'post',
                     // 同步接口，传数据ID和修改后的金额值
-                    url: '/items?id=' + id,
-                    success: function(){
-                      layer.msg('Quote has been saved!');
-                      table.reload('items',{}); // 重载数据表格
+                    url: 'order-update',
+                    data:{
+                      id: id,
+                      status: 91 //生成中
+                    },
+                    success: function(res){
+                      if(res.errCode == 0){
+                        layer.msg('The order status has been changed');
+                        table.reload(); // 重载数据表格
+                        layer.closeAll();
+                      }else{
+                        layer.msg(res.errMsg,{icon:6});
+                        return false;
+                      }
+
                     },
                     error: function(){
                       layer.msg('Error');
@@ -85,15 +96,15 @@ layui.define(function(exports){
                   $.ajax({
                     type: 'post',
                     // 同步接口，传数据ID和修改后的金额值
-                    url: 'update',
+                    url: 'order-update',
                     data:{
                       id: id,
                       status: 101 //生成完成
                     },
                     success: function(res){
                       if(res.errCode == 0){
-                        layer.msg('The order status has saved');
-                        table.reload('items',{}); // 重载数据表格
+                        layer.msg('The order status has been changed');
+                        table.reload(); // 重载数据表格
                         layer.closeAll();
                       }else{
                         layer.msg(res.errMsg,{icon:6});
@@ -113,10 +124,21 @@ layui.define(function(exports){
                   $.ajax({
                     type: 'post',
                     // 同步接口，传数据ID和修改后的金额值
-                    url: '/items?id=' + id,
-                    success: function(){
-                      layer.msg('Quote has been saved!');
-                      table.reload('items',{}); // 重载数据表格
+                    url: 'order-update',
+                    data:{
+                      id: id,
+                      status: 200 //订单完成
+                    },
+                    success: function(res){
+                      if(res.errCode == 0){
+                        layer.msg('The order status has been changed');
+                        table.reload(); // 重载数据表格
+                        layer.closeAll();
+                      }else{
+                        layer.msg(res.errMsg,{icon:6});
+                        return false;
+                      }
+
                     },
                     error: function(){
                       layer.msg('Error');
