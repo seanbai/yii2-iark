@@ -172,7 +172,7 @@ layui.define(function(exports){
               var bid   = $("#manuList").val();
               var bName = $("#manuList").find("option:selected").text();
               var selectIdex = $('#manuList').prop("selectedIndex");
-              var open = $("#open").checkbox();
+              var open = $("#open").val();
 
               bName = selectIdex > 0 ? bName : '';
               if(selectIdex <= 0){
