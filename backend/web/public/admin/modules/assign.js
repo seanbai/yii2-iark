@@ -197,7 +197,7 @@ layui.define(function(exports){
                   if(response.errCode == 0){
                     var newData = {
                       supplier_name: price > 0 ? bName : bName,
-                      price: price,
+                      price: quote_type ? 0 : price,
                       quote_type: quote_type
                     };
                     console.log(newData);
