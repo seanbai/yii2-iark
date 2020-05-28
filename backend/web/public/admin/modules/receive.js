@@ -59,7 +59,9 @@ layui.define(function(exports){
     table.on('tool(quote)', function(obj){
       var data = obj.data;
       var id = data.id;
-
+      var total = data.quote;
+      var tax = data.tax;
+      total = total ? parseInt(total) : 0;
       switch(obj.event){
         case 'confirm':
           var form = layer.open({
@@ -68,7 +70,11 @@ layui.define(function(exports){
             area: ['640px', 'auto'],
             content: $('#confirmPayment'),
             success: function(layero, index){
-              $('#orderId').val(id)
+              $('#orderId').val(id);
+              $('#total').val(total);
+              $('#deposit').val(total/2);
+              $('#balance').val(total/2);
+              $('#tax').val(tax);
             }
           });
           break;
@@ -137,13 +143,17 @@ layui.define(function(exports){
         type: 'post',
         dataType: 'json',
         data: data.field,
-        url: '/api/order/status',
+        url: 'receive-confirm',
         error: function(){
           layer.msg('系统错误,请稍后重试.');
         },
-        success: function(){
-          layer.msg('系统错误,请稍后重试...');
-          layer.closeAll();
+        success: function(res){
+          if(res.errCode == 0){
+            layer.msg('操作成功');
+            layer.closeAll();
+          }else{
+            layer.msg(res.errMsg);
+          }
         }
       });
       return false;

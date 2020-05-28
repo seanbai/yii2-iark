@@ -76,58 +76,58 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">订单总价</label>
           <div class="layui-input-block">
-            <input type="text" name="total" value="20000" class="layui-input" disabled>
+            <input type="text" name="quote" id="total" value="20000" class="layui-input" disabled>
           </div>
         </div>
         <!-- 自动计算总金额的50% -->
         <div class="layui-form-item">
           <label class="layui-form-label">应收定金</label>
           <div class="layui-input-block">
-            <input type="text" value="10000" class="layui-input" >
+            <input type="text" value="10000" name="deposit" id="deposit" disabled class="layui-input" >
           </div>
         </div>
         <!-- 实际收款金额 -->
         <div class="layui-form-item">
           <label class="layui-form-label">实收定金</label>
           <div class="layui-input-block">
-            <input type="text" name="deposit" lay-verify="required" autocomplete="off" class="layui-input">
+            <input type="text" name="receive_deposit" autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 自动计算总金额的50% -->
         <div class="layui-form-item">
           <label class="layui-form-label">应收尾款</label>
           <div class="layui-input-block">
-            <input type="text" value="10000" class="layui-input" disabled>
+            <input type="text" value="10000" id="balance" name="balance" class="layui-input" disabled>
           </div>
         </div>
         <!-- 实际收款金额 -->
         <div class="layui-form-item">
           <label class="layui-form-label">实收尾款</label>
           <div class="layui-input-block">
-            <input type="text" name="balance" lay-verify="required" autocomplete="off" class="layui-input">
+            <input type="text" name="receive_balance" autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 自动计算总金额的50% -->
         <div class="layui-form-item">
           <label class="layui-form-label">应收税金</label>
           <div class="layui-input-block">
-            <input type="text" value="10000" class="layui-input">
+            <input type="text" value="10000" name="tax" id="tax" class="layui-input">
           </div>
         </div>
         <!-- 实际收款金额 -->
         <div class="layui-form-item">
           <label class="layui-form-label">实收税金</label>
           <div class="layui-input-block">
-            <input type="text" name="tax" lay-verify="tax" autocomplete="off" class="layui-input">
+            <input type="text" name="receive_tax"  autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 备注说明 -->
-        <div class="layui-form-item layui-form-text">
+        <!--<div class="layui-form-item layui-form-text">
           <label class="layui-form-label">收款备注</label>
           <div class="layui-input-block">
             <textarea name="info" class="layui-textarea"></textarea>
           </div>
-        </div>
+        </div>-->
         <!-- 提交按钮 -->
         <div class="layui-form-item layui-form-text">
           <input type="text" name="orderId" id="orderId" hidden>
