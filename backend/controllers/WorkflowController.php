@@ -443,12 +443,12 @@ class WorkflowController extends Controller
 
     /**
      * 财务收款-订单列表
-     * @acl：workflow/receive-items
+     * @acl：workflow/receive-orders
      * @return array
      */
     public function actionReceiveOrders()
     {
-        $status = null;
+        $status = [5];
         return $this->getOrders($status);
     }
 
@@ -466,7 +466,7 @@ class WorkflowController extends Controller
 
     /**
      * 财务收款-订单列表
-     * @acl：workflow/pay-items
+     * @acl：workflow/pay-orders
      * @return array
      */
     public function actionPayOrders()
@@ -537,15 +537,20 @@ class WorkflowController extends Controller
     private function getOrders($orderStatus = null, $callBack = null)
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
-        if(!$orderStatus){
+        if (is_string($orderStatus) && !$orderStatus) {
             $total = 0;
             $orders = [];
-        }else{
-            $where = new Expression('order_status = :order_status', [':order_status' => $orderStatus]);
+        } else {
+            if (is_array($orderStatus)) {
+                $where = ["order_status"=>$orderStatus];
+            } else {
+                $where = new Expression('order_status = :order_status', [':order_status' => $orderStatus]);
+            }
             try{
                 $query = Order::find()
                     ->leftJoin('admin u','u.id = order.user')
                     ->select('order.*, u.username as owner')->where($where);
+
                 $total = $query->count('order.id');
                 $limit = $_GET['limit'];
                 $offset = ($_GET['page'] - 1) * 10;

@@ -101,7 +101,7 @@ layui.define(function(exports){
           {field: 'att', title: '附件',
             templet: function(d){
               var att = d.att;
-              if(att.length === 0){
+              if(!att){
                 return ''
               }else{
                 return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
@@ -110,7 +110,8 @@ layui.define(function(exports){
           },
           {field: 'desc', title: '备注'},
           {field: 'price', title: '单价（欧元）'},
-          {field: 'total', title: '合计(欧元)', totalRow: true}
+          {field: 'total', title: '合计(欧元)',
+            totalRow: true}
         ]]
       });
     }
