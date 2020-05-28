@@ -83,7 +83,7 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">应收定金</label>
           <div class="layui-input-block">
-            <input type="text" value="10000" class="layui-input" disabled>
+            <input type="text" value="10000" class="layui-input" >
           </div>
         </div>
         <!-- 实际收款金额 -->

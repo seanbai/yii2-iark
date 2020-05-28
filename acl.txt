@@ -18,4 +18,5 @@ manufacturer/pending-order-list	    供货商- Pending Order-list
 
 order/watingquote         采购商- 报价待处理
 order/order-pay           采购商- 订单支付
+order/items               采购商- 订单产品报价详情
 order/watingquote-list	采购商-报价待处理订单列表
