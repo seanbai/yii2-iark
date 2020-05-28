@@ -370,14 +370,12 @@ class WorkflowController extends Controller
         $model = OrderItem::findOne(['id'=>intval($_POST['id'])]);
         $model->supplier_id = $_POST['userId'];
         $model->supplier_name = $_POST['name'];
-        $quote_type = 0;
-        if (isset($_POST['price']) && !empty($_POST['price'])) {
+        $model->quote_type = $_POST['open'];
+        if (isset($_POST['price']) && !empty($_POST['price']) && !empty($_POST['open'])) {
             $model->price = $_POST['price'];
-            $quote_type = 1;
         } else {
             $model->price = '0';
         }
-        $model->quote_type = $quote_type;
         if ($model->save()){
             return $this->success();
         }else{
