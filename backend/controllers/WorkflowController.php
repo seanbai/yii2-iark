@@ -368,17 +368,17 @@ class WorkflowController extends Controller
      */
     public function actionUpdateUser()
     {
+        $quote_type = ($_POST['open'] == 'true') ? 0 : 1;
         $model = OrderItem::findOne(['id'=>intval($_POST['id'])]);
         $model->supplier_id = $_POST['userId'];
         $model->supplier_name = $_POST['name'];
-        $quote_type = 0;
-        if (isset($_POST['price']) && !empty($_POST['price'])) {
+        $model->quote_type = $quote_type;
+
+        if (isset($_POST['price']) && !empty($_POST['price']) && ($quote_type == 1)) {
             $model->price = $_POST['price'];
-            $quote_type = 1;
         } else {
             $model->price = '0';
         }
-        $model->quote_type = $quote_type;
         if ($model->save()){
             return $this->success();
         }else{
