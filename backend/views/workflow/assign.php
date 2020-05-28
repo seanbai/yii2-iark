@@ -78,7 +78,7 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">供货商报价</label>
           <div class="layui-input-block">
-            <input type="checkbox" id="open" name="open" lay-skin="switch" lay-text="是|否" >
+            <input type="checkbox" id="open" name="open" lay-skin="switch" lay-text="是|否" lay-filter="price">
           </div>
         </div>
 
