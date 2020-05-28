@@ -16,9 +16,13 @@ layui.define(function(exports){
         error: function(){ // 保存错误处理
           layer.msg('系统错误，请稍后重试');
         },
-        success: function(){ // 保存成功处理
+        success: function(e){ // 保存成功处理
           // 成功提示
-          layer.msg('保存成功');
+          if (e.errCode == 200){
+            layer.msg('密码重置成功');
+          } else {
+            layer.msg(e.errMsg);
+          }
         }
       });
       return false;
