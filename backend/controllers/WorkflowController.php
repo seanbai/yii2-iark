@@ -373,8 +373,6 @@ class WorkflowController extends Controller
         $model->supplier_name = $_POST['name'];
         $model->quote_type = $quote_type;
 
-        print_r($quote_type);die;
-
         if (isset($_POST['price']) && !empty($_POST['price']) && ($quote_type == 1)) {
             $model->price = $_POST['price'];
         } else {

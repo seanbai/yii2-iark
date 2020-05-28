@@ -181,7 +181,7 @@ layui.define(function(exports){
               }
               var price = $('#priceInput').find('input').val();
 
-              var quote_type = price > 0 ? 1 : 0;
+              var quote_type = open ? 0 : 1;
               // 更新单条产品数据
               $.ajax({
                 type: 'POST',
