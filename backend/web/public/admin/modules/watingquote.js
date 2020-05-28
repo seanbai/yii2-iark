@@ -17,6 +17,7 @@ layui.define(function(exports){
       cols: [[ //表头
         {type:'radio'},
         {field: 'order_number', title: '订单号'},
+        {field: 'order_status', title: '订单状态'},
         {field: 'project_name', title: '项目名称'},
         {field: 'create_time', title: '创建时间'},
         {field: 'date', title: '期望交付时间'},
@@ -161,11 +162,11 @@ layui.define(function(exports){
           layer.msg('系统错误,请稍后重试.');
         },
         success: function(res){
-          if(res.errCode == 0){
+          if(res.code == 200){
             layer.closeAll();
             workflow.reload();
           }else{
-            layer.msg('系统错误,请稍后重试...');
+            layer.msg(res.msg);
           }
         }
       });

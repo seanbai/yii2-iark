@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\helpers\OrderStatus;
 use backend\models\Admin;
 use backend\models\Auth;
 use backend\models\Create;
@@ -541,6 +542,7 @@ class WorkflowController extends Controller
             $total = 0;
             $orders = [];
         } else {
+            $orderStatusArr = OrderStatus::get();
             if (is_array($orderStatus)) {
                 $where = ["order_status"=>$orderStatus];
             } else {
@@ -561,6 +563,11 @@ class WorkflowController extends Controller
                 }
             }catch (\Exception $exception){
                 echo $exception->getMessage();die;
+            }
+        }
+        if (!empty($orders)) {
+            foreach ($orders as $k => $order) {
+                $orders[$k]['order_status'] = $orderStatusArr[$order['order_status']];
             }
         }
         $data = [
