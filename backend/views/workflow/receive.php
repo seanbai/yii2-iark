@@ -48,9 +48,9 @@ layui.config({
 
 <!-- 数据表格状态格式化 -->
 <script type="text/html" id="orderStatus">
-  {{#  if(d.status == 1){ }}
-    <span class="tag layui-bg-cyan">定金待确认</span>
-  {{# }else { }}
+  {{#  if(d.status == 5){ }}
+    <span class="tag layui-bg-cyan">确认报价</span>
+  {{# } else { }}
     <span class="tag layui-bg-red">尾款待确认</span>
   {{# } }}
 </script>

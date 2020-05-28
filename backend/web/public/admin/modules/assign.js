@@ -172,6 +172,7 @@ layui.define(function(exports){
               var bid   = $("#manuList").val();
               var bName = $("#manuList").find("option:selected").text();
               var selectIdex = $('#manuList').prop("selectedIndex");
+              var open = $("#open").is(":checked");
 
               bName = selectIdex > 0 ? bName : '';
               if(selectIdex <= 0){
@@ -180,7 +181,7 @@ layui.define(function(exports){
               }
               var price = $('#priceInput').find('input').val();
 
-              var quote_type = price > 0 ? 1 : 0;
+              var quote_type = open ? 0 : 1;
               // 更新单条产品数据
               $.ajax({
                 type: 'POST',
@@ -189,13 +190,14 @@ layui.define(function(exports){
                     id: id,
                     userId: bid,
                     name: bName,
-                    price: price
+                    price: price,
+                    open : open
                 },
                 success: function (response) {
                   if(response.errCode == 0){
                     var newData = {
-                      supplier_name: price > 0 ? '' : bName,
-                      price: price,
+                      supplier_name: price > 0 ? bName : bName,
+                      price: quote_type ? price : 0,
                       quote_type: quote_type
                     };
                     console.log(newData);

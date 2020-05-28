@@ -303,7 +303,7 @@ class OrderController extends Controller
      */
     public function actionWatingquoteList()
     {
-        $orderStatus = [4,5,6]; //todo 更改为报价中的状态列表
+        $orderStatus = [4,5,6,11,14]; //todo 更改为报价中的状态列表
         \Yii::$app->response->format = Response::FORMAT_JSON;
         if(!$orderStatus){
             $total = 0;
@@ -321,6 +321,12 @@ class OrderController extends Controller
                 echo $exception->getMessage();die;
             }
         }
+        $orderStatusArr = OrderStatus::get();
+        if (!empty($orders)) {
+            foreach ($orders as $k => $order) {
+                $orders[$k]['order_status'] = $orderStatusArr[$order['order_status']];
+            }
+        }
         $data = [
             'code'  => 0,
             'count' => $total,
@@ -331,11 +337,43 @@ class OrderController extends Controller
 
     public function actionOrderPay()
     {
-        //todo
-        //$_POST['orderId']
-        //$_POST['orderId']
-        //$_POST['pay_deposit'] //定金支付 值为 ‘on’ 代表支付
-        //$_POST['pay_balance'] //支付尾款 值为 ‘on’ 代表支付
-        //$_POST['pay_tax']//支付税金， 值为 ‘on’ 代表支付
+        $msg = 'Operation failed';
+        $code = 400;
+        $orderId = \Yii::$app->request->post('orderId', null);
+        if ($orderId) {
+            $deposit =  \Yii::$app->request->post('pay_deposit', null);
+            $balance =  \Yii::$app->request->post('pay_balance', null);
+            $tax =  \Yii::$app->request->post('pay_tax', null);
+            $order = Order::findOne(['id'=>$orderId]);
+            if ($order->id) {
+                if ($deposit) {
+                    //确认支付定金
+                    $order->order_status = 7;
+                    $msg = 'Operation successed';
+                    $code = 200;
+                    $order->save();
+                } else if ($balance) {
+                    //确认支付尾款
+                    $order->order_status = 12;
+                    $msg = 'Operation successed';
+                    $code = 200;
+                    $order->save();
+                } else if ($tax) {
+                    //确认支付税金
+                    $order->order_status = 15;
+                    $msg = 'Operation successed';
+                    $code = 200;
+                    $order->save();
+                }
+
+            }
+        }
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        $data = [
+            'code'  => $code,
+            'msg'   => $msg,
+            'data'  => []
+        ];
+        return $data;
     }
 }
