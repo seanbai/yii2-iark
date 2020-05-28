@@ -58,7 +58,7 @@ layui.define(function(exports){
     table.on('tool(quote)', function(obj){
       var data = obj.data;
       var id = data.id;
-      var project = data.project;
+      var project = data.project_name;
       // 显示子订单
       switch(obj.event){
         case 'confirm':
@@ -121,8 +121,8 @@ layui.define(function(exports){
         skin: 'row',
         even: true,
         cols: [[ //表头
-          {field: 'supplier', title: '供货商'},
-          {field: 'quote', title: '报价时间'},
+          {field: 'supplier_name', title: '供货商'},
+          {field: 'quote_time', title: '报价时间'},
           {field: 'total', title: '报价金额'},
           {field: 'deposit', title: '定金'},
           {field: 'depositDate', title: '定金支付时间'},
@@ -135,18 +135,29 @@ layui.define(function(exports){
       table.on('tool(subOrder)', function(obj){
         var data = obj.data;
         var id = data.id;
-        var statusId = data.status;
+        var statusId = data.order_status;
+        var deposit = data.deposit ? parseInt(data.deposit) : 0;
+        var balance = data.balance ? parseInt(data.balance) : 0;
         // 弹出付款登记
         switch(obj.event){
           case 'logPay':
-            if(statusId === 1){
+            console.log(statusId);
+            if(deposit <= 0 || balance <= 0){
               var form = layer.open({
                 type: 1,
                 title: '付款确认',
                 area: ['640px', 'auto'],
                 content: $('#confirmPay'),
                 success: function(layero, index){
-                  $('#subOrderId').val(id)
+                  $('#subOrderId').val(id);
+                  if(balance){
+                    $('#balance').attr("disable", true);
+                  }
+                  $('#balance').val(balance);
+                  if(deposit){
+                    $('#deposit').attr("disable", true);
+                  }
+                  $('#deposit').val(deposit);
                 }
               });
             }else{
@@ -178,13 +189,18 @@ layui.define(function(exports){
         type: 'post',
         dataType: 'json',
         data: data.field,
-        url: '/api/order/status',
+        url: 'payment', //todo
         error: function(){
           layer.msg('系统错误,请稍后重试.');
         },
-        success: function(){
-          layer.msg('系统错误,请稍后重试...');
-          layer.closeAll();
+        success: function(res){
+          if(res.errCode == 0){
+            layer.msg('操作成功');
+            layer.closeAll();
+            order.reload();
+          }else{
+            layer.msg(res.errMsg);
+          }
         }
       });
       return false;

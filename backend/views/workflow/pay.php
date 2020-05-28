@@ -97,14 +97,14 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">实付定金</label>
           <div class="layui-input-block">
-            <input type="text" name="deposit" lay-verify="required" autocomplete="off" class="layui-input">
+            <input type="text" name="deposit"  id="deposit" lay-verify="required" autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 实际收款金额 -->
         <div class="layui-form-item">
           <label class="layui-form-label">实付尾款</label>
           <div class="layui-input-block">
-            <input type="text" name="balance" lay-verify="required" autocomplete="off" class="layui-input">
+            <input type="text" name="balance" id="balance" lay-verify="required" autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 备注说明 -->

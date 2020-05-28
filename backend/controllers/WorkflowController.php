@@ -466,13 +466,54 @@ class WorkflowController extends Controller
     }
 
     /**
+     * 财务付款
+     * //todo 所有子订单都付款完成，主订单付款完成
+     * @return array
+     */
+    public function actionPayment()
+    {
+        $orderId = isset($_POST['orderId']) && $_POST['orderId'] ? $_POST['orderId'] : 0;
+        $deposit = isset($_POST['deposit']) && $_POST['deposit'] ? $_POST['deposit'] : 0;
+        $balance =  isset($_POST['balance']) && $_POST['balance'] ? $_POST['balance'] : 0;
+        $order = SupplierOrder::findOne($orderId);
+        $update = false;
+        if($balance > 0 && $balance !== $order->getOldAttribute('balance')){
+            $order->setAttribute('balance', $balance);
+            $update = true;
+        }
+        if($deposit > 0 && $deposit !== $order->getOldAttribute('deposit')){
+            $order->setAttribute('deposit', $deposit);
+            $update = true;
+        }
+        $code = 0;
+        $msg = '';
+        if($update){
+           try{
+               $order->save();
+               $code = 0;
+               $msg = '付款成功';
+           }catch (\Exception  $e){
+               $code = 400;
+               $msg = '付款失败';
+           }
+        }
+        \Yii::$app->response->format = 'json';
+        return [
+            'errCode' => $code,
+            'errMsg' => $msg
+        ];
+
+    }
+
+    /**
      * 财务收款-订单列表
      * @acl：workflow/pay-orders
      * @return array
      */
     public function actionPayOrders()
     {
-        $status = null;
+        //财务确认定金(尾款)已经收到，操作需要需要付款给供货商的订单
+        $status = [8, 13];
         return $this->getOrders($status);
     }
 
@@ -544,7 +585,7 @@ class WorkflowController extends Controller
         } else {
             $orderStatusArr = OrderStatus::get();
             if (is_array($orderStatus)) {
-                $where = ["order_status"=>$orderStatus];
+                $where = ['in', "order_status", $orderStatus];
             } else {
                 $where = new Expression('order_status = :order_status', [':order_status' => $orderStatus]);
             }

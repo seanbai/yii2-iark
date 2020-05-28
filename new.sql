@@ -99,3 +99,10 @@ alter table `order` add column quote decimal(10, 4) comment "订单报价";
 alter table `order` add column quote_status smallint (1) default 0;
 alter table `supplier_order` add column quote_status smallint (1) default 0;
 alter table `order_item` add column quote_type smallint (1) default 0;
+
+
+--子订单新增字段 5/28
+alter table `supplier_order` add column deposit decimal (10,2) default 0;
+alter table `supplier_order` add column depositDate datetime default null ;
+alter table `supplier_order` add column balance decimal (10,2) default 0;
+alter table `supplier_order` add column balanceDate datetime default null ;
