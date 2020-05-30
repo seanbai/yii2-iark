@@ -14,9 +14,12 @@ workflow/receive	        财务收款
 
 //新增页面
 manufacturer/pending-order	    供货商- Pending Order-list
+manufacturer/order-update	    供货商- 修改供货商订单信息
 manufacturer/pending-order-list	    供货商- Pending Order-list
 
 order/watingquote         采购商- 报价待处理
 order/order-pay           采购商- 订单支付
 order/items               采购商- 订单产品报价详情
 order/watingquote-list	采购商-报价待处理订单列表
+
+workflow/payment    财务付款 给 供货商 操作

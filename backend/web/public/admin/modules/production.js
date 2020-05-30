@@ -127,7 +127,7 @@ layui.define(function(exports){
                     url: 'order-update',
                     data:{
                       id: id,
-                      status: 200 //订单完成
+                      status: 201 //订单完成
                     },
                     success: function(res){
                       if(res.errCode == 0){

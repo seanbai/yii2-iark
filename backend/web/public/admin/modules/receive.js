@@ -60,23 +60,47 @@ layui.define(function(exports){
       var data = obj.data;
       var id = data.id;
       var total = data.quote;
+      var status = data.order_status;
       var tax = data.tax;
       total = total ? parseInt(total) : 0;
       switch(obj.event){
         case 'confirm':
-          var form = layer.open({
-            type: 1,
-            title: '收款确认',
-            area: ['640px', 'auto'],
-            content: $('#confirmPayment'),
-            success: function(layero, index){
-              $('#orderId').val(id);
-              $('#total').val(total);
-              $('#deposit').val(total/2);
-              $('#balance').val(total/2);
-              $('#tax').val(tax);
-            }
-          });
+          if(status == 5){
+            //询问框
+            layer.confirm('是否已通知采购方支付定金？', {
+              btn: ['是','否'] //按钮
+            }, function(){
+              $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: {
+                  id: id,
+                  status: 6
+                },
+                url: 'update-status',
+                success:function () {
+                  order.reload();
+                  layer.closeAll();
+                }
+              });
+            },function(){
+              layer.closeAll();
+            });
+          }else{
+            var form = layer.open({
+              type: 1,
+              title: '收款确认',
+              area: ['640px', 'auto'],
+              content: $('#confirmPayment'),
+              success: function(layero, index){
+                $('#orderId').val(id);
+                $('#total').val(total);
+                $('#deposit').val(total/2);
+                $('#balance').val(total/2);
+                $('#tax').val(tax);
+              }
+            });
+          }
           break;
         default:
       }
@@ -151,6 +175,7 @@ layui.define(function(exports){
           if(res.errCode == 0){
             layer.msg('操作成功');
             layer.closeAll();
+            order.reload();
           }else{
             layer.msg(res.errMsg);
           }
