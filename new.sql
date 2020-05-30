@@ -99,3 +99,9 @@ alter table `order` add column quote decimal(10, 4) comment "订单报价";
 alter table `order` add column quote_status smallint (1) default 0;
 alter table `supplier_order` add column quote_status smallint (1) default 0;
 alter table `order_item` add column quote_type smallint (1) default 0;
+
+--新增财务中字段
+alter table `order` add column receive_deposit decimal(10, 4) comment "财务实收定金";
+alter table `order` add column receive_balance decimal(10, 4) comment "财务实收尾款";
+ALTER TABLE `order` CHANGE COLUMN `tax` `tax` decimal(10, 4) comment "财务应收税金" ;
+alter table `order` add column receive_tax decimal(10, 4) comment "财务实收税金";
