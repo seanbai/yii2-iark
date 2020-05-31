@@ -449,7 +449,7 @@ class WorkflowController extends Controller
      */
     public function actionReceiveOrders()
     {
-        $status = [5];
+        $status = [5,7,12,15,9,10];
         return $this->getOrders($status);
     }
 
@@ -617,5 +617,50 @@ class WorkflowController extends Controller
             'data'  => $orders
         ];
         return $data;
+    }
+
+    /**
+     * @acl workflow/receive-confirm
+     */
+    public function actionReceiveConfirm()
+    {
+        $id = Yii::$app->getRequest()->post('orderId');
+        $model = Order::findOne(['id'=>intval($id)]);
+        $receive_deposit = floatval(Yii::$app->getRequest()->post('receive_deposit'));
+        $receive_balance = floatval(Yii::$app->getRequest()->post('receive_balance'));
+        $tax             = floatval(Yii::$app->getRequest()->post('tax'));
+        $receive_tax     = floatval(Yii::$app->getRequest()->post('receive_tax'));
+        if ($model->id) {
+            //先要确定当前订单状态下，应该保存什么值
+            $order_status = $model->order_status;
+            switch ($order_status) {
+                case 5:
+                    $model->order_status = 6;//什么都不用上传
+                    break;
+                case 7:
+                    $model->order_status = 8;
+                    //确认支付了定金，保存定金
+                    $model->receive_deposit = $receive_deposit;
+                    break;
+                case 12:
+                    $model->order_status = 13;
+                    //确认支付了尾款，保存尾款
+                    $model->receive_balance = $receive_balance;
+                    break;
+                case 15:
+                    $model->order_status = 16;
+                    //确认支付了税金，保存税金
+                    $model->receive_tax  = $receive_tax;
+                    break;
+            }
+            if ($model->save()){
+                return $this->success();
+            }else{
+                return $this->error($model->getErrors());
+            }
+        } else {
+            $this->error(400,'订单不存在');
+        }
+
     }
 }
