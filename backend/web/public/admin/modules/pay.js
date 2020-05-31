@@ -141,7 +141,7 @@ layui.define(function(exports){
         // 弹出付款登记
         switch(obj.event){
           case 'logPay':
-            console.log(statusId);
+            console.log(data);
             if(deposit <= 0 || balance <= 0){
               var form = layer.open({
                 type: 1,

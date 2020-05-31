@@ -116,7 +116,7 @@ layui.config({
         </div>
         <!-- 提交按钮 -->
         <div class="layui-form-item layui-form-text">
-          <input type="text" name="subOrderId" id="orderId" hidden>
+          <input type="text" name="subOrderId" id="subOrderId" hidden>
           <button type="submit" class="layui-btn" lay-submit="" lay-filter="confirmPay">确认付款</button>
         </div>
       </form>
