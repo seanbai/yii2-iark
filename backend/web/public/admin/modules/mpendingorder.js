@@ -10,7 +10,7 @@ layui.define(function(exports){
       elem: '#myOrder',
       height: 'full-115',
       toolbar: '#toolbar',
-      url: 'pending-order-list', //数据接口
+      url: 'pending-order', //数据接口
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
@@ -31,7 +31,7 @@ layui.define(function(exports){
       var jsonData = checkStatus.data;
 
       switch(obj.event){
-        // 查看产品清单
+          // 查看产品清单
         case 'items':
           if(checkStatus.data.length === 0){
             layer.msg("You should be select an order first!");
@@ -50,8 +50,8 @@ layui.define(function(exports){
               success: showItems(id)
             });
           }
-        break;
-        // 打开状态修改弹层
+          break;
+          // 打开状态修改弹层
         case 'status':
           if(checkStatus.data.length === 0){
             layer.msg("You should be select an order first!");
@@ -65,73 +65,95 @@ layui.define(function(exports){
               layer.msg('The order not in production, can not do this action.');
               return false;
             }
-
             if( statusId == 81 ){
               // 状态码等于1时执行
               layer.confirm('Confirm receipt of deposit? <br>After confirmation, the order can start production',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
-                  $.ajax({
-                    type: 'post',
-                    // 同步接口，传数据ID和修改后的金额值
-                    url: '/items?id=' + id,
-                    success: function(){
-                      layer.msg('Quote has been saved!');
-                      table.reload('items',{}); // 重载数据表格
-                    },
-                    error: function(){
-                      layer.msg('Error');
+                $.ajax({
+                  type: 'post',
+                  // 同步接口，传数据ID和修改后的金额值
+                  url: 'order-update',
+                  data:{
+                    id: id,
+                    status: 91 //生成中
+                  },
+                  success: function(res){
+                    if(res.errCode == 0){
+                      layer.msg('The order status has been changed');
+                      table.reload(); // 重载数据表格
+                      layer.closeAll();
+                    }else{
+                      layer.msg(res.errMsg,{icon:6});
+                      return false;
                     }
-                  })
+
+                  },
+                  error: function(){
+                    layer.msg('Error');
+                  }
+                })
               });
-            }else if (statusId == 91) { //生产中
+            }else if (statusId === 92) {
               // 状态码等于2时执行
               layer.confirm('Confirm production completion? <br>After confirmation, the other party will pay the final payment',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
-                  $.ajax({
-                    type: 'post',
-                    url: 'update',
-                    data:{
-                      id: id,
-                      status: 101 //生成完成
-                    },
-                    success: function(res){
-                      if(res.errCode == 0){
-                        layer.msg('The order status has saved');
-                        table.reload('items',{}); // 重载数据表格
-                        layer.closeAll();
-                      }else{
-                        layer.msg(res.errMsg,{icon:6});
-                        return false;
-                      }
-
-                    },
-                    error: function(){
-                      layer.msg('Error');
+                $.ajax({
+                  type: 'post',
+                  // 同步接口，传数据ID和修改后的金额值
+                  url: 'order-update',
+                  data:{
+                    id: id,
+                    status: 101 //生成完成
+                  },
+                  success: function(res){
+                    if(res.errCode == 0){
+                      layer.msg('The order status has been changed');
+                      table.reload(); // 重载数据表格
+                      layer.closeAll();
+                    }else{
+                      layer.msg(res.errMsg,{icon:6});
+                      return false;
                     }
-                  })
+
+                  },
+                  error: function(){
+                    layer.msg('Error');
+                  }
+                })
               });
             }else {
               // 状态码等于3时执行
               layer.confirm('Confirm receipt of balance? <br>After receiving the final payment, the buyer will pick up the goods',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
-                  $.ajax({
-                    type: 'post',
-                    // 同步接口，传数据ID和修改后的金额值
-                    url: '/items?id=' + id,
-                    success: function(){
-                      layer.msg('Quote has been saved!');
-                      table.reload('items',{}); // 重载数据表格
-                    },
-                    error: function(){
-                      layer.msg('Error');
+                $.ajax({
+                  type: 'post',
+                  // 同步接口，传数据ID和修改后的金额值
+                  url: 'order-update',
+                  data:{
+                    id: id,
+                    status: 201 //订单完成
+                  },
+                  success: function(res){
+                    if(res.errCode == 0){
+                      layer.msg('The order status has been changed');
+                      table.reload(); // 重载数据表格
+                      layer.closeAll();
+                    }else{
+                      layer.msg(res.errMsg,{icon:6});
+                      return false;
                     }
-                  })
+
+                  },
+                  error: function(){
+                    layer.msg('Error');
+                  }
+                })
               });
             }
             // 提交报价
 
           }
-        break;
+          break;
       };
     });
 
