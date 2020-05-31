@@ -24,7 +24,7 @@
                     <script type="text/html" id="toolbar">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" lay-event="items">Items List</button>
-                            <button class="layui-btn layui-btn-sm" lay-event="status">Change Production Status</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="status">Change Order Status</button>
                         </div>
                     </script>
                 </div>
