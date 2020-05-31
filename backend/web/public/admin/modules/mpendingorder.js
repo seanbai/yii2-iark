@@ -61,12 +61,12 @@ layui.define(function(exports){
             var id = data[0].id;
             var statusId = data[0].order_status;
 
-            if(statusId !== 91){
+            if(statusId != 81){
               layer.msg('The order not in production, can not do this action.');
               return false;
             }
 
-            if( statusId === 1 ){
+            if( statusId == 81 ){
               // 状态码等于1时执行
               layer.confirm('Confirm receipt of deposit? <br>After confirmation, the order can start production',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
@@ -83,7 +83,7 @@ layui.define(function(exports){
                     }
                   })
               });
-            }else if (statusId === 91) { //生产中
+            }else if (statusId == 91) { //生产中
               // 状态码等于2时执行
               layer.confirm('Confirm production completion? <br>After confirmation, the other party will pay the final payment',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
