@@ -53,8 +53,80 @@ layui.define(function(exports){
             });
           }
         break;
+        case 'receiveNotice':
+          if(checkStatus.data.length === 0){
+            layer.msg("您需要先选择一条数据");
+          }else{
+            var id = data[0].id;
+            var project = data[0].project_name;
+            var total = data[0].quote;
+            var status = parseInt(data[0].order_status);
+            var tax = data[0].tax;
+            total = total ? parseInt(total) : 0;
+            layer.open({
+              type: 1,
+              title: '项目名称 - ' + project,
+              area: ['50%', '55%'],
+              content: $('#receiveNotice'),
+              resize: false,
+              success: function () {
+                $('#noticeId').val(id);
+                $('#notice-total').val(total);
+                var depositEle = $('input[name="deposit_notice"]'),
+                    balanceEle = $('input[name="balance_notice"]'),
+                    taxEle     = $('input[name="tax_notice"]');
+                depositEle.attr({"checked": true, "disabled":false});
+                balanceEle.attr({"checked": false, "disabled":true});
+                taxEle.attr({"checked": false, "disabled": true});
+                if(status === 6){//等待收取定金
+                  depositEle.attr({"checked": true, "disabled":true});
+                  balanceEle.attr({"checked": false, "disabled":false});
+                  taxEle.attr({"checked": false, "disabled":true});
+                }
+                if(status === 11){//等待收取尾款
+                  depositEle.attr({"checked": true, "disabled":true});
+                  balanceEle.attr({"checked": true, "disabled":true});
+                  taxEle.attr({"checked": false, "disabled":false});
+                }
+                if(status === 14){//等待收取税金
+                  depositEle.attr({"checked": true, "disabled":true});
+                  balanceEle.attr({"checked": true, "disabled":true});
+                  taxEle.attr({"checked": true, "disabled":true});
+                  $('.layui-layer-btn .layui-layer-btn0').hide();
+                }
+
+                $('#aux-balance').html('应收尾款'+ (total/2));
+                $('#aux-tax').html('应收税金'+ (tax));
+                $('#aux-deposit').html('应收定金'+ (total/2));
+                form.render();
+              }
+            });
+          }
+          break;
       };
     });
+    // 表单提交
+    form.on('submit(receiveNotice)',function(data,id){
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        data: data.field,
+        url: 'receive-notice',
+        error: function(){
+          layer.msg('系统错误,请稍后重试.');
+        },
+        success: function(res){
+          if(res.errCode == 0){
+            layer.closeAll();
+            order.reload();
+          }else{
+            layer.msg(res.errMsg);
+          }
+        }
+      });
+      return false;
+    });
+
     // 收款确认按钮
     table.on('tool(quote)', function(obj){
       var data = obj.data;

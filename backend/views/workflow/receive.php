@@ -25,6 +25,7 @@ use yii\helpers\Url;
           <script type="text/html" id="quoteBar">
             <div class="layui-btn-container">
               <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看商品清单</button>
+              <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="receiveNotice">发送收款通知</button>
             </div>
           </script>
           <script type="text/html" id="action">
@@ -67,6 +68,43 @@ layui.config({
   </div>
 </div>
 
+<!--发送收款通知-->
+<div style="display:none;margin-top: 16px" id="receiveNotice" class="layui-fluid">
+    <form class="layui-form">
+        <input type="hidden" name="id" id="noticeId" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单总价</label>
+            <div class="layui-input-block" style="width: 50%;">
+                <input type="text" id="notice-total" autocomplete="off" class="layui-input" value="20000" disabled/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知支付定金</label>
+            <div class="layui-input-inline">
+                <input type="checkbox" lay-text="是|否" name="deposit_notice" lay-skin="switch">
+            </div>
+            <div class="layui-form-mid layui-word-aux" id="aux-deposit">应收定金10000</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知支付尾款</label>
+            <div class="layui-input-inline">
+                <input type="checkbox" lay-text="是|否" name="balance_notice" lay-skin="switch">
+            </div>
+            <div class="layui-form-mid layui-word-aux" id="aux-balance">应收尾款10000</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知支付税金</label>
+            <div class="layui-input-inline">
+                <input type="checkbox" lay-text="是|否" name="tax_notice" lay-skin="switch">
+            </div>
+            <div class="layui-form-mid layui-word-aux" id="aux-tax">应收金10000</div>
+        </div>
+        <!-- 提交按钮 -->
+        <div class="layui-form-item">
+            <button class="layui-btn" lay-submit="" lay-filter="receiveNotice">确认</button>
+        </div>
+    </form>
+</div>
 <!-- 确认收款表单 -->
 <div style="display:none" id="confirmPayment" class="layui-fluid">
   <div class="layui-row layui-col-space10">

@@ -472,7 +472,7 @@ class WorkflowController extends Controller
      */
     public function actionPayment()
     {
-        $orderId = isset($_POST['orderId']) && $_POST['orderId'] ? $_POST['orderId'] : 0;
+        $orderId = isset($_POST['subOrderId']) && $_POST['subOrderId'] ? $_POST['subOrderId'] : 0;
         $deposit = isset($_POST['deposit']) && $_POST['deposit'] ? $_POST['deposit'] : 0;
         $balance =  isset($_POST['balance']) && $_POST['balance'] ? $_POST['balance'] : 0;
         $order = SupplierOrder::findOne($orderId);
