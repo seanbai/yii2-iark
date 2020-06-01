@@ -28,17 +28,21 @@ class ManufactuerCompletedController extends Controller
     {
         //用户过滤
         $userId = \Yii::$app->user->id;
-        $query = SupplierOrder::find()->select('*')
-            ->where('order_status = :order_status', [':order_status' => 101]);
+        $query = SupplierOrder::find()->select('supplier_order.*,o.name,o.package,o.project_name,o.address')
+            ->where('supplier_order.order_status = :order_status', [':order_status' => 101]);
         if(!$this->isAdministrator()){
-            $query->where('supplier_id = :supplier_id', [':supplier_id' => $userId]);
+            $query->andWhere('supplier_id = :supplier_id', [':supplier_id' => $userId]);
         }
-
-        $total = $query->count('id');
-        $limit = $_GET['limit'];
-        $offset = ($_GET['page'] - 1) * 10;
-        $query->orderBy('id desc')->limit($limit)->offset($offset);
-        $orders = $query->asArray()->all();
+        $query->leftJoin('order o', 'o.id = supplier_order.order_id');
+       try{
+           $total = $query->count('supplier_order.id');
+           $limit = $_GET['limit'];
+           $offset = ($_GET['page'] - 1) * 10;
+           $query->orderBy('supplier_order.id desc')->limit($limit)->offset($offset);
+           $orders = $query->asArray()->all();
+       }catch (\Exception $exception){
+            echo $exception->getMessage();die;
+       }
 
         $data = [
             'code' => 0,

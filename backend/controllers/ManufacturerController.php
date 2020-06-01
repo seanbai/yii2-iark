@@ -103,7 +103,7 @@ class ManufacturerController extends Controller
             $query->where($search['where']);
         }
         //只出现子订单为等待报价的
-        $query->where(['order_status'=>31]);
+        $query->andWhere(['order_status'=>31]);
 
         if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
 
@@ -409,7 +409,7 @@ class ManufacturerController extends Controller
         $query = SupplierOrder::find()->select('*')
             ->where(['in', 'order_status', $orderStatus]);
         if(!$this->isAdministrator()){
-            $query->where('supplier_id = :supplier_id',[':supplier_id' => $userId]);
+            $query->andWhere('supplier_id = :supplier_id',[':supplier_id' => $userId]);
         }
         $total = $query->count('id');
         $limit = $_GET['limit'];
