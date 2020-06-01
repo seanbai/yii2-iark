@@ -213,7 +213,11 @@ class OrderController extends Controller
             if(!$order){
                 return $this->error(400, 'The order does not exist');
             }
-            $items = $order->items;
+            $query = $order->getItems(false)->leftJoin(
+                'supplier_order_item soi',
+                'order_item.id = soi.order_item_id'
+            )->select("soi.price as price2 ,order_item.*");
+            $items = $query->asArray()->all();
         }catch (\Exception $exception){
             return $this->error(400, $exception->getMessage());
         }

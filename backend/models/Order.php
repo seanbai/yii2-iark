@@ -97,13 +97,18 @@ class Order extends \yii\db\ActiveRecord
        }
        return true;
     }
+
     /**
-     * @return array|\yii\db\ActiveRecord[]
+     * @param bool $return
+     * @return array|\yii\db\ActiveQuery|\yii\db\ActiveRecord[]
      */
-    public function getItems()
+    public function getItems($return = true)
     {
-        return OrderItem::find()->where('order_id = :order_id', [':order_id' =>$this->id])
-                ->asArray()->all();
+        $query =  OrderItem::find()->where('order_id = :order_id', [':order_id' =>$this->id]);
+        if($return){
+            return $query->asArray()->all();
+        }
+        return $query;
     }
 
     /**

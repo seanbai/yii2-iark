@@ -202,7 +202,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
-          {field: 'price', title: 'Price (EUR)', edit: 'text'}
+          {field: 'price2', title: 'Price (EUR)', edit: 'text'}
         ]]
       });
       // 价格编辑
