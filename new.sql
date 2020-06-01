@@ -114,3 +114,8 @@ alter table `supplier_order` add column depositDate datetime default null ;
 alter table `supplier_order` add column balance decimal (10,2) default 0;
 alter table `supplier_order` add column balanceDate datetime default null ;
 
+
+
+alter table `order` add column deposit_notice smallint (1) default 0;
+alter table `order` add column balance_notice smallint (1) default 0;
+alter table `order` add column tax_notice smallint (1) default 0;

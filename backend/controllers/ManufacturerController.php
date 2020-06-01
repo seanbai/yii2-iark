@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\helpers\OrderStatus;
 use backend\models\Admin;
 use backend\models\Auth;
 use backend\models\Order;
@@ -324,7 +325,10 @@ class ManufacturerController extends Controller
         return $this->render('pendingorder');
     }
 
-
+    /**
+     * @acl manufacturer/order-update
+     * @return array
+     */
     public function actionOrderUpdate()
     {
         $post = \Yii::$app->request->post();
@@ -335,8 +339,42 @@ class ManufacturerController extends Controller
             $code = 0;
             $msg = '';
             try{
+                $order = Order::findOne($childOrder->order_id);
+                if ($status == 91 && $order->order_status != 9) {
+                    $order->order_status = 9;//主订单变为生产中
+                    $order->save();
+                }
                 $childOrder->order_status = $status;
                 $childOrder->save(false);
+                //如果所有子订单变成生产完成，则修改父订单状态为生产完成，如果主订单进入了尾款，则所有子订单立即进入尾款状态
+                if ($status == 101 && $order->order_status == 9) {
+                    $allChildOrders = $order->getChildOrders();
+                    $update = true;
+                    foreach ($allChildOrders as $child) {
+                        if ($child['order_status'] != 101) {
+                            $update = false;break;
+                        }
+                    }
+                    if ($update) {
+                        $order->order_status = 10;
+                        $order->save();
+                    }
+                }
+
+                if ($status == 132 && $order->order_status == 13) {
+                    $allChildOrders = $order->getChildOrders();
+                    $update = true;
+                    foreach ($allChildOrders as $child) {
+                        if ($child['order_status'] != 132) {
+                            $update = false;break;
+                        }
+                    }
+                    if ($update) {
+                        $order->order_status = 14;
+                        $order->save();
+                    }
+                }
+
             }catch (\Exception $exception){
                 $code = 400;
                 $msg  = 'The request error';
@@ -358,7 +396,7 @@ class ManufacturerController extends Controller
         //  91 => '生产中',//当子订单确认收到了定金后，便更改子订单状态为生产中，当第一个子订单状态变为生产中，
         //          则主订单状态变为生产中
         //  101 => '生产完成',//子订单状态一定是从生产中变为生产完成，完成后才能去确认收取尾款
-        $orderStatus = [81, 91 , 101];
+        $orderStatus = [81, 91 , 101,131];
         $query = SupplierOrder::find()->select('*')
             ->where(['in', 'order_status', $orderStatus]);
         $total = $query->count('id');
@@ -366,6 +404,13 @@ class ManufacturerController extends Controller
         $offset = ($_GET['page'] - 1) * 10;
         $query->orderBy('id desc')->limit($limit)->offset($offset);
         $orders = $query->asArray()->all();
+        $orderStatusArr = OrderStatus::getChild();
+        if (!empty($orders)) {
+            foreach ($orders as $k => $order) {
+                $orders[$k]['order_status_label'] = $orderStatusArr[$order['order_status']];
+            }
+        }
+
         $data = [
             'code' => 0,
             'msg' => '',
@@ -373,6 +418,6 @@ class ManufacturerController extends Controller
             'data' => $orders
         ];
         \Yii::$app->response->format = Response::FORMAT_JSON;
-        return$data;
+        return $data;
     }
 }

@@ -10,7 +10,7 @@ layui.define(function(exports){
       elem: '#myOrder',
       height: 'full-115',
       toolbar: '#toolbar',
-      url: 'pending-order', //数据接口
+      url: 'pending-order-list', //数据接口
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
@@ -18,7 +18,7 @@ layui.define(function(exports){
       cols: [[ //表头
         {type:'radio'},
         {field: 'order_number', title: 'Order Number'},
-        {field: 'order_status', title: 'Order Status', templet:'#orderStatus'},
+        {field: 'order_status_label', title: 'Order Status'},
         {field: 'date', title: 'Expect Delivery Date'}, //期望交付时间
         {field: 'create_time', title: 'Order Date'}, //创建时间
         {field: 'quote_time', title: 'Quotation Date'} //创建时间
@@ -61,7 +61,7 @@ layui.define(function(exports){
             var id = data[0].id;
             var statusId = data[0].order_status;
 
-            if(statusId != 81){
+            if(statusId < 81){
               layer.msg('The order not in production, can not do this action.');
               return false;
             }
@@ -93,7 +93,7 @@ layui.define(function(exports){
                   }
                 })
               });
-            }else if (statusId === 92) {
+            }else if (statusId == 91) {
               // 状态码等于2时执行
               layer.confirm('Confirm production completion? <br>After confirmation, the other party will pay the final payment',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
@@ -103,7 +103,7 @@ layui.define(function(exports){
                   url: 'order-update',
                   data:{
                     id: id,
-                    status: 101 //生成完成
+                    status: 101 //生产完成
                   },
                   success: function(res){
                     if(res.errCode == 0){
@@ -121,7 +121,7 @@ layui.define(function(exports){
                   }
                 })
               });
-            }else {
+            }else if (statusId == 131) {
               // 状态码等于3时执行
               layer.confirm('Confirm receipt of balance? <br>After receiving the final payment, the buyer will pick up the goods',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
@@ -131,7 +131,7 @@ layui.define(function(exports){
                   url: 'order-update',
                   data:{
                     id: id,
-                    status: 201 //订单完成
+                    status: 132 //订单完成
                   },
                   success: function(res){
                     if(res.errCode == 0){

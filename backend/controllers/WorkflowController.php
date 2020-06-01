@@ -472,31 +472,44 @@ class WorkflowController extends Controller
      */
     public function actionPayment()
     {
+        $code = 400;
+        $msg = '操作失败';
         $orderId = isset($_POST['subOrderId']) && $_POST['subOrderId'] ? $_POST['subOrderId'] : 0;
         $deposit = isset($_POST['deposit']) && $_POST['deposit'] ? $_POST['deposit'] : 0;
         $balance =  isset($_POST['balance']) && $_POST['balance'] ? $_POST['balance'] : 0;
         $order = SupplierOrder::findOne($orderId);
-        $update = false;
-        if($balance > 0 && $balance !== $order->getOldAttribute('balance')){
-            $order->setAttribute('balance', $balance);
-            $update = true;
+
+        if ($order->id) {
+            try {
+                $mainOrder = Order::findOne($order->order_id);
+                if ($mainOrder->order_status <= 9) {//已经收取了定金
+                    if ($deposit > 0 && $deposit !== $order->getOldAttribute('deposit')) {
+                        $order->setAttribute('deposit', $deposit);
+                        $order->setAttribute('order_status', 81);
+                        $order->setAttribute('depositDate',date('Y-m-d H:i:s'));
+                        $order->save();
+                        $code = 0;
+                        $msg = '付款成功';
+                    }
+                } else if ($mainOrder->order_status == 13) {
+                    if($balance > 0 && $balance != $order->getOldAttribute('balance')){
+                        $order->setAttribute('balance', $balance);
+                        $order->setAttribute('order_status', 131);
+                        $order->setAttribute('balanceDate',date('Y-m-d H:i:s'));
+                        $order->save();
+                        $code = 0;
+                        $msg = '付款成功';
+                    }
+                }
+            } catch (\Exception  $e){
+                $code = 400;
+                $msg = '操作失败';
+            }
+        } else {
+            $code = 400;
+            $msg = '子订单不存在';
         }
-        if($deposit > 0 && $deposit !== $order->getOldAttribute('deposit')){
-            $order->setAttribute('deposit', $deposit);
-            $update = true;
-        }
-        $code = 0;
-        $msg = '';
-        if($update){
-           try{
-               $order->save();
-               $code = 0;
-               $msg = '付款成功';
-           }catch (\Exception  $e){
-               $code = 400;
-               $msg = '付款失败';
-           }
-        }
+
         \Yii::$app->response->format = 'json';
         return [
             'errCode' => $code,
@@ -513,7 +526,7 @@ class WorkflowController extends Controller
     public function actionPayOrders()
     {
         //财务确认定金(尾款)已经收到，操作需要需要付款给供货商的订单
-        $status = [8, 13];
+        $status = [8,9,13];
         return $this->getOrders($status);
     }
 
@@ -618,7 +631,46 @@ class WorkflowController extends Controller
         ];
         return $data;
     }
+    /**
+     * @acl workflow/receive-notice
+     */
+    public function actionReceiveNotice()
+    {
+        $id = Yii::$app->getRequest()->post('id');
+        $balance = Yii::$app->getRequest()->post('balance_notice');
+        $deposit = Yii::$app->getRequest()->post('deposit_notice');
+        $tax = Yii::$app->getRequest()->post('tax_notice');
+        $order = Order::findOne($id);
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        if ($order->id) {
+            if ($balance && !$order->balance_notice) {
+                //发起尾款收取操作
+                $order->balance_notice = 1;
+                $order->order_status   = 11;//发起收取尾款请求
+                $order->save();
+            }
+            if ($deposit && !$order->deposit_notice) {
+                //发起尾款收取操作
+                $order->deposit_notice = 1;
+                $order->order_status   = 6;//发起收取定金请求
+                $order->save();
+            }
+            if ($tax && !$order->tax_notice) {
+                //发起尾款收取操作
+                $order->tax_notice = 1;
+                $order->order_status   = 14;//发起收取税金请求
+                $order->save();
+            }
+            if ($order->save()){
+                return $this->success();
+            }else{
+                return $this->error(400, Helper::arrayToString($order->getErrors()));
+            }
+        } else {
+            return $this->error(400,'订单不存在');
+        }
 
+    }
     /**
      * @acl workflow/receive-confirm
      */

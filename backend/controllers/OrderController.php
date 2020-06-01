@@ -324,7 +324,7 @@ class OrderController extends Controller
         $orderStatusArr = OrderStatus::get();
         if (!empty($orders)) {
             foreach ($orders as $k => $order) {
-                $orders[$k]['order_status'] = $orderStatusArr[$order['order_status']];
+                $orders[$k]['order_status_label'] = $orderStatusArr[$order['order_status']];
             }
         }
         $data = [

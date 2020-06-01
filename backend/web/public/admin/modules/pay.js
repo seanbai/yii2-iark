@@ -19,7 +19,7 @@ layui.define(function(exports){
         {type:'radio'},
         {field: 'order_number', title: '订单号'},
         {field: 'project_name', title: '项目名称'},
-        {field: 'order_status', title: '订单状态', width:150, templet:'#orderStatus'},
+        {field: 'order_status', title: '订单状态', width:150},
         {field: 'create_time', title: '创建时间'},
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},

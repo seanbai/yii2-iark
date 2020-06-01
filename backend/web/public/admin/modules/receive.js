@@ -75,25 +75,25 @@ layui.define(function(exports){
                 var depositEle = $('input[name="deposit_notice"]'),
                     balanceEle = $('input[name="balance_notice"]'),
                     taxEle     = $('input[name="tax_notice"]');
-                depositEle.attr({"checked": true, "disabled":false});
-                balanceEle.attr({"checked": false, "disabled":true});
-                taxEle.attr({"checked": false, "disabled": true});
-                if(status === 6){//等待收取定金
-                  depositEle.attr({"checked": true, "disabled":true});
-                  balanceEle.attr({"checked": false, "disabled":false});
-                  taxEle.attr({"checked": false, "disabled":true});
-                }
-                if(status === 11){//等待收取尾款
-                  depositEle.attr({"checked": true, "disabled":true});
-                  balanceEle.attr({"checked": true, "disabled":true});
-                  taxEle.attr({"checked": false, "disabled":false});
-                }
-                if(status === 14){//等待收取税金
-                  depositEle.attr({"checked": true, "disabled":true});
-                  balanceEle.attr({"checked": true, "disabled":true});
-                  taxEle.attr({"checked": true, "disabled":true});
-                  $('.layui-layer-btn .layui-layer-btn0').hide();
-                }
+                // depositEle.attr({"checked": true, "disabled":false});
+                // balanceEle.attr({"checked": false, "disabled":true});
+                // taxEle.attr({"checked": false, "disabled": true});
+                // if(status === 6){//等待收取定金
+                //   depositEle.attr({"checked": true, "disabled":true});
+                //   balanceEle.attr({"checked": false, "disabled":false});
+                //   taxEle.attr({"checked": false, "disabled":true});
+                // }
+                // if(status === 11){//等待收取尾款
+                //   depositEle.attr({"checked": true, "disabled":true});
+                //   balanceEle.attr({"checked": true, "disabled":true});
+                //   taxEle.attr({"checked": false, "disabled":false});
+                // }
+                // if(status === 14){//等待收取税金
+                //   depositEle.attr({"checked": true, "disabled":true});
+                //   balanceEle.attr({"checked": true, "disabled":true});
+                //   taxEle.attr({"checked": true, "disabled":true});
+                //   $('.layui-layer-btn .layui-layer-btn0').hide();
+                // }
 
                 $('#aux-balance').html('应收尾款'+ (total/2));
                 $('#aux-tax').html('应收税金'+ (tax));

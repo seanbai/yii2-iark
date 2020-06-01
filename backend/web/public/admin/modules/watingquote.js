@@ -17,7 +17,7 @@ layui.define(function(exports){
       cols: [[ //表头
         {type:'radio'},
         {field: 'order_number', title: '订单号'},
-        {field: 'order_status', title: '订单状态'},
+        {field: 'order_status_label', title: '订单状态'},
         {field: 'project_name', title: '项目名称'},
         {field: 'create_time', title: '创建时间'},
         {field: 'date', title: '期望交付时间'},
