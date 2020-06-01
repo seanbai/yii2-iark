@@ -6,23 +6,35 @@ workflow/receive-orders	    收款订单列表
 workflow/quote-orders	    报价中的订单列表
 workflow/assign-orders	    分配订单列表
 
+workflow/confirm-order      订单确认
 workflow/assign	            供应商与报价分配
+workflow/update-status      报价分配提交
+workflow/update-user        产品分配供应商
 workflow/quote	            报价中
-workflow/pay	            财务付款
-workflow/receive	        财务收款
+workflow/pay	            财务  付款
+workflow/payment            财务  付款 给 供货商 操作
+workflow/receive	        财务  收款
+workflow/receive-notice	    财务  发起收款通知
+workflow/items              订单信息
+workflow/child-orders       子订单
 
 
 //新增页面
-manufacturer/pending-order	    供货商- Pending Order-list
-manufacturer/order-update	    供货商- 修改供货商订单信息
-manufacturer/pending-order-list	    供货商- Pending Order-list
-
-order/watingquote         采购商- 报价待处理
-order/order-pay           采购商- 订单支付
-order/items               采购商- 订单产品报价详情
-order/watingquote-list	采购商-报价待处理订单列表
-
-workflow/payment    财务付款 给 供货商 操作
+manufacturer/pending-order	        供货商 - Pending Order-list
+manufacturer/order-update	        供货商 - 修改供货商订单信息
+manufacturer/pending-order-list	    供货商 - Pending Order-list
+manufacturer/index                  供货商 - Waiting For Quote
+manufacturer/items                  供货商 - Order Items
+manufactuercompleted/index          供货商 - Complete Order
+manufactuer-completed/list          供货商 - Complete Order List
 
 
-manufactuer-completed/list  供货商完成订单列表
+order/watingquote           采购商- 报价待处理
+order/watingquote-list	    采购商-报价待处理订单列表
+order/order-pay             采购商- 订单支付
+order/items                 采购商- 订单产品报价详情
+order/cancel                采购商- 取消采购
+
+
+
+
