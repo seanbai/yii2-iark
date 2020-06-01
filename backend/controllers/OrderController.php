@@ -271,6 +271,9 @@ class OrderController extends Controller
 
         $total = $model->count();
         if ($total){
+            $limit = $_GET['limit'];
+            $offset = ($_GET['page'] - 1) * 10;
+            $model->limit($limit)->offset($offset);
             $array = $model->asArray()->all();
         } else {
             $array = [];
@@ -310,8 +313,14 @@ class OrderController extends Controller
             $orders = [];
         }else{
             try{
+                $userId = \Yii::$app->user->id;
                 $query = Order::find()->select('order.*')
                     ->where(['in', 'order_status', $orderStatus]);
+
+                if ($userId != 1) {
+                    $query->andWhere(['user' => $userId]);
+                }
+
                 $total = $query->count('order.id');
                 $limit = $_GET['limit'];
                 $offset = ($_GET['page'] - 1) * 10;

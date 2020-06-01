@@ -14,14 +14,24 @@ class PurchaserCompletedController extends Controller
     }
 
 
-
-
     public function actionEnd()
     {
-        $data = Order::find()->where(['order_status'=>13])->asArray()->all();
+        $query = Order::find()->where(['order_status'=>200]);
+
+        $userId = \Yii::$app->user->identity->id;
+        if ($userId != 1)
+        {
+            $query->andWhere(['user' => $userId]);
+        }
+
+        $count = $query->count('*');
+        $limit = $_GET['limit'];
+        $offset = ($_GET['page'] - 1) * 10;
+        $query->limit($limit)->offset($offset);
+        $data = $query->asArray()->all();
 
         $model['code'] = 0;
-        $model['count'] = count($data);
+        $model['count'] = $count;
         $model['data'] = $data;
 
         return json_encode($model);

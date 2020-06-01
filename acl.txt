@@ -23,3 +23,6 @@ order/items               采购商- 订单产品报价详情
 order/watingquote-list	采购商-报价待处理订单列表
 
 workflow/payment    财务付款 给 供货商 操作
+
+
+manufactuer-completed/list  供货商完成订单列表

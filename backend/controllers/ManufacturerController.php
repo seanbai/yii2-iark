@@ -194,8 +194,13 @@ class ManufacturerController extends Controller
         if(\Yii::$app->request->isAjax){
             $userId = Yii::$app->user->id;
             $status = 91;
-            $orders = SupplierOrder::find()
-                ->where(['supplier_id'=>$userId, 'order_status'=>$status])
+            $query = SupplierOrder::find();
+            if(!$this->isAdministrator()){
+                $where = ['supplier_id'=>$userId, 'order_status'=>$status];
+            }else{
+                $where = ['order_status'=>$status];
+            }
+            $orders = $query->where($where)
                 ->asArray()->all();
             $data = [
                 'code' => 0,
@@ -397,8 +402,15 @@ class ManufacturerController extends Controller
         //          则主订单状态变为生产中
         //  101 => '生产完成',//子订单状态一定是从生产中变为生产完成，完成后才能去确认收取尾款
         $orderStatus = [81, 91 , 101,131];
+
+        //用户过滤
+        $userId = \Yii::$app->user->id;
+
         $query = SupplierOrder::find()->select('*')
             ->where(['in', 'order_status', $orderStatus]);
+        if(!$this->isAdministrator()){
+            $query->where('supplier_id = :supplier_id',[':supplier_id' => $userId]);
+        }
         $total = $query->count('id');
         $limit = $_GET['limit'];
         $offset = ($_GET['page'] - 1) * 10;
@@ -419,5 +431,14 @@ class ManufacturerController extends Controller
         ];
         \Yii::$app->response->format = Response::FORMAT_JSON;
         return $data;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isAdministrator()
+    {
+        $role = \Yii::$app->user->id;
+        return $role == 1;
     }
 }
