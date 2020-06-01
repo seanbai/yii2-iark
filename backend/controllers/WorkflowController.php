@@ -7,6 +7,7 @@ use backend\models\Admin;
 use backend\models\Auth;
 use backend\models\Create;
 use backend\models\Order;
+use backend\models\OrderComment;
 use backend\models\OrderItem;
 use backend\models\ProductPushRecord;
 use backend\models\SupplierOrder;
@@ -477,8 +478,8 @@ class WorkflowController extends Controller
         $orderId = isset($_POST['subOrderId']) && $_POST['subOrderId'] ? $_POST['subOrderId'] : 0;
         $deposit = isset($_POST['deposit']) && $_POST['deposit'] ? $_POST['deposit'] : 0;
         $balance =  isset($_POST['balance']) && $_POST['balance'] ? $_POST['balance'] : 0;
+        $comment =  isset($_POST['info']) && $_POST['info'] ? $_POST['info'] : '';
         $order = SupplierOrder::findOne($orderId);
-
         if ($order->id) {
             try {
                 $mainOrder = Order::findOne($order->order_id);
@@ -500,6 +501,15 @@ class WorkflowController extends Controller
                         $code = 0;
                         $msg = '付款成功';
                     }
+                }
+                if($comment){
+                    try{
+                        $commentOb = new OrderComment();
+                        $commentOb->setAttribute('supplier_order_id', $orderId);
+                        $commentOb->setAttribute('status', $order->order_status);
+                        $commentOb->setAttribute('comment', $comment);
+                        $commentOb->save();
+                    }catch (\Exception $exception){}
                 }
             } catch (\Exception  $e){
                 $code = 400;

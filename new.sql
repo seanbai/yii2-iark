@@ -119,3 +119,18 @@ alter table `supplier_order` add column balanceDate datetime default null ;
 alter table `order` add column deposit_notice smallint (1) default 0;
 alter table `order` add column balance_notice smallint (1) default 0;
 alter table `order` add column tax_notice smallint (1) default 0;
+
+
+/**
+新sql
+ */
+CREATE TABLE `supplier_order_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `supplier_order_id` int(11) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `comment` text,
+  `created_at` timestamp default current_timestamp,
+  PRIMARY KEY (`id`),
+  KEY `idx_supplier_order_id` (`supplier_order_id`),
+  FOREIGN KEY fk_supplier_order_id(supplier_order_id) REFERENCES supplier_order(id) ON UPDATE NO ACTION ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
