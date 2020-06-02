@@ -58,12 +58,21 @@ layui.define(function(exports){
                     },
                     success: function(response){
                       if(response.code == 200){
-                        layer.msg(response.msg);
+                        layer.msg(response.msg, {
+                          icon: 1,
+                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                          layer.closeAll();
+                        });
                       }else{
                         // 关闭弹层
-                        layer.msg(response.msg, {icon: 5});
+                        layer.msg(response.msg, {
+                          icon: 5,
+                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                          layer.closeAll();
+                        });
                       }
-                      layer.closeAll();
                       layer.close(itemsbox);
                       // 表格重载
                       workflow.reload();
