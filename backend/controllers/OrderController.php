@@ -310,7 +310,7 @@ class OrderController extends Controller
      */
     public function actionWatingquoteList()
     {
-        $orderStatus = [4,5,6,11,14]; //todo 更改为报价中的状态列表
+        $orderStatus = [5,6,11,14,21]; //todo 更改为报价中的状态列表
         \Yii::$app->response->format = Response::FORMAT_JSON;
         if(!$orderStatus){
             $total = 0;
