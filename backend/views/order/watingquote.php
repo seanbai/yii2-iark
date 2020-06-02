@@ -57,7 +57,7 @@ use yii\helpers\Url; ?>
     </div>
 </div>
 
-<div style="display:none" id="payOrderForm" class="layui-fluid">
+<div style="display:none; padding: 20px;" id="payOrderForm" class="layui-fluid">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">
             <form class="layui-form layui-form-pane">
