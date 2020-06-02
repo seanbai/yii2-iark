@@ -49,10 +49,10 @@ layui.define(function(exports){
               title: 'Order Number: ' + num,
               area: ['99%', '98%'],
               content: $('#showItems'),
-              btn: ['Confirm Quote','Cancel Quote', 'Close'],
+              btn: ['确认报价','拒绝报价', '取消'],
               success: showItems(id),
               yes: function(){
-                layer.confirm('The quotation has been completed and verified?', function(index){
+                layer.confirm('是否确认报价,并支付定金', function(index){
                   $.ajax({
                     type: 'POST',
                     url: 'update',
@@ -61,21 +61,31 @@ layui.define(function(exports){
                       status: 5
                     },
                     error: function(){
-                      layer.msg('error...',{icon:6});
+                      layer.msg('系统异常...',{icon:5});
                     },
                     success: function(response){
                       if(response.errCode == 0){
-                        layer.close(itemsbox);
-                        workflow.reload();
+                        layer.msg(response.errMsg, {
+                          icon: 1,
+                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                          layer.close(itemsbox);
+                          workflow.reload();
+                        });
                       }else{
-                        layer.msg(response.errMsg, {icon:6});
+                        layer.msg(response.errMsg, {
+                          icon: 5,
+                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                          layer.close(itemsbox);
+                        });
                       }
                     }
                   });
                 })
               },
               btn2 : function () {
-                layer.confirm('Are you sure reject quote?', function(){
+                layer.confirm('您确定拒绝报价吗？', function(){
                   $.ajax({
                     type: 'POST',
                     url: 'update',
@@ -84,15 +94,25 @@ layui.define(function(exports){
                       status: 401 //取消订单
                     },
                     error: function(){
-                      layer.msg('error...',{icon:6});
+                      layer.msg('系统异常...',{icon:5});
                     },
                     success: function(response){
                       // 关闭弹层
                       if(response.errCode == 0){
-                        layer.close(itemsbox);
-                        workflow.reload();
+                        layer.msg(response.errMsg, {
+                          icon: 1,
+                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                          layer.close(itemsbox);
+                          workflow.reload();
+                        });
                       }else{
-                        layer.msg(response.errMsg, {icon:6});
+                        layer.msg(response.errMsg, {
+                          icon: 5,
+                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                          layer.close(itemsbox);
+                        });
                       }
                     }
                   });
