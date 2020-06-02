@@ -401,7 +401,7 @@ class OrderController extends Controller
         if ($item) return $this->error(201,'订单中存在商品还未完成报价，请联系供货商');
 
         $model = Order::findOne(['id' => $id]);
-        if ($model->order_status == 3) return $this->error(201,'订单中存在商品还未完成报价，请联系供货商');
+        if ($model->order_status == 3) return $this->error(202,'订单中存在商品还未完成报价，请联系供货商');
         $model->order_status = 21;
         $model->save();
 
