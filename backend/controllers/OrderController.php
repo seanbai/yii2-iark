@@ -389,4 +389,21 @@ class OrderController extends Controller
         ];
         return $data;
     }
+
+    /**
+     * 检查子订单是否报价完成,并发送报价给采购商
+     */
+    public function actionSendOrderBuyers()
+    {
+        $id = $_GET['id'];
+        $item = OrderItem::find()->where(['order_id' => $id])->andWhere(['order_status'=> 31])->asArray()->one();
+        if ($item) return $this->error(201,'订单中存在商品还未完成报价，请联系供货商');
+
+        $model = Order::findOne(['id' => $id]);
+        if ($model->order_status == 3) return $this->error(201,'订单中存在商品还未完成报价，请联系供货商');
+        $model->order_status = 21;
+        $model->save();
+
+        return $this->success();
+    }
 }

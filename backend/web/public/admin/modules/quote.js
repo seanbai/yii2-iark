@@ -139,13 +139,19 @@ layui.define(function(exports){
     // 改变订单状态
     window.changeStatus = function(id){
       $.ajax({
-        type: 'POST',
-        url: '/order/status?id=' + id + '&code=0',
+        type: 'GET',
+        url: '/order/send-order-buyers?id=' + id + '',
         error: function(){
-          layer.alert('订单中存在商品还未完成报价，请联系供货商。');
+          layer.msg('订单中存在商品还未完成报价，请联系供货商。',{icon:5});
         },
-        success: function(e){
-          layer.msg();
+        success: function(response){
+          if(response.errCode == 0){
+            layer.msg(response.errMsg);
+            layer.closeAll();
+            order.reload()
+          }else{
+            layer.msg(response.errMsg,{icon:5})
+          }
         }
       });
     }
