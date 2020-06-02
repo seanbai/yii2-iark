@@ -282,11 +282,13 @@ class WorkflowController extends Controller
         $supplierOrderAttributes['create_time'] = $order->create_time;
         $supplierOrderAttributes['order_number'] = $order->order_number;
         $supplierOrderAttributes['quote_status'] = $quote_status;
+        $setup = 1;
         foreach ($suppliers as $supplierId => $supplierName){
             //save supplier order
             $_supplierOrder = clone  $supplierOrder;
-            $supplierOrderAttributes['supplier_id'] = $supplierId;
+            $supplierOrderAttributes['supplier_id']   = $supplierId;
             $supplierOrderAttributes['supplier_name'] = $supplierName;
+            $supplierOrderAttributes['order_number']  = $order->order_number.'-'.$setup;
             $_supplierOrder->setAttributes($supplierOrderAttributes, false);
             $_supplierOrder->save();
 
@@ -298,6 +300,7 @@ class WorkflowController extends Controller
                 $_supplierOrderItem->setAttributes($supplierItemAttributes, false);
                 $_supplierOrderItem->save();
             }
+            $setup++;
         }
     }
 

@@ -172,7 +172,9 @@ class CreateController extends Controller
         }
         $transaction = \Yii::$app->db->beginTransaction();
         try{
-            $number = $this->getRand(3).date("YmdHis",time());
+            $username = \Yii::$app->user->username;
+            $username = substr($username, 0 ,5);
+            $number = $username.date("YmdHis",time());
             $order = [
                 'order_number' => $number,
                 'user' => \Yii::$app->user->id,

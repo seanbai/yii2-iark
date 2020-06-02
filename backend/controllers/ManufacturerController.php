@@ -171,16 +171,17 @@ class ManufacturerController extends Controller
                         'code' => 400,
                         'msg' => '平台已经报价,请直接提交'
                     ];
+                }else{
+                    $supplierOrderItem->setAttribute('price', $value);
+                    $supplierOrderItem->save();
+                    //保存单个产品的报价到order item
+                    $orderItem = OrderItem::findOne($supplierOrderItem->order_item_id);
+                    $orderItem->setAttribute('price',$value);
+                    $orderItem->save();
+                    $data = [
+                        'code' => 200,
+                    ];
                 }
-                $supplierOrderItem->setAttribute('price', $value);
-                $supplierOrderItem->save();
-                //保存单个产品的报价到order item
-                $orderItem = OrderItem::findOne($supplierOrderItem->order_item_id);
-                $orderItem->setAttribute('price',$value);
-                $orderItem->save();
-                $data = [
-                    'code' => 200,
-                ];
             }
         }
         \Yii::$app->response->format = Response::FORMAT_JSON;
