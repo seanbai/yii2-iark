@@ -428,7 +428,7 @@ class WorkflowController extends Controller
      */
     public function actionQuoteOrders()
     {
-        $status = 3;
+        $status = [3,4];
         return $this->getOrders($status);
     }
 

@@ -19,6 +19,7 @@ layui.define(function(exports){
         {field: 'order_number', title: '订单号'},
         {field: 'project_name', title: '项目名称'},
         {field: 'create_time', title: '创建时间'},
+        {field: 'order_status', title: '订单状态'},
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},
         {field: 'name', title: '提货联系人'},
@@ -139,12 +140,12 @@ layui.define(function(exports){
     window.changeStatus = function(id){
       $.ajax({
         type: 'POST',
-        url: '/api/order/status?id=' + id + '&code=0',
+        url: '/order/status?id=' + id + '&code=0',
         error: function(){
           layer.alert('订单中存在商品还未完成报价，请联系供货商。');
         },
-        success: function(){
-          layer.msg('error...');
+        success: function(e){
+          layer.msg();
         }
       });
     }
