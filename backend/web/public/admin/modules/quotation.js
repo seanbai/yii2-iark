@@ -63,6 +63,7 @@ layui.define(function(exports){
                         // 关闭弹层
                         layer.msg(response.msg, {icon: 5});
                       }
+                      layer.closeAll();
                       layer.close(itemsbox);
                       // 表格重载
                       workflow.reload();
@@ -124,10 +125,10 @@ layui.define(function(exports){
           url: 'quote-item?id=' + itemId + '&price=' + value,
           success: function(response){
             if(response.code == 200){
-              layer.msg('Quote has been saved!');
+              layer.msg('Quote has been saved!', {icon: 6});
               table.reload('items',{}); // 重载数据表格
             }else {
-              layer.msg(response.msg,{icon: 6});
+              layer.msg(response.msg,{icon: 5});
             }
           },
           error: function(){
