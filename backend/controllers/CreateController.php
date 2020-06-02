@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Admin;
 use backend\models\AdminLog;
 use backend\models\Order;
 use backend\models\Product;
@@ -172,8 +173,9 @@ class CreateController extends Controller
         }
         $transaction = \Yii::$app->db->beginTransaction();
         try{
-            $username = \Yii::$app->user->username;
-            $username = substr($username, 0 ,5);
+            $id = \Yii::$app->user->id;
+            $admin = Admin::findOne(['id' => $id]);
+            $username = substr($admin->username, 0 ,5);
             $number = $username.date("YmdHis",time());
             $order = [
                 'order_number' => $number,
