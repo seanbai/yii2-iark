@@ -279,10 +279,10 @@ layui.define(function (exports) {
                         order.reload()
                     } else {
                         layer.msg(response.errMsg, {
-                            icon: 5,
+                            icon: 0,
                             time: 2000 //2秒关闭（如果不配置，默认是3秒）
                         }, function () {
-                            layer.closeAll();
+                            //layer.closeAll();
                         });
                     }
                 }

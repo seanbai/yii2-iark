@@ -110,8 +110,12 @@ class ManufacturerController extends Controller
         // 查询数据条数
         $total = $query->count();
         if ($total) {
+            $status = OrderStatus::getChild();
             $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
+            array_walk($array,function (&$value) use ($status){
+                $value['order_status'] =  $status[31];
+            });
             $data['code'] = 0;
         } else {
             $array        = [];
