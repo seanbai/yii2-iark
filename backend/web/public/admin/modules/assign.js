@@ -54,7 +54,6 @@ layui.define(function(exports){
               success: showItems(id),
               yes: function(){
                 changeStatus(id);
-                layer.msg('success');
               }
             });
           }
@@ -262,15 +261,15 @@ layui.define(function(exports){
         type: 'GET',
         url: 'update-status?id=' + id+'&status=3',
         error: function(){
-          layer.msg('request error',{icon:6});
+          layer.msg('request error',{icon:5});
         },
         success: function(response){
           if(response.errCode == 0){
-            layer.msg(response.errMsg)
-            layer.closeAll()
+            layer.msg(response.errMsg);
+            layer.closeAll();
             order.reload()
           }else{
-            layer.msg(response.errMsg,{icon:6})
+            layer.msg(response.errMsg,{icon:5})
           }
         }
       });

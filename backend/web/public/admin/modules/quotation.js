@@ -16,6 +16,7 @@ layui.define(function(exports){
       cols: [[ //表头
         {type:'radio'},
         {field: 'order_number', title: 'Order Number'},
+        {field: 'quote_status', title: 'Order Status'},
         {field: 'date', title: 'Expect Delivery Date'}, //期望交付时间
         {field: 'create_time', title: 'Order Date'} //创建时间
       ]]
@@ -53,15 +54,16 @@ layui.define(function(exports){
                       id: id
                     },
                     error: function(){
-                      layer.msg('the request error!');
+                      layer.msg('the request error!',{icon: 5});
                     },
                     success: function(response){
-                      if(response.code != 200){
-                        layer.msg(response.msg,{icon: 6});
+                      if(response.code == 200){
+                        layer.msg(response.msg);
                       }else{
                         // 关闭弹层
-                        layer.close(itemsbox);
+                        layer.msg(response.msg, {icon: 5});
                       }
+                      layer.close(itemsbox);
                       // 表格重载
                       workflow.reload();
                     }
@@ -71,7 +73,7 @@ layui.define(function(exports){
             });
           }
         break;
-      };
+      }
     });
 
     window.showItems = function(id){

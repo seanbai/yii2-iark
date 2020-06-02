@@ -3,7 +3,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-sm12">
             <div class="layui-card">
-                <div class="layui-card-header">Pending Order</div>
+                <div class="layui-card-header">Quote to be confirmed</div>
                 <div class="layui-card-body">
                     <!-- table black -->
                     <table id="order" lay-filter="order"></table>

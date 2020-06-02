@@ -28,7 +28,7 @@ use yii\helpers\Url;
                     <!-- tool bar -->
                     <script type="text/html" id="toolbar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="items">Items List</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="items">Products List</button>
                         </div>
                     </script>
                 </div>
