@@ -7,6 +7,7 @@ use backend\models\Admin;
 use backend\models\Auth;
 use backend\models\Order;
 use backend\models\OrderItem;
+use backend\models\SupplierOrder;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
@@ -396,7 +397,7 @@ class OrderController extends Controller
     public function actionSendOrderBuyers()
     {
         $id = $_GET['id'];
-        $item = OrderItem::find()->where(['order_id' => $id])->andWhere(['order_status'=> 31])->asArray()->one();
+        $item = SupplierOrder::find()->where(['order_id' => $id])->andWhere(['order_status'=> 31])->asArray()->one();
         if ($item) return $this->error(201,'订单中存在商品还未完成报价，请联系供货商');
 
         $model = Order::findOne(['id' => $id]);
