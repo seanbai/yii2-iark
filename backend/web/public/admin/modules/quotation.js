@@ -31,7 +31,7 @@ layui.define(function(exports){
         // 查看产品清单
         case 'items':
           if(checkStatus.data.length === 0){
-            layer.msg("You should be select an order first!");
+            layer.msg("You should be select an order first!", {icon:0});
           }else{
             // 取订单ID 和 项目名称
             var data = checkStatus.data;
@@ -46,7 +46,11 @@ layui.define(function(exports){
               btn: ['Submit Quote','Cancel'],
               success: showItems(id),
               yes: function(){
-                layer.confirm('The quotation has been completed and verified?', function(index){
+                layer.confirm('The quotation has been completed and verified?', {
+                      title:'Message',
+                      btn: ['OK','No']
+                    },
+                   function(index){
                   $.ajax({
                     type: 'POST',
                     url: 'submit-quote',
