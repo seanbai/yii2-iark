@@ -149,7 +149,7 @@ layui.define(function (exports) {
                                             });
                                         } else {
                                             layer.msg(e.errMsg ,{
-                                                icon: 1,
+                                                icon: 2,
                                                 time: 3000
                                             }, function(){
                                                 layer.close(normal);

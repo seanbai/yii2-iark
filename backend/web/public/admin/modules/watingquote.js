@@ -99,7 +99,7 @@ layui.define(function(exports){
                     success: function(response){
                       // 关闭弹层
                       if(response.errCode == 0){
-                        layer.msg(response.errMsg, {
+                        layer.msg('订单更新成功', {
                           icon: 1,
                           time: 2000 //2秒关闭（如果不配置，默认是3秒）
                         }, function () {
