@@ -128,7 +128,7 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">实收定金</label>
           <div class="layui-input-block">
-            <input type="text" name="receive_deposit" autocomplete="off" class="layui-input">
+            <input type="text" name="receive_deposit"  id="receive_deposit" autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 自动计算总金额的50% -->
@@ -142,7 +142,7 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">实收尾款</label>
           <div class="layui-input-block">
-            <input type="text" name="receive_balance" autocomplete="off" class="layui-input">
+            <input type="text" name="receive_balance" id="receive_balance" autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 自动计算总金额的50% -->
@@ -156,7 +156,7 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">实收税金</label>
           <div class="layui-input-block">
-            <input type="text" name="receive_tax"  autocomplete="off" class="layui-input">
+            <input type="text" name="receive_tax" id="receive_tax" autocomplete="off" class="layui-input">
           </div>
         </div>
         <!-- 备注说明 -->

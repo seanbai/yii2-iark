@@ -129,8 +129,9 @@ layui.define(function(exports){
             var order_data = checkStatus.data,
                 order_id = order_data[0].id,
                 total = order_data[0].quote,
-                order_status = order_data[0].order_status,
-             form=layer.open({
+                order_status = order_data[0].order_status;
+
+             layer.open({
               type: 1,
               title: '付款确认',
               area: ['640px', '400px'],
@@ -145,6 +146,7 @@ layui.define(function(exports){
                 }else{
                   $('[data-role="subPay"]').show();
                 }
+
                 if(order_status == 6){
                   $('#order-deposit').val(total/2);
                   $('[data-role="pay-deposit"]').show();
@@ -152,18 +154,25 @@ layui.define(function(exports){
                   $('[data-role="pay-tax"]').hide();
                 }
                 if(order_status == 11){
+                  $('#order-deposit').val(total/2);
                   $('#order-balance').val( total/2);
                   $('[data-role="pay-deposit"]').show();
+                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
                   $('[data-role="pay-balance"]').show();
                   $('[data-role="pay-tax"]').hide();
                 }
                 if(order_status == 14){
+                  $('#order-deposit').val(total/2);
+                  $('#order-balance').val( total/2);
+                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
+                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":true});
+
                   $('#order-tax').val(data[0].tax);
                   $('[data-role="pay-deposit"]').show();
                   $('[data-role="pay-balance"]').hide();
                   $('[data-role="pay-tax"]').show();
                 }
-
+                form.render();
               }
             });
           }

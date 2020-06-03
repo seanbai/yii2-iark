@@ -240,7 +240,7 @@ class OrderController extends Controller
         $id = $_POST['id'];
         $model = Order::findOne(['id' => $id]);
         if($model->order_status >= 5){
-            return $this->error(400,'The order has been submit quote, can not cancel.');
+            return $this->error(400,'订单已经提交报价不能取消.');
         }
         $model->order_status = 401;   //必须在确认报价前
         if ($model->save()){

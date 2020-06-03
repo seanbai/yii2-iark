@@ -78,12 +78,12 @@ layui.define(function(exports){
                     status: 91 //生成中
                   },
                   success: function(res){
-                    if(res.errCode == 0){
+                    if(res.code == 0){
                       layer.msg('The order status has been changed');
                       table.reload(); // 重载数据表格
                       layer.closeAll();
                     }else{
-                      layer.msg(res.errMsg,{icon:5});
+                      layer.msg(res.msg,{icon:5});
                       return false;
                     }
 
@@ -106,12 +106,12 @@ layui.define(function(exports){
                     status: 101 //生产完成
                   },
                   success: function(res){
-                    if(res.errCode == 0){
+                    if(res.code == 0){
                       layer.msg('The order status has been changed');
                       table.reload(); // 重载数据表格
                       layer.closeAll();
                     }else{
-                      layer.msg(res.errMsg,{icon:5});
+                      layer.msg(res.msg,{icon:5});
                       return false;
                     }
 
@@ -134,12 +134,12 @@ layui.define(function(exports){
                     status: 132 //订单完成
                   },
                   success: function(res){
-                    if(res.errCode == 0){
+                    if(res.code == 0){
                       layer.msg('The order status has been changed');
                       table.reload(); // 重载数据表格
                       layer.closeAll();
                     }else{
-                      layer.msg(res.errMsg,{icon:5});
+                      layer.msg(res.msg,{icon:5});
                       return false;
                     }
 

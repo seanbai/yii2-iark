@@ -26,9 +26,7 @@ layui.define(function(exports){
         {type:'radio'},
         {field: 'order_number', title: '订单号'},
         {field: 'project_name', title: '项目名称'},
-        {field: 'status', title: '订单状态',templet: function (row) {
-            return '<span class="tag layui-bg-cyan">'+row.status_label+'</span>'
-          }},
+        {field: 'status_label', title: '订单状态'},
         {field: 'create_time', title: '创建时间'},
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},
@@ -145,12 +143,12 @@ layui.define(function(exports){
         },
         success: function(response){ // 保存成功处理
           // 成功提示
-          if(response.code === 200){
+          if(response.errCode == 0){
             layer.msg('订单已取消，您可以在已取消订单的列表里找到它。');
             // 表格重载
             order.reload();
           }else{
-            layer.msg(response.msg);
+            layer.msg(response.errMsg, {icon: 0});
           }
         }
       });
