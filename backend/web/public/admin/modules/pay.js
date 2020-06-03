@@ -138,6 +138,7 @@ layui.define(function(exports){
         var statusId = data.order_status;
         var deposit = data.deposit ? parseInt(data.deposit) : 0;
         var balance = data.balance ? parseInt(data.balance) : 0;
+        var total  = data.total ? parseInt(data.total) : 0;
         // 弹出付款登记
         switch(obj.event){
           case 'logPay':
@@ -150,13 +151,14 @@ layui.define(function(exports){
                 content: $('#confirmPay'),
                 success: function(layero, index){
                   $('#subOrderId').val(id);
+                  $('#total').val(total).attr('disabled',true);
                   if(balance){
-                    $('#balance').attr("disable", true);
+                    $('#balance').attr("disabled", true);
+                  }
+                  if(deposit){
+                    $('#deposit').attr("disabled", true);
                   }
                   $('#balance').val(balance);
-                  if(deposit){
-                    $('#deposit').attr("disable", true);
-                  }
                   $('#deposit').val(deposit);
                 }
               });

@@ -90,7 +90,7 @@ layui.config({
         <div class="layui-form-item">
           <label class="layui-form-label">订单总价</label>
           <div class="layui-input-block">
-            <input type="text" name="total" value="20000" class="layui-input" disabled>
+            <input type="text" name="total" id="total" value="20000" class="layui-input" >
           </div>
         </div>
         <!-- 实际收款金额 -->
