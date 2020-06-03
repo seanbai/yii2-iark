@@ -699,23 +699,30 @@ class WorkflowController extends Controller
             //先要确定当前订单状态下，应该保存什么值
             $order_status = $model->order_status;
             switch ($order_status) {
-                case 5:
-                    $model->order_status = 6;//什么都不用上传
-                    break;
+//                case 5:
+//                    $model->order_status = 6;//什么都不用上传
+//                    break;
                 case 7:
-                    $model->order_status = 8;
-                    //确认支付了定金，保存定金
-                    $model->receive_deposit = $receive_deposit;
+                    if ($receive_deposit) {
+                        $model->order_status = 8;
+                        //确认支付了定金，保存定金
+                        $model->receive_deposit = $receive_deposit;
+                    }
                     break;
                 case 12:
-                    $model->order_status = 13;
-                    //确认支付了尾款，保存尾款
-                    $model->receive_balance = $receive_balance;
+                    if ($receive_balance) {
+                        $model->order_status = 13;
+                        //确认支付了尾款，保存尾款
+                        $model->receive_balance = $receive_balance;
+                    }
                     break;
                 case 15:
-                    $model->order_status = 16;
-                    //确认支付了税金，保存税金
-                    $model->receive_tax  = $receive_tax;
+                    if ($receive_tax && $tax) {
+                        $model->order_status = 16;
+                        //确认支付了税金，保存税金
+                        $model->tax = $tax;
+                        $model->receive_tax = $receive_tax;
+                    }
                     break;
             }
             if ($model->save()){
