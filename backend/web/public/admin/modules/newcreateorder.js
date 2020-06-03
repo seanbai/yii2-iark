@@ -109,14 +109,14 @@ layui.define(function(exports){
             '_csrf': $('meta[name=csrf-token]').attr('content'),
           },
           error: function(){ // 保存错误处理
-            layer.msg('系统错误,请稍后重试.',{icon:6});
+            layer.msg('系统错误,请稍后重试.',{icon:5});
           },
           success: function(res){ // 保存成功处理
             if(res.errCode == 0){
               layer.msg('删除成功');
               tableIns.reload();// 表格重载
             }else{
-              layer.msg(res.errMsg,{icon:6});
+              layer.msg(res.errMsg,{icon:5});
             }
           }
         })

@@ -107,7 +107,7 @@ layui.define(function(exports){
                         table.reload(); // 重载数据表格
                         layer.closeAll();
                       }else{
-                        layer.msg(res.errMsg,{icon:6});
+                        layer.msg(res.errMsg,{icon:5});
                         return false;
                       }
 
@@ -135,7 +135,7 @@ layui.define(function(exports){
                         table.reload(); // 重载数据表格
                         layer.closeAll();
                       }else{
-                        layer.msg(res.errMsg,{icon:6});
+                        layer.msg(res.errMsg,{icon:5});
                         return false;
                       }
 

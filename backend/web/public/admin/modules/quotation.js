@@ -134,7 +134,7 @@ layui.define(function(exports){
           url: 'quote-item?id=' + itemId + '&price=' + value,
           success: function(response){
             if(response.code == 200){
-              layer.msg('Quote has been saved!', {icon: 6});
+              layer.msg('Quote has been saved!', {icon: 1});
               table.reload('items',{}); // 重载数据表格
             }else {
               layer.msg(response.msg,{icon: 5});

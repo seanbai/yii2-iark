@@ -180,7 +180,7 @@ layui.define(function (exports) {
 
                             bName = selectIdex > 0 ? bName : '';
                             if (selectIdex <= 0) {
-                                layer.msg('请选择供货商', {icon: 6});
+                                layer.msg('请选择供货商', {icon: 5});
                                 return;
                             }
                             var price = $('#priceInput').find('input').val();
@@ -208,7 +208,7 @@ layui.define(function (exports) {
                                         obj.update(newData);
                                         layer.close(index);
                                     } else {
-                                        layer.msg(response.errMsg, {icon: 6})
+                                        layer.msg(response.errMsg, {icon: 5})
                                     }
                                 }
                             });
