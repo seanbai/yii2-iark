@@ -242,8 +242,6 @@ class AdminController extends Controller
             return $this->error( 203, '重置密码失败,请稍后再重试');
         }
 
-        Yii::$app->cache->delete(Menu::CACHE_KEY.Yii::$app->user->id);
-        Yii::$app->user->logout();
-        return $this->goHome();
+        return $this->success();
     }
 }
