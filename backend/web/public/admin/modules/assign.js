@@ -138,7 +138,7 @@ layui.define(function (exports) {
                             }
                         }
                     },
-                    {field: 'supplier_name', title: '品牌'},
+                    {field: 'supplier_name', title: '供应商'},
                     {fixed: 'right', title: '操作', toolbar: '#action', width: 90}
                 ]],
                 //
