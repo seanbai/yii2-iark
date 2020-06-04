@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\AdminLog;
+use backend\models\Menu;
 use common\helpers\Helper;
 use Yii;
 use backend\models\Admin;
@@ -241,6 +242,8 @@ class AdminController extends Controller
             return $this->error( 203, '重置密码失败,请稍后再重试');
         }
 
-        return $this->success();
+        Yii::$app->cache->delete(Menu::CACHE_KEY.Yii::$app->user->id);
+        Yii::$app->user->logout();
+        return $this->goHome();
     }
 }
