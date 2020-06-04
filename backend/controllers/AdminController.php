@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\AdminLog;
+use backend\models\Menu;
 use common\helpers\Helper;
 use Yii;
 use backend\models\Admin;

@@ -153,11 +153,11 @@ class OrderController extends Controller
             'count' => count($model),
             'data' => $model,
         ];
-       /* return $this->render(
-            'products', [
-            'products' => $model,
-        ]
-        );*/
+        /* return $this->render(
+             'products', [
+             'products' => $model,
+         ]
+         );*/
     }
 
 
@@ -168,9 +168,9 @@ class OrderController extends Controller
 
         return $this->render(
             'view', [
-            'id' => $id,
-            'status' => $model['order_status']
-        ]
+                'id' => $id,
+                'status' => $model['order_status']
+            ]
         );
     }
 

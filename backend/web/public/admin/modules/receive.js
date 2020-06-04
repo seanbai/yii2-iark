@@ -55,13 +55,13 @@ layui.define(function(exports){
         break;
         case 'receiveNotice':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
+            layer.msg("您需要先选择一条数据", {icon:0});
           }else{
             var id = data[0].id;
             var project = data[0].project_name;
             var total = data[0].quote;
             var status = parseInt(data[0].order_status);
-            var tax = data[0].tax;
+            var tax = data[0].tax ? parseInt(data[0].tax) : 0;
             total = total ? parseInt(total) : 0;
             layer.open({
               type: 1,
@@ -75,9 +75,15 @@ layui.define(function(exports){
                 var depositEle = $('input[name="deposit_notice"]'),
                     balanceEle = $('input[name="balance_notice"]'),
                     taxEle     = $('input[name="tax_notice"]');
-                // depositEle.attr({"checked": true, "disabled":false});
-                // balanceEle.attr({"checked": false, "disabled":true});
-                // taxEle.attr({"checked": false, "disabled": true});
+                if(data[0].receive_deposit){
+                  depositEle.attr({"checked": true, "disabled":true});
+                }
+                if(data[0].receive_balance){
+                  balanceEle.attr({"checked": true, "disabled":true});
+                }
+                if(data[0].receive_tax){
+                  taxEle.attr({"checked": true, "disabled":true});
+                }
                 // if(status === 6){//等待收取定金
                 //   depositEle.attr({"checked": true, "disabled":true});
                 //   balanceEle.attr({"checked": false, "disabled":false});
@@ -159,6 +165,9 @@ layui.define(function(exports){
               layer.closeAll();
             });
           }else{
+            var receive_deposit =  data.receive_deposit ? parseInt(data.receive_deposit) : 0;
+            var receive_balance = data.receive_balance ? parseInt(data.receive_balance) : 0;
+            var receive_tax = data.receive_tax ? parseInt(data.receive_tax) : 0;
             var form = layer.open({
               type: 1,
               title: '收款确认',
@@ -169,6 +178,15 @@ layui.define(function(exports){
                 $('#total').val(total);
                 $('#deposit').val(total/2);
                 $('#balance').val(total/2);
+                if(receive_tax){
+                  $('#receive_tax').val(receive_tax).attr('disabled',true);
+                }
+                if(receive_deposit){
+                  $('#receive_deposit').val(receive_deposit).attr('disabled',true);
+                }
+                if(receive_balance){
+                  $('#receive_balance').val(receive_balance).attr('disabled',true);
+                }
                 $('#tax').val(tax);
               }
             });
@@ -196,9 +214,9 @@ layui.define(function(exports){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'supplier_name', title: '供应商'},
+          {field: 'supplier_name', title: '品牌'},
           {field: 'type', title: '型号'},
-          {field: 'size', title: '图纸尺寸'},
+          {field: 'size', title: '产品尺寸'},
           {field: 'material', title: '材质'},
           {field: 'att', title: '附件',
             templet: function(d){

@@ -111,7 +111,8 @@ layui.define(function (exports) {
                         }
                     },
                     {field: 'type', title: '型号'},
-                    {field: 'size', title: '图纸尺寸'},
+                    {field: 'product_supplier', title: '品牌'},
+                    {field: 'size', title: '产品尺寸'},
                     {field: 'material', title: '材质'},
                     {
                         field: 'att', title: '附件',

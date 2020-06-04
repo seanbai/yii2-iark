@@ -120,9 +120,9 @@ layui.define(function(exports){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'supplier_name', title: '供应商',  templet:'<div>{{d.supplier_name}}</div>'},
+          {field: 'supplier_name', title: '品牌',  templet:'<div>{{d.supplier_name}}</div>'},
           {field: 'type', title: '型号',  templet:'<div>{{d.type}}</div>'},
-          {field: 'size', title: '图纸尺寸',  templet:'<div>{{d.size}}</div>'},
+          {field: 'size', title: '产品尺寸',  templet:'<div>{{d.size}}</div>'},
           {field: 'material', title: '材质',  templet:'<div>{{d.material}}</div>'},
           {field: 'att', title: '附件',
             templet: function(d){
