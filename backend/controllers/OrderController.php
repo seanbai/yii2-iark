@@ -103,13 +103,13 @@ class OrderController extends Controller
         $search['where'] = ['<>', 'order_status', 401];
         $search['offset'] = ($page - 1) * $limit;
         $search['limit'] = $limit;
-
-        if (yii::$app->user->identity->id != 1){
-            $search['andWhere'] = ['user' => yii::$app->user->identity->id];
-        }
-
         // 查询数据
         $query = $this->getQuery($search['where']);
+        if (yii::$app->user->identity->id != 1){
+            $search['andWhere'] = ['user' => yii::$app->user->identity->id];
+            $query->andWhere($search['andWhere']);
+        }
+
         if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
 
         // 查询数据条数
