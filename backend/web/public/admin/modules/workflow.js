@@ -262,7 +262,7 @@ layui.define(function (exports) {
                     {field: 'brand', title: '品牌',templet:'<div>{{d.brand}}</div>'},
                     {field: 'qty', title: '数量',templet:'<div>{{d.number}}</div>'},
                     {field: 'type', title: '型号',templet:'<div>{{d.type}}</div>'},
-                    {field: 'size', title: '图纸尺寸',templet:'<div>{{d.size}}</div>'},
+                    {field: 'size', title: '产品尺寸',templet:'<div>{{d.size}}</div>'},
                     {field: 'material', title: '材质',templet:'<div>{{d.material}}</div>'},
                     {field: 'des', title: '描述',templet:'<div>{{d.desc}}</div>'},
                 ]]

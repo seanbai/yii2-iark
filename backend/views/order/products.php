@@ -14,7 +14,7 @@
             <th>数量</th>
             <th width="100">样式图片</th>
             <th>型号</th>
-            <th>图纸尺寸</th>
+            <th>产品尺寸</th>
             <th>材质</th>
             <th width="100">附件</th>
             <th>备注</th>
