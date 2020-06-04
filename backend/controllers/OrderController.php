@@ -103,13 +103,13 @@ class OrderController extends Controller
         $search['where'] = ['<>', 'order_status', 401];
         $search['offset'] = ($page - 1) * $limit;
         $search['limit'] = $limit;
-
-        if (yii::$app->user->identity->id != 1){
-            $search['andWhere'] = ['user' => yii::$app->user->identity->id];
-        }
-
         // 查询数据
         $query = $this->getQuery($search['where']);
+        if (yii::$app->user->identity->id != 1){
+            $search['andWhere'] = ['user' => yii::$app->user->identity->id];
+            $query->andWhere($search['andWhere']);
+        }
+
         if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
 
         // 查询数据条数
@@ -153,11 +153,11 @@ class OrderController extends Controller
             'count' => count($model),
             'data' => $model,
         ];
-       /* return $this->render(
-            'products', [
-            'products' => $model,
-        ]
-        );*/
+        /* return $this->render(
+             'products', [
+             'products' => $model,
+         ]
+         );*/
     }
 
 
@@ -168,9 +168,9 @@ class OrderController extends Controller
 
         return $this->render(
             'view', [
-            'id' => $id,
-            'status' => $model['order_status']
-        ]
+                'id' => $id,
+                'status' => $model['order_status']
+            ]
         );
     }
 
@@ -240,7 +240,7 @@ class OrderController extends Controller
         $id = $_POST['id'];
         $model = Order::findOne(['id' => $id]);
         if($model->order_status >= 5){
-            return $this->error(400,'订单已经提交报价不能取消.');
+            return $this->error(400,'The order has been submit quote, can not cancel.');
         }
         $model->order_status = 401;   //必须在确认报价前
         if ($model->save()){
