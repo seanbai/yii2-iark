@@ -262,3 +262,7 @@
 .layui-nav .layui-nav-item a {
     text-decoration:none !important;
 }
+
+.sidebar .nav-scroll .scroll-content {
+    width: 0px;
+}

@@ -733,6 +733,17 @@ class WorkflowController extends Controller
         } else {
             $this->error(400,'订单不存在');
         }
+    }
 
+    public function actionWaitPick()
+    {
+        return $this->render('watingpick');
+    }
+
+    public function actionWaitPickList()
+    {
+        $status = 2; //已确认的订单，等待报价
+
+        return $this->getOrders($status);
     }
 }

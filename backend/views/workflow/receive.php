@@ -69,7 +69,7 @@ layui.config({
 </div>
 
 <!--发送收款通知-->
-<div style="display:none;margin-top: 16px" id="receiveNotice" class="layui-fluid">
+<div style="display:none;margin-top: 16px" id="receiveNotice" class="layui-fluids">
     <form class="layui-form">
         <input type="hidden" name="id" id="noticeId" />
         <div class="layui-form-item">
@@ -106,7 +106,7 @@ layui.config({
     </form>
 </div>
 <!-- 确认收款表单 -->
-<div style="display:none" id="confirmPayment" class="layui-fluid">
+<div style="display:none" id="confirmPayment" class="layui-fluids">
   <div class="layui-row layui-col-space10">
     <div class="layui-col-md12">
       <form class="layui-form layui-form-pane">
