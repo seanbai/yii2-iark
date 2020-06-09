@@ -99,6 +99,13 @@ layui.config({
             </div>
             <div class="layui-form-mid layui-word-aux" id="aux-tax">应收金10000</div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知支付服务费</label>
+            <div class="layui-input-inline">
+                <input type="checkbox" lay-text="是|否" name="fuwu_notice" lay-skin="switch">
+            </div>
+            <div class="layui-form-mid layui-word-aux" id="aux-fuwu">应收服务费10000</div>
+        </div>
         <!-- 提交按钮 -->
         <div class="layui-form-item">
             <button class="layui-btn" lay-submit="" lay-filter="receiveNotice">确认</button>
@@ -159,6 +166,20 @@ layui.config({
             <input type="text" name="receive_tax" id="receive_tax" autocomplete="off" class="layui-input">
           </div>
         </div>
+          <!-- 自动计算总金额的50% -->
+          <div class="layui-form-item">
+              <label class="layui-form-label">应收服务费</label>
+              <div class="layui-input-block">
+                  <input type="text" value="10000" name="fuwu" id="fuwu" class="layui-input">
+              </div>
+          </div>
+          <!-- 实际收款金额 -->
+          <div class="layui-form-item">
+              <label class="layui-form-label">实收服务费</label>
+              <div class="layui-input-block">
+                  <input type="text" name="receive_tax" id="receive_fuwu" autocomplete="off" class="layui-input">
+              </div>
+          </div>
         <!-- 备注说明 -->
         <!--<div class="layui-form-item layui-form-text">
           <label class="layui-form-label">收款备注</label>

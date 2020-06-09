@@ -360,19 +360,19 @@ class OrderController extends Controller
             $tax =  \Yii::$app->request->post('pay_tax', null);
             $order = Order::findOne(['id'=>$orderId]);
             if ($order->id) {
-                if ($deposit) {
+                if ($deposit && $order->order_status == 6) {
                     //确认支付定金
                     $order->order_status = 7;
                     $msg = 'Operation successed';
                     $code = 200;
                     $order->save();
-                } else if ($balance) {
+                } else if ($balance && $order->order_status == 11) {
                     //确认支付尾款
                     $order->order_status = 12;
                     $msg = 'Operation successed';
                     $code = 200;
                     $order->save();
-                } else if ($tax) {
+                } else if ($tax && $order->order_status == 14) {
                     //确认支付税金
                     $order->order_status = 15;
                     $msg = 'Operation successed';

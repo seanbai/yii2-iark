@@ -146,12 +146,21 @@ layui.define(function(exports){
                 }else{
                   $('[data-role="subPay"]').show();
                 }
-
+                if(order_status < 6){
+                  $('[data-role="pay-balance"]').hide();
+                  $('[data-role="pay-tax"]').hide();
+                  $('[data-role="pay-deposit"]').hide();
+                  $('[data-role="pay-fuwu"]').hide();
+                  $('[data-role="subPay"]').hide();
+                }else{
+                  $('[data-role="subPay"]').show();
+                }
                 if(order_status == 6){
                   $('#order-deposit').val(total/2);
                   $('[data-role="pay-deposit"]').show();
                   $('[data-role="pay-balance"]').hide();
                   $('[data-role="pay-tax"]').hide();
+                  $('[data-role="pay-fuwu"]').hide();
                 }
                 if(order_status == 11){
                   $('#order-deposit').val(total/2);
@@ -159,6 +168,7 @@ layui.define(function(exports){
                   $('[data-role="pay-deposit"]').show();
                   $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
                   $('[data-role="pay-balance"]').show();
+                  $('[data-role="pay-fuwu"]').hide();
                   $('[data-role="pay-tax"]').hide();
                 }
                 if(order_status == 14){
@@ -167,11 +177,27 @@ layui.define(function(exports){
                   $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
                   $('input[name="pay_balance"]').attr({'checked':true,"disabled":true});
 
-                  $('#order-tax').val(data[0].tax);
+                  $('#order-tax').val(order_data[0].tax);
                   $('[data-role="pay-deposit"]').show();
-                  $('[data-role="pay-balance"]').hide();
+                  $('[data-role="pay-balance"]').show();
+                  $('[data-role="pay-fuwu"]').hide();
                   $('[data-role="pay-tax"]').show();
                 }
+
+                if(order_status == 202){
+                  $('#order-deposit').val(total/2);
+                  $('#order-balance').val( total/2);
+                  $('#order-tax').val(order_data[0].tax);
+                  $('#order-fuwu').val(order_data[0].fuwu);
+                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
+                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":true});
+                  $('input[name="pay_tax"]').attr({'checked':true,"disabled":true});
+
+                  $('[data-role="pay-deposit"]').show();
+                  $('[data-role="pay-balance"]').show();
+                  $('[data-role="pay-tax"]').show();
+                  $('[data-role="pay-fuwu"]').show();
+               }
                 form.render();
               }
             });
