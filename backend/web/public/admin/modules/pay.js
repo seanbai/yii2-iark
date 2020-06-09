@@ -92,7 +92,7 @@ layui.define(function(exports){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'supplier_name', title: '品牌'},
+          {field: 'product_supplier', title: '品牌'},
           {field: 'type', title: '型号'},
           {field: 'size', title: '产品尺寸'},
           {field: 'material', title: '材质'},
@@ -106,8 +106,8 @@ layui.define(function(exports){
               }
             }
           },
+          {field: 'supplier_name', title: '供货商'},
           {field: 'desc', title: '备注'},
-          {field: 'price', title: '单价（欧元）'},
           {field: 'total', title: '合计(欧元)', totalRow: true}
         ]]
       });

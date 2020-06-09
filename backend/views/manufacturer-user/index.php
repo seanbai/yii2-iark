@@ -136,21 +136,21 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">备用人</label>
                 <div class="layui-input-block">
-                    <input type="text" name="contact2" lay-verify="required"  autocomplete="off" class="layui-input">
+                    <input type="text" name="contact2"  autocomplete="off" class="layui-input">
                 </div>
             </div>
             <!-- 签约电话 -->
             <div class="layui-form-item">
                 <label class="layui-form-label">备用人电话</label>
                 <div class="layui-input-block">
-                    <input type="number" name="phone2" lay-verify="required" autocomplete="off" class="layui-input">
+                    <input type="number" name="phone2" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <!-- 法定邮箱 -->
             <div class="layui-form-item">
                 <label class="layui-form-label">备用人邮箱</label>
                 <div class="layui-input-block">
-                    <input type="email" name="email2" lay-verify="email"  autocomplete="off" class="layui-input">
+                    <input type="email" name="email2"  autocomplete="off" class="layui-input">
                 </div>
             </div>
 

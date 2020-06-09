@@ -125,7 +125,6 @@ layui.define(function (exports) {
                             }
                         }
                     },
-                    {field: 'desc', title: '备注'},
                     {field: 'price', title: '单价(欧元)'},
                     {
                         field: 'quote_type', title: '报价方', templet: function (d) {
@@ -139,6 +138,7 @@ layui.define(function (exports) {
                         }
                     },
                     {field: 'supplier_name', title: '供应商'},
+                    {field: 'desc', title: '备注'},
                     {fixed: 'right', title: '操作', toolbar: '#action', width: 90}
                 ]],
                 //

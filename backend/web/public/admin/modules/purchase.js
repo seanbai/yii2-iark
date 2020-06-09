@@ -110,7 +110,8 @@ layui.define(function(exports){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'supplier_name', title: '品牌'},
+
+
           {field: 'type', title: '型号'},
           {field: 'size', title: '产品尺寸'},
           {field: 'material', title: '材质'},
@@ -124,6 +125,7 @@ layui.define(function(exports){
               }
             }
           },
+          {field: 'supplier_name', title: '供应商'},
           {field: 'desc', title: '备注'},
           {field: 'price', title: '价格', totalRow: true}
         ]]
