@@ -101,13 +101,27 @@ use yii\helpers\Url; ?>
                 <div class="layui-form-item" style="display:none"  data-role="pay-tax">
                     <label class="layui-form-label">应收税金</label>
                     <div class="layui-input-block">
-                        <input type="text" value="500" id="order-tax" class="layui-input">
+                        <input type="text" value="500" id="order-tax" class="layui-input" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item" style="display:none"  data-role="pay-tax">
                     <label class="layui-form-label">是否支付</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="pay_tax"  lay-skin="switch" lay-text="是|否">
+                    </div>
+                </div>
+
+                <!-- 应收税金% -->
+                <div class="layui-form-item" style="display:none"  data-role="pay-fuwu">
+                    <label class="layui-form-label">应收服务费</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="500" id="order-fuwu" class="layui-input" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display:none"  data-role="pay-fuwu">
+                    <label class="layui-form-label">是否支付</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="pay_fuwu"  lay-skin="switch" lay-text="是|否">
                     </div>
                 </div>
 
