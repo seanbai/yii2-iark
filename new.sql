@@ -135,3 +135,8 @@ CREATE TABLE `supplier_order_comment` (
   FOREIGN KEY fk_supplier_order_id(supplier_order_id) REFERENCES supplier_order(id) ON UPDATE NO ACTION ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `order_item` MODIFY COLUMN `quote_type`  smallint(3) NOT NULL DEFAULT 0 AFTER `product_supplier`;
+
+/**
+brand,产品名称,,
+品牌product_supplier,
+ */

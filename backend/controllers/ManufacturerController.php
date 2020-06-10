@@ -371,11 +371,11 @@ class ManufacturerController extends Controller
                     }
                 }
 
-                if ($status == 132 && $order->order_status == 13) {
+                if ($status == 141 && $order->order_status == 13) {
                     $allChildOrders = $order->getChildOrders();
                     $update = true;
                     foreach ($allChildOrders as $child) {
-                        if ($child['order_status'] != 132) {
+                        if ($child['order_status'] != 141) {
                             $update = false;break;
                         }
                     }
