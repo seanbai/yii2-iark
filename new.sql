@@ -145,3 +145,6 @@ ALTER TABLE `order` add column `fuwu` decimal(10, 4) comment "财务应收服务
 alter table `order` add column receive_fuwu decimal(10, 4) comment "财务实收服务费";
 alter table `order` add column fuwu_notice smallint (1) default 0;
 
+alter table `order_item` add column origin_price decimal(10, 4) comment "产品报价";
+alter table `supplier_order_item` add column origin_price decimal(10, 4) comment "产品报价";
+
