@@ -156,6 +156,7 @@ class ManufacturerController extends Controller
         $itemId = \Yii::$app->request->get('id');
         $value = \Yii::$app->request->get('price');
 
+
         if(!$itemId || !$value){
             $data = [
                 'code' => 400,
@@ -173,14 +174,20 @@ class ManufacturerController extends Controller
                 if (!$order || ($order->quote_status == 1)) {
                     $data = [
                         'code' => 400,
-                        'msg' => '平台已经报价,请直接提交'
+                        'msg' => 'The platform has been quoted, please submit directly.'
                     ];
                 }else{
-                    $supplierOrderItem->setAttribute('price', $value);
+                    $user = Admin::findOne($order->supplier_id);
+                    $rate = (float) ($user->off / 100);
+                    $rate = (1 - $rate);
+                    $price = $value * $rate;
+                    $supplierOrderItem->setAttribute('price', $price); //折扣后价格
+                    $supplierOrderItem->setAttribute('origin_price', $value); //原价
                     $supplierOrderItem->save();
                     //保存单个产品的报价到order item
                     $orderItem = OrderItem::findOne($supplierOrderItem->order_item_id);
-                    $orderItem->setAttribute('price',$value);
+                    $orderItem->setAttribute('price',$price);
+                    $orderItem->setAttribute('origin_price', $value);
                     $orderItem->save();
                     $data = [
                         'code' => 200,

@@ -19,6 +19,7 @@ layui.define(function(exports){
         {type:'radio'},
         {field: 'order_number', title: 'Order Number'},
         {field: 'order_status_label', title: 'Order Status'},
+        {field: 'total', title: 'Order Total'},
         {field: 'date', title: 'Expect Delivery Date'}, //期望交付时间
         {field: 'create_time', title: 'Order Date'}, //创建时间
         {field: 'quote_time', title: 'Quotation Date'} //创建时间
@@ -186,6 +187,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
+          {field: 'origin_price', title: 'Origin Price(EUR)'},
           {field: 'price', title: 'Price (EUR)'}
         ]]
       });

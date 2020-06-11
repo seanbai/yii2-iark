@@ -378,16 +378,25 @@ class WorkflowController extends Controller
         $model->supplier_name = $_POST['name'];
         $model->quote_type = $quote_type;
 
-        if (isset($_POST['price']) && !empty($_POST['price']) && ($quote_type == 1)) {
-            $model->price = $_POST['price'];
-        } else {
-            $model->price = '0';
-        }
-        if ($model->save()){
-            return $this->success();
-        }else{
-            return $this->error($model->getErrors());
-        }
+       try{
+           if (isset($_POST['price']) && !empty($_POST['price']) && ($quote_type == 1)) {
+               $rate = Admin::findOne($model->supplier_id)->off;
+               $rate = 1 - ($rate / 100);
+               $price = (float) $_POST['price'];
+               $model->origin_price = $price;
+               $model->price = (string) ($price * $rate); //折扣后的价格
+           } else {
+               $model->price = '0';
+               $model->origin_price = '0';
+           }
+           if ($model->save()){
+               return $this->success();
+           }else{
+               return $this->error($model->getErrors());
+           }
+       }catch (\Exception $exception){
+           echo $exception->getMessage();
+       }
     }
 
     /**

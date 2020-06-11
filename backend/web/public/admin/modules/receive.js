@@ -60,10 +60,10 @@ layui.define(function(exports){
             var id = data[0].id;
             var project = data[0].project_name;
             var total = data[0].quote;
-            var status = parseInt(data[0].order_status);
-            var tax = data[0].tax ? parseInt(data[0].tax) : 0;
-            var fuwu = (data[0].fuwu || data[0].fuwu !== undefined) ? parseInt(data[0].fuwu) : 0;
-            total = total ? parseInt(total) : 0;
+            var status = (data[0].order_status);
+            var tax = data[0].tax ? (data[0].tax) : 0;
+            var fuwu = data[0].fuwu ? (data[0].fuwu) : 0;
+            total = total ? (total) : 0;
             layer.open({
               type: 1,
               title: '项目名称 - ' + project,
@@ -77,16 +77,16 @@ layui.define(function(exports){
                     balanceEle = $('input[name="balance_notice"]'),
                     taxEle     = $('input[name="tax_notice"]'),
                     fuwuEle     = $('input[name="fuwu_notice"]');
-                if(data[0].deposit_notice){
+                if(data[0].deposit_notice == 1){
                   depositEle.attr({"checked": true, "disabled":true});
                 }
-                if(data[0].balance_notice){
+                if(data[0].balance_notice == 1){
                   balanceEle.attr({"checked": true, "disabled":true});
                 }
-                if(data[0].tax_notice){
+                if(data[0].tax_notice == 1){
                   taxEle.attr({"checked": true, "disabled":true});
                 }
-                if(data[0].fuwu_notice){
+                if(data[0].fuwu_notice == 1){
                   fuwuEle.attr({"checked": true, "disabled":true});
                 }
                 // if(status === 6){//等待收取定金
