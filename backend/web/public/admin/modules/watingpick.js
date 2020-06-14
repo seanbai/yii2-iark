@@ -47,8 +47,6 @@ layui.define(function(exports){
     // 表格工具
     table.on('toolbar(myOrder)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
-      var jsonData = checkStatus.data;
-
       switch(obj.event){
         // 查看产品清单
           case 'items':
@@ -64,10 +62,10 @@ layui.define(function(exports){
                 ids += data[i]['id'] + ',';
               }
               console.log(ids);
-              layer.open({
+              var itemsbox = layer.open({
                 type: 1,
                 title: '本次提货商品列表',
-                area: ['99%', '98%'],
+                area: ['90%', '80%'],
                 content: $('#showItems'),
                 btn: ['提交'],
                 success: showItems(ids),
@@ -75,16 +73,31 @@ layui.define(function(exports){
                   layer.confirm('是否确认这些商品提货完成', function(index){
                     $.ajax({
                       type: 'POST',
-                      url: 'update',
+                      url: 'create-pick',
                       data:{
-                        id: ids,
+                        ids: ids,
                         status: 5
                       },
                       error: function(){
                         layer.msg('系统异常...',{icon:5});
                       },
-                      success: function(){
-
+                      success: function(response){
+                        if(response.errCode == 0){
+                          layer.msg(response.errMsg, {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                          }, function () {
+                            layer.close(itemsbox);
+                            workflow.reload();
+                          });
+                        }else{
+                          layer.msg(response.errMsg, {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如是果不配置，默认3秒）
+                          }, function () {
+                            layer.close(itemsbox);
+                          });
+                        }
                       }
                     });
                   })

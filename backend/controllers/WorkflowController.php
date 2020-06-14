@@ -6,6 +6,7 @@ use backend\helpers\OrderStatus;
 use backend\models\Admin;
 use backend\models\Auth;
 use backend\models\Create;
+use backend\models\Delivery;
 use backend\models\Order;
 use backend\models\OrderComment;
 use backend\models\OrderItem;
@@ -766,11 +767,19 @@ class WorkflowController extends Controller
         }
     }
 
+    /**
+     * 待提货页面
+     * @return string
+     */
     public function actionWaitPick()
     {
         return $this->render('watingpick');
     }
 
+    /**
+     * 待提货页面产品数据
+     * @return false|string
+     */
     public function actionWaitPickList()
     {
         $status = 31;  //子订单，已收取尾款
@@ -791,5 +800,66 @@ class WorkflowController extends Controller
             'data'  => $model
         ];
         return json_encode($data);
+    }
+
+    /**
+     * 生成提货单号
+     */
+    public function actionCreatePick()
+    {
+        $ids = \Yii::$app->request->post('ids', null);
+        $ids = substr($ids,0,strlen($ids)-1);
+        $model = new Delivery();
+        $model->name = (string)"TH-".date("YmdHis", time());
+        $model->product_ids = $ids;
+        $model->user_id = 1;
+        $model->created_at = (string)date("Y-m-d H:i:s", time());
+        if (!$model->save()) {
+            print_r($model->getErrors());die;
+            return $this->error($model->getErrors());
+        }
+        return $this->success();
+    }
+
+    /**
+     * 已提货页面
+     */
+    public function actionDelivery()
+    {
+        return $this->render('delivery');
+    }
+
+    /**
+     * 已提货页面数据
+     */
+    public function actionDeliveryList()
+    {
+        $model = Delivery::find()->asArray()->all();
+        $data = [
+            'code'  => 0,
+            'count' => count($model),
+            'data'  => $model
+        ];
+        return json_encode($data);
+    }
+
+    /**
+     * 已提货页面产品数据
+     */
+    public function actionDeliveryItems()
+    {
+        $ids = \Yii::$app->request->get('ids', null);
+        $ids = explode(',', $ids);
+        $productItems = SupplierOrderItem::find()
+            ->where(['id' => $ids])
+            ->asArray()->all();
+
+        \Yii::$app->response->format = 'json';
+        $data = [
+            'code'  => 0,
+            'count' => count($productItems),
+            'data'  => $productItems
+        ];
+        return $data;
     }
 }
