@@ -38,7 +38,7 @@ layui.define(function(exports){
         // show details
         case 'details':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
+            layer.msg("您需要先选择一条数据",{icon:0});
           }else{
             var id = data[0].id;
             var project = data[0].project_name;
@@ -115,8 +115,75 @@ layui.define(function(exports){
             });
           }
           break;
-      };
+        case 'support':
+          if(checkStatus.data.length === 0) {
+            layer.msg("您需要先选择一条数据", {icon:0});
+          } else {
+            var id = data[0].id;
+            var project = data[0].project_name;
+            var supprot_notice = $("#supprot_notice").is(":checked");
+            if (supprot_notice) {
+              $('#serviceAmount').show();
+            } else {
+              $('#serviceAmount').hide();
+            }
+            console.log(supprot_notice);
+            layer.open({
+              type: 1,
+              title: '项目名称 - ' + project,
+              area: ['50%', '60%'],
+              content: $('#support'),
+              resize: false,
+              success : function(){
+                $('#supprotId').val(id);
+              }
+            });
+          }
+          break;
+      }
     });
+    // 判断报价方式的开关状态
+    form.on('switch(supprot)', function (obj) {
+      if (obj.elem.checked === false) {
+        $('#serviceAmount').hide();
+      } else {
+        $('#serviceAmount').show();
+      }
+    });
+
+    // 表单提交
+    form.on('submit(submit-support)',function(data,id){
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        data: data.field,
+        url: 'receive-notice',
+        error: function(){
+          layer.msg('系统错误,请稍后重试.');
+        },
+        success: function(response){
+          if(response.errCode == 0){
+            layer.msg(response.errMsg, {
+              icon: 1,
+              time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            }, function () {
+              layer.closeAll();
+              order.reload();
+              $('#supportForm')[0].reset();
+            });
+          }else{
+            layer.msg(response.errMsg, {
+              icon: 5,
+              time: 2000 //2秒关闭（如是果不配置，默认3秒）
+            }, function () {
+              layer.close(itemsbox);
+            });
+          }
+        }
+      });
+      return false;
+    });
+
     // 表单提交
     form.on('submit(receiveNotice)',function(data,id){
       $.ajax({

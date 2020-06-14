@@ -163,3 +163,20 @@ alter table `supplier_order_item` add column origin_price decimal(10, 4) comment
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+
+/**
+20200614-服务费表
+ */
+CREATE TABLE `supprot` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `charge_amount` varchar(50) DEFAULT NULL COMMENT '应收金额',
+  `confirm_amout` varchar(50) DEFAULT NULL COMMENT '实收金额',
+  `created_at` varchar(255) DEFAULT NULL COMMENT '申请时间',
+  `desc` text COMMENT '备注信息',
+  `is_ charge` int(3) DEFAULT NULL COMMENT '是否需要收取服务费',
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

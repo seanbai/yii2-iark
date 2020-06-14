@@ -24,8 +24,9 @@ use yii\helpers\Url;
           <!-- tool bar -->
           <script type="text/html" id="quoteBar">
             <div class="layui-btn-container">
-              <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看商品清单</button>
-              <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="receiveNotice">发送收款通知</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看商品清单</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="receiveNotice">发送收款通知</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="support">发送收取服务费通知</button>
             </div>
           </script>
           <script type="text/html" id="action">
@@ -195,4 +196,30 @@ layui.config({
       </form>
     </div>
   </div>
+</div>
+
+
+
+<div style="display:none;margin-top: 16px" id="support" class="layui-fluids">
+    <form class="layui-form" id="supportForm">
+        <input type="hidden" name="id" id="supprotId" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否需要支付服务费</label>
+            <div class="layui-input-switch">
+                <input type="checkbox" lay-text="是|否" id="supprot_notice" name="supprot_notice" lay-skin="switch" lay-filter="supprot" checked >
+            </div>
+        </div>
+
+        <div class="layui-form-item" id="serviceAmount">
+            <label class="layui-form-label">服务费金额</label>
+            <div class="layui-input-block">
+                <input type="text" id="service_amount" name="service_amount" autocomplete="off" placeholder="请输入金额" class="layui-input">
+            </div>
+        </div>
+
+        <!-- 提交按钮 -->
+        <div class="layui-form-item">
+            <button class="layui-btn" lay-submit="" lay-filter="submit-support">确认</button>
+        </div>
+    </form>
 </div>
