@@ -24,8 +24,7 @@ layui.define(function(exports){
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},
         {field: 'owner', title: '采购商'},
-        {field: 'quote', title: '总计'},
-        {fixed: 'right', title:'操作', toolbar: '#action', width:100}
+        {fixed: 'right', title:'操作', toolbar: '#action', width:200}
       ]]
     });
     // 表格菜单事件
@@ -157,7 +156,7 @@ layui.define(function(exports){
         type: 'post',
         dataType: 'json',
         data: data.field,
-        url: 'receive-notice',
+        url: 'create-supprot',
         error: function(){
           layer.msg('系统错误,请稍后重试.');
         },
@@ -271,12 +270,74 @@ layui.define(function(exports){
             });
           }
           break;
-        default:
+        case 'confirmSupprot':
+          var itemsbox = layer.open({
+            type: 1,
+            title: '服务费清单 ',
+            area: ['60%', '50%'],
+            content: $('#showItems'),
+            btn: ['提交'],
+            success: showSupprots(id),
+            yes: function(){
+              layer.confirm('请仔细核对收到的服务费金额', function(index){
+                $.ajax({
+                  type: 'POST',
+                  url: 'update',
+                  data:{
+
+                  },
+                  error: function(){
+                    layer.msg('系统异常...',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.close(itemsbox);
+                        workflow.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.close(itemsbox);
+                      });
+                    }
+                  }
+                });
+              })
+            }
+          });
+
+          break;
+
       }
     });
+
+    // 显示产品清单方法
+    window.showSupprots = function(id){
+      var items = table.render({
+        id: 'itemsList',
+        elem: '#items',
+        url: 'supprot-list?id='+id, //数据接口
+        toolbar: '#showItemsBar',
+        totalRow: true,
+        skin: 'row',
+        even: true,
+        cols: [[
+          {field: 'id', title: '编号'},
+          {field: 'charge_amount', title: '应收金额'},
+          {field: 'confirm_amout', title: '实收金额', edit: 'text'},
+          {field: 'created_at', title: '收取时间'},
+          {field: 'desc', title: '备注', edit: 'text', width:300}
+        ]]
+      });
+    }
     // 显示产品清单方法
     window.showItems = function(id){
-
       var items = table.render({
         id: 'itemsList',
         elem: '#items',
@@ -330,6 +391,29 @@ layui.define(function(exports){
         content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
       });
     }
+    // 表单提交
+    form.on('submit(confirmPayment)',function(data,id){
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        data: data.field,
+        url: 'receive-confirm',
+        error: function(){
+          layer.msg('系统错误,请稍后重试.');
+        },
+        success: function(res){
+          if(res.errCode == 0){
+            layer.msg('操作成功');
+            layer.closeAll();
+            order.reload();
+          }else{
+            layer.msg(res.errMsg);
+          }
+        }
+      });
+      return false;
+    })
+
     // 表单提交
     form.on('submit(confirmPayment)',function(data,id){
       $.ajax({

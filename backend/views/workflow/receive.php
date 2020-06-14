@@ -31,6 +31,7 @@ use yii\helpers\Url;
           </script>
           <script type="text/html" id="action">
             <a class="layui-btn layui-btn-xs" lay-event="confirm">收款确认</a>
+            <a class="layui-btn layui-btn-xs" lay-event="confirmSupprot">收服务费确认</a>
           </script>
         </div>
       </div>
@@ -199,7 +200,7 @@ layui.config({
 </div>
 
 
-
+<!--服务费申请-->
 <div style="display:none;margin-top: 16px" id="support" class="layui-fluids">
     <form class="layui-form" id="supportForm">
         <input type="hidden" name="id" id="supprotId" />
@@ -223,3 +224,5 @@ layui.config({
         </div>
     </form>
 </div>
+
+<!-- 确认收款服务费表单 -->

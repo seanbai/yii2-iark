@@ -13,6 +13,7 @@ use backend\models\OrderItem;
 use backend\models\ProductPushRecord;
 use backend\models\SupplierOrder;
 use backend\models\SupplierOrderItem;
+use backend\models\Supprot;
 use backend\models\User;
 use common\helpers\Helper;
 use common\strategy\Substance;
@@ -868,6 +869,44 @@ class WorkflowController extends Controller
      */
     public function actionCreateSupprot()
     {
+        $id = \Yii::$app->request->post('id');
+        $notice = \Yii::$app->request->post('supprot_notice');
+        $amount = \Yii::$app->request->post('service_amount');
 
+        if (empty($notice)) $notice = 0;
+        if (empty($amount)) $amount = 0;
+
+        $model = new Supprot();
+        $model->order_id = $id;
+        $model->charge_amount = $amount;
+        $model->is_charge = (int)$notice;
+        $model->created_at = (string)date("Y-m-d H:i:s", time());
+        if (!$model->save()) {
+            print_r($model->getErrors());
+            die;
+            return $this->error($model->getErrors());
+        }
+        return $this->success();
+    }
+
+    /**
+     * 创建服务费申请
+     */
+    public function actionSupprotList()
+    {
+        $id = \Yii::$app->request->get('id');
+        if (empty($notice)) $notice = 0;
+        if (empty($amount)) $amount = 0;
+
+        $model = Supprot::find()
+            ->where(['order_id' => $id])
+            ->asArray()->all();
+        \Yii::$app->response->format = 'json';
+        $data = [
+            'code'  => 0,
+            'count' => count($model),
+            'data'  => $model
+        ];
+        return $data;
     }
 }
