@@ -15,16 +15,32 @@ layui.define(function(exports){
       skin: 'row',
       even: true,
       cols: [[ //表头
-        {type:'radio'},
-        {field: 'order_number', title: '订单号'},
-        {field: 'order_status_label', title: '订单状态'},
+        {type: 'checkbox'},
+        {field: 'order_number', title: '项目编号'},
         {field: 'project_name', title: '项目名称'},
-        {field: 'create_time', title: '创建时间'},
-        {field: 'date', title: '期望交付时间'},
-        {field: 'package', title: '包装要求'},
-        {field: 'name', title: '提货联系人'},
-        {field: 'address', title: '交付地址'},
-        {field: 'quote', title: '报价'}
+        {field: 'package', title: '运输方式'},
+        {field: 'brand', title: '产品名称'},
+        {field: 'number', title: '数量'},
+        {field: 'files', title: '产品图片',
+          templet: function(d){
+            return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
+          }
+        },
+        {field: 'type', title: '型号'},
+        {field: 'size', title: '产品尺寸'},
+        {field: 'material', title: '材质'},
+        {field: 'product_supplier', title: '品牌'},
+        {field: 'att', title: '附件',
+          templet: function(d){
+            var att = d.att;
+            if(att.length === 0){
+              return ''
+            }else{
+              return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
+            }
+          }
+        },
+        {field: 'desc', title: '备注'}
       ]]
     });
 
@@ -35,91 +51,68 @@ layui.define(function(exports){
 
       switch(obj.event){
         // 查看产品清单
-        case 'items':
-          if(checkStatus.data.length === 0){
-            layer.msg("请选择一条订单数据");
-          }else{
-            // 取订单ID 和 项目名称
-            var data = checkStatus.data;
-            var id = data[0].id;
-            var num = data[0].order_number;
-            // 打开产品列表弹层
-            var itemsbox = layer.open({
-              type: 1,
-              title: 'Order Number: ' + num,
-              area: ['99%', '98%'],
-              content: $('#showItems'),
-              btn: ['确认已提货', '取消'],
-              success: showItems(id),
-              yes: function(){
-                layer.confirm('是否已经提货完成', function(index){
-                  $.ajax({
-                    type: 'POST',
-                    url: 'update',
-                    data:{
-                      id:id,
-                      status: 5
-                    },
-                    error: function(){
-                      layer.msg('系统异常...',{icon:5});
-                    },
-                    success: function(response){
-                      if(response.errCode == 0){
-                        layer.msg(response.errMsg, {
-                          icon: 1,
-                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                          layer.close(itemsbox);
-                          workflow.reload();
-                        });
-                      }else{
-                        layer.msg(response.errMsg, {
-                          icon: 5,
-                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                          layer.close(itemsbox);
-                        });
-                      }
-                    }
-                  });
-                })
+          case 'items':
+            if(checkStatus.data.length === 0){
+              layer.msg("请选择一条订单数据");
+            }else{
+              // 取订单ID 和 项目名称
+              var data = checkStatus.data;
+              // 打开产品列表弹层
+              layer.msg("确定以下商品已完成提货操作");
+              var ids = '';
+              for (var i=0;i<checkStatus.data.length;i++) {
+                ids += data[i]['id'] + ',';
               }
-            });
-          }
-        break;
+              console.log(ids);
+              layer.open({
+                type: 1,
+                title: '本次提货商品列表',
+                area: ['99%', '98%'],
+                content: $('#showItems'),
+                btn: ['提交'],
+                success: showItems(ids),
+                yes: function(){
+                  layer.confirm('是否确认这些商品提货完成', function(index){
+                    $.ajax({
+                      type: 'POST',
+                      url: 'update',
+                      data:{
+                        id: ids,
+                        status: 5
+                      },
+                      error: function(){
+                        layer.msg('系统异常...',{icon:5});
+                      },
+                      success: function(){
+
+                      }
+                    });
+                  })
+                }
+              })
+            }
+          break;
       }
     });
 
     window.showItems = function(id){
       table.render({
         elem: '#items',
-        url: 'items?id='+id, //数据接口
+        url: 'pick-items?ids='+id, //数据接口
         toolbar: '#itemsBar',
         skin: 'row',
         even: true,
         cols: [[
-          {field: 'brand', title: 'Item'},
-          {field: 'number', title: 'Qty'},
-          {field: 'files', title: 'Image',
+          {field: 'brand', title: '产品名称'},
+          {field: 'number', title: '数量'},
+          {field: 'files', title: '图片',
             templet: function(d){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'type', title: 'Model'},
-          {field: 'size', title: 'Size'},
-          {field: 'material', title: 'Material'},
-          {field: 'att', title: 'Attachment',
-            templet: function(d){
-              var att = d.att;
-              if(att.length === 0){
-                return ''
-              }else{
-                return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
-              }
-            }
-          },
-          {field: 'desc', title: 'Remarks'},
-          {field: 'price', title: 'Price (EUR)'}
+          {field: 'type', title: '型号'},
+          {field: 'size', title: '尺寸'},
+          {field: 'material', title: '材质'},
         ]]
       });
     }

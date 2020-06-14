@@ -23,7 +23,7 @@ use yii\helpers\Url; ?>
                     <!-- tool bar -->
                     <script type="text/html" id="orderBar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="items">查看商品明细</button>
+                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="items">进行提货操作</button>
                         </div>
                     </script>
                 </div>
@@ -44,13 +44,25 @@ use yii\helpers\Url; ?>
 </html>
 
 <!-- 产品清单 -->
-<div style="display:none" id="showItems" class="layui-fluid">
+<div style="display:none" id="showItems" class="layui-fluids">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">
             <table class="items" id="items" lay-filter="items"></table>
         </div>
         <!-- 顶部工具栏 -->
         <script type="text/html" id="showItemsBar">
+    </script>
+    </div>
+</div>
+
+<!-- 子订单清单 -->
+<div style="display:none" id="showOrderItems" class="layui-fluids">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <table class="items" id="items" lay-filter="items"></table>
+        </div>
+        <!-- 顶部工具栏 -->
+        <script type="text/html" id="showOrderItemsBar">
     </script>
     </div>
 </div>

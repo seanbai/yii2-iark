@@ -378,16 +378,25 @@ class WorkflowController extends Controller
         $model->supplier_name = $_POST['name'];
         $model->quote_type = $quote_type;
 
-        if (isset($_POST['price']) && !empty($_POST['price']) && ($quote_type == 1)) {
-            $model->price = $_POST['price'];
-        } else {
-            $model->price = '0';
-        }
-        if ($model->save()){
-            return $this->success();
-        }else{
-            return $this->error($model->getErrors());
-        }
+       try{
+           if (isset($_POST['price']) && !empty($_POST['price']) && ($quote_type == 1)) {
+               $rate = Admin::findOne($model->supplier_id)->off;
+               $rate = 1 - ($rate / 100);
+               $price = (float) $_POST['price'];
+               $model->origin_price = $price;
+               $model->price = (string) ($price * $rate); //折扣后的价格
+           } else {
+               $model->price = '0';
+               $model->origin_price = '0';
+           }
+           if ($model->save()){
+               return $this->success();
+           }else{
+               return $this->error($model->getErrors());
+           }
+       }catch (\Exception $exception){
+           echo $exception->getMessage();
+       }
     }
 
     /**
@@ -595,6 +604,28 @@ class WorkflowController extends Controller
         return $data;
     }
 
+
+    /***
+     * @return array
+     */
+    public function actionPickItems()
+    {
+        $ids = \Yii::$app->request->get('ids', null);
+        $ids = explode(',', substr($ids,0,strlen($ids)-1));
+
+        $productItems = SupplierOrderItem::find()
+            ->where(['id' => $ids])
+            ->asArray()->all();
+
+        \Yii::$app->response->format = 'json';
+        $data = [
+            'code'  => 0,
+            'count' => count($productItems),
+            'data'  => $productItems
+        ];
+        return $data;
+    }
+
     /**
      * 订单列表
      *
@@ -742,8 +773,23 @@ class WorkflowController extends Controller
 
     public function actionWaitPickList()
     {
-        $status = 2; //已确认的订单，等待报价
+        $status = 31;  //子订单，已收取尾款
+        //获取子订单状态为已支付的订单
+        $model = (new \yii\db\Query())
+            ->select('a.*, u.order_status, c.project_name, c.package, c.order_number')
+            ->from('supplier_order_item AS a')
+            ->leftJoin('supplier_order AS u','a.supplier_order_id = u.id')
+            ->leftJoin('order AS c','u.order_id = c.id')
+            ->where(['u.order_status' => $status])
+            ->orderBy('a.id DESC')
+            ->All();
 
-        return $this->getOrders($status);
+
+        $data = [
+            'code'  => 0,
+            'count' => count($model),
+            'data'  => $model
+        ];
+        return json_encode($data);
     }
 }
