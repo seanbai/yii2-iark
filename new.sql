@@ -149,3 +149,17 @@ alter table `order` add column fuwu_notice smallint (1) default 0;
 alter table `order_item` add column origin_price decimal(10, 4) comment "产品报价";
 alter table `supplier_order_item` add column origin_price decimal(10, 4) comment "产品报价";
 
+
+
+/***
+20200614-提货数据库
+ */
+ CREATE TABLE `delivery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `product_ids` varchar(255) NOT NULL COMMENT '产品ids',
+  `user_id` int(11) NOT NULL COMMENT '提货人员',
+  `created_at` varchar(255) NOT NULL COMMENT '提货时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
