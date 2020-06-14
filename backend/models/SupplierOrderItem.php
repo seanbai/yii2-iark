@@ -18,6 +18,7 @@ use yii\db\StaleObjectException;
  * @property string $desc
  * @property string $files
  * @property string $price
+ * @property string $origin_price
  * @property string $size
  * @property string $material
  * @property string $att

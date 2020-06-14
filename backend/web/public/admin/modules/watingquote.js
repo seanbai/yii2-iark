@@ -46,7 +46,7 @@ layui.define(function(exports){
             // 打开产品列表弹层
             var itemsbox = layer.open({
               type: 1,
-              title: 'Order Number: ' + num,
+              title: '订单号: ' + num,
               area: ['99%', '98%'],
               content: $('#showItems'),
               btn: ['确认报价','拒绝报价', '取消'],
@@ -146,12 +146,21 @@ layui.define(function(exports){
                 }else{
                   $('[data-role="subPay"]').show();
                 }
-
+                if(order_status < 6){
+                  $('[data-role="pay-balance"]').hide();
+                  $('[data-role="pay-tax"]').hide();
+                  $('[data-role="pay-deposit"]').hide();
+                  $('[data-role="pay-fuwu"]').hide();
+                  $('[data-role="subPay"]').hide();
+                }else{
+                  $('[data-role="subPay"]').show();
+                }
                 if(order_status == 6){
                   $('#order-deposit').val(total/2);
                   $('[data-role="pay-deposit"]').show();
                   $('[data-role="pay-balance"]').hide();
                   $('[data-role="pay-tax"]').hide();
+                  $('[data-role="pay-fuwu"]').hide();
                 }
                 if(order_status == 11){
                   $('#order-deposit').val(total/2);
@@ -159,6 +168,7 @@ layui.define(function(exports){
                   $('[data-role="pay-deposit"]').show();
                   $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
                   $('[data-role="pay-balance"]').show();
+                  $('[data-role="pay-fuwu"]').hide();
                   $('[data-role="pay-tax"]').hide();
                 }
                 if(order_status == 14){
@@ -167,11 +177,27 @@ layui.define(function(exports){
                   $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
                   $('input[name="pay_balance"]').attr({'checked':true,"disabled":true});
 
-                  $('#order-tax').val(data[0].tax);
+                  $('#order-tax').val(order_data[0].tax);
                   $('[data-role="pay-deposit"]').show();
-                  $('[data-role="pay-balance"]').hide();
+                  $('[data-role="pay-balance"]').show();
+                  $('[data-role="pay-fuwu"]').hide();
                   $('[data-role="pay-tax"]').show();
                 }
+
+                if(order_status == 202){
+                  $('#order-deposit').val(total/2);
+                  $('#order-balance').val( total/2);
+                  $('#order-tax').val(order_data[0].tax);
+                  $('#order-fuwu').val(order_data[0].fuwu);
+                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
+                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":true});
+                  $('input[name="pay_tax"]').attr({'checked':true,"disabled":true});
+
+                  $('[data-role="pay-deposit"]').show();
+                  $('[data-role="pay-balance"]').show();
+                  $('[data-role="pay-tax"]').show();
+                  $('[data-role="pay-fuwu"]').show();
+               }
                 form.render();
               }
             });
@@ -210,17 +236,17 @@ layui.define(function(exports){
         skin: 'row',
         even: true,
         cols: [[
-          {field: 'brand', title: 'Item'},
-          {field: 'number', title: 'Qty'},
-          {field: 'files', title: 'Image',
+          {field: 'brand', title: '名称'},
+          {field: 'number', title: '数量'},
+          {field: 'files', title: '图片',
             templet: function(d){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'type', title: 'Model'},
-          {field: 'size', title: 'Size'},
-          {field: 'material', title: 'Material'},
-          {field: 'att', title: 'Attachment',
+          {field: 'type', title: '型号'},
+          {field: 'size', title: '尺寸'},
+          {field: 'material', title: '材质'},
+          {field: 'att', title: '附件',
             templet: function(d){
               var att = d.att;
               if(att.length === 0){
@@ -230,8 +256,9 @@ layui.define(function(exports){
               }
             }
           },
-          {field: 'desc', title: 'Remarks'},
-          {field: 'price2', title: 'Price (EUR)', edit: 'text'}
+          {field: 'desc', title: '备注'},
+          {field: 'origin_price', title: '报价(欧元)'},
+          {field: 'price2', title: '单价 (欧元)', edit: 'text'}
         ]]
       });
       // 价格编辑

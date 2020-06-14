@@ -17,6 +17,7 @@ use Yii;
  * @property string $files
  * @property string $create_time
  * @property string $price
+ * @property string $origin_price
  * @property string $pricing_id
  * @property int $supplier_id
  * @property string $supplier_name

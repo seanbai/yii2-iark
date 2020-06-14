@@ -135,3 +135,17 @@ CREATE TABLE `supplier_order_comment` (
   FOREIGN KEY fk_supplier_order_id(supplier_order_id) REFERENCES supplier_order(id) ON UPDATE NO ACTION ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `order_item` MODIFY COLUMN `quote_type`  smallint(3) NOT NULL DEFAULT 0 AFTER `product_supplier`;
+
+/**
+brand,产品名称,,
+品牌product_supplier,
+ */
+
+ALTER TABLE `order` add column `fuwu` decimal(10, 4) comment "财务应收服务费" ;
+alter table `order` add column receive_fuwu decimal(10, 4) comment "财务实收服务费";
+alter table `order` add column fuwu_notice smallint (1) default 0;
+
+
+alter table `order_item` add column origin_price decimal(10, 4) comment "产品报价";
+alter table `supplier_order_item` add column origin_price decimal(10, 4) comment "产品报价";
+

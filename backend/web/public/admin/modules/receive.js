@@ -60,13 +60,14 @@ layui.define(function(exports){
             var id = data[0].id;
             var project = data[0].project_name;
             var total = data[0].quote;
-            var status = parseInt(data[0].order_status);
-            var tax = data[0].tax ? parseInt(data[0].tax) : 0;
-            total = total ? parseInt(total) : 0;
+            var status = (data[0].order_status);
+            var tax = data[0].tax ? (data[0].tax) : 0;
+            var fuwu = data[0].fuwu ? (data[0].fuwu) : 0;
+            total = total ? (total) : 0;
             layer.open({
               type: 1,
               title: '项目名称 - ' + project,
-              area: ['50%', '55%'],
+              area: ['50%', '60%'],
               content: $('#receiveNotice'),
               resize: false,
               success: function () {
@@ -74,15 +75,19 @@ layui.define(function(exports){
                 $('#notice-total').val(total);
                 var depositEle = $('input[name="deposit_notice"]'),
                     balanceEle = $('input[name="balance_notice"]'),
-                    taxEle     = $('input[name="tax_notice"]');
-                if(data[0].receive_deposit){
+                    taxEle     = $('input[name="tax_notice"]'),
+                    fuwuEle     = $('input[name="fuwu_notice"]');
+                if(data[0].deposit_notice == 1){
                   depositEle.attr({"checked": true, "disabled":true});
                 }
-                if(data[0].receive_balance){
+                if(data[0].balance_notice == 1){
                   balanceEle.attr({"checked": true, "disabled":true});
                 }
-                if(data[0].receive_tax){
+                if(data[0].tax_notice == 1){
                   taxEle.attr({"checked": true, "disabled":true});
+                }
+                if(data[0].fuwu_notice == 1){
+                  fuwuEle.attr({"checked": true, "disabled":true});
                 }
                 // if(status === 6){//等待收取定金
                 //   depositEle.attr({"checked": true, "disabled":true});
@@ -103,6 +108,7 @@ layui.define(function(exports){
 
                 $('#aux-balance').html('应收尾款'+ (total/2));
                 $('#aux-tax').html('应收税金'+ (tax));
+                $('#aux-fuwu').html('应收服务费'+ (fuwu));
                 $('#aux-deposit').html('应收定金'+ (total/2));
                 form.render();
               }
@@ -140,6 +146,7 @@ layui.define(function(exports){
       var total = data.quote;
       var status = data.order_status;
       var tax = data.tax;
+      var fuwu = data.fuwu !== undefined || data.fuwu ? data.fuwu : 0;
       total = total ? parseInt(total) : 0;
       switch(obj.event){
         case 'confirm':
@@ -165,9 +172,10 @@ layui.define(function(exports){
               layer.closeAll();
             });
           }else{
-            var receive_deposit =  data.receive_deposit ? parseInt(data.receive_deposit) : 0;
-            var receive_balance = data.receive_balance ? parseInt(data.receive_balance) : 0;
-            var receive_tax = data.receive_tax ? parseInt(data.receive_tax) : 0;
+            var receive_deposit =  data.receive_deposit ? (data.receive_deposit) : 0;
+            var receive_balance = data.receive_balance ? (data.receive_balance) : 0;
+            var receive_tax = data.receive_tax ? (data.receive_tax) : 0;
+            var receive_fuwu = (data.receive_fuwu !== undefined || data.receive_fuwu) ? (data.receive_fuwu) : 0;
             var form = layer.open({
               type: 1,
               title: '收款确认',
@@ -177,9 +185,13 @@ layui.define(function(exports){
                 $('#orderId').val(id);
                 $('#total').val(total);
                 $('#deposit').val(total/2);
-                $('#balance').val(total/2);
+                $('#balance').val(total/2).attr('disabled',true);
+                $('#fuwu').val(fuwu);
                 if(receive_tax){
                   $('#receive_tax').val(receive_tax).attr('disabled',true);
+                }
+                if(receive_fuwu){
+                  $('#receive_fuwu').val(receive_fuwu).attr('disabled',true);
                 }
                 if(receive_deposit){
                   $('#receive_deposit').val(receive_deposit).attr('disabled',true);

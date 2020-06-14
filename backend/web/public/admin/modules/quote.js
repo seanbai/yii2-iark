@@ -119,7 +119,8 @@ layui.define(function (exports) {
                     },
                     {field: 'supplier_name', title: '供应商'},
                     {field: 'desc', title: '备注'},
-                    {field: 'price', title: '总价(欧元)', totalRow: true}
+                    {field: 'origin_price', title: '报价(欧元)'},
+                    {field: 'price', title: '单价(欧元)', totalRow: true}
                 ]]
             });
         }

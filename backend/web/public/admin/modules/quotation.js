@@ -120,6 +120,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
+          {field: 'origin_price', title: '报价(欧元)'},
           {field: 'price', title: 'Price (EUR)',  totalRow: true, edit: 'text'}
         ]]
       });
