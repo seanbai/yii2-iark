@@ -467,7 +467,7 @@ class WorkflowController extends Controller
      */
     public function actionReceiveOrders()
     {
-        $status = [5,7,12,15,9,10];
+        $status = [5,7,12,15,9,10,14];
         return $this->getOrders($status);
     }
 
@@ -786,7 +786,7 @@ class WorkflowController extends Controller
      */
     public function actionWaitPickList()
     {
-        $status = 31;  //子订单，已收取尾款
+        $status = 141;  //子订单，已收取尾款
         //获取子订单状态为已支付的订单
         $model = (new \yii\db\Query())
             ->select('a.*, u.order_status, c.project_name, c.package, c.order_number, c.id as order_id')
