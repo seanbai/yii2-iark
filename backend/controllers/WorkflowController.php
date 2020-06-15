@@ -14,12 +14,15 @@ use backend\models\ProductPushRecord;
 use backend\models\SupplierOrder;
 use backend\models\SupplierOrderItem;
 use backend\models\Supprot;
+use backend\models\TaxService;
 use backend\models\User;
 use common\helpers\Helper;
 use common\strategy\Substance;
 use Yii;
 use yii\db\Expression;
+use yii\rbac\Item;
 use yii\web\Response;
+use backend\helpers\ItemStatus;
 
 /**
  * Class OrderController My Order 执行操作控制器
@@ -786,7 +789,7 @@ class WorkflowController extends Controller
         $status = 31;  //子订单，已收取尾款
         //获取子订单状态为已支付的订单
         $model = (new \yii\db\Query())
-            ->select('a.*, u.order_status, c.project_name, c.package, c.order_number')
+            ->select('a.*, u.order_status, c.project_name, c.package, c.order_number, c.id as order_id')
             ->from('supplier_order_item AS a')
             ->leftJoin('supplier_order AS u','a.supplier_order_id = u.id')
             ->leftJoin('order AS c','u.order_id = c.id')
@@ -808,18 +811,58 @@ class WorkflowController extends Controller
      */
     public function actionCreatePick()
     {
-        $ids = \Yii::$app->request->post('ids', null);
-        $ids = substr($ids,0,strlen($ids)-1);
-        $model = new Delivery();
-        $model->name = (string)"TH-".date("YmdHis", time());
-        $model->product_ids = $ids;
-        $model->user_id = 1;
-        $model->created_at = (string)date("Y-m-d H:i:s", time());
-        if (!$model->save()) {
-            print_r($model->getErrors());die;
-            return $this->error($model->getErrors());
+        $data = $_POST['ids'];
+        $model_tmp = new Delivery();
+        $numberName = (string)"TH-".date("YmdHis", time());
+        foreach ($data as $datum) {
+            $model = clone $model_tmp;
+            $model->name = $numberName;
+            $model->product_ids = $datum['id'];
+            $model->order_id = (int)$datum['order_id'];
+            $model->order_item_id = (int)$datum['supplier_order_id'];
+            $model->project_name = $datum['project_name'];
+            $model->user_id = 1;
+            $model->created_at = (string)date("Y-m-d H:i:s", time());
+            if (!$model->save()) {
+                return $this->error($model->getErrors());
+            }
         }
+
+        $orderData = $this->array_group_by($data, 'order_id');
+        $modelTaxService = new TaxService();
+        foreach ($orderData as $orderId => $items) {
+            $modelTax = clone $modelTaxService;
+            $modelTax->name = $numberName;
+            $modelTax->order_id = $orderId;
+            $modelTax->status = 0;
+            $modelTax->product_ids = implode(",", array_column($items, 'id'));
+            $modelTax->product_names = implode(",", array_column($items, 'brand'));
+            $modelTax->created_at = date("Y-m-d H:i:s", time());
+            $modelTax->update_at = date("Y-m-d H:i:s", time());
+            if (!$modelTax->save()) {
+                return $this->error($modelTax->getErrors());
+            }
+        }
+
         return $this->success();
+    }
+
+    public function array_group_by($arr, $key)
+    {
+        $grouped = [];
+        foreach ($arr as $value) {
+            $grouped[$value[$key]][] = $value;
+        }
+        // Recursively build a nested grouping if more parameters are supplied
+        // Each grouped array value is grouped according to the next sequential key
+        if (func_num_args() > 2) {
+            $args = func_get_args();
+            foreach ($grouped as $key => $value) {
+                $parms = array_merge([$value], array_slice($args, 2, func_num_args()));
+                $grouped[$key] = call_user_func_array('array_group_by', $parms);
+            }
+        }
+        return $grouped;
     }
 
     /**
@@ -835,7 +878,11 @@ class WorkflowController extends Controller
      */
     public function actionDeliveryList()
     {
-        $model = Delivery::find()->asArray()->all();
+        $model = Delivery::find()->groupBy(['name'])->asArray()->all();
+        foreach ($model as &$item) {
+            $ids = Delivery::find()->where(['name' => $item['name']])->asArray()->all();
+            $item['product_ids'] = implode(",", array_column($ids, 'product_ids'));
+        }
         $data = [
             'code'  => 0,
             'count' => count($model),
@@ -851,17 +898,20 @@ class WorkflowController extends Controller
     {
         $ids = \Yii::$app->request->get('ids', null);
         $ids = explode(',', $ids);
-        $productItems = SupplierOrderItem::find()
-            ->where(['id' => $ids])
-            ->asArray()->all();
+        $productItems = (new \yii\db\Query())
+            ->select('a.*, c.project_name')
+            ->from('supplier_order_item AS a')
+            ->leftJoin('supplier_order AS u','a.supplier_order_id = u.id')
+            ->leftJoin('order AS c','u.order_id = c.id')
+            ->where(['a.id' => $ids])
+            ->orderBy('a.id DESC')->all();
 
-        \Yii::$app->response->format = 'json';
         $data = [
             'code'  => 0,
             'count' => count($productItems),
             'data'  => $productItems
         ];
-        return $data;
+        return json_encode($data);
     }
 
     /**
@@ -882,8 +932,6 @@ class WorkflowController extends Controller
         $model->is_charge = (int)$notice;
         $model->created_at = (string)date("Y-m-d H:i:s", time());
         if (!$model->save()) {
-            print_r($model->getErrors());
-            die;
             return $this->error($model->getErrors());
         }
         return $this->success();
@@ -908,5 +956,57 @@ class WorkflowController extends Controller
             'data'  => $model
         ];
         return $data;
+    }
+
+    public function actionGoodsList()
+    {
+        $id = \Yii::$app->request->get('id');
+        $model = TaxService::find()
+            ->where(['order_id' => $id])
+            ->asArray()->all();
+        \Yii::$app->response->format = 'json';
+
+        foreach ($model as &$item) {
+            $item['status_name']  = ItemStatus::getType($item['status']);
+        }
+
+        $data = [
+            'code'  => 0,
+            'count' => count($model),
+            'data'  => $model
+        ];
+        return $data;
+    }
+
+    public function actionUpdateTaxService()
+    {
+        $id =  \Yii::$app->request->get('id');
+        $price =  \Yii::$app->request->get('price');
+        $field =  \Yii::$app->request->get('field');
+        $status =  \Yii::$app->request->get('status');
+
+        if ($status == 0 && $field != "wait_tax_amount") {
+            return $this->error(201, "当前状态，不能操作其他金额字段");
+        }
+
+        $model = TaxService::findOne(['id' => $id]);
+        $model->$field = $price;
+        $model->status = $this->getStatus($field);
+        if (!$model->save()) {
+            return $this->error(300, $model->getErrors());
+        }
+        return $this->success();
+    }
+
+    private function getStatus($ltd)
+    {
+        $data = [
+            'wait_tax_amount' => ItemStatus::HASAPPLIED,
+            'confirm_tax_amount' => ItemStatus::HAVETOPAY,
+            'wait_support_amount' => ItemStatus::SERVICEBEENAPPILIED,
+            'confirm_supprot_amount' => ItemStatus::SERVICEPAY,
+        ];
+
+        return isset($data[$ltd]) ? $data[$ltd] : false;
     }
 }

@@ -152,22 +152,23 @@ alter table `supplier_order_item` add column origin_price decimal(10, 4) comment
 
 
 /***
-20200614-提货数据库
+20200614-提货编码数据库
  */
- CREATE TABLE `delivery` (
+CREATE TABLE `delivery` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `product_ids` varchar(255) NOT NULL COMMENT '产品ids',
+  `name` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `product_ids` varchar(255) CHARACTER SET latin1 NOT NULL COMMENT '产品ids',
   `user_id` int(11) NOT NULL COMMENT '提货人员',
-  `created_at` varchar(255) NOT NULL COMMENT '提货时间',
+  `created_at` varchar(255) CHARACTER SET latin1 NOT NULL COMMENT '提货时间',
+  `order_id` int(11) DEFAULT NULL,
+  `order_item_id` int(11) DEFAULT NULL,
+  `project_name` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+  KEY `product_id` (`product_ids`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
-
-/**
-20200614-服务费表
- */
+/*服务费表**/
 CREATE TABLE `supprot` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
@@ -180,3 +181,23 @@ CREATE TABLE `supprot` (
   KEY `order_id` (`order_id`),
   KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/***提货清单表**/
+CREATE TABLE `tax_service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `status` int(3) NOT NULL DEFAULT '0',
+  `product_ids` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `product_names` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `wait_tax_amount` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `confirm_tax_amount` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `wait_support_amount` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `confirm_supprot_amount` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `created_at` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `update_at` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `desc` text CHARACTER SET latin1,
+  `order_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+

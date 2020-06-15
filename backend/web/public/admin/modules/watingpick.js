@@ -57,9 +57,11 @@ layui.define(function(exports){
               var data = checkStatus.data;
               // 打开产品列表弹层
               layer.msg("确定以下商品已完成提货操作");
-              var ids = '';
+              var fileData = [];
+              var ids = [];
               for (var i=0;i<checkStatus.data.length;i++) {
-                ids += data[i]['id'] + ',';
+                fileData.push(data[i]);
+                ids += data[i].id+",";
               }
               console.log(ids);
               var itemsbox = layer.open({
@@ -74,10 +76,9 @@ layui.define(function(exports){
                     $.ajax({
                       type: 'POST',
                       url: 'create-pick',
-                      data:{
-                        ids: ids,
-                        status: 5
-                      },
+                      dataType: 'json',
+                      data: { ids: fileData},
+                      async: false,
                       error: function(){
                         layer.msg('系统异常...',{icon:5});
                       },

@@ -55,6 +55,7 @@ layui.define(function(exports){
         skin: 'row',
         even: true,
         cols: [[
+          {field: 'project_name', title: '项目名称'},
           {field: 'brand', title: '产品名称'},
           {field: 'number', title: '数量'},
           {field: 'files', title: '图片',

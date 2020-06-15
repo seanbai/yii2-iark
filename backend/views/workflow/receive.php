@@ -26,12 +26,13 @@ use yii\helpers\Url;
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看商品清单</button>
                 <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="receiveNotice">发送收款通知</button>
-                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="support">发送收取服务费通知</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="goodslist">提货清单</button>
             </div>
           </script>
           <script type="text/html" id="action">
             <a class="layui-btn layui-btn-xs" lay-event="confirm">收款确认</a>
-            <a class="layui-btn layui-btn-xs" lay-event="confirmSupprot">收服务费确认</a>
+<!--            <a class="layui-btn layui-btn-xs" lay-event="confirmTax">税金收取清单</a>-->
+            <a class="layui-btn layui-btn-xs" lay-event="confirmSupprot">服务费收取清单</a>
           </script>
         </div>
       </div>
@@ -94,20 +95,20 @@ layui.config({
             </div>
             <div class="layui-form-mid layui-word-aux" id="aux-balance">应收尾款10000</div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">通知支付税金</label>
-            <div class="layui-input-inline">
-                <input type="checkbox" lay-text="是|否" name="tax_notice" lay-skin="switch">
-            </div>
-            <div class="layui-form-mid layui-word-aux" id="aux-tax">应收金10000</div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">通知支付服务费</label>
-            <div class="layui-input-inline">
-                <input type="checkbox" lay-text="是|否" name="fuwu_notice" lay-skin="switch">
-            </div>
-            <div class="layui-form-mid layui-word-aux" id="aux-fuwu">应收服务费10000</div>
-        </div>
+<!--        <div class="layui-form-item">-->
+<!--            <label class="layui-form-label">通知支付税金</label>-->
+<!--            <div class="layui-input-inline">-->
+<!--                <input type="checkbox" lay-text="是|否" name="tax_notice" lay-skin="switch">-->
+<!--            </div>-->
+<!--            <div class="layui-form-mid layui-word-aux" id="aux-tax">应收金10000</div>-->
+<!--        </div>-->
+<!--        <div class="layui-form-item">-->
+<!--            <label class="layui-form-label">通知支付服务费</label>-->
+<!--            <div class="layui-input-inline">-->
+<!--                <input type="checkbox" lay-text="是|否" name="fuwu_notice" lay-skin="switch">-->
+<!--            </div>-->
+<!--            <div class="layui-form-mid layui-word-aux" id="aux-fuwu">应收服务费10000</div>-->
+<!--        </div>-->
         <!-- 提交按钮 -->
         <div class="layui-form-item">
             <button class="layui-btn" lay-submit="" lay-filter="receiveNotice">确认</button>
@@ -222,7 +223,14 @@ layui.config({
         <div class="layui-form-item">
             <button class="layui-btn" lay-submit="" lay-filter="submit-support">确认</button>
         </div>
+
     </form>
 </div>
+
+<!-- 行编辑 -->
+<script type="text/html" id="taxAction">
+    <a class="layui-btn layui-btn-xs" lay-event="pleaseTax">税金申请</a>
+    <a class="layui-btn layui-btn-xs" lay-event="pleaseSupprot">服务费申请</a>
+</script>
 
 <!-- 确认收款服务费表单 -->

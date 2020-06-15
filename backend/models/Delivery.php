@@ -12,6 +12,9 @@ use Yii;
  * @property string $product_ids 产品ids
  * @property int $user_id 提货人员
  * @property string $created_at 提货时间
+ * @property int $order_id
+ * @property int $order_item_id
+ * @property string $project_name
  */
 class Delivery extends \yii\db\ActiveRecord
 {
@@ -29,10 +32,10 @@ class Delivery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'product_ids', 'user_id'], 'required'],
-            [['user_id'], 'integer'],
+            [['name', 'product_ids', 'user_id', 'created_at'], 'required'],
+            [['user_id', 'order_id', 'order_item_id'], 'integer'],
             [['name', 'product_ids', 'created_at'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['project_name'], 'string', 'max' => 100],
         ];
     }
 
@@ -47,6 +50,9 @@ class Delivery extends \yii\db\ActiveRecord
             'product_ids' => 'Product Ids',
             'user_id' => 'User ID',
             'created_at' => 'Created At',
+            'order_id' => 'Order ID',
+            'order_item_id' => 'Order Item ID',
+            'project_name' => 'Project Name',
         ];
     }
 }
