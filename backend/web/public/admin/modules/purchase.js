@@ -89,7 +89,24 @@ layui.define(function(exports){
               resize: false
             });
           }
-      };
+          break;
+        //提货清单
+        case 'goodslist':
+          if(checkStatus.data.length === 0) {
+            layer.msg("您需要先选择一条数据", {icon:0});
+          } else {
+            var id = checkStatus.data[0].id;
+            layer.open({
+              type: 1,
+              title: '提货订单',
+              area: ['90%', '70%'],
+              content: $('#showItems'),
+              btn: ['提交'],
+              success: showGoodslist(id)
+            });
+          }
+          break;
+      }
     });
 
     // 显示产品清单方法
@@ -172,6 +189,67 @@ layui.define(function(exports){
         content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
       });
     }
+
+    // 显示提货清单方法
+    window.showGoodslist = function(id){
+      var items = table.render({
+        id: 'itemsList',
+        elem: '#items',
+        url: 'goods-list?id='+id, //数据接口
+        toolbar: '#showItemsBar',
+        totalRow: true,
+        skin: 'row',
+        even: true,
+        cols: [[
+          {field: 'name', title: '提货编号'},
+          {field: 'status_name', title: '状态'},
+          {field: 'wait_tax_amount', title: '应收税金', edit: 'text'},
+          {field: 'confirm_tax_amount', title: '实收税金', edit: 'text'},
+          {field: 'wait_support_amount', title: '应收服务费', edit: 'text'},
+          {field: 'confirm_supprot_amount', title: '实收服务费', edit: 'text'},
+          {field: 'desc', title: '备注', edit: 'text', width:300},
+          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 180}
+        ]]
+      });
+      //价格编辑
+      table.on('edit(items)', function(obj){
+        console.log(obj);
+        var value = obj.value;  //修改后的金额
+        var field = obj.field;   //修改的字段
+        var status = obj.data.status;
+        var itemId = obj.data.id;
+        var msgStatus = true;
+        //修改待申请税金。
+        if (status == 0 && field != 'wait_tax_amount') {
+          layer.msg("当前状态不能修改其他字段", {
+            icon: 5,
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+          })
+          msgStatus = false;
+        }
+        if (msgStatus == true) {
+          // 改动完即同步数据库
+          $.ajax({
+            type: 'POST',
+            //同步接口，传数据ID和修改后的金额值
+            url: 'update-tax-service?id=' + itemId + '&price=' + value + '&field=' + field + '&status=' + status,
+            success: function(response){
+              if(response.errCode == 0){
+                layer.msg('操作成功', {icon: 6});
+                table.reload('items',{}); // 重载数据表格
+              }else {
+                layer.msg(response.errMsg,{icon: 5});
+                table.reload('items',{}); // 重载数据表格
+              }
+            },
+            error: function(){
+              layer.msg('Error');
+            }
+          })
+        }
+      })
+    }
+
 
   });
   //
