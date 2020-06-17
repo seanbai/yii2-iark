@@ -195,7 +195,7 @@ layui.define(function(exports){
       var items = table.render({
         id: 'itemsList',
         elem: '#items',
-        url: 'goods-list?id='+id, //数据接口
+        url: '/workflow/goods-list?id='+id, //数据接口
         toolbar: '#showItemsBar',
         totalRow: true,
         skin: 'row',
@@ -203,50 +203,88 @@ layui.define(function(exports){
         cols: [[
           {field: 'name', title: '提货编号'},
           {field: 'status_name', title: '状态'},
-          {field: 'wait_tax_amount', title: '应收税金', edit: 'text'},
-          {field: 'confirm_tax_amount', title: '实收税金', edit: 'text'},
-          {field: 'wait_support_amount', title: '应收服务费', edit: 'text'},
-          {field: 'confirm_supprot_amount', title: '实收服务费', edit: 'text'},
-          {field: 'desc', title: '备注', edit: 'text', width:300},
-          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 180}
+          {field: 'wait_tax_amount', title: '税金', },
+          {field: 'wait_support_amount', title: '服务费', },
+          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 250}
         ]]
       });
-      //价格编辑
-      table.on('edit(items)', function(obj){
-        console.log(obj);
-        var value = obj.value;  //修改后的金额
-        var field = obj.field;   //修改的字段
-        var status = obj.data.status;
-        var itemId = obj.data.id;
-        var msgStatus = true;
-        //修改待申请税金。
-        if (status == 0 && field != 'wait_tax_amount') {
-          layer.msg("当前状态不能修改其他字段", {
-            icon: 5,
-            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-          })
-          msgStatus = false;
-        }
-        if (msgStatus == true) {
-          // 改动完即同步数据库
+      //按钮提交
+      table.on('tool(items)', function(obj){
+        var data = obj.data;
+        var id = data.id;
+        var status = data.status;
+        switch(obj.event){
+          case 'confirmTax':
+            layer.confirm('请确认是否已经支付税金，一旦确认无法修改，如有问题，请联系管理人员', function (index) {
+              if (status != 1) {
+                layer.msg("当前状态不能执行税金已支付操作");
+              } else {
+                $.ajax({
+                  type: 'POST',
+                  url: '/workflow/update-tax',
+                  data: {
+                    id : id,
+                    status: 2
+                  },
+                  error: function(){
+                    layer.msg('系统异常,请联系管理人员',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        items.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      });
+                    }
+                  }
+                });
+              }
+      })
+      break;
+    case 'confirmSupprot':
+      layer.confirm('请确认是否已经支付服务费，一旦确认无法修改，如有问题，请联系管理人员', function (index) {
+        if (status != 4) {
+          layer.msg("当前状态不能执行服务费已支付操作");
+        } else {
           $.ajax({
             type: 'POST',
-            //同步接口，传数据ID和修改后的金额值
-            url: 'update-tax-service?id=' + itemId + '&price=' + value + '&field=' + field + '&status=' + status,
-            success: function(response){
-              if(response.errCode == 0){
-                layer.msg('操作成功', {icon: 6});
-                table.reload('items',{}); // 重载数据表格
-              }else {
-                layer.msg(response.errMsg,{icon: 5});
-                table.reload('items',{}); // 重载数据表格
-              }
+            url: '/workflow/update-tax',
+            data: {
+              id : id,
+              status: 5
             },
             error: function(){
-              layer.msg('Error');
+              layer.msg('系统异常,请联系管理人员',{icon:5});
+            },
+            success: function(response){
+              if(response.errCode == 0){
+                layer.msg(response.errMsg, {
+                  icon: 1,
+                  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function () {
+                  layer.closeAll();
+                  items.reload();
+                });
+              }else{
+                layer.msg(response.errMsg, {
+                  icon: 5,
+                  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+              }
             }
-          })
+          });
         }
+      })
+      break;
+    }
       })
     }
 

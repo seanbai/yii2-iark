@@ -103,6 +103,11 @@ use yii\helpers\Url;
   <div class="layui-row layui-col-space10">
     <div class="layui-col-md12">
       <table class="items" id="items" lay-filter="items"></table>
+        <!-- 行编辑 -->
+        <script type="text/html" id="taxAction">
+            <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="confirmTax">税金已支付</a>
+            <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="confirmSupprot">服务费已支付</a>
+        </script>
     </div>
     <!-- 顶部工具栏 -->
     <script type="text/html" id="showItemsBar">
