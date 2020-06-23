@@ -89,7 +89,24 @@ layui.define(function(exports){
               resize: false
             });
           }
-      };
+          break;
+        //提货清单
+        case 'goodslist':
+          if(checkStatus.data.length === 0) {
+            layer.msg("您需要先选择一条数据", {icon:0});
+          } else {
+            var id = checkStatus.data[0].id;
+            layer.open({
+              type: 1,
+              title: '提货订单',
+              area: ['90%', '70%'],
+              content: $('#showItems'),
+              btn: ['提交'],
+              success: showGoodslist(id)
+            });
+          }
+          break;
+      }
     });
 
     // 显示产品清单方法
@@ -118,7 +135,7 @@ layui.define(function(exports){
           {field: 'att', title: '附件',
             templet: function(d){
               var att = d.att;
-              if(att.length === 0){
+              if(!att){
                 return ''
               }else{
                 return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
@@ -172,6 +189,105 @@ layui.define(function(exports){
         content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
       });
     }
+
+    // 显示提货清单方法
+    window.showGoodslist = function(id){
+      var items = table.render({
+        id: 'itemsList',
+        elem: '#items',
+        url: '/workflow/goods-list?id='+id, //数据接口
+        toolbar: '#showItemsBar',
+        totalRow: true,
+        skin: 'row',
+        even: true,
+        cols: [[
+          {field: 'name', title: '提货编号'},
+          {field: 'status_name', title: '状态'},
+          {field: 'wait_tax_amount', title: '税金', },
+          {field: 'wait_support_amount', title: '服务费', },
+          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 250}
+        ]]
+      });
+      //按钮提交
+      table.on('tool(items)', function(obj){
+        var data = obj.data;
+        var id = data.id;
+        var status = data.status;
+        switch(obj.event){
+          case 'confirmTax':
+            layer.confirm('请确认是否已经支付税金，一旦确认无法修改，如有问题，请联系管理人员', function (index) {
+              if (status != 1) {
+                layer.msg("当前状态不能执行税金已支付操作");
+              } else {
+                $.ajax({
+                  type: 'POST',
+                  url: '/workflow/update-tax',
+                  data: {
+                    id : id,
+                    status: 2
+                  },
+                  error: function(){
+                    layer.msg('系统异常,请联系管理人员',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        items.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      });
+                    }
+                  }
+                });
+              }
+      })
+      break;
+    case 'confirmSupprot':
+      layer.confirm('请确认是否已经支付服务费，一旦确认无法修改，如有问题，请联系管理人员', function (index) {
+        if (status != 4) {
+          layer.msg("当前状态不能执行服务费已支付操作");
+        } else {
+          $.ajax({
+            type: 'POST',
+            url: '/workflow/update-tax',
+            data: {
+              id : id,
+              status: 5
+            },
+            error: function(){
+              layer.msg('系统异常,请联系管理人员',{icon:5});
+            },
+            success: function(response){
+              if(response.errCode == 0){
+                layer.msg(response.errMsg, {
+                  icon: 1,
+                  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function () {
+                  layer.closeAll();
+                  items.reload();
+                });
+              }else{
+                layer.msg(response.errMsg, {
+                  icon: 5,
+                  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                });
+              }
+            }
+          });
+        }
+      })
+      break;
+    }
+      })
+    }
+
 
   });
   //

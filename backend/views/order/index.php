@@ -18,15 +18,16 @@ use yii\helpers\Url;
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
       <div class="layui-card">
-        <div class="layui-card-header">待处理订单</div>
+        <div class="layui-card-header">进行中订单</div>
         <div class="layui-card-body">
           <table id="order" lay-filter="order"></table>
           <!-- tool bar -->
           <script type="text/html" id="pendingOrderBar">
             <div class="layui-btn-container">
-              <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看产品清单</button>
-              <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="cancel">取消采购</button>
-              <button style="display: none" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="status">订单状态变更</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看产品清单</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="cancel">取消采购</button>
+                <button style="display: none" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="status">订单状态变更</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="goodslist">提货清单</button>
             </div>
           </script>
         </div>
@@ -102,6 +103,11 @@ use yii\helpers\Url;
   <div class="layui-row layui-col-space10">
     <div class="layui-col-md12">
       <table class="items" id="items" lay-filter="items"></table>
+        <!-- 行编辑 -->
+        <script type="text/html" id="taxAction">
+            <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="confirmTax">税金已支付</a>
+            <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="confirmSupprot">服务费已支付</a>
+        </script>
     </div>
     <!-- 顶部工具栏 -->
     <script type="text/html" id="showItemsBar">

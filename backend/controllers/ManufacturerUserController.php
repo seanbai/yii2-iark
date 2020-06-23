@@ -72,6 +72,7 @@ class ManufacturerUserController extends Controller
             $model->email2 = $_POST['email2'];
             $model->off = $_POST['off'];
             $model->text = $_POST['text'];
+            $model->discount = $_POST['discount'];
 
             if ($model->save()){
                 return $this->success(0);

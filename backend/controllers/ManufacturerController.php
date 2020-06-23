@@ -178,7 +178,7 @@ class ManufacturerController extends Controller
                     ];
                 }else{
                     $user = Admin::findOne($order->supplier_id);
-                    $rate = (float) ($user->off / 100);
+                    $rate = (float) ($user->discount / 100);
                     $rate = (1 - $rate);
                     $price = $value * $rate;
                     $supplierOrderItem->setAttribute('price', $price); //折扣后价格

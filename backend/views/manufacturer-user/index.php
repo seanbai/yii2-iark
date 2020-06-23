@@ -3,7 +3,7 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    Manufacturer Management
+                    供货商账户信息
                 </div>
                 <div class="layui-card-body">
                     <!-- table black -->
@@ -108,6 +108,14 @@
                 <label class="layui-form-label">供货折扣</label>
                 <div class="layui-input-block">
                     <input type="number" name="off" autocomplete="off" placeholder="折扣指百分比OFF，只填写数字不加%"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">采购折扣</label>
+                <div class="layui-input-block">
+                    <input type="number" name="discount" autocomplete="off" placeholder="折扣指百分比OFF，只填写数字不加%"
                            class="layui-input">
                 </div>
             </div>

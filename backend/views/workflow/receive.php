@@ -31,7 +31,6 @@ use yii\helpers\Url;
           </script>
           <script type="text/html" id="action">
             <a class="layui-btn layui-btn-xs" lay-event="confirm">收款确认</a>
-<!--            <a class="layui-btn layui-btn-xs" lay-event="confirmTax">税金收取清单</a>-->
             <a class="layui-btn layui-btn-xs" lay-event="confirmSupprot">服务费收取清单</a>
           </script>
         </div>
@@ -67,6 +66,13 @@ layui.config({
   <div class="layui-row layui-col-space10">
     <div class="layui-col-md12">
       <table class="items" id="items" lay-filter="items"></table>
+        <!-- 行编辑 -->
+        <script type="text/html" id="taxAction">
+            <a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="pleaseTax">税金申请</a>
+            <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="confirmTax">税金确认</a>
+            <a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="pleaseSupprot">服务费申请</a>
+            <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="confirmSupprot">服务费确认</a>
+        </script>
     </div>
   </div>
 </div>
@@ -227,10 +233,5 @@ layui.config({
     </form>
 </div>
 
-<!-- 行编辑 -->
-<script type="text/html" id="taxAction">
-    <a class="layui-btn layui-btn-xs" lay-event="pleaseTax">税金申请</a>
-    <a class="layui-btn layui-btn-xs" lay-event="pleaseSupprot">服务费申请</a>
-</script>
 
 <!-- 确认收款服务费表单 -->

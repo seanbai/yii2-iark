@@ -760,6 +760,8 @@ class WorkflowController extends Controller
                         $model->receive_tax = $receive_tax;
                     }
                     break;
+                default :
+                    return $this->error(201, "当前状态异常，不能操作其它数据");
             }
             if ($model->save()){
                 return $this->success();
@@ -820,7 +822,7 @@ class WorkflowController extends Controller
             $model->product_ids = $datum['id'];
             $model->order_id = (int)$datum['order_id'];
             $model->order_item_id = (int)$datum['supplier_order_id'];
-            $model->project_name = $datum['project_name'];
+            $model->project_name = (string)$datum['project_name'];
             $model->user_id = 1;
             $model->created_at = (string)date("Y-m-d H:i:s", time());
             if (!$model->save()) {
@@ -984,29 +986,59 @@ class WorkflowController extends Controller
         $price =  \Yii::$app->request->get('price');
         $field =  \Yii::$app->request->get('field');
         $status =  \Yii::$app->request->get('status');
+        $desc =  \Yii::$app->request->get('status');
 
-        if ($status == 0 && $field != "wait_tax_amount") {
-            return $this->error(201, "当前状态，不能操作其他金额字段");
+        if ($field == 'desc') {
+            $model = TaxService::findOne(['id' => $id]);
+            $model->$field = $price;
+            $model->desc = $price;  //value值都传到price里了。
+            if (!$model->save()) {
+                return $this->error(300, $model->getErrors());
+            }
+            return $this->success();
+        } else {
+            if ($status == 0 && $field != "wait_tax_amount") {
+                return $this->error(201, "当前状态，不能操作其他金额字段");
+            }
+            if ($status == 1 || $status == 4 || $status == 6) {
+                return $this->error(201, "当前状态，不能修改任何数据");
+            }
+            if ($status == 2 && $field != "confirm_tax_amount") {
+                return $this->error(201, "当前状态，不能操作其他金额字段");
+            }
+            if ($status == 3 && $field != "wait_support_amount") {
+                return $this->error(201, "当前状态，不能操作其他金额字段");
+            }
+            if ($status == 5 && $field != "confirm_supprot_amount") {
+                return $this->error(201, "当前状态，不能操作其他金额字段");
+            }
+            $model = TaxService::findOne(['id' => $id]);
+            $model->$field = $price;
+            if (!$model->save()) {
+                return $this->error(300, $model->getErrors());
+            }
+            return $this->success();
+        }
+    }
+
+    public function actionUpdateTax()
+    {
+        $id = \Yii::$app->request->post('id');
+        $status = \Yii::$app->request->post('status');
+        $price = \Yii::$app->request->post('price');
+        $model = TaxService::findOne(['id' => $id]);
+        if (empty($model)) return $this->error(300, "该数据已被删除，无法执行任何操作");
+
+        if (in_array($status, [3,4,6]) && empty($price)) {
+            return $this->error(300, "对应的金额不能为空");
         }
 
-        $model = TaxService::findOne(['id' => $id]);
-        $model->$field = $price;
-        $model->status = $this->getStatus($field);
+        $model->status = (int)$status;
+        $model->update_at = (string)date("Y-m-d H:i:s");
         if (!$model->save()) {
             return $this->error(300, $model->getErrors());
         }
         return $this->success();
-    }
 
-    private function getStatus($ltd)
-    {
-        $data = [
-            'wait_tax_amount' => ItemStatus::HASAPPLIED,
-            'confirm_tax_amount' => ItemStatus::HAVETOPAY,
-            'wait_support_amount' => ItemStatus::SERVICEBEENAPPILIED,
-            'confirm_supprot_amount' => ItemStatus::SERVICEPAY,
-        ];
-
-        return isset($data[$ltd]) ? $data[$ltd] : false;
     }
 }

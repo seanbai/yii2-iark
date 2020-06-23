@@ -35,7 +35,7 @@ class Delivery extends \yii\db\ActiveRecord
             [['name', 'product_ids', 'user_id', 'created_at'], 'required'],
             [['user_id', 'order_id', 'order_item_id'], 'integer'],
             [['name', 'product_ids', 'created_at'], 'string', 'max' => 255],
-            [['project_name'], 'string', 'max' => 100],
+            [['project_name'], 'string', 'max' => 255],
         ];
     }
 

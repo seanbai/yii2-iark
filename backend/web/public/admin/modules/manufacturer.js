@@ -47,7 +47,7 @@ layui.define(function(exports){
           layer.open({
             type: 1,
             title: '供货商账户信息',
-            area: ['700px', '800px'],
+            area: ['90%', '95%'],
             content: $("#editForm"),
             resize: false,
             success: function(){
@@ -132,7 +132,7 @@ layui.define(function(exports){
         layer.open({
           type: 1,
           title: '采购商账户信息',
-          area: ['700px', '800px'],
+          area: ['90%', '95%'],
           content: $('#editForm'),
           resize: false,
           success: function(){

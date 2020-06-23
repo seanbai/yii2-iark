@@ -94,7 +94,7 @@ layui.define(function(exports){
           {field: 'att', title: 'Attachment',
             templet: function(d){
               var att = d.att;
-              if(att.length === 0){
+              if(!att){
                 return ''
               }else{
                 return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
@@ -103,7 +103,7 @@ layui.define(function(exports){
           },
           {field: 'desc', title: 'Remarks'},
           {field: 'origin_price', title: 'Origin Price(EUR)'},
-          {field: 'price', title: '价格', totalRow: true}
+          {field: 'price', title: 'Price (EUR)'}
         ]]
       })
     };

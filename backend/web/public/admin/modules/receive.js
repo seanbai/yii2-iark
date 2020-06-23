@@ -32,7 +32,6 @@ layui.define(function(exports){
       // 取被选中数据的ID
       var checkStatus = table.checkStatus(obj.config.id);
       var data = checkStatus.data;
-
       switch(obj.event){
         // show details
         case 'details':
@@ -147,7 +146,7 @@ layui.define(function(exports){
             console.log(id);
             layer.open({
               type: 1,
-              title: '项目名称 - ' + project,
+              title: '项目名称 - ' + "",
               area: ['90%', '70%'],
               content: $('#showItems'),
               btn: ['提交'],
@@ -300,7 +299,6 @@ layui.define(function(exports){
                   type: 'POST',
                   url: 'update',
                   data:{
-
                   },
                   error: function(){
                     layer.msg('系统异常...',{icon:5});
@@ -327,9 +325,7 @@ layui.define(function(exports){
               })
             }
           });
-
           break;
-
       }
     });
 
@@ -353,7 +349,7 @@ layui.define(function(exports){
       });
     }
 
-    // 显示产品清单方法
+    // 显示提货清单方法
     window.showGoodslist = function(id){
       var items = table.render({
         id: 'itemsList',
@@ -371,28 +367,21 @@ layui.define(function(exports){
           {field: 'wait_support_amount', title: '应收服务费', edit: 'text'},
           {field: 'confirm_supprot_amount', title: '实收服务费', edit: 'text'},
           {field: 'desc', title: '备注', edit: 'text', width:300},
-          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 180}
+          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 340}
         ]]
       });
       //价格编辑
       table.on('edit(items)', function(obj){
-        console.log(obj);
         var value = obj.value;  //修改后的金额
         var field = obj.field;   //修改的字段
         var status = obj.data.status;
         var itemId = obj.data.id;
-        //修改待申请税金。
-        if (status == 0 && field != 'wait_tax_amount') {
-          layer.msg("当前状态不能修改其他字段", {
-            icon: 5,
-            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-          })
-        }
-        // 改动完即同步数据库
+        var desc = obj.data.desc;
+          // 改动完即同步数据库
         $.ajax({
           type: 'POST',
           //同步接口，传数据ID和修改后的金额值
-          url: 'update-tax-service?id=' + itemId + '&price=' + value + '&field=' + field + '&status=' + status,
+          url: 'update-tax-service?id=' + itemId + '&price=' + value + '&field=' + field + '&status=' + status + '$desc=' + desc,
           success: function(response){
             if(response.errCode == 0){
               layer.msg('操作成功', {icon: 6});
@@ -403,9 +392,164 @@ layui.define(function(exports){
             }
           },
           error: function(){
-            layer.msg('Error');
+            layer.msg('系统异常，请联系管理人员');
           }
         })
+      });
+
+      //按钮提交
+      table.on('tool(items)', function(obj){
+        var data = obj.data;
+        var id = data.id;
+        var status = data.status;
+        var confirm_tax_amount = data.confirm_tax_amount;
+        var wait_support_amount = data.wait_support_amount;
+        var confirm_supprot_amount = data.confirm_supprot_amount;
+        switch(obj.event){
+          case 'pleaseTax':
+            layer.confirm('请仔细核对税金收取金额', function (index) {
+              if (status != 0) {
+                layer.msg("当前状态不能发起税金收取操作");
+              } else {
+                $.ajax({
+                  type: 'POST',
+                  url: 'update-tax',
+                  data: {
+                    id : id,
+                    status: 1
+                  },
+                  error: function(){
+                    layer.msg('系统异常,请联系管理人员',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        items.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      });
+                    }
+                  }
+                });
+              }
+            })
+            break;
+          case 'confirmTax':
+            layer.confirm('请仔细核对税金收取金额,一旦确认则无法修改', function (index) {
+              if (status != 2) {
+                layer.msg("当前状态不能执行确认税金操作");
+              } else {
+                $.ajax({
+                  type: 'POST',
+                  url: 'update-tax',
+                  data: {
+                    id : id,
+                    status: 3,
+                    price: confirm_tax_amount
+                  },
+                  error: function(){
+                    layer.msg('系统异常,请联系管理人员',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        items.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      });
+                    }
+                  }
+                });
+              }
+            })
+            break;
+          case 'pleaseSupprot':
+            layer.confirm('请仔细核对服务费收取金额，一旦发起申请则无法修改', function (index) {
+              if (status != 3) {
+                layer.msg("当前状态不能发起服务费收取操作");
+              } else {
+                $.ajax({
+                  type: 'POST',
+                  url: 'update-tax',
+                  data: {
+                    id : id,
+                    status: 4,
+                    price: wait_support_amount
+                  },
+                  error: function(){
+                    layer.msg('系统异常,请联系管理人员',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        items.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      });
+                    }
+                  }
+                });
+              }
+            })
+            break;
+          case 'confirmSupprot':
+            layer.confirm('请仔细核对服务费收取金额，一旦确认则无法修改', function (index) {
+              if (status != 5) {
+                layer.msg("当前状态不能执行确认服务费操作");
+              } else {
+                $.ajax({
+                  type: 'POST',
+                  url: 'update-tax',
+                  data: {
+                    id : id,
+                    status: 6,
+                    price: confirm_supprot_amount
+                  },
+                  error: function(){
+                    layer.msg('系统异常,请联系管理人员',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        items.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      });
+                    }
+                  }
+                });
+              }
+            })
+            break;
+        }
       })
     }
 
@@ -486,43 +630,6 @@ layui.define(function(exports){
       });
       return false;
     })
-
-    // 表单提交
-    form.on('submit(confirmPayment)',function(data,id){
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        data: data.field,
-        url: 'receive-confirm',
-        error: function(){
-          layer.msg('系统错误,请稍后重试.');
-        },
-        success: function(res){
-          if(res.errCode == 0){
-            layer.msg('操作成功');
-            layer.closeAll();
-            order.reload();
-          }else{
-            layer.msg(res.errMsg);
-          }
-        }
-      });
-      return false;
-    })
-
-
-    //税金收取
-    form.on('submit(pleaseTax)', function (data, id) {
-      console.log(data.field);
-
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        data: data.field,
-      })
-    })
-
-
   });
   //
   exports('receive', {});
