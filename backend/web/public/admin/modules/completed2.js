@@ -91,7 +91,7 @@ layui.define(function(exports){
           {field: 'att', title: '附件',
             templet: function(d){
               var att = d.att;
-              if(att.length === 0){
+              if(!att){
                 return ''
               }else{
                 return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
