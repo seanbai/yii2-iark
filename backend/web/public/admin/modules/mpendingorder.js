@@ -30,7 +30,6 @@ layui.define(function(exports){
     table.on('toolbar(myOrder)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
       var jsonData = checkStatus.data;
-
       switch(obj.event){
           // 查看产品清单
         case 'items':
@@ -81,7 +80,7 @@ layui.define(function(exports){
                   success: function(res){
                     if(res.code == 0){
                       layer.msg('The order status has been changed');
-                      table.reload(); // 重载数据表格
+                      workflow.reload(); // 重载数据表格
                       layer.closeAll();
                     }else{
                       layer.msg(res.msg,{icon:5});
@@ -109,13 +108,12 @@ layui.define(function(exports){
                   success: function(res){
                     if(res.code == 0){
                       layer.msg('The order status has been changed');
-                      table.reload(); // 重载数据表格
+                      workflow.reload(); // 重载数据表格
                       layer.closeAll();
                     }else{
                       layer.msg(res.msg,{icon:5});
                       return false;
                     }
-
                   },
                   error: function(){
                     layer.msg('Error');
@@ -137,13 +135,12 @@ layui.define(function(exports){
                   success: function(res){
                     if(res.code == 0){
                       layer.msg('The order status has been changed');
-                      table.reload(); // 重载数据表格
+                      workflow.reload(); // 重载数据表格
                       layer.closeAll();
                     }else{
                       layer.msg(res.msg,{icon:5});
                       return false;
                     }
-
                   },
                   error: function(){
                     layer.msg('Error');
