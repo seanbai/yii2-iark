@@ -5,7 +5,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">Completed Order</div>
+                <div class="layui-card-header">已完成订单</div>
                 <div class="layui-card-body">
                     <table id="completed" lay-filter="completed"></table>
                     <!-- tool bar -->

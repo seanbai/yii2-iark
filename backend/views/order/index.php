@@ -18,7 +18,7 @@ use yii\helpers\Url;
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
       <div class="layui-card">
-        <div class="layui-card-header">Pending Order</div>
+        <div class="layui-card-header">进行中订单</div>
         <div class="layui-card-body">
           <table id="order" lay-filter="order"></table>
           <!-- tool bar -->
