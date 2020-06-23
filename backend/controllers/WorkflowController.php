@@ -760,6 +760,8 @@ class WorkflowController extends Controller
                         $model->receive_tax = $receive_tax;
                     }
                     break;
+                default :
+                    return $this->error(201, "当前状态异常，不能操作其它数据");
             }
             if ($model->save()){
                 return $this->success();
