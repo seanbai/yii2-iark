@@ -80,7 +80,7 @@ $this->title = 'My Order';
                 </div>
                 <!-- 提交表单 -->
                 <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit="" lay-filter="update">保存信息</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="update">Save</button>
                 </div>
             </form>
         </div>

@@ -18,7 +18,7 @@ use yii\helpers\Url;
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
       <div class="layui-card">
-        <div class="layui-card-header">Waiting For Receive Money</div>
+        <div class="layui-card-header">收款处理</div>
         <div class="layui-card-body">
           <table id="quote" lay-filter="quote"></table>
           <!-- tool bar -->

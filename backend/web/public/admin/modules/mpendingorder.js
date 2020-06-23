@@ -15,6 +15,9 @@ layui.define(function(exports){
       page: true, //开启分页
       skin: 'row',
       even: true,
+      text: {
+        none: 'There are not any record' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+      },
       cols: [[ //表头
         {type:'radio'},
         {field: 'order_number', title: 'Order Number'},

@@ -107,7 +107,7 @@ layui.define(function(exports){
                           workflow.reload();
                         });
                       }else{
-                        layer.msg(response.errMsg, {
+                        layer.msg('订单更新失败', {
                           icon: 5,
                           time: 2000 //2秒关闭（如果不配置，默认是3秒）
                         }, function () {
@@ -221,7 +221,7 @@ layui.define(function(exports){
             layer.closeAll();
             workflow.reload();
           }else{
-            layer.msg(res.msg);
+            layer.msg('操作失败，稍后再试');
           }
         }
       });
@@ -275,11 +275,11 @@ layui.define(function(exports){
           // 同步接口，传数据ID和修改后的金额值
           url: '/items?id=' + itemId + '&price=' + value,
           success: function(){
-            layer.msg('Quote has been saved!');
+            layer.msg('报价已保存');
             table.reload('items',{}); // 重载数据表格
           },
           error: function(){
-            layer.msg('Error');
+            layer.msg('系统错误');
           }
         })
       })

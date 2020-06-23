@@ -110,7 +110,7 @@ class ManufacturerController extends Controller
         // 查询数据条数
         $total = $query->count();
         if ($total) {
-            $status = OrderStatus::getChild();
+            $status = OrderStatus::getChild('en');
             $array = $query->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
             array_walk($array,function (&$value) use ($status){
@@ -428,7 +428,7 @@ class ManufacturerController extends Controller
         $offset = ($_GET['page'] - 1) * 10;
         $query->orderBy('id desc')->limit($limit)->offset($offset);
         $orders = $query->asArray()->all();
-        $orderStatusArr = OrderStatus::getChild();
+        $orderStatusArr = OrderStatus::getChild('en');
         if (!empty($orders)) {
             foreach ($orders as $k => $order) {
                 $orders[$k]['order_status_label'] = $orderStatusArr[$order['order_status']];

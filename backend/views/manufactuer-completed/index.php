@@ -10,7 +10,7 @@
                     <!-- tool bar -->
                     <script type="text/html" id="completedBar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="details">查看产品清单</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="details">Products List</button>
                         </div>
                     </script>
                 </div>

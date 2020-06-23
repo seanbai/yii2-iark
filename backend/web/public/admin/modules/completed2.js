@@ -22,16 +22,19 @@ layui.define(function(exports){
       page: true, //开启分页
       skin: 'row',
       even: true,
+      text: {
+        none: 'There are not any record' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+      },
       cols: [[ //表头
         {type:'radio'},
-        {field: 'order_number', title: '订单号'},
-        {field: 'project_name', title: '项目名称'},
-        {field: 'create_time', title: '创建时间'},
-        {field: 'date', title: '期望交付时间'},
-        {field: 'package', title: '包装要求'},
-        {field: 'name', title: '提货联系人'},
-        {field: 'address', title: '交付地址'},
-        {field: 'total', title: '报价'}
+        {field: 'order_number', title: 'Order Number'},
+        {field: 'project_name', title: 'Project Name'},
+        {field: 'create_time', title: 'Create Time'},
+        {field: 'date', title: 'Delivery Date'},
+        {field: 'package', title: 'Package'},
+        {field: 'name', title: 'Name'},
+        {field: 'address', title: 'Address'},
+        {field: 'total', title: 'Quote'}
       ]]
     });
     // 表格菜单事件
@@ -41,7 +44,7 @@ layui.define(function(exports){
         // show details
         case 'details':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据");
+            layer.msg("You should be select an order first!");
           }else{
             // 取订单ID 和 项目名称
             var data = checkStatus.data;
@@ -50,7 +53,7 @@ layui.define(function(exports){
             // 打开详情
             layer.open({
               type: 1,
-              title: '项目名称 - ' + project,
+              title: 'Project Name - ' + project,
               area: ['90%', '80%'],
               content: $('#showItems'),
               resize: false,
@@ -61,7 +64,7 @@ layui.define(function(exports){
         // track order
         case 'track':
           if(checkStatus.data.length === 0){
-            layer.msg("您需要先选择一条数据")
+            layer.msg("You should be select an order first!");
           }else{
 
           }
@@ -78,17 +81,17 @@ layui.define(function(exports){
         even: true,
         totalRow: true, //开启合计行
         cols: [[
-          {field: 'brand', title: '名称'},
-          {field: 'number', title: '数量', totalRow: true},
-          {field: 'files', title: '样式图片',
+          {field: 'brand', title: 'Item'},
+          {field: 'number', title: 'Qty', totalRow: true},
+          {field: 'files', title: 'Image',
             templet: function(d){
               return '<div onclick="showImg(this)"><img src="'+d.files+'"></div>'
             }
           },
-          {field: 'type', title: '型号'},
-          {field: 'size', title: '产品尺寸'},
-          {field: 'material', title: '材质'},
-          {field: 'att', title: '附件',
+          {field: 'type', title: 'Model'},
+          {field: 'size', title: 'Size'},
+          {field: 'material', title: 'Material'},
+          {field: 'att', title: 'Attachment',
             templet: function(d){
               var att = d.att;
               if(att.length === 0){
@@ -98,7 +101,8 @@ layui.define(function(exports){
               }
             }
           },
-          {field: 'desc', title: '备注'},
+          {field: 'desc', title: 'Remarks'},
+          {field: 'origin_price', title: 'Origin Price(EUR)'},
           {field: 'price', title: '价格', totalRow: true}
         ]]
       })

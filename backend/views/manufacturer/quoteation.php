@@ -20,7 +20,7 @@ use yii\helpers\Url;
 
             <div class="layui-card">
                 <div class="layui-card-header">
-                    Pending Order
+                    Waiting For Quote
                 </div>
                 <div class="layui-card-body">
                     <!-- table black -->

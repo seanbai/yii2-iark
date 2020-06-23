@@ -13,6 +13,9 @@ layui.define(function(exports){
       page: true, //开启分页
       skin: 'row',
       even: true,
+      text: {
+        none: 'There are not any record' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+      },
       cols: [[ //表头
         {type:'radio'},
         {field: 'order_number', title: 'Order Number'},
@@ -98,6 +101,9 @@ layui.define(function(exports){
         skin: 'row',
         even: true,
         totalRow: true,
+        text: {
+          none: 'There are not any record' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+        },
         cols: [[
           {field: 'brand', title: 'Item'},
           {field: 'number', title: 'Qty', totalRow: true},
@@ -120,7 +126,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
-          {field: 'origin_price', title: '报价(欧元)'},
+          {field: 'origin_price', title: 'Origin Price(EUR)'},
           {field: 'price', title: 'Price (EUR)',  totalRow: true, edit: 'text'}
         ]]
       });

@@ -64,7 +64,7 @@ class OrderStatus
      * @param null $code
      * @return mixed|string
      */
-    public static function getChild()
+    public static function getChild($lang = '')
     {
         $status = [
             31 => '等待报价',//当拆单后，所有子订单变为等待报价
@@ -79,7 +79,21 @@ class OrderStatus
             402  => '拒绝报价',//采购方拒绝报价，主订单和旗下所有子订单变为拒绝报价
             403  => '采购商取消采购',//必须在确认报价前，主订单和旗下所有子订单变为采购商取消采购
         ];
-        return $status;
+
+        $status_en = [
+            31 => 'Pending Quote',//当拆单后，所有子订单变为等待报价
+            41 => 'Complete Quote',//每当子订单报价完成，变为报价完成，所有子订单报价完成则修改主订单状态
+            81 => 'Pending Confirm Deposit',//当财务付款支付了定金后
+            91 => 'Production',//当子订单确认收到了定金后，便更改子订单状态为生产中，当第一个子订单状态变为生产中，则主订单状态变为生产中
+            101 => 'Complete Production',//子订单状态一定是从生产中变为生产完成，完成后才能去确认收取尾款
+            131 => 'Pending Confirm Balance',
+            141 => 'Pending Pick',
+            201 => 'Order Complete',//只有当子订单变为生产完成的时候，才需要去判断子订单是否可以去点击确认收到尾款，如果确认收到了，保存后，应该直接变成订单完成
+            //判断子订单是否可以去点击确认收到尾款，是根据两个条件，1是子订单已经生产完成，2是主订单状态>=12 <=200
+            402  => 'Reject Quote',//采购方拒绝报价，主订单和旗下所有子订单变为拒绝报价
+            403  => 'Canceled',//必须在确认报价前，主订单和旗下所有子订单变为采购商取消采购
+        ];
+        return $lang ? $status_en : $status;
     }
 
     /**

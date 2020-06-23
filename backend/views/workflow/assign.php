@@ -18,7 +18,7 @@ use yii\helpers\Url;
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md12">
       <div class="layui-card">
-        <div class="layui-card-header">Waiting For Quote</div>
+        <div class="layui-card-header">报价分配</div>
         <div class="layui-card-body">
           <table id="assign" lay-filter="assign"></table>
           <!-- tool bar -->

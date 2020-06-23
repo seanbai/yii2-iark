@@ -18,7 +18,7 @@ use yii\helpers\Url;
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">Cancelled Order</div>
+                <div class="layui-card-header">已取消订单</div>
                 <div class="layui-card-body">
                     <table id="cancelled" lay-filter="cancelled"></table>
                     <!-- tool bar -->
