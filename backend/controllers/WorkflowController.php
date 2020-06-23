@@ -822,7 +822,7 @@ class WorkflowController extends Controller
             $model->product_ids = $datum['id'];
             $model->order_id = (int)$datum['order_id'];
             $model->order_item_id = (int)$datum['supplier_order_id'];
-            $model->project_name = $datum['project_name'];
+            $model->project_name = (string)$datum['project_name'];
             $model->user_id = 1;
             $model->created_at = (string)date("Y-m-d H:i:s", time());
             if (!$model->save()) {
