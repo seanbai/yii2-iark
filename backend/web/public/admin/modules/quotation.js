@@ -126,8 +126,8 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
-          {field: 'origin_price', title: 'Origin Price(EUR)'},
-          {field: 'price', title: 'Price (EUR)',  totalRow: true, edit: 'text'}
+          {field: 'price', title: 'Price(EUR)'},
+          {field: 'origin_price', title: 'Quote Price (EUR)',  totalRow: true, edit: 'text'}
         ]]
       });
       // 价格编辑

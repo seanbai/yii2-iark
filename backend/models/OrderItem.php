@@ -33,17 +33,17 @@ class OrderItem extends \yii\db\ActiveRecord
         return 'order_item';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['order_id','pricing_id'], 'integer'],
-            [['order_number','product_supplier','desc', 'files', 'create_time','supplier_id'], 'string', 'max' => 255],
-            [['brand', 'number', 'type', 'price', 'supplier_name'], 'string', 'max' => 45],
-        ];
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function rules()
+//    {
+//        return [
+//            [['order_id','pricing_id'], 'integer'],
+//            [['order_number','product_supplier','desc', 'files', 'create_time','supplier_id'], 'string', 'max' => 255],
+//            [['brand', 'number', 'type', 'price', 'supplier_name'], 'string', 'max' => 45],
+//        ];
+//    }
 
     /**
      * {@inheritdoc}
@@ -61,6 +61,7 @@ class OrderItem extends \yii\db\ActiveRecord
             'files' => 'Files',
             'pricing_id' => 'Pricing Id',
             'price' => 'Price',
+            'origin_price' => 'Origin Price',
             'create_time' => 'Create Time',
             'supplier_id' => '供货商ID',
             'supplier_name' => '供货商名称',
