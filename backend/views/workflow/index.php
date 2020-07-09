@@ -12,7 +12,7 @@
                     <!-- tool bar -->
                     <script type="text/html" id="toolbar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="status">改变状态</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="status">改变状态</button>
                         </div>
                     </script>
 

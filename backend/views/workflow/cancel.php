@@ -9,8 +9,8 @@
                     <!-- tool bar -->
                     <script type="text/html" id="cancelledBar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看产品清单</button>
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="ownerInfo">采购商信息</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="details">查看产品清单</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="ownerInfo">采购商信息</button>
                         </div>
                     </script>
                 </div>

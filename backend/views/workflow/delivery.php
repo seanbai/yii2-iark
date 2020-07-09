@@ -23,7 +23,7 @@ use yii\helpers\Url; ?>
                     <!-- tool bar -->
                     <script type="text/html" id="orderBar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="items">产品数据</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="items">产品数据</button>
                         </div>
                     </script>
                 </div>

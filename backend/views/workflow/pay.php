@@ -24,7 +24,7 @@ use yii\helpers\Url;
           <!-- tool bar -->
           <script type="text/html" id="quoteBar">
             <div class="layui-btn-container">
-              <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看商品清单</button>
+              <button class="layui-btn layui-btn-sm " lay-event="details">查看商品清单</button>
             </div>
           </script>
           <!-- row action -->

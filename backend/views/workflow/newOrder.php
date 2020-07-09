@@ -9,10 +9,10 @@
                     <!-- tool bar -->
                     <script type="text/html" id="newOrderBar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="details">查看产品清单</button>
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="ownerInfo">采购商信息</button>
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="confirm">确认下单</button>
-                            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="cancel">取消采购</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="details">查看产品清单</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="ownerInfo">采购商信息</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="confirm">确认下单</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="cancel">取消采购</button>
                         </div>
                     </script>
                 </div>
