@@ -68,7 +68,18 @@
                     <input type="hidden" name="id" id="id" value="">
                 </div>
             </div>
-            <!--  -->
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">设计师*</label>
+                <div class="layui-input-block">
+                    <select name="designer" lay-verify="required">
+                        <option value="0" selected="">请选择设计师</option>
+                        <option value="46">Dylan</option>
+                        <option value="58">Lalay</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="layui-form-item">
                 <label class="layui-form-label">联系人*</label>
                 <div class="layui-input-block">
@@ -82,7 +93,6 @@
                     <input type="text" name="phone" id="phone" lay-verify="required" autocomplete="off" placeholder="联系电话用于订单及时沟通" class="layui-input">
                 </div>
             </div>
-
             <!--  -->
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>

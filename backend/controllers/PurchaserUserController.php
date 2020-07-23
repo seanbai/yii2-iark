@@ -33,6 +33,7 @@ class PurchaserUserController extends Controller
                 return $this->error(400, $error[0][0]);
             }
         }else{
+            if (empty($_POST['designer'])) return $this->error(400, "设计师不能为空");
             $id = $_POST['id'];
             $model = Admin::findOne(['id'=>$id]);
             $model->name = $_POST['name'];
@@ -40,6 +41,7 @@ class PurchaserUserController extends Controller
             $model->phone = $_POST['phone'];
             $model->email = $_POST['email'];
             $model->address = $_POST['address'];
+            $model->designer = $_POST['designer'];
             if ($model->save()){
                 return $this->success(0);
             }else{

@@ -30,6 +30,7 @@ use yii\helpers\ArrayHelper;
  * @property string $contact
  * @property string $phone
  * @property string $city
+ * @property integer $designer
  */
 class Admin extends \common\models\Admin
 {
@@ -126,7 +127,7 @@ class Admin extends \common\models\Admin
             [['email'], 'string', 'max' => 64],
             [['face', 'address'], 'string', 'max' => 100],
             ['email', 'email'],
-            [['age', 'sex'], 'integer'],
+            [['age', 'sex', 'designer'], 'integer'],
             // Repassword
             ['repassword', 'compare', 'compareAttribute' => 'password'],
             //['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -138,9 +139,9 @@ class Admin extends \common\models\Admin
     public function scenarios()
     {
         return [
-            'default' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text', 'discount'],
-            'create' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text', 'discount'],
-            'update' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text', 'discount']
+            'default' => ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text', 'discount', 'designer'],
+            'create' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text', 'discount', 'designer'],
+            'update' =>  ['username', 'email', 'password', 'repassword', 'status', 'role', 'face', 'address', 'city', 'name', 'contact', 'phone','time','main','url','contact2','phone2','email2','off', 'text', 'discount', 'designer']
         ];
     }
 
