@@ -89,7 +89,7 @@ class WorkflowController extends Controller
     }
 
     /**
-     * 新订单-待平台确认
+     * 新订单-待平台确认-设计师页面
      */
     public function actionNewOrderList()
     {
@@ -100,12 +100,12 @@ class WorkflowController extends Controller
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
         $search['limit'] = $_GET['limit'];
         $search['offset'] = ($_GET['page'] - 1) * 10;
-
         $search['where'] = ['order_status'=> 1];
         // 查询数据
+        $loginId = yii::$app->user->identity->id;
         $query = $this->getQuery($search['where'])->leftJoin(
             'admin u',
-            'u.id = order.user'
+            "u.id = order.user and u.designer = {$loginId}"
         );
         // 查询数据条数
         $total = $query->count();
