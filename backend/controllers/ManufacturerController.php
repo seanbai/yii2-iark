@@ -361,6 +361,16 @@ class ManufacturerController extends Controller
                     $order->order_status = 9;//主订单变为生产中
                     $order->save();
                 }
+                if($status == 141){//确认尾款收取，填写装箱单号
+                    $packingNumbers = $post['packing_numbers'] ?? [];
+                    if(empty($packingNumbers) || count($packingNumbers) < $childOrder->itemCount()){
+                        $code = 400;
+                        $msg  = 'Please fill the products packing numbers';
+                        \Yii::$app->response->format = Response::FORMAT_JSON;
+                        return ['code' => $code, 'msg' => $msg];
+                    }
+                    $childOrder->savePackingNumbers($packingNumbers);
+                }
                 $childOrder->order_status = $status;
                 $childOrder->save(false);
                 //如果所有子订单变成生产完成，则修改父订单状态为生产完成，如果主订单进入了尾款，则所有子订单立即进入尾款状态
@@ -393,8 +403,9 @@ class ManufacturerController extends Controller
                 }
 
             }catch (\Exception $exception){
+
                 $code = 400;
-                $msg  = 'The request error';
+                $msg  = $exception->getMessage();;
             }
         }else{
             $code = 400;

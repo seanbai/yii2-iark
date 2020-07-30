@@ -174,6 +174,34 @@ class OrderController extends Controller
         );
     }
 
+
+    //确认报价并支付定金,并上传支付凭证
+    //@acl order/confirm-quote-pay-deposit
+    public function actionConfirmQuotePayDeposit()
+    {
+        $id = \Yii::$app->request->post('id', null);
+        $deposit_file = \Yii::$app->request->post('deposit_file', null);
+        if(empty($id)){
+            return $this->error(400, '订单不存在，请重试');
+        }
+        $depositRealPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR .$deposit_file;
+        if(!file_exists($depositRealPath)){
+            return $this->error(400, '凭证上传上传失败，请重试');
+        }
+        $model = Order::findOne(['id' => $id]);
+        if(empty($model)){
+            return $this->error(400, '订单不存在，请重试');
+        }
+        $model->order_status = 7; //定金已付
+        $model->deposit_notice = 1; //定金已付
+        $model->deposit_file = $deposit_file;
+        if($model->save()){
+            return $this->success();
+        }else{
+            return $this->error(400, Helper::arrayToString($model->getErrors()));
+        }
+    }
+
     public function actionUpdate()
     {
         $data = $_POST;

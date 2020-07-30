@@ -125,9 +125,9 @@ layui.define(function(exports){
           {field: 'quote_time', title: '报价时间'},
           {field: 'total', title: '报价金额'},
           {field: 'deposit', title: '定金'},
-          {field: 'depositDate', title: '定金支付时间'},
+          {field: 'depositdate', title: '定金支付时间'},
           {field: 'balance', title: '尾款'},
-          {field: 'balanceDate', title: '尾款支付时间'},
+          {field: 'balancedate', title: '尾款支付时间'},
           {fixed: 'right', title:'操作', toolbar: '#logPay', width:100}
         ]]
       });

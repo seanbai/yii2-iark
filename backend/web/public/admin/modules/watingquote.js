@@ -1,9 +1,10 @@
 layui.define(function(exports){
   //
-  layui.use(['table','jquery','form'], function(){
+  layui.use(['table','jquery','form', 'upload'], function(){
     var table = layui.table;
     var $ = layui.jquery;
-    var form = layui.form;
+    var form = layui.form, upload = layui.upload;
+
     //
     var workflow = table.render({
       elem: '#myOrder',
@@ -28,6 +29,52 @@ layui.define(function(exports){
       ]]
     });
 
+    var uploadInst = upload.render({
+      elem: '#deposit-img',
+      url: '/uploads/upload?',
+      size: 2*1024*1024, //kb
+      exts: 'jpg|jpeg|png',
+      data: {
+        "_csrf": $('meta[name=csrf-token]').attr('content')
+      },
+      before: function(obj){
+        //预读本地文件示例，不支持ie8
+        obj.preview(function(index, file, result){
+          $('#deposit-img-tmp').attr('src', result).bind('click', function () {
+            // 图片 lightbox
+            layer.open({
+              type: 1,
+              title: false,
+              skin: 'layui-layer-rim',
+              area: ['auto'],
+              shadeClose: true,
+              end: function(index, layero){
+                return false;
+              },
+              content: '<div style="text-align:center"><img width="500" height="500" src="' + result + '" /></div>'
+            });
+          });
+        });
+      },
+      done: function(res){
+        //如果上传失败
+        if(res.code !== 200){
+          return layer.msg('上传失败');
+        }
+        if(res.data !== undefined){
+          $("#deposit-upload-file").val(res.data);
+        }
+        //上传成功
+      },
+      error: function(){
+        //演示失败状态，并实现重传
+        var demoText = $('#demoText');
+        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs upload-reload">重试</a>');
+        demoText.find('.upload-reload').on('click', function(){
+          uploadInst.upload();
+        });
+      }
+    });
     // 表格工具
     table.on('toolbar(myOrder)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
@@ -49,40 +96,85 @@ layui.define(function(exports){
               title: '订单号: ' + num,
               area: ['99%', '98%'],
               content: $('#showItems'),
-              btn: ['确认报价','拒绝报价', '取消'],
+              btn: ['确认报价', '拒绝报价', '取消'],
               success: showItems(id),
               yes: function(){
-                layer.confirm('是否确认报价,并支付定金', function(index){
-                  $.ajax({
-                    type: 'POST',
-                    url: 'update',
-                    data:{
-                      id:id,
-                      status: 5
-                    },
-                    error: function(){
-                      layer.msg('系统异常...',{icon:5});
-                    },
-                    success: function(response){
-                      if(response.errCode == 0){
-                        layer.msg(response.errMsg, {
-                          icon: 1,
-                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                          layer.close(itemsbox);
-                          workflow.reload();
-                        });
-                      }else{
-                        layer.msg(response.errMsg, {
-                          icon: 5,
-                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                          layer.close(itemsbox);
-                        });
-                      }
+                layer.open({
+                  type: 1,
+                  title: '请上传支付凭证',
+                  area: ['50%', '60%'],
+                  content: $('.deposit-upload'),
+                  success: function(){
+                    $('#deposit-img-tmp').attr('src', null);
+                    $('#deposit-amount').html(data[0].quote / 2);
+                  },
+                  btn: ['确认', '取消'],
+                  yes: function () {
+                    var $deposit_file = $("#deposit-upload-file").val();
+                    if(!$deposit_file){
+                      layer.msg('请上传支付凭证',{icon:5});
+                      return false;
                     }
-                  });
-                })
+                    $.ajax({
+                      type: 'POST',
+                      url: 'confirm-quote-pay-deposit', //确认报价支付订单
+                      data:{id: id, deposit_file: $deposit_file},
+                      error: function(){
+                        layer.msg('系统异常...',{icon:5});
+                      },
+                      success: function(response){
+                        if(response.errCode == 0){
+                          layer.msg(response.errMsg, {
+                            icon: 1,
+                            time: 900 //2秒关闭（如果不配置，默认是3秒）
+                          }, function () {
+                            layer.close(itemsbox);
+                            workflow.reload();
+                          });
+                        }else{
+                          layer.msg(response.errMsg, {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                          }, function () {
+                            layer.close(itemsbox);
+                          });
+                        }
+                      }
+                    });
+                  }
+                });
+                // layer.confirm('是否确认报价,并支付定金', function(index){
+                //   $.ajax({
+                //     type: 'POST',
+                //     //url: 'update',
+                //     url: 'confirm-quote-pay-deposit', //确认报价支付订单
+                //     data:{
+                //       id:id,
+                //       status: 5
+                //     },
+                //     error: function(){
+                //       layer.msg('系统异常...',{icon:5});
+                //     },
+                //     success: function(response){
+                //       if(response.errCode == 0){
+                //         layer.msg(response.errMsg, {
+                //           icon: 1,
+                //           time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                //         }, function () {
+                //           layer.close(itemsbox);
+                //           workflow.reload();
+                //         });
+                //       }else{
+                //         layer.msg(response.errMsg, {
+                //           icon: 5,
+                //           time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                //         }, function () {
+                //           layer.close(itemsbox);
+                //         });
+                //       }
+                //     }
+                //   });
+                // })
               },
               btn2 : function () {
                 layer.confirm('您确定拒绝报价吗？', function(){
@@ -257,7 +349,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: '备注'},
-          {field: 'origin_price', title: '报价(欧元)'},
+          //{field: 'origin_price', title: '报价(欧元)'},
           {field: 'price2', title: '单价 (欧元)', edit: 'text'}
         ]]
       });

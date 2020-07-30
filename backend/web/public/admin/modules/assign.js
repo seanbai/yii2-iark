@@ -125,7 +125,8 @@ layui.define(function (exports) {
                             }
                         }
                     },
-                    {field: 'price', title: '单价(欧元)'},
+                    {field: 'origin_price', title: '单价(欧元)'},
+                    {field: 'price', title: '供货折扣价(欧元)'},
                     {
                         field: 'quote_type', title: '报价方', templet: function (d) {
                             if (d.quote_type == 0) {
@@ -202,10 +203,10 @@ layui.define(function (exports) {
                                     if (response.errCode == 0) {
                                         var newData = {
                                             supplier_name: price > 0 ? bName : bName,
-                                            price: quote_type ? price : 0,
+                                            price: quote_type ? response.data.price : 0,
+                                            origin_price: quote_type ? response.data.origin_price : 0,
                                             quote_type: quote_type
                                         };
-                                        console.log(newData);
                                         obj.update(newData);
                                         layer.close(index);
                                     } else {

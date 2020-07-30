@@ -29,6 +29,17 @@ layui.define(function(exports){
       ]]
     });
 
+    //填写packing_number
+    var packingNumbers = [];
+    table.on('edit(items)', function(obj){
+      // 取到修改的价格字段值
+      var value = obj.value;
+      // 取到被修改的产品数据id
+      var data = obj.data;
+      var itemId = data.id;
+      packingNumbers.push({'id': itemId, 'value': value});
+    });
+
     //
     table.on('toolbar(myOrder)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
@@ -63,7 +74,7 @@ layui.define(function(exports){
             var data = checkStatus.data;
             var id = data[0].id;
             var statusId = data[0].order_status;
-
+            var num = data[0].order_number;
             if(statusId < 81){
               layer.msg('The order not in production, can not do this action.');
               return false;
@@ -127,28 +138,47 @@ layui.define(function(exports){
               // 状态码等于3时执行
               layer.confirm('Confirm receipt of balance? <br>After receiving the final payment, the buyer will pick up the goods',{
                 btn: ['Confirm', 'Cancel'], title:'Change Order Status'}, function(index){
-                $.ajax({
-                  type: 'post',
-                  // 同步接口，传数据ID和修改后的金额值
-                  url: 'order-update',
-                  data:{
-                    id: id,
-                    status: 141 //子订单待提货
-                  },
-                  success: function(res){
-                    if(res.code == 0){
-                      layer.msg('The order status has been changed');
-                      workflow.reload(); // 重载数据表格
-                      layer.closeAll();
-                    }else{
-                      layer.msg(res.msg,{icon:5});
+                //添加装货单号
+                layer.open({
+                  type: 1,
+                  title: 'Add Packing Number - Order#'+num,
+                  area: ['55%', '50%'],
+                  content: $('#showItems'),
+                  resize: false,
+                  success: addPackingNumber(id),
+                  btn: ['Ok', 'Cancel'],
+                  yes: function () {
+                    console.log(packingNumbers);
+                    if(packingNumbers.length < 0){
+                      layer.msg('Please fill packing number for per product',{icon:5});
                       return false;
                     }
-                  },
-                  error: function(){
-                    layer.msg('Error');
+                    $.ajax({
+                      type: 'post',
+                      // 同步接口，传数据ID和修改后的金额值
+                      url: 'order-update',
+                      data:{
+                        id: id,
+                        packing_numbers: packingNumbers,
+                        status: 141 //子订单待提货
+                      },
+                      success: function(res){
+                        if(res.code === 0){
+                          layer.msg('The order status has been changed');
+                          workflow.reload(); // 重载数据表格
+                          layer.closeAll();
+                          packingNumbers = [];
+                        }else{
+                          layer.msg(res.msg,{icon:5});
+                          return false;
+                        }
+                      },
+                      error: function(){
+                        layer.msg('The request is abort');
+                      }
+                    })
                   }
-                })
+                });
               });
             }
             // 提交报价
@@ -157,6 +187,22 @@ layui.define(function(exports){
           break;
       };
     });
+
+    window.addPackingNumber = function(id){
+      table.render({
+        elem: '#items',
+        url: 'items?id='+id, //数据接口
+        toolbar: '#itemsBar',
+        skin: 'row',
+        even: true,
+        cols: [[
+          {field: 'brand', title: 'Item'},
+          {field: 'number', title: 'Qty'},
+          {field: 'price', title: 'Price (EUR)'},
+          {field: 'packing_number', title: 'Packing Number', edit: 'text'}
+        ]]
+      });
+    }
 
     window.showItems = function(id){
       table.render({
