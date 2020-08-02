@@ -3,6 +3,8 @@
 namespace backend\controllers;
 
 use backend\models\AdminLog;
+use backend\models\Order;
+use backend\models\SupplierOrder;
 use common\models\Log;
 use console\models\User;
 use Yii;
@@ -14,6 +16,7 @@ use yii\db\Query;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
+use yii\web\Response;
 use yii\web\UploadedFile;
 use yii\web\UnauthorizedHttpException;
 
@@ -501,5 +504,51 @@ class Controller extends \common\controllers\UserController
 
 
         Log::add($ip, $level, $this->description, $user, $requestPath, $requestUrl, $data_id, $request, $response);
+    }
+
+    //订单历史
+    //@acl order/history-view
+    public function actionHistoryView()
+    {
+        return $this->render('history_view');
+    }
+
+    //订单历史
+    //@acl order/history-list
+    public function actionHistoryList()
+    {
+        try{
+            $type = $_GET['type'] ?? null;
+            $userId = \Yii::$app->user->id;
+            if($type == 'menufacturer'){
+                $query = SupplierOrder::find()->select('supplier_order.*'.
+                    ',order.project_name,order.package,order.address,order.name')
+                    ->leftJoin('order', 'order.id = supplier_order.order_id');
+                if ($userId != 1) {
+                    $query->andWhere(['supplier_id' => $userId]);
+                }
+                $orderby = 'supplier_order.id desc';
+            }else{
+                $query = Order::find()->select('order.*');
+                if ($userId != 1) {
+                    $query->andWhere(['user' => $userId]);
+                }
+                $orderby = 'id desc';
+            }
+            $total = $query->count('*');
+            $limit = $_GET['limit'];
+            $offset = ($_GET['page'] - 1) * 10;
+            $query->orderBy($orderby)->limit($limit)->offset($offset);
+            $orders = $query->asArray()->all();
+        }catch (\Exception $exception){
+            $orders = [];
+        }
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        $data = [
+            'code'  => 0,
+            'count' => $total,
+            'data'  => $orders
+        ];
+        return $data;
     }
 }

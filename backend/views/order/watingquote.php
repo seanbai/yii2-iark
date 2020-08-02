@@ -57,6 +57,24 @@ use yii\helpers\Url; ?>
     </div>
 </div>
 
+<!--支付凭证上传-->
+<div class="deposit-upload" style="display: none;">
+    <div class="layui-card">
+        <div class="layui-card-body">应支付定金：<span id="deposit-amount">1000</span></div>
+    </div>
+    <input type="hidden" id="deposit-upload-file" />
+    <div class="layui-upload" id="deposit-upload" style="margin: 20px 20px;">
+        <button type="button" class="layui-btn" id="deposit-img">上传支付凭证</button>
+        <div class="layui-upload-list">
+            <img class="layui-upload-img" style=" width: 105px;height: 105px;margin: 0 10px 10px 0;" id="deposit-img-tmp">
+            <p id="demoText"></p>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">上传凭证后，请确认无误后再点击“确认”</div>
+    </div>
+</div>
+
 <div style="display:none; padding: 20px;" id="payOrderForm" class="layui-fluids">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">

@@ -384,18 +384,25 @@ class WorkflowController extends Controller
         $model->quote_type = $quote_type;
 
        try{
-           if (isset($_POST['price']) && !empty($_POST['price']) && ($quote_type == 1)) {
+           $price = '0';
+           $originPrice = $_POST['price'] ?? '0';
+           $rate = 0; //折扣比
+           if ($originPrice > 0 && ($quote_type == 1)) {
                $rate = Admin::findOne($model->supplier_id)->off;
                $rate = 1 - ($rate / 100);
-               $price = (float) $_POST['price'];
-               $model->origin_price = $price;
-               $model->price = (string) ($price * $rate); //折扣后的价格
+               $model->origin_price = $originPrice; //单价
+               $price = (string) bcmul((double)$originPrice, $rate, 2); //供货折扣/采购折扣价
+               $model->price = $price;
            } else {
-               $model->price = '0';
-               $model->origin_price = '0';
+               $model->price = $price;
+               $model->origin_price = $originPrice;
            }
            if ($model->save()){
-               return $this->success();
+               return $this->success([
+                   'origin_price'    => (double) $originPrice,
+                   'discount_rate'   => sprintf("%.2F",$rate),
+                   'price'           => (double) $price
+               ]);
            }else{
                return $this->error($model->getErrors());
            }
@@ -565,6 +572,9 @@ class WorkflowController extends Controller
         $order = Order::findOne($parentId);
         if($order){
             $childOrders = $order->getChildOrders();
+            array_walk($childOrders, function (&$value){
+                array_change_key_case($value, CASE_LOWER );
+            });
         }
         //todo 处理数据成如下面结构
         //  $data[] = [

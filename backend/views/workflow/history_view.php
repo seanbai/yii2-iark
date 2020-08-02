@@ -18,11 +18,11 @@ use yii\helpers\Url;
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">我的订单</div>
+                <div class="layui-card-header">订单列表</div>
                 <div class="layui-card-body">
-                    <table id="my-orders" lay-filter="my-orders"></table>
+                    <table id="history" lay-filter="history"></table>
                     <!-- tool bar -->
-                    <script type="text/html" id="cancelledBar">
+                    <script type="text/html" id="historybar">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" lay-event="details">查看产品清单</button>
                         </div>

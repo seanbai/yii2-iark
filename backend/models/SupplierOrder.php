@@ -32,6 +32,11 @@ class SupplierOrder extends ActiveRecord
     ];
 
     /**
+     * @var SupplierOrderItem[]
+     */
+    private $_items;
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -113,6 +118,18 @@ class SupplierOrder extends ActiveRecord
     }
 
     /**
+     * @return array|SupplierOrderItem[]
+     */
+    public function items()
+    {
+        if($this->_items === null){
+            $this->_items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id'])
+                ->all();
+        }
+        return $this->_items;
+    }
+    
+    /**
      * 供应商确认订单报价
      *
      * @throws Exception
@@ -121,8 +138,7 @@ class SupplierOrder extends ActiveRecord
     public function quote()
     {
         $total = 0;
-        $items = $this->hasMany(SupplierOrderItem::class, ['supplier_order_id' => 'id'])
-                ->all();
+        $items = $this->items();
         foreach ($items as $item){
             /* @var $item SupplierOrderItem */
             $price = (float) $item->price*$item->number;
@@ -132,5 +148,31 @@ class SupplierOrder extends ActiveRecord
         $this->total = $total;
         $this->quote_time = date('Y-m-d H:i:s');
         $this->setStatus($orderStatus); //所有子订单报价完成，更改主订单的状态为‘报价完成’
+    }
+
+    /**
+     * @return int
+     */
+    public function itemCount()
+    {
+        return count($this->items());
+    }
+
+    /**
+     * 保存装箱单号
+     * @param $packingList
+     */
+    public function savePackingNumbers($packingList)
+    {
+        $packingLists = [];
+        foreach ($packingList as $packing){
+            $packingLists[$packing['id']] = $packing['value'];
+        }
+        $items = $this->items();
+        foreach ($items as $item) {
+            $packing = $packingLists[$item->id];
+            $item->packing_number = $packing;
+            $item->save(false);
+        }
     }
 }

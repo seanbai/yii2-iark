@@ -21,6 +21,11 @@ layui.define(function(exports){
         {field: 'project_name', title: '项目名称'},
         {field: 'order_status', title: '订单状态', width:150},
         {field: 'create_time', title: '创建时间'},
+        {field: 'deposit_file', title: '定金支付凭证',
+          templet: function(d){
+            return '<div onclick="showImg(this)"><img src="'+d.deposit_file+'"></div>'
+          }
+        },
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},
         {field: 'owner', title: '采购商'},
@@ -605,7 +610,7 @@ layui.define(function(exports){
         end: function(index, layero){
           return false;
         },
-        content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
+        content: '<div style="text-align:center"><img width="500" height="600" src="' + $(t).attr('src') + '" /></div>'
       });
     }
     // 表单提交

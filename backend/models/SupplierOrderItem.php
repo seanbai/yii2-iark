@@ -24,11 +24,27 @@ use yii\db\StaleObjectException;
  * @property string $att
  * @property string $product_supplier
  * @property string $production_status
+ * @property string $packing_number
  * Class SupplierOrder
  * @package backend\models
  */
 class SupplierOrderItem extends ActiveRecord
 {
+    /**
+     * 子订单item 和 订单item 同步字段映射关系
+     *  ['子订单item字段' => '订单item字段']
+     * @var array
+     */
+    protected $syncFiledMapping = [
+        'price' => 'price',
+        'packing_number' => 'packing_number'
+    ];
+
+    /**
+     * @var OrderItem|null
+     */
+    private $_orderItem;
+
     /**
      * {@inheritdoc}
      */
@@ -50,11 +66,17 @@ class SupplierOrderItem extends ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        if(isset($changedAttributes['price']) && $changedAttributes['price']){
-            if($orderItem = $this->getOrderItem()){
-                $orderItem->setAttribute('price', $this->price);
-                $orderItem->save(false);
+        $updating = false;
+        foreach ($this->syncFiledMapping as $filed => $pFiled) {
+            if(isset($changedAttributes[$filed]) && $changedAttributes[$filed]){
+                if($orderItem = $this->getOrderItem()){
+                    $orderItem->setAttribute($pFiled, $this->getAttribute($filed));
+                    $updating = true;
+                }
             }
+        }
+        if($updating){
+            $this->getOrderItem()->save(false);
         }
     }
 
@@ -63,6 +85,9 @@ class SupplierOrderItem extends ActiveRecord
      */
     public function getOrderItem()
     {
-        return OrderItem::findOne($this->order_item_id);
+        if($this->_orderItem === null){
+            $this->_orderItem = OrderItem::findOne($this->order_item_id);
+        }
+        return $this->_orderItem;
     }
 }

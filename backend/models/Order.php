@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
  * @property int $product_amount
  * @property string $deposit_amount
  * @property string $balance
+ * @property string $deposit_file
  * @property string $tax
  */
 class Order extends \yii\db\ActiveRecord
@@ -41,7 +42,7 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['order_status','product_amount'], 'integer'],
-            [['tax'], 'safe'],
+            [['tax','deposit_file'], 'safe'],
             [['create_time','deposit_amount','balance',], 'string', 'max' => 255],
         ];
     }
@@ -58,6 +59,7 @@ class Order extends \yii\db\ActiveRecord
             'create_time' => 'Create Time',
             'order_status' => '订单状态',
             'product_amount' => '报价金额',
+            'deposit_file' => '定金支付凭证',
             'deposit_amount' => '订金金额',
             'balance' => '尾款',
             'tax' => '税金',
