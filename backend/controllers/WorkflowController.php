@@ -1045,8 +1045,19 @@ class WorkflowController extends Controller
     // 采购商我的订单
     public function actionMyorder()
     {
-        print_r(123);die;
         return $this->render('myorder');
+    }
+
+    // 财务我的订单
+    public function actionMyorderCai()
+    {
+        return $this->render('myorderCai');
+    }
+
+    // 设计师我的订单
+    public function actionMyorderShe()
+    {
+        return $this->render('myorderShe');
     }
 
     /**
@@ -1057,7 +1068,7 @@ class WorkflowController extends Controller
     public function actionMyorderList()
     {
         $userId = yii::$app->user->identity->id;
-        $userId = 49;
+        //$userId = 49;
         $strategy = Substance::getInstance($this->strategy);
         // 获取查询参数
         $search = $strategy->getRequest(); // 处理查询参数
@@ -1102,9 +1113,9 @@ class WorkflowController extends Controller
      * @return false|string
      * @throws \Exception
      */
-    public function actionMyorderListPim()
+    public function actionMyorderListCai()
     {
-        $userId = yii::$app->user->identity->id;
+        //$userId = yii::$app->user->identity->id;
 
         $strategy = Substance::getInstance($this->strategy);
         // 获取查询参数
@@ -1123,6 +1134,7 @@ class WorkflowController extends Controller
         // 查询数据条数
         $total = $query->count();
 
+        print_r($total);die;
         if ($total) {
             $columns = ['order.*','u.username as owner'];
             $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
@@ -1150,7 +1162,7 @@ class WorkflowController extends Controller
      * @return false|string
      * @throws \Exception
      */
-    public function actionMyorderListBuy()
+    public function actionMyorderListShe()
     {
         $userId = yii::$app->user->identity->id;
 

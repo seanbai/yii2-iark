@@ -10,9 +10,9 @@ return [
         // 数据库配置
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=192.168.11.120;dbname=uapim',
+            'dsn' => 'mysql:host=localhost;dbname=iark',
             'username' => 'root',
-            'password' => '12345@Abc',
+            'password' => '12345abc',
             'charset' => 'utf8',
             //'tablePrefix' => 'yii2_',
         ],
