@@ -10,7 +10,7 @@ layui.define(function(exports){
       elem: '#history',
       height: 'full-115',
       toolbar: '#cancelledBar',
-      url: 'history-cancel-list', //数据接口
+      url: 'purchaser-cancel-list', //数据接口
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
@@ -24,7 +24,7 @@ layui.define(function(exports){
         {field: 'package', title: '包装要求'},
         {field: 'name', title: '提货联系人'},
         {field: 'address', title: '交付地址'},
-        {field: 'quote', title: '报价'}
+        {field: 'update', title: '修改商品信息', }
       ]]
     });
     // 表格菜单事件
@@ -51,12 +51,21 @@ layui.define(function(exports){
             });
           }
         break;
-      };
+        case 'edit':
+          if(checkStatus.data.length === 0){
+            layer.msg("您需要先选择一条数据");
+          }else {
+            // 取订单ID 和 项目名称
+            var data = checkStatus.data;
+            var id = data[0].id;
+            window.open('/create/update?id=' + id);
+          }
+          break;
+      }
     });
 
     // 显示产品清单方法
     window.showItems = function(id){
-
       table.render({
         elem: '#items',
         url: 'items?id=' + id, //数据接口
@@ -87,15 +96,11 @@ layui.define(function(exports){
             }
           },
           {field: 'supplier_name', title: '供应商'},
-          {field: 'desc', title: '备注'},
-          {field: 'price', title: '单价'},
-          {field: 'rowTotal', title: '小计',  templet: function(d){
-              var price = d.price, qty = d.number;
-              return Math.round(qty * price);
-            }, totalRow: true}
+          {field: 'desc', title: '备注'}
         ]]
       })
     }
+
 
   });
   //

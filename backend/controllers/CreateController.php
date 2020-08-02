@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\models\Admin;
 use backend\models\AdminLog;
 use backend\models\Order;
+use backend\models\OrderItem;
 use backend\models\Product;
 use backend\models\System;
 use backend\modules\api\messages\ApiMsg;
@@ -93,6 +94,7 @@ class CreateController extends Controller
         ->where(['user_id' =>  \Yii::$app->user->id])
         ->asArray()
         ->all();
+
         foreach ($items as $key => &$item){
             $item['pid'] = $item['id'];
             $item['id'] = $key + 1;
@@ -104,7 +106,7 @@ class CreateController extends Controller
             'data' => $items
         ];
         \Yii::$app->response->format = Response::FORMAT_JSON;
-        return$data;
+        return $data;
     }
 
     /**
@@ -359,6 +361,64 @@ class CreateController extends Controller
             ];
         }
         \Yii::$app->db->createCommand()->batchInsert('order_status', $columns, $item)->execute();
+    }
+
+    public function actionUpdate()
+    {
+        $id = $_GET['id'];
+        $order = Order::find()->where(['id' => $id])->asArray()->one();
+        $products = OrderItem::find()->where(['order_id' => $id])->asArray()->all();
+
+        return $this->render('update', [
+            'order' => $order,
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * 订单产品
+     * auth rule: create/items
+     * @return mixed|string
+     */
+    public function actionItemsUpdate()
+    {
+        $id = $_GET['id'];
+
+        $items = OrderItem::find()
+            ->where(['order_id' => $id])
+            ->asArray()
+            ->all();
+
+        foreach ($items as $key => &$item){
+            $item['pid'] = $item['id'];
+            $item['id'] = $key + 1;
+        }
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($items),
+            'data' => $items
+        ];
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return $data;
+    }
+
+    public function actionProductUpdate()
+    {
+        $data = \Yii::$app->request->post();
+
+        $model = OrderItem::findOne(['id' => $data['pid']]);
+        $model->brand = $data['brand'];
+        $model->number = $data['number'];
+        $model->type = $data['type'];
+        $model->size = $data['size'];
+        $model->material = $data['material'];
+        $model->desc = $data['desc'];
+
+        if (!$model->save()) return $this->error(201, $model->getErrors()) ;
+
+        return $this->success();
+
     }
 
 }
