@@ -1086,7 +1086,11 @@ class WorkflowController extends Controller
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
         $search['limit'] = $_GET['limit'];
         $search['offset'] = ($_GET['page'] - 1) * 10;
-        $search['where'] = ['order.user' => $userId];
+        if ($userId == 1) {
+            $search['where'] = [];
+        } else {
+            $search['where'] = ['order.user' => $userId];
+        }
 
         // 查询数据
         $query = $this->getQuery($search['where'])->leftJoin(
@@ -1144,7 +1148,6 @@ class WorkflowController extends Controller
         // 查询数据条数
         $total = $query->count();
 
-        print_r($total);die;
         if ($total) {
             $columns = ['order.*','u.username as owner'];
             $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
@@ -1175,7 +1178,7 @@ class WorkflowController extends Controller
     public function actionMyorderListShe()
     {
         $userId = yii::$app->user->identity->id;
-
+        $userId = 58;
         $strategy = Substance::getInstance($this->strategy);
         // 获取查询参数
         $search = $strategy->getRequest(); // 处理查询参数
@@ -1183,7 +1186,7 @@ class WorkflowController extends Controller
         $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
         $search['limit'] = $_GET['limit'];
         $search['offset'] = ($_GET['page'] - 1) * 10;
-        $search['where'] = [];
+        $search['where'] = ['u.designer' => $userId];
 
         // 查询数据
         $query = $this->getQuery($search['where'])->leftJoin(
