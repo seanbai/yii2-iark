@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\models\Admin;
 use backend\models\AdminLog;
 use backend\models\Order;
+use backend\models\OrderItem;
 use backend\models\Product;
 use backend\models\System;
 use backend\modules\api\messages\ApiMsg;
@@ -93,6 +94,7 @@ class CreateController extends Controller
         ->where(['user_id' =>  \Yii::$app->user->id])
         ->asArray()
         ->all();
+
         foreach ($items as $key => &$item){
             $item['pid'] = $item['id'];
             $item['id'] = $key + 1;
@@ -104,7 +106,7 @@ class CreateController extends Controller
             'data' => $items
         ];
         \Yii::$app->response->format = Response::FORMAT_JSON;
-        return$data;
+        return $data;
     }
 
     /**
@@ -359,6 +361,96 @@ class CreateController extends Controller
             ];
         }
         \Yii::$app->db->createCommand()->batchInsert('order_status', $columns, $item)->execute();
+    }
+
+    public function actionUpdate()
+    {
+        $id = $_GET['id'];
+        $order = Order::find()->where(['id' => $id])->asArray()->one();
+        if ($order['order_status'] != 401) return $this->error(201, "当前订单状态不支持修改数据");
+
+        $products = OrderItem::find()->where(['order_id' => $id])->asArray()->all();
+
+        return $this->render('update', [
+            'order' => $order,
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * 订单产品
+     * auth rule: create/items
+     * @return mixed|string
+     */
+    public function actionItemsUpdate()
+    {
+        $id = $_GET['id'];
+        $order = Order::find()->where(['id' => $id])->asArray()->one();
+        if ($order['order_status'] != 401) return $this->error(201, "当前订单状态不支持修改数据");
+
+        $items = OrderItem::find()
+            ->where(['order_id' => $id])
+            ->asArray()
+            ->all();
+
+        foreach ($items as $key => &$item){
+            $item['pid'] = $item['id'];
+            $item['id'] = $key + 1;
+        }
+        $data = [
+            'code' => 0,
+            'msg' => '',
+            'count' => count($items),
+            'data' => $items
+        ];
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+        return $data;
+    }
+
+    public function actionProductUpdate()
+    {
+        $data = \Yii::$app->request->post();
+        $id = $data['pid'];
+        $order = Order::find()->where(['id' => $id])->asArray()->one();
+        if ($order['order_status'] != 401) return $this->error(201, "当前订单状态不支持修改数据");
+
+        $model = OrderItem::findOne(['id' => $id]);
+        $model->brand = $data['brand'];
+        $model->number = $data['number'];
+        $model->type = $data['type'];
+        $model->size = $data['size'];
+        $model->material = $data['material'];
+        $model->desc = $data['desc'];
+        if (isset($data['image'])) $model->files = $data['image'];
+        if (isset($data['att'])) $model->att = $data['att'];
+
+        if (!$model->save()) return $this->error(201, $model->getErrors()) ;
+
+        return $this->success();
+    }
+
+    /**
+     * 修改订单
+     * @return mixed|string
+     * @throws Exception
+     */
+    public function actionFromUpdate()
+    {
+        $postData = \Yii::$app->request->post();
+
+        $order = Order::find()->where(['id' => $postData['id']])->asArray()->one();
+        if ($order['order_status'] != 401) return $this->error(201, "当前订单状态不支持修改数据");
+
+        $model = Order::findOne(['id' => $postData['id']]);
+        $model->project_name = $postData['project'];
+        $model->date = $postData['delivery'];
+        $model->package = $postData['package'];
+        $model->name = $postData['contact'];
+        $model->address = $postData['address'];
+        $model->order_status = 1;
+        if (!$model->save()) return $this->error(201, $model->getErrors()) ;
+
+        return $this->success([],"订单数据修改成功！并重新发起购买申请。");
     }
 
 }

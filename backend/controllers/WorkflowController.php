@@ -1092,4 +1092,170 @@ class WorkflowController extends Controller
         return $this->success();
 
     }
+
+    // 采购商我的订单
+    public function actionMyorder()
+    {
+        return $this->render('myorder');
+    }
+
+    // 财务我的订单
+    public function actionMyorderCai()
+    {
+        return $this->render('myorderCai');
+    }
+
+    // 设计师我的订单
+    public function actionMyorderShe()
+    {
+        return $this->render('myorderShe');
+    }
+
+    /**
+     * 采购商我的订单
+     * @return false|string
+     * @throws \Exception
+     */
+    public function actionMyorderList()
+    {
+        $userId = yii::$app->user->identity->id;
+        //$userId = 49;
+        $strategy = Substance::getInstance($this->strategy);
+        // 获取查询参数
+        $search = $strategy->getRequest(); // 处理查询参数
+        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
+        $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
+        $search['limit'] = $_GET['limit'];
+        $search['offset'] = ($_GET['page'] - 1) * 10;
+        if ($userId == 1) {
+            $search['where'] = [];
+        } else {
+            $search['where'] = ['order.user' => $userId];
+        }
+
+        // 查询数据
+        $query = $this->getQuery($search['where'])->leftJoin(
+            'admin u',
+            "u.id = order.user"
+        );
+        // 查询数据条数
+        $total = $query->count();
+
+        if ($total) {
+            $columns = ['order.*','u.username as owner'];
+            $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
+            if ($array) $this->afterSearch($array);
+        } else {
+            $array = [];
+        }
+
+        $orderStatusArr = OrderStatus::get();
+        if (!empty($array)) {
+            foreach ($array as $k => $item) {
+                $array[$k]['order_status'] = $orderStatusArr[$item['order_status']];
+            }
+        }
+
+        $data['code'] = 0;
+        $data['count'] = $total;
+        $data['data'] = $array;
+        return json_encode($data);
+
+    }
+
+    /**
+     * 财务我的订单
+     * @return false|string
+     * @throws \Exception
+     */
+    public function actionMyorderListCai()
+    {
+        //$userId = yii::$app->user->identity->id;
+
+        $strategy = Substance::getInstance($this->strategy);
+        // 获取查询参数
+        $search = $strategy->getRequest(); // 处理查询参数
+        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
+        $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
+        $search['limit'] = $_GET['limit'];
+        $search['offset'] = ($_GET['page'] - 1) * 10;
+        $search['where'] = [];
+
+        // 查询数据
+        $query = $this->getQuery($search['where'])->leftJoin(
+            'admin u',
+            "u.id = order.user"
+        );
+        // 查询数据条数
+        $total = $query->count();
+
+        if ($total) {
+            $columns = ['order.*','u.username as owner'];
+            $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
+            if ($array) $this->afterSearch($array);
+        } else {
+            $array = [];
+        }
+
+        $orderStatusArr = OrderStatus::get();
+        if (!empty($array)) {
+            foreach ($array as $k => $item) {
+                $array[$k]['order_status'] = $orderStatusArr[$item['order_status']];
+            }
+        }
+
+        $data['code'] = 0;
+        $data['count'] = $total;
+        $data['data'] = $array;
+        return json_encode($data);
+
+    }
+
+    /**
+     * 设计师我的订单
+     * @return false|string
+     * @throws \Exception
+     */
+    public function actionMyorderListShe()
+    {
+        $userId = yii::$app->user->identity->id;
+        $userId = 58;
+        $strategy = Substance::getInstance($this->strategy);
+        // 获取查询参数
+        $search = $strategy->getRequest(); // 处理查询参数
+        $search['field'] = $search['field'] ? $search['field'] : $this->sort;
+        $search['orderBy'] = [$search['field'] => $search['sort'] == 'asc' ? SORT_ASC : SORT_DESC];
+        $search['limit'] = $_GET['limit'];
+        $search['offset'] = ($_GET['page'] - 1) * 10;
+        $search['where'] = ['u.designer' => $userId];
+
+        // 查询数据
+        $query = $this->getQuery($search['where'])->leftJoin(
+            'admin u',
+            "u.id = order.user"
+        );
+        // 查询数据条数
+        $total = $query->count();
+
+        if ($total) {
+            $columns = ['order.*','u.username as owner'];
+            $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
+            if ($array) $this->afterSearch($array);
+        } else {
+            $array = [];
+        }
+
+        $orderStatusArr = OrderStatus::get();
+        if (!empty($array)) {
+            foreach ($array as $k => $item) {
+                $array[$k]['order_status'] = $orderStatusArr[$item['order_status']];
+            }
+        }
+
+        $data['code'] = 0;
+        $data['count'] = $total;
+        $data['data'] = $array;
+        return json_encode($data);
+
+    }
 }

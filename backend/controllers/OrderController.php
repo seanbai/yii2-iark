@@ -435,4 +435,16 @@ class OrderController extends Controller
 
         return $this->success();
     }
+
+    /**
+     * 采购商-取消订单列表
+     */
+    public function actionHistoryCancelList()
+    {
+        return $this->success();
+
+
+
+
+    }
 }

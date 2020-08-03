@@ -18,13 +18,14 @@ use yii\helpers\Url;
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">我的订单</div>
+                <div class="layui-card-header">取消的订单</div>
                 <div class="layui-card-body">
-                    <table id="my-orders" lay-filter="my-orders"></table>
+                    <table id="history" lay-filter="history"></table>
                     <!-- tool bar -->
                     <script type="text/html" id="cancelledBar">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" lay-event="details">查看产品清单</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="edit">商品编辑</button>
                         </div>
                     </script>
                 </div>
@@ -34,13 +35,14 @@ use yii\helpers\Url;
 </div>
 
 
+
 <script src="<?= Url::to('@web/public/admin/ui/layui.js',true)?>"></script>
 <script>
     layui.config({
         base: '/public/admin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'history']);
+    }).use(['index', 'history2']);
 </script>
 </body>
 </html>

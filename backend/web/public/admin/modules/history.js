@@ -9,8 +9,8 @@ layui.define(function(exports){
     table.render({
       elem: '#history',
       height: 'full-115',
-      toolbar: '#historybar',
-      url: 'history-list', //数据接口
+      toolbar: '#cancelledBar',
+      url: 'history-cancel-list', //数据接口
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
