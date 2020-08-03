@@ -30,7 +30,6 @@ layui.define(function(exports){
         {field: 'package', title: '包装要求', templet:'<div>{{d.package}}</div>'},
         {field: 'contact', title: '提货联系人', templet:'<div>{{d.name}}</div>'},
         {field: 'address', title: '交付地址', templet:'<div>{{d.address}}</div>'},
-        {field: 'owner', title: '采购商', templet:'<div>{{d.owner}}</div>'}
       ]]
     });
     // 表格菜单事件

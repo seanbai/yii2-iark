@@ -24,12 +24,12 @@
         </div>
       </div>
     </div>
-      <input type="hidden" id="id" value="<?php echo $order['id'] ?>">
     <!-- 订单基本信息 -->
     <form class="layui-col-md12 layui-form">
       <div class="layui-card">
         <div class="layui-card-header">基本信息</div>
         <div class="layui-card-body layui-row layui-col-space10">
+            <input type="hidden" id="id" name="id" value="<?php echo $order['id'] ?>">
           <div class="layui-col-md3">
             <input type="text" name="project" placeholder="项目名称" value="<?php echo $order['project_name'] ?>" autocomplete="off" class="layui-input">
           </div>
@@ -47,7 +47,6 @@
           </div>
           <div class="layui-col-md12">
             <button class="layui-btn" type="button"  id="createOrder" lay-submit="" lay-filter="component-form-demo1">保存订单</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
       </div>
@@ -74,13 +73,13 @@
         form.on('submit(component-form-demo1)', function(data){
             var $postData = data.field;
             $postData._csrf = $('meta[name=csrf-token]').attr('content');
-            $.post('<?= \yii\helpers\Url::toRoute(['create/from'])?>', $postData, function (res) {
+            $.post('<?= \yii\helpers\Url::toRoute(['create/from-update'])?>', $postData, function (res) {
                 if(res.errCode == 0){
                     layer.msg(res.errMsg, {
                         icon: 6,
                         time: 2000
                     }, function(){
-                        window.location.reload();
+                        window.location.href = '/order/purchaser-cancel';
                     });
                 }else{
                     layer.msg(res.errMsg,{
