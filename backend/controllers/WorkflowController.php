@@ -225,29 +225,28 @@ class WorkflowController extends Controller
         $data = $_GET;
         $splitOrder = false;
         $model = Order::findOne(['id'=>$data['id']]);
-        //订单是完成正确分配工作 是否出现部分报价是平台部分报价是供货商
+        //订单是完成正确分配工作
         $completeAssign = $model->hasCompleteAssignation();
-        $first_quote = '';
 
-        $flag = true;
-        foreach ($model->getItems() as $k => $item) {
-            if ($k == 0) {
-                $first_quote = $item['quote_type'];
-            } else {
-                if ($first_quote != $item['quote_type']) {
-                    $flag = false;
-                }
-            }
-        }
-        if ($data['status'] == 3 && $completeAssign && $flag) {
-            $model->order_status = 3;
-            $quote_status = $first_quote;
-            $model->quote_status = $quote_status;
+        if ($data['status'] == 3 && $completeAssign) {
+            //如果所有的子订单都被平台报价了，则总订单状态变为4,否则订单状态变为3
+
             try{
-                $this->splitOrder($model,$quote_status);
+                $status = $this->splitOrder($model);
             }catch (\Exception $exception){
                 return $this->error(300, $exception->getMessage());
             }
+            if ($status) {
+                //计算订单总价
+                $supplierOrders = $model->hasMany(SupplierOrder::class, ['order_id' => 'id'])
+                    ->all();
+                $total = 0;
+                foreach ($supplierOrders as $supplierOrder) {
+                    $total +=  $supplierOrder->total;
+                }
+                $model->quote = $total;
+            }
+            $model->order_status = $status?4:3;
             if ($model->save()){
                 return $this->success('保存成功');
             } else {
@@ -266,39 +265,75 @@ class WorkflowController extends Controller
      *
      * @param Order $order
      */
-    private function splitOrder(Order $order,$quote_status)
+    private function splitOrder(Order $order)
     {
         $supplierOrder = new SupplierOrder;
         $supplierOrderItem = new SupplierOrderItem;
         $orderItems = $order->hasMany(OrderItem::class, ['order_id' => 'id'])->all();
         $splitItems = [];
+        $finalStatus = [];
         foreach ($orderItems as $orderItem){
             /* @var $orderItem OrderItem */
             $supplierOrderItemAttributes = $orderItem->getAttributes(null, [
-                    'create_time','supplier_id', 'supplier_name', 'pricing_id', 'order_number', 'order_id', 'id'
-                ]);
+                'create_time','supplier_id', 'supplier_name', 'pricing_id', 'order_number', 'order_id', 'id'
+            ]);
             $supplierOrderItemAttributes['order_item_id'] = $orderItem->id;
+            $supplierOrderItemAttributes['quote_status'] = $orderItem->price>0?1:0;
             $splitItems[$orderItem->supplier_id][] = $supplierOrderItemAttributes;
             $suppliers[$orderItem->supplier_id] = $orderItem->supplier_name;
         }
         $supplierOrderAttributes['order_id'] = $order->id;
         $supplierOrderAttributes['date'] = $order->date;
-        $supplierOrderAttributes['order_status'] = 31;//等待报价
+
         $supplierOrderAttributes['create_time'] = $order->create_time;
         $supplierOrderAttributes['order_number'] = $order->order_number;
-        $supplierOrderAttributes['quote_status'] = $quote_status;
+//        $supplierOrderAttributes['quote_status'] = $quote_status;
         $setup = 1;
         foreach ($suppliers as $supplierId => $supplierName){
             //save supplier order
             $_supplierOrder = clone  $supplierOrder;
             $supplierOrderAttributes['supplier_id']   = $supplierId;
+            $supplierItems = $splitItems[$supplierId];
+            $flag = true;
+            $i=0;
+            $quote_status=0;
+
+            foreach ($supplierItems as $value) {
+                if ($i == 0) {
+                    $quote_status = $value['quote_status'];
+                } else {
+                    if ($value['quote_status'] != $quote_status) {
+                        $flag = false;
+                        break;
+                    }
+                }
+                $i++;
+            }
+            if (!$flag) {
+                $supplierOrderAttributes['order_status'] = 31;//等待报价
+            } else {
+                if ($quote_status) {
+                    $supplierOrderAttributes['order_status'] = 41;//子订单完全是平台报价
+                    //计算子订单总价
+                    $total = 0;
+                    foreach ($supplierItems as $v) {
+                        $price = (float)$v['price']* $v['number'];
+                        $total += $price;
+                    }
+                    $supplierOrderAttributes['total'] = $total;
+                    $supplierOrderAttributes['quote_time'] = date('Y-m-d H:i:s');
+                } else {
+                    $supplierOrderAttributes['order_status'] = 31;//子订单完全是供应商报价
+                }
+            }
+            $finalStatus[] = $supplierOrderAttributes['order_status'];
             $supplierOrderAttributes['supplier_name'] = $supplierName;
             $supplierOrderAttributes['order_number']  = $order->order_number.'-'.$setup;
             $_supplierOrder->setAttributes($supplierOrderAttributes, false);
             $_supplierOrder->save();
 
             //save supplier order items
-            $supplierItems = $splitItems[$supplierId];
+
             foreach ($supplierItems as $supplierItemAttributes){
                 $supplierItemAttributes['supplier_order_id'] = $_supplierOrder->id;
                 $_supplierOrderItem = clone $supplierOrderItem;
@@ -307,6 +342,12 @@ class WorkflowController extends Controller
             }
             $setup++;
         }
+        if (in_array(31,$finalStatus)) {
+            return 0;
+        } else {
+            return 1;
+        }
+
     }
 
     /***

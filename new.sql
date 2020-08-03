@@ -206,3 +206,4 @@ CREATE TABLE `tax_service` (
 alter table `order` add column `deposit_file` varchar (255) default '' comment '定金支付凭证';
 alter table `order_item` add column `packing_number` varchar (255) default '' comment '装箱单号';
 alter table `supplier_order_item` add column `packing_number` varchar (255) default '' comment '装箱单号';
+alter table `supplier_order_item` add column quote_status smallint (1) default 0;

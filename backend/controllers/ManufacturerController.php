@@ -171,7 +171,7 @@ class ManufacturerController extends Controller
                 ];
             }else{
                 $order = SupplierOrder::findOne($supplierOrderItem->supplier_order_id);
-                if (!$order || ($order->quote_status == 1)) {
+                if (!$order || ($supplierOrderItem->quote_status == 1)) {
                     $data = [
                         'code' => 400,
                         'msg' => 'The platform has been quoted, please submit directly.'
