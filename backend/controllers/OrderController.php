@@ -431,9 +431,32 @@ class OrderController extends Controller
         $model = Order::findOne(['id' => $id]);
         if ($model->order_status == 3) return $this->error(202,'订单中存在商品还未完成报价，请联系供货商');
         $model->order_status = 21;
-        $model->save();
+
+        //计算出商品总价，采购折扣价，供货折扣价
+        $amount = $this->getProductAmount($id);
+        $model->quote = $amount['productAmount'];       //商品总价格
+        $model->off_quote = (string) $amount['offAmount'];  //供货折扣总金额
+        $model->desc_quote = (string) $amount['depositAmount'];  //采购折扣总金额
+        if (!$model->save()) return $this->error(201, $model->getErrors());
 
         return $this->success();
+    }
+
+    public function getProductAmount($id)
+    {
+        $products = OrderItem::find()->where(['order_id' => $id])->asArray()->all();
+        $depositAmount = $productAmount = $offAmount = 0;
+        foreach ($products as $item) {
+            $depositAmount += $item['disc_price'];
+            $productAmount += $item['price'];
+            $offAmount += $item['origin_price'];
+        }
+
+        return [
+                'productAmount' => $productAmount ,
+                'depositAmount' => $depositAmount ,
+                'offAmount' => $offAmount
+            ];
     }
 
     /**
@@ -442,9 +465,5 @@ class OrderController extends Controller
     public function actionHistoryCancelList()
     {
         return $this->success();
-
-
-
-
     }
 }

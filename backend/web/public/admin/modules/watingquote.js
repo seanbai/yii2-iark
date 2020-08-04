@@ -24,8 +24,7 @@ layui.define(function(exports){
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},
         {field: 'name', title: '提货联系人'},
-        {field: 'address', title: '交付地址'},
-        {field: 'quote', title: '报价'}
+        {field: 'address', title: '交付地址'}
       ]]
     });
 
@@ -106,7 +105,7 @@ layui.define(function(exports){
                   content: $('.deposit-upload'),
                   success: function(){
                     $('#deposit-img-tmp').attr('src', null);
-                    $('#deposit-amount').html(data[0].quote / 2);
+                    $('#deposit-amount').html(data[0].desc_quote / 2);
                   },
                   btn: ['确认', '取消'],
                   yes: function () {
@@ -128,7 +127,7 @@ layui.define(function(exports){
                             icon: 1,
                             time: 900 //2秒关闭（如果不配置，默认是3秒）
                           }, function () {
-                            layer.close(itemsbox);
+                            layer.closeAll();
                             workflow.reload();
                           });
                         }else{
@@ -136,7 +135,7 @@ layui.define(function(exports){
                             icon: 5,
                             time: 2000 //2秒关闭（如果不配置，默认是3秒）
                           }, function () {
-                            layer.close(itemsbox);
+                            layer.closeAll();
                           });
                         }
                       }
@@ -220,7 +219,7 @@ layui.define(function(exports){
           }else {
             var order_data = checkStatus.data,
                 order_id = order_data[0].id,
-                total = order_data[0].quote,
+                total = order_data[0].desc_quote,
                 order_status = order_data[0].order_status;
 
              layer.open({
@@ -349,8 +348,8 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: '备注'},
-          //{field: 'origin_price', title: '报价(欧元)'},
-          {field: 'price2', title: '单价 (欧元)', edit: 'text'}
+          {field: 'origin_price', title: '产品单价(欧元)'},
+          {field: 'disc_price', title: '采购折扣价 (欧元)'}
         ]]
       });
       // 价格编辑

@@ -424,32 +424,32 @@ class WorkflowController extends Controller
         $model->supplier_name = $_POST['name'];
         $model->quote_type = $quote_type;
 
-       try{
-           $price = '0';
-           $originPrice = $_POST['price'] ?? '0';
-           $rate = 0; //折扣比
-           if ($originPrice > 0 && ($quote_type == 1)) {
-               $rate = Admin::findOne($model->supplier_id)->off;
-               $rate = 1 - ($rate / 100);
-               $model->origin_price = $originPrice; //单价
-               $price = (string) bcmul((double)$originPrice, $rate, 2); //供货折扣/采购折扣价
-               $model->price = $price;
-           } else {
-               $model->price = $price;
-               $model->origin_price = $originPrice;
-           }
-           if ($model->save()){
-               return $this->success([
-                   'origin_price'    => (double) $originPrice,
-                   'discount_rate'   => sprintf("%.2F",$rate),
-                   'price'           => (double) $price
-               ]);
-           }else{
-               return $this->error($model->getErrors());
-           }
-       }catch (\Exception $exception){
-           echo $exception->getMessage();
+        $originPrice = $_POST['price'] ?? '0';
+        $discountPrice = $price = 0;
+        $model->origin_price = $originPrice; //单价
+        $model->price = 0;
+        $model->disc_price = 0;
+
+
+       if ($originPrice > 0 && ($quote_type == 1)) {
+           $user = Admin::find()->where(['id' => $_POST['userId']])->asArray()->one();
+
+           $offrate = !empty($user['off']) ? $user['off'] : 0;               //供货商价格
+           $discountrate = !empty($user['discount']) ? $user['discount'] : 0;               //供货商价格
+
+           $price = (string) bcmul((double)$originPrice, 1 - ($offrate / 100), 2); //供货折扣/采购折扣价
+           $model->price = $price;
+
+           $discountPrice = (string) bcmul((double)$originPrice, 1 - ($discountrate / 100), 2); //供货折扣/采购折扣价
+           $model->disc_price = $discountPrice;
        }
+       if (!$model->save()) return $this->error($model->getErrors());
+
+       return $this->success([
+           'origin_price'    => $originPrice,          //单价
+           'discount_price'  => $discountPrice,        //采购折扣价
+           'price'           => $price                 //供货商折扣价
+       ]);
     }
 
     /**
@@ -847,9 +847,9 @@ class WorkflowController extends Controller
             ->leftJoin('supplier_order AS u','a.supplier_order_id = u.id')
             ->leftJoin('order AS c','u.order_id = c.id')
             ->where(['u.order_status' => $status])
+            ->andWhere(['a.quote_status' => 0])
             ->orderBy('a.id DESC')
             ->All();
-
 
         $data = [
             'code'  => 0,

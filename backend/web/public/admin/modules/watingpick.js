@@ -17,6 +17,7 @@ layui.define(function(exports){
       cols: [[ //表头
         {type: 'checkbox'},
         {field: 'order_number', title: '项目编号'},
+        {field: 'packing_number', title: '提货编码'},
         {field: 'project_name', title: '项目名称'},
         {field: 'package', title: '运输方式'},
         {field: 'brand', title: '产品名称'},

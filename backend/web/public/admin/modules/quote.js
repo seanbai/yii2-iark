@@ -25,7 +25,6 @@ layui.define(function (exports) {
                 {field: 'name', title: '提货联系人'},
                 {field: 'address', title: '交付地址'},
                 {field: 'owner', title: '采购商'},
-                {field: 'quote', title: '报价'}
             ]]
         });
         // 表格菜单事件
@@ -120,7 +119,8 @@ layui.define(function (exports) {
                     {field: 'supplier_name', title: '供应商'},
                     {field: 'desc', title: '备注'},
                     {field: 'origin_price', title: '报价(欧元)'},
-                    {field: 'price', title: '单价(欧元)', totalRow: true}
+                    {field: 'price', title: '供货折扣价(欧元)', totalRow: true},
+                    {field: 'disc_price', title: '采购折扣价(欧元)', totalRow: true}
                 ]]
             });
         }

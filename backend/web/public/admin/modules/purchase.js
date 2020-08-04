@@ -144,7 +144,8 @@ layui.define(function(exports){
           },
           {field: 'supplier_name', title: '供应商'},
           {field: 'desc', title: '备注'},
-          {field: 'price', title: '价格', totalRow: true}
+          {field: 'origin_price', title: '产品单价', totalRow: true},
+          {field: 'disc_price', title: '采购折扣价', totalRow: true}
         ]]
       })
     }

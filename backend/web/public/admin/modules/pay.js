@@ -24,7 +24,6 @@ layui.define(function(exports){
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},
         {field: 'owner', title: '采购商'},
-        {field: 'quote', title: '总计'},
         {fixed: 'right', title:'操作', toolbar: '#action', width:100}
       ]]
     });
@@ -108,7 +107,12 @@ layui.define(function(exports){
           },
           {field: 'supplier_name', title: '供货商'},
           {field: 'desc', title: '备注'},
-          {field: 'total', title: '合计(欧元)', totalRow: true}
+          {field: 'origin_price', title: '单价(欧元)',
+            totalRow: true},
+          {field: 'price', title: '供货折扣价(欧元)',
+            totalRow: true},
+          {field: 'disc_price', title: '采购折扣价(欧元)',
+            totalRow: true}
         ]]
       });
     }
@@ -124,6 +128,7 @@ layui.define(function(exports){
           {field: 'supplier_name', title: '供货商'},
           {field: 'quote_time', title: '报价时间'},
           {field: 'total', title: '报价金额'},
+          {field: 'total', title: '供货折扣价'},
           {field: 'deposit', title: '定金'},
           {field: 'depositdate', title: '定金支付时间'},
           {field: 'balance', title: '尾款'},

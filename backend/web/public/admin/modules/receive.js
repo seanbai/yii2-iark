@@ -62,7 +62,7 @@ layui.define(function(exports){
           }else{
             var id = data[0].id;
             var project = data[0].project_name;
-            var total = data[0].quote;
+            var total = data[0].desc_quote;
             var status = (data[0].order_status);
             var tax = data[0].tax ? (data[0].tax) : 0;
             var fuwu = data[0].fuwu ? (data[0].fuwu) : 0;
@@ -229,7 +229,7 @@ layui.define(function(exports){
     table.on('tool(quote)', function(obj){
       var data = obj.data;
       var id = data.id;
-      var total = data.quote;
+      var total = data.desc_quote;
       var status = data.order_status;
       var tax = data.tax;
       var fuwu = data.fuwu !== undefined || data.fuwu ? data.fuwu : 0;
@@ -592,7 +592,11 @@ layui.define(function(exports){
           },
           {field: 'supplier_name', title: '供应商'},
           {field: 'desc', title: '备注'},
-          {field: 'total', title: '合计(欧元)',
+          {field: 'origin_price', title: '单价(欧元)',
+            totalRow: true},
+          {field: 'price', title: '供货折扣价(欧元)',
+            totalRow: true},
+          {field: 'disc_price', title: '采购折扣价(欧元)',
             totalRow: true}
         ]]
       });
