@@ -14,6 +14,7 @@ layui.define(function (exports) {
             elem: '#delivery'
         });
 
+
         var tableIns = items.render({
             elem: '#items',
             url: 'items-update?id=' + pageId,
@@ -28,9 +29,9 @@ layui.define(function (exports) {
                 {field: 'brand', title: '名称'},
                 {field: 'number', title: '数量'},
                 {
-                    field: 'image', title: '样式图片',
+                    field: 'files', title: '样式图片',
                     templet: function (d) {
-                        return '<div onclick="showImg(this)"><img src="' + d.image + '"></div>';
+                        return '<div onclick="showImg(this)"><img src="' + d.files + '"></div>';
                     }
                 },
                 {field: 'product_supplier', title: '品牌'},
