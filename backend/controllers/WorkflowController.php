@@ -846,7 +846,7 @@ class WorkflowController extends Controller
             ->leftJoin('supplier_order AS u','a.supplier_order_id = u.id')
             ->leftJoin('order AS c','u.order_id = c.id')
             ->where(['u.order_status' => $status])
-            ->andWhere(['a.quote_status' => 0])
+            ->andWhere(['a.quote_status' => 1])
             ->orderBy('a.id DESC')
             ->All();
 
