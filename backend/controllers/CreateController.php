@@ -410,10 +410,12 @@ class CreateController extends Controller
     public function actionProductUpdate()
     {
         $data = \Yii::$app->request->post();
-        print_r($data);
-        die;
         $id = $data['pid'];
-        $order = Order::find()->where(['id' => $id])->asArray()->one();
+
+        $orderModel = OrderItem::findOne(['id' => $id]);
+        if (!$orderModel) return $this->error(201, "根据产品ID获取订单ID失败");
+
+        $order = Order::find()->where(['id' => $orderModel->order_id])->asArray()->one();
         if ($order['order_status'] != '401') return $this->error(201, "当前订单状态不支持修改数据[{$order['order_status']}]");
 
         $model = OrderItem::findOne(['id' => $id]);
@@ -423,8 +425,9 @@ class CreateController extends Controller
         $model->size = $data['size'];
         $model->material = $data['material'];
         $model->desc = $data['desc'];
-        if (isset($data['image'])) $model->files = $data['image'];
-        if (isset($data['att'])) $model->att = $data['att'];
+        $model->product_supplier = $data['product_supplier'];
+        if (isset($data['image']) && !empty($data['image'])) $model->files = $data['image'];
+        if (isset($data['att']) && !empty($data['att'])) $model->att = $data['att'];
 
         if (!$model->save()) return $this->error(201, $model->getErrors()) ;
 
