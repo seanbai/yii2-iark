@@ -30,6 +30,7 @@
         <div class="layui-card-header">基本信息</div>
         <div class="layui-card-body layui-row layui-col-space10">
             <input type="hidden" id="id" name="id" value="<?php echo $order['id'] ?>">
+            <input type="hidden" id="pid" name="pid" value="<?php echo $order['pid'] ?>">
           <div class="layui-col-md3">
             <input type="text" name="project" placeholder="项目名称" value="<?php echo $order['project_name'] ?>" autocomplete="off" class="layui-input">
           </div>
@@ -101,7 +102,6 @@
     <div class="layui-fluids">
         <form class="layui-form layui-form-pane" id="addItems" lay-filter="edit">
             <!-- 型号名称 -->
-            <input type="hidden" id="pid" name="pid" value="<?php echo $order['pid'] ?>">
             <div class="layui-form-item">
                 <label class="layui-form-label">名称*</label>
                 <div class="layui-input-block">
