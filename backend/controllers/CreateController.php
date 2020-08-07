@@ -410,6 +410,8 @@ class CreateController extends Controller
     public function actionProductUpdate()
     {
         $data = \Yii::$app->request->post();
+        print_r($data);
+        die;
         $id = $data['pid'];
         $order = Order::find()->where(['id' => $id])->asArray()->one();
         if ($order['order_status'] != '401') return $this->error(201, "当前订单状态不支持修改数据[{$order['order_status']}]");
