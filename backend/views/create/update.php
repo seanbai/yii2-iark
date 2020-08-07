@@ -101,8 +101,7 @@
     <div class="layui-fluids">
         <form class="layui-form layui-form-pane" id="addItems" lay-filter="edit">
             <!-- 型号名称 -->
-            <input type="hidden" name="id" value="" />
-            <input type="hidden" name="pid" value="" />
+            <input type="hidden" id="pid" name="pid" value="<?php echo $order['pid'] ?>">
             <div class="layui-form-item">
                 <label class="layui-form-label">名称*</label>
                 <div class="layui-input-block">
