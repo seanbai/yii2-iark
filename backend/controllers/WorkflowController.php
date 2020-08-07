@@ -437,10 +437,9 @@ class WorkflowController extends Controller
            $offrate = !empty($user['off']) ? $user['off'] : 0;               //供货商价格
            $discountrate = !empty($user['discount']) ? $user['discount'] : 0;               //供货商价格
 
-           $price = (string) bcmul((double)$originPrice, 1 - ($offrate / 100), 2); //供货折扣/采购折扣价
+           $price = (string) $originPrice * (1 - ($offrate / 100)); //供货折扣/采购折扣价
            $model->price = $price;
-
-           $discountPrice = (string) bcmul((double)$originPrice, 1 - ($discountrate / 100), 2); //供货折扣/采购折扣价
+           $discountPrice = (string) $originPrice * (1 - ($discountrate / 100)); //供货折扣/采购折扣价
            $model->disc_price = $discountPrice;
        }
        if (!$model->save()) return $this->error($model->getErrors());
