@@ -1,9 +1,9 @@
 layui.define(function(exports){
   //
-  layui.use(['table','jquery','form'], function(){
+  layui.use(['table','jquery','form', 'upload'], function(){
     var table = layui.table;
     var $ = layui.jquery;
-    var form = layui.form;
+    var form = layui.form, upload = layui.upload;
     //
     var workflow = table.render({
       elem: '#myOrder',
@@ -20,6 +20,67 @@ layui.define(function(exports){
         {field: 'product_ids', title: '提货的产品ids'},
         {field: 'created_at', title: '提货时间'}
       ]]
+    });
+
+    var uploadInst = upload.render({
+      elem: '#deposit-img',
+      url: '/uploads/upload?',
+      size: 2*1024*1024, //kb
+      exts: 'jpg|jpeg|png',
+      data: {
+        "_csrf": $('meta[name=csrf-token]').attr('content')
+      },
+      before: function(obj){
+        //预读本地文件示例，不支持ie8
+        obj.preview(function(index, file, result){
+          $('#deposit-img-tmp').attr('src', result).bind('click', function () {
+            // 图片 lightbox
+            layer.open({
+              type: 1,
+              title: false,
+              skin: 'layui-layer-rim',
+              area: ['auto'],
+              shadeClose: true,
+              end: function(index, layero){
+                return false;
+              },
+              content: '<div style="text-align:center"><img width="500" height="500" src="' + result + '" /></div>'
+            });
+          });
+          $('#deposit-img-tmp2').attr('src', result).bind('click', function () {
+            // 图片 lightbox
+            layer.open({
+              type: 1,
+              title: false,
+              skin: 'layui-layer-rim',
+              area: ['auto'],
+              shadeClose: true,
+              end: function(index, layero){
+                return false;
+              },
+              content: '<div style="text-align:center"><img width="500" height="500" src="' + result + '" /></div>'
+            });
+          });
+        });
+      },
+      done: function(res){
+        //如果上传失败
+        if(res.code !== 200){
+          return layer.msg('上传失败');
+        }
+        if(res.data !== undefined){
+          $("#service-fee-file").val(res.data);
+        }
+        //上传成功
+      },
+      error: function(){
+        //演示失败状态，并实现重传
+        var demoText = $('#demoText');
+        demoText.html('<span style="color: #ff5722;">上传失败</span> <a class="layui-btn layui-btn-xs upload-reload">重试</a>');
+        demoText.find('.upload-reload').on('click', function(){
+          uploadInst.upload();
+        });
+      }
     });
 
     // 表格工具
@@ -44,8 +105,46 @@ layui.define(function(exports){
               })
             }
           break;
+        case 'add':
+          if(checkStatus.data.length === 0){
+            layer.msg("请选择一条订单数据");
+          }else{
+            // 取订单ID 和 项目名称
+            var data = checkStatus.data;
+            var id = data[0].id;
+
+            var itemsbox = layer.open({
+              type: 1,
+              title: '填写物流信息',
+              area: ['90%', '80%'],
+              content: $('#information')
+            })
+          }
+          break;
       }
     });
+
+    // 表单提交
+    form.on('submit(information)',function(data, id){
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        data: data.field,
+        url: 'order-pay',
+        error: function(){
+          layer.msg('系统错误,请稍后重试.');
+        },
+        success: function(res){
+          if(res.code == 200){
+            layer.closeAll();
+            workflow.reload();
+          }else{
+            layer.msg('操作失败，稍后再试');
+          }
+        }
+      });
+      return false;
+    })
 
     window.showItems = function(id){
       table.render({
@@ -69,6 +168,32 @@ layui.define(function(exports){
         ]]
       });
     }
+
+    // 附件上传事件
+    upload.render({
+      elem: '#attachment',
+      url: '/uploads/uploads?',
+      // 只允许压缩包格式
+      accept: 'file',
+      exts: 'zip|rar|7z',
+      choose: function(obj){
+        // 上传时加载 Loading
+        layer.load();
+      },
+      data: {
+        "_csrf": $('meta[name=csrf-token]').attr('content')
+      },
+      done: function(res){
+        // 上传完成后关闭 Loading
+        layer.closeAll('loading');
+        if (res.code == 200) {
+          //将图片添加到input
+          $('#att').attr('value',res.data);
+        } else {
+          layer.msg('上传失败');
+        }
+      }
+    });
 
     // 产品图片预览
     window.showImg = function(t){

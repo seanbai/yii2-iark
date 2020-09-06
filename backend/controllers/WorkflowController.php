@@ -39,7 +39,7 @@ class WorkflowController extends Controller
     public function actionIndex()
     {
         $data = [
-            'user' => Admin::getUser(),
+            'user' =>   Admin::getUser(),
             'status' => Order::status(),
             'pay' => Order::pay(),
         ];

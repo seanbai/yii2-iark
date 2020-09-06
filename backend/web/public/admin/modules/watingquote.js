@@ -74,6 +74,7 @@ layui.define(function(exports){
         });
       }
     });
+
     // 表格工具
     table.on('toolbar(myOrder)', function(obj){
       var checkStatus = table.checkStatus(obj.config.id);
