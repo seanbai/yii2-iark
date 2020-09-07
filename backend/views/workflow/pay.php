@@ -81,6 +81,8 @@ layui.config({
   </div>
 </div>
 
+
+
 <!-- 确认收款表单 -->
 <div style="display:none" id="confirmPay" class="layui-fluid">
   <div class="layui-row layui-col-space10">
@@ -99,6 +101,18 @@ layui.config({
           <div class="layui-input-block">
             <input type="text" name="deposit"  id="deposit" lay-verify="required" autocomplete="off" class="layui-input">
           </div>
+            <!--支付凭证上传-->
+            <div class="pay-upload">
+                <input type="hidden" id="deposit-upload-file" name="deposit-upload-file" />
+                <div class="layui-upload" id="deposit-upload" style="margin: 20px 20px;">
+                    <button type="button" class="layui-btn" id="deposit-img">上传付款凭证</button>
+                    <div class="layui-upload-list">
+                        <img class="layui-upload-img" style=" width: 105px;height: 105px;margin: 0 10px 10px 0;"
+                             id="pay-file-deposit">
+                        <p id="demoText-deposit"></p>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- 实际收款金额 -->
         <div class="layui-form-item">
@@ -106,6 +120,18 @@ layui.config({
           <div class="layui-input-block">
             <input type="text" name="balance" id="balance" lay-verify="required" autocomplete="off" class="layui-input">
           </div>
+            <!--支付凭证上传-->
+            <div class="pay-upload">
+                <input type="hidden" id="balance-upload-file" name="balance-upload-file" />
+                <div class="layui-upload" id="balance-upload" style="margin: 20px 20px;">
+                    <button type="button" class="layui-btn" id="balance-img">上传付款凭证</button>
+                    <div class="layui-upload-list">
+                        <img class="layui-upload-img" style=" width: 105px;height: 105px;margin: 0 10px 10px 0;"
+                             id="pay-file-balance">
+                        <p id="demoText-balance"></p>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- 备注说明 -->
         <div class="layui-form-item layui-form-text">

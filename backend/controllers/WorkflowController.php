@@ -541,6 +541,8 @@ class WorkflowController extends Controller
         $msg = '操作失败';
         $orderId = isset($_POST['subOrderId']) && $_POST['subOrderId'] ? $_POST['subOrderId'] : 0;
         $deposit = isset($_POST['deposit']) && $_POST['deposit'] ? $_POST['deposit'] : 0;
+        $depositFile = $_POST['deposit-upload-file'] ?? null;
+        $balanceFile = $_POST['balance-upload-file'] ?? null;
         $balance =  isset($_POST['balance']) && $_POST['balance'] ? $_POST['balance'] : 0;
         $comment =  isset($_POST['info']) && $_POST['info'] ? $_POST['info'] : '';
         $order = SupplierOrder::findOne($orderId);
@@ -549,6 +551,16 @@ class WorkflowController extends Controller
                 $mainOrder = Order::findOne($order->order_id);
                 if ($mainOrder->order_status <= 9) {//已经收取了定金
                     if ($deposit > 0 && $deposit !== $order->getOldAttribute('deposit')) {
+                        if(!$depositFile && ($order->getAttribute('order_status') < 81)){
+                            \Yii::$app->response->format = 'json';
+                            return [
+                                'errCode' => 400,
+                                'errMsg' => '请上传定金付款凭证附件'
+                            ];
+                        }else{
+                            $depositFile = $depositFile ?: $order->deposit_file;
+                            $order->setAttribute('deposit_file', $depositFile);
+                        }
                         $order->setAttribute('deposit', $deposit);
                         $order->setAttribute('order_status', 81);
                         $order->setAttribute('depositDate',date('Y-m-d H:i:s'));
@@ -558,7 +570,18 @@ class WorkflowController extends Controller
                     }
                 } else if ($mainOrder->order_status == 13) {
                     if($balance > 0 && $balance != $order->getOldAttribute('balance')){
+                        if(!$balanceFile && ($order->getAttribute('order_status') < 131)){
+                            \Yii::$app->response->format = 'json';
+                            return [
+                                'errCode' => 400,
+                                'errMsg' => '请上传定金付款凭证附件'
+                            ];
+                        }else{
+                            $balanceFile = $balanceFile ?: $order->balance_file;
+                            $order->setAttribute('balance_file', $balanceFile);
+                        }
                         $order->setAttribute('balance', $balance);
+                        $order->setAttribute('balance_file', $balanceFile);
                         $order->setAttribute('order_status', 131);
                         $order->setAttribute('balanceDate',date('Y-m-d H:i:s'));
                         $order->save();

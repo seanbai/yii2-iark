@@ -20,6 +20,19 @@ layui.define(function(exports){
         {field: 'order_number', title: '订单号'},
         {field: 'order_status_label', title: '订单状态'},
         {field: 'project_name', title: '项目名称'},
+        {field: 'deposit_file', title: '定金付款凭证',
+          templet: function(d){
+            if(d.deposit_file){
+              return '<div onclick="showImg(this)"><img src="'+d.deposit_file+'"></div>'
+            }
+            return  '';
+          }},
+        {field: 'balance_file', title: '尾款付款凭证',templet: function(d){
+            if(d.balance_file){
+              return '<div onclick="showImg(this)"><img src="'+d.balance_file+'"></div>'
+            }
+            return  '';
+          }},
         {field: 'create_time', title: '创建时间'},
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},

@@ -13,6 +13,23 @@ layui.define(function(exports){
       elem: '#processList' //指定元素
     })
 
+    // 产品图片预览
+    window.showImg = function(t){
+      var t = $(t).find("img");
+      // 图片 lightbox
+      layer.open({
+        type: 1,
+        title: false,
+        skin: 'layui-layer-rim',
+        area: ['auto'],
+        shadeClose: true,
+        end: function(index, layero){
+          return false;
+        },
+        content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
+      });
+    }
+
     var order = table.render({
       elem: '#order',
       height: 'full-115',
@@ -28,6 +45,19 @@ layui.define(function(exports){
         {field: 'project_name', title: '项目名称'},
         {field: 'status_label', title: '订单状态'},
         {field: 'create_time', title: '创建时间'},
+        {field: 'deposit_file', title: '定金付款凭证',
+          templet: function(d){
+            if(d.deposit_file){
+              return '<div onclick="showImg(this)"><img src="'+d.deposit_file+'"></div>'
+            }
+            return  '';
+          }},
+        {field: 'balance_file', title: '尾款付款凭证',templet: function(d){
+            if(d.balance_file){
+              return '<div onclick="showImg(this)"><img src="'+d.balance_file+'"></div>'
+            }
+            return  '';
+          }},
         {field: 'date', title: '期望交付时间'},
         {field: 'package', title: '包装要求'},
         {field: 'name', title: '提货联系人'},
