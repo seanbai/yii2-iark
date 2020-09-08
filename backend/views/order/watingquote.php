@@ -107,6 +107,18 @@ use yii\helpers\Url; ?>
                     <div class="layui-input-block">
                         <input type="text" value="10000" id="order-balance" class="layui-input" disabled>
                     </div>
+                    <!--支付凭证上传-->
+                    <div class="pay-upload">
+                        <input type="hidden" id="balance-upload-file" name="balance-upload-file" />
+                        <div class="layui-upload" id="balance-upload" style="margin: 20px 20px;">
+                            <button type="button" class="layui-btn" id="balance-img">上传付款凭证</button>
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img" style=" width: 105px;height: 105px;margin: 0 10px 10px 0;"
+                                     id="pay-file-balance">
+                                <p id="demoText-balance"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="layui-form-item" style="display:none"  data-role="pay-balance">
                     <label class="layui-form-label">是否支付</label>
