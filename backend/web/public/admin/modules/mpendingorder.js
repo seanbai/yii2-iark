@@ -23,6 +23,20 @@ layui.define(function(exports){
         {field: 'order_number', title: 'Order Number'},
         {field: 'order_status_label', title: 'Order Status'},
         {field: 'total', title: 'Order Total'},
+        //{field: 'deposit', title: 'Paid Deposit'},
+        {field: 'deposit_file', title: 'Deposit Certificate', templet: function(d){
+            if(d.deposit_file){
+              return '<div onclick="showImg(this)"><img src="'+d.deposit_file+'"></div>'
+            }
+            return ''
+          }},
+        //{field: 'balance', title: 'Paid Balance'},
+        {field: 'balance_file', title: 'Balance Certificate', templet: function(d){
+            if(d.balance_file){
+              return '<div onclick="showImg(this)"><img src="'+d.balance_file+'"></div>'
+            }
+            return ''
+          }},
         {field: 'date', title: 'Expect Delivery Date'}, //期望交付时间
         {field: 'create_time', title: 'Order Date'}, //创建时间
         {field: 'quote_time', title: 'Quotation Date'} //创建时间

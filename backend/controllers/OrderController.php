@@ -399,6 +399,8 @@ class OrderController extends Controller
                     $order->order_status = 12;
                     $msg = 'Operation successed';
                     $code = 200;
+                    $file = \Yii::$app->request->post('balance-upload-file', null);
+                    $order->balance_file = $file;
                     $order->save();
                 } else if ($tax && $order->order_status == 14) {
                     //确认支付税金

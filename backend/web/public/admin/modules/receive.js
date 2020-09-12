@@ -23,7 +23,18 @@ layui.define(function(exports){
         {field: 'create_time', title: '创建时间'},
         {field: 'deposit_file', title: '定金支付凭证',
           templet: function(d){
+            if(!d.deposit_file){
+              return  '';
+            }
             return '<div onclick="showImg(this)"><img src="'+d.deposit_file+'"></div>'
+          }
+        },
+        {field: 'balance_file', title: '尾款支付凭证',
+          templet: function(d){
+            if(!d.balance_file){
+              return  '';
+            }
+            return '<div onclick="showImg(this)"><img src="'+d.balance_file+'"></div>'
           }
         },
         {field: 'date', title: '期望交付时间'},

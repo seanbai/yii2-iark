@@ -1,11 +1,11 @@
 layui.define(function(exports){
 
   //
-  layui.use(['table','jquery','form'], function(){
+  layui.use(['table','jquery','form', 'upload'], function(){
 
     var table = layui.table;
     var $ = layui.jquery;
-    var form = layui.form;
+    var form = layui.form, upload = layui.upload;
 
     var order = table.render({
       elem: '#quote',
@@ -130,8 +130,21 @@ layui.define(function(exports){
           {field: 'total', title: '报价金额'},
           {field: 'total', title: '供货折扣价'},
           {field: 'deposit', title: '定金'},
+          {field: 'deposit_file', title: '定金付款凭证',
+            templet: function(d){
+              if(d.deposit_file){
+                return '<div onclick="showImg(this)"><img src="'+d.deposit_file+'"></div>'
+              }
+              return  '';
+            }},
           {field: 'depositdate', title: '定金支付时间'},
           {field: 'balance', title: '尾款'},
+          {field: 'balance_file', title: '尾款付款凭证',templet: function(d){
+              if(d.balance_file){
+                return '<div onclick="showImg(this)"><img src="'+d.balance_file+'"></div>'
+              }
+              return  '';
+            }},
           {field: 'balancedate', title: '尾款支付时间'},
           {fixed: 'right', title:'操作', toolbar: '#logPay', width:100}
         ]]
@@ -152,10 +165,19 @@ layui.define(function(exports){
               var form = layer.open({
                 type: 1,
                 title: '付款确认',
-                area: ['640px', 'auto'],
+                area: ['640px', '600px'],
+                scrollbar: true,
                 content: $('#confirmPay'),
                 success: function(layero, index){
                   $('#subOrderId').val(id);
+                  if(data.deposit_file){
+                    $('#deposit-img').hide();
+                    $('#pay-file-deposit').attr('src', data.deposit_file);
+                  }
+                  if(data.balance_file){
+                    $('#balance-img').hide();
+                    $('#pay-file-balance').attr('src', data.balance_file);
+                  }
                   $('#total').val(total).attr('disabled',true);
                   if(balance){
                     $('#balance').attr("disabled", true);
@@ -174,6 +196,103 @@ layui.define(function(exports){
         }
       });
     }
+
+    //定金付款上传
+    var uploadInst = upload.render({
+      elem: '#deposit-img',
+      url: '/uploads/upload?',
+      size: 2*1024*1024, //kb
+      exts: 'jpg|jpeg|png',
+      data: {
+        "_csrf": $('meta[name=csrf-token]').attr('content')
+      },
+      before: function(obj){
+        //预读本地文件示例，不支持ie8
+        obj.preview(function(index, file, result){
+          $('#pay-file-deposit').attr('src', result).bind('click', function () {
+            // 图片 lightbox
+            layer.open({
+              type: 1,
+              title: false,
+              skin: 'layui-layer-rim',
+              area: ['auto'],
+              shadeClose: true,
+              end: function(index, layero){
+                return false;
+              },
+              content: '<div style="text-align:center"><img width="500" height="500" src="' + result + '" /></div>'
+            });
+          });
+        });
+      },
+      done: function(res){
+        //如果上传失败
+        if(res.code !== 200){
+          return layer.msg('上传失败');
+        }
+        if(res.data !== undefined){
+          $("#deposit-upload-file").val(res.data);
+        }
+        //上传成功
+      },
+      error: function(){
+        //演示失败状态，并实现重传
+        var demoText = $('#demoText-deposi');
+        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs upload-reload">重试</a>');
+        demoText.find('.upload-reload').on('click', function(){
+          uploadInst.upload();
+        });
+      }
+    });
+
+    //付款品质上传
+    var uploadBalance = upload.render({
+      elem: '#balance-img',
+      url: '/uploads/upload?',
+      size: 2*1024*1024, //kb
+      exts: 'jpg|jpeg|png',
+      data: {
+        "_csrf": $('meta[name=csrf-token]').attr('content')
+      },
+      before: function(obj){
+        //预读本地文件示例，不支持ie8
+        obj.preview(function(index, file, result){
+          $('#pay-file-balance').attr('src', result).bind('click', function () {
+            // 图片 lightbox
+            layer.open({
+              type: 1,
+              title: false,
+              skin: 'layui-layer-rim',
+              area: ['auto'],
+              shadeClose: true,
+              end: function(index, layero){
+                return false;
+              },
+              content: '<div style="text-align:center"><img width="500" height="500" src="' + result + '" /></div>'
+            });
+          });
+        });
+      },
+      done: function(res){
+        //如果上传失败
+        if(res.code !== 200){
+          return layer.msg('上传失败');
+        }
+        if(res.data !== undefined){
+          $("#balance-upload-file").val(res.data);
+        }
+        //上传成功
+      },
+      error: function(){
+        //演示失败状态，并实现重传
+        var demoText = $('#demoText-balance');
+        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs upload-reload">重试</a>');
+        demoText.find('.upload-reload').on('click', function(){
+          uploadInst.upload();
+        });
+      }
+    });
+
     // 产品图片预览
     window.showImg = function(t){
       var t = $(t).find("img");
@@ -190,6 +309,8 @@ layui.define(function(exports){
         content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
       });
     }
+
+
     // 表单提交
     form.on('submit(confirmPay)',function(data,id){
       $.ajax({
