@@ -72,28 +72,28 @@ use yii\helpers\Url; ?>
 <div style="display:none" id="information" class="layui-fluids">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">
-            <form class="layui-form layui-form-pane">
+            <form class="layui-form layui-form-pane" id="addFrom">
                 <div class="layui-form-item">
                     <label class="layui-form-label">运输信息</label>
                     <div class="layui-input-block">
-                        <input type="text"  id="transport" class="layui-input" >
+                        <input type="text" name="transport"  id="transport" class="layui-input" >
                     </div>
                 </div>
 
                 <div class="layui-form-item"  data-role="pay-deposit">
                     <label class="layui-form-label" >预期到港时间</label>
                     <div class="layui-input-block">
-                        <input type="text" value="2020-01-01"  id="port-time" class="layui-input" >
+                        <input type="text" name="time" value="2020-01-01"  id="port-time" class="layui-input" >
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">服务费用</label>
+                        <label class="layui-form-label">服务信息</label>
                         <div class="layui-input-block">
                             <input type="hidden" name="att" id="att">
                             <button type="button" class="layui-btn layui-btn-primary" id="attachment"><i class="layui-icon"></i>上传附件</button>
-                            <small>仅支持 zip|rar|7z 格式压缩包文件</small>
+                            <small id="fileName">仅支持 zip|rar|7z 格式压缩包文件</small>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@ use yii\helpers\Url; ?>
                 <div class="layui-form-item" data-role="pay-deposit">
                     <label class="layui-form-label">运输发票</label>
                     <div class="layui-input-block">
-                        <input type="hidden" id="transport-fee-file" />
+                        <input type="hidden" name="image" id="service-fee-file" />
                         <div class="layui-upload" id="deposit-upload" style="margin: 20px 20px;">
                             <button type="button" class="layui-btn" id="deposit-img">上传支付凭证</button>
                             <div class="layui-upload-list">
@@ -114,7 +114,7 @@ use yii\helpers\Url; ?>
                 </div>
 
                 <div class="layui-form-item layui-form-text"  data-role="subPay">
-                    <input type="text" name="orderId" id="orderId" value="1" hidden>
+                    <input type="text" name="orderId" id="orderId" hidden>
                     <button type="submit" class="layui-btn" lay-submit="" lay-filter="payOrderForm">保存</button>
                 </div>
             </form>

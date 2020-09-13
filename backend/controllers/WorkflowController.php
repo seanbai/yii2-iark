@@ -1280,4 +1280,24 @@ class WorkflowController extends Controller
         return json_encode($data);
 
     }
+
+    /**
+     * 填写物流运输信息
+     */
+    public function actionTransportUpdate()
+    {
+        if (empty($_POST['transport']) || empty($_POST['time']) || empty($_POST['image']) || empty($_POST['att']) ) {
+            return $this->error(201,"资料填写不全，请填写完全后提交");
+        }
+        $id = $_POST['orderId'];
+        $model = Delivery::findOne(['id' => $id]);
+        $model->transport = $_POST['transport'];
+        $model->port_time = $_POST['time'];
+        $model->image = $_POST['image'];
+        $model->file = $_POST['att'];
+
+        if (!$model->save()) return $this->error(503, $model->errors());
+        return $this->success();
+    }
+
 }

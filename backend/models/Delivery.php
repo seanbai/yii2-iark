@@ -15,6 +15,10 @@ use Yii;
  * @property int $order_id
  * @property int $order_item_id
  * @property string $project_name
+ * @property string $transport 运输信息
+ * @property string $port_time 预计到港时间
+ * @property string $file 服务费附件
+ * @property string $image 运输发票
  */
 class Delivery extends \yii\db\ActiveRecord
 {
@@ -34,8 +38,7 @@ class Delivery extends \yii\db\ActiveRecord
         return [
             [['name', 'product_ids', 'user_id', 'created_at'], 'required'],
             [['user_id', 'order_id', 'order_item_id'], 'integer'],
-            [['name', 'product_ids', 'created_at'], 'string', 'max' => 255],
-            [['project_name'], 'string', 'max' => 255],
+            [['name', 'product_ids', 'created_at', 'project_name', 'transport', 'port_time', 'file', 'image'], 'string', 'max' => 255],
         ];
     }
 
@@ -53,6 +56,10 @@ class Delivery extends \yii\db\ActiveRecord
             'order_id' => 'Order ID',
             'order_item_id' => 'Order Item ID',
             'project_name' => 'Project Name',
+            'transport' => 'Transport',
+            'port_time' => 'Port Time',
+            'file' => 'File',
+            'image' => 'Image',
         ];
     }
 }

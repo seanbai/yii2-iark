@@ -18,7 +18,14 @@ layui.define(function(exports){
         {type: 'radio'},
         {field: 'name', title: '提货编号'},
         {field: 'product_ids', title: '提货的产品ids'},
-        {field: 'created_at', title: '提货时间'}
+        {field: 'created_at', title: '提货时间'},
+        {field: 'transport', title: '运输信息'},
+        {field: 'port_time', title: '预计到港时间'},
+        {field: 'file', title: '服务费附件'},
+        {field: 'image', title: '运输发票',templet: function(d){
+            if(d.image) { return '<div onclick="showImg(this)"><img src="'+d.image+'"></div>' }
+            return  '';
+          }}
       ]]
     });
 
@@ -109,10 +116,12 @@ layui.define(function(exports){
           if(checkStatus.data.length === 0){
             layer.msg("请选择一条订单数据");
           }else{
+            $('#addFrom')[0].reset();
             // 取订单ID 和 项目名称
             var data = checkStatus.data;
             var id = data[0].id;
 
+            $("#orderId").val(id);
             var itemsbox = layer.open({
               type: 1,
               title: '填写物流信息',
@@ -125,21 +134,22 @@ layui.define(function(exports){
     });
 
     // 表单提交
-    form.on('submit(information)',function(data, id){
+    form.on('submit(payOrderForm)',function(data, id){
       $.ajax({
         type: 'post',
         dataType: 'json',
         data: data.field,
-        url: 'order-pay',
+        url: 'transport-update',
         error: function(){
           layer.msg('系统错误,请稍后重试.');
         },
         success: function(res){
-          if(res.code == 200){
+          if(res.code == 0){
+            layer.msg("保存运输信息成功");
             layer.closeAll();
             workflow.reload();
           }else{
-            layer.msg('操作失败，稍后再试');
+            layer.msg(res.errMsg);
           }
         }
       });
@@ -188,7 +198,8 @@ layui.define(function(exports){
         layer.closeAll('loading');
         if (res.code == 200) {
           //将图片添加到input
-          $('#att').attr('value',res.data);
+          $('#att').val(res.data);
+          $('#fileName').html(res.data)
         } else {
           layer.msg('上传失败');
         }
