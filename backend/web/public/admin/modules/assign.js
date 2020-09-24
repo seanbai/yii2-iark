@@ -263,31 +263,83 @@ layui.define(function (exports) {
         }
         // 改变订单状态
         window.changeStatus = function (id) {
-            $.ajax({
-                type: 'GET',
-                url: 'update-status?id=' + id + '&status=3',
-                error: function () {
-                    layer.msg('request error', {icon: 5});
-                },
-                success: function (response) {
-                    if (response.errCode == 0) {
-                        layer.msg(response.errMsg, {
-                            icon: 1,
-                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                            layer.closeAll();
+
+            layer.prompt({
+                formType: 2,
+                title: '请为此订单添加留言'
+            },function(value,index){
+                layer.close(index);
+                $.ajax({
+                    type: 'POST',
+                    // url: '/api/feedback?orderId=' + id + '&content=' + value,
+                    url: '/message/save?orderId='+ id +'&type='+ 2 +'&content='+value,
+                    error: function(){ // 保存错误处理
+                        layer.msg('留言失败,请稍后重试.',{
+                            icon: 5,
+                            time: 1000
+                        }, function(){
+                            $.ajax({
+                                type: 'GET',
+                                url: 'update-status?id=' + id + '&status=3',
+                                error: function () {
+                                    layer.msg('保存报价失败', {icon: 5});
+                                },
+                                success: function (response) {
+                                    if (response.errCode == 0) {
+                                        layer.msg(response.errMsg, {
+                                            icon: 1,
+                                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                        }, function () {
+                                            layer.closeAll();
+                                        });
+                                        order.reload()
+                                    } else {
+                                        layer.msg(response.errMsg, {
+                                            icon: 2,
+                                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                        }, function () {
+                                            //layer.closeAll();
+                                        });
+                                    }
+                                }
+                            });
                         });
-                        order.reload()
-                    } else {
-                        layer.msg(response.errMsg, {
-                            icon: 2,
-                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                            //layer.closeAll();
+                    },
+                    success: function(){ // 保存成功处理
+                        layer.confirm('请仔细核对后金额后进行提交！！！', function(index){
+                            $.ajax({
+                                type: 'GET',
+                                url: 'update-status?id=' + id + '&status=3',
+                                error: function () {
+                                    layer.msg('保存报价失败', {icon: 5});
+                                },
+                                success: function (response) {
+                                    if (response.errCode == 0) {
+                                        layer.msg(response.errMsg, {
+                                            icon: 1,
+                                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                        }, function () {
+                                            layer.closeAll();
+                                        });
+                                        order.reload()
+                                    } else {
+                                        layer.msg(response.errMsg, {
+                                            icon: 2,
+                                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                        }, function () {
+                                            //layer.closeAll();
+                                        });
+                                    }
+                                }
+                            });
                         });
                     }
-                }
+                });
             });
+
+
+
+
         }
     });
     //

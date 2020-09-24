@@ -128,31 +128,82 @@ layui.define(function(exports){
                       layer.msg('请上传支付凭证',{icon:5});
                       return false;
                     }
-                    $.ajax({
-                      type: 'POST',
-                      url: 'confirm-quote-pay-deposit', //确认报价支付订单
-                      data:{id: id, deposit_file: $deposit_file},
-                      error: function(){
-                        layer.msg('系统异常...',{icon:5});
-                      },
-                      success: function(response){
-                        if(response.errCode == 0){
-                          layer.msg(response.errMsg, {
-                            icon: 1,
-                            time: 900 //2秒关闭（如果不配置，默认是3秒）
-                          }, function () {
-                            layer.closeAll();
-                            workflow.reload();
-                          });
-                        }else{
-                          layer.msg(response.errMsg, {
+
+                    layer.prompt({
+                      formType: 2,
+                      title: '请先为此订单添加留言'
+                    },function(value,index){
+                      layer.close(index);
+                      $.ajax({
+                        type: 'POST',
+                        // url: '/api/feedback?orderId=' + id + '&content=' + value,
+                        url: '/message/save?orderId='+ id +'&type='+ 4 +'&content='+value,
+                        error: function(){ // 保存错误处理
+                          layer.msg('留言失败,请稍后重试.',{
                             icon: 5,
-                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                          }, function () {
-                            layer.closeAll();
+                            time: 1000
+                          }, function(){
+                            layer.confirm('是否继续确认报价?', function(index){
+                              $.ajax({
+                                type: 'POST',
+                                url: 'confirm-quote-pay-deposit', //确认报价支付订单
+                                data:{id: id, deposit_file: $deposit_file},
+                                error: function(){
+                                  layer.msg('系统异常...',{icon:5});
+                                },
+                                success: function(response){
+                                  if(response.errCode == 0){
+                                    layer.msg(response.errMsg, {
+                                      icon: 1,
+                                      time: 900 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                      layer.closeAll();
+                                      workflow.reload();
+                                    });
+                                  }else{
+                                    layer.msg(response.errMsg, {
+                                      icon: 5,
+                                      time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                      layer.closeAll();
+                                    });
+                                  }
+                                }
+                              });
+                            });
+                          });
+                        },
+                        success: function(){ // 保存成功处理
+                          layer.confirm('是否继续确认报价?', function(index){
+                            $.ajax({
+                              type: 'POST',
+                              url: 'confirm-quote-pay-deposit', //确认报价支付订单
+                              data:{id: id, deposit_file: $deposit_file},
+                              error: function(){
+                                layer.msg('系统异常...',{icon:5});
+                              },
+                              success: function(response){
+                                if(response.errCode == 0){
+                                  layer.msg(response.errMsg, {
+                                    icon: 1,
+                                    time: 900 //2秒关闭（如果不配置，默认是3秒）
+                                  }, function () {
+                                    layer.closeAll();
+                                    workflow.reload();
+                                  });
+                                }else{
+                                  layer.msg(response.errMsg, {
+                                    icon: 5,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                  }, function () {
+                                    layer.closeAll();
+                                  });
+                                }
+                              }
+                            });
                           });
                         }
-                      }
+                      });
                     });
                   }
                 });
@@ -190,35 +241,88 @@ layui.define(function(exports){
                 // })
               },
               btn2 : function () {
-                layer.confirm('您确定拒绝报价吗？', function(){
+
+                layer.prompt({
+                  formType: 2,
+                  title: '请先为此订单添加留言'
+                },function(value,index){
+                  layer.close(index);
                   $.ajax({
                     type: 'POST',
-                    url: 'update',
-                    data:{
-                      id:id,
-                      status: 401 //取消订单
-                    },
-                    error: function(){
-                      layer.msg('系统异常...',{icon:5});
-                    },
-                    success: function(response){
-                      // 关闭弹层
-                      if(response.errCode == 0){
-                        layer.msg('订单更新成功', {
-                          icon: 1,
-                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                          layer.close(itemsbox);
-                          workflow.reload();
+                    // url: '/api/feedback?orderId=' + id + '&content=' + value,
+                    url: '/message/save?orderId='+ id +'&type='+ 4 +'&content='+value,
+                    error: function(){ // 保存错误处理
+                      layer.msg('留言失败,请稍后重试.',{
+                        icon: 5,
+                        time: 1000
+                      }, function(){
+                        layer.confirm('您确定继续拒绝报价吗？', function(){
+                          $.ajax({
+                            type: 'POST',
+                            url: 'update',
+                            data:{
+                              id:id,
+                              status: 401 //取消订单
+                            },
+                            error: function(){
+                              layer.msg('系统异常...',{icon:5});
+                            },
+                            success: function(response){
+                              // 关闭弹层
+                              if(response.errCode == 0){
+                                layer.msg('订单更新成功', {
+                                  icon: 1,
+                                  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function () {
+                                  layer.close(itemsbox);
+                                  workflow.reload();
+                                });
+                              }else{
+                                layer.msg('订单更新失败', {
+                                  icon: 5,
+                                  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function () {
+                                  layer.close(itemsbox);
+                                });
+                              }
+                            }
+                          });
                         });
-                      }else{
-                        layer.msg('订单更新失败', {
-                          icon: 5,
-                          time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        }, function () {
-                          layer.close(itemsbox);
+                      });
+                    },
+                    success: function(){ // 保存成功处理
+                      layer.confirm('您确定拒绝报价吗？', function(){
+                        $.ajax({
+                          type: 'POST',
+                          url: 'update',
+                          data:{
+                            id:id,
+                            status: 401 //取消订单
+                          },
+                          error: function(){
+                            layer.msg('系统异常...',{icon:5});
+                          },
+                          success: function(response){
+                            // 关闭弹层
+                            if(response.errCode == 0){
+                              layer.msg('订单更新成功', {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                              }, function () {
+                                layer.close(itemsbox);
+                                workflow.reload();
+                              });
+                            }else{
+                              layer.msg('订单更新失败', {
+                                icon: 5,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                              }, function () {
+                                layer.close(itemsbox);
+                              });
+                            }
+                          }
                         });
-                      }
+                      });
                     }
                   });
                 });

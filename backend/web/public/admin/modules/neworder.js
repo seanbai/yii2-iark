@@ -77,11 +77,34 @@ layui.define(function(exports){
             var data = checkStatus.data;
             var id = data[0].id;
 
-            layer.confirm('确认使订单立即生效?', function(index){
-              confirm(id);
-              // layer.close(index);
-              order.reload();
+            layer.prompt({
+              formType: 2,
+              title: '请先为此订单添加留言'
+            },function(value,index){
+              layer.close(index);
+              $.ajax({
+                type: 'POST',
+                // url: '/api/feedback?orderId=' + id + '&content=' + value,
+                url: '/message/save?orderId='+ id +'&type='+ 1 +'&content='+value,
+                error: function(){ // 保存错误处理
+                  layer.msg('留言失败,请稍后重试.',{
+                        icon: 5,
+                        time: 1000
+                      }, function(){
+                    layer.confirm('确认继续使订单立即生效?', function(index){
+                      confirm(id);
+                    });
+                  });
+                },
+                success: function(){ // 保存成功处理
+                  layer.confirm('确认使订单立即生效?', function(index){
+                    confirm(id);
+                    order.reload();
+                  });
+                }
+              });
             });
+
           }
         break;
         // cancel order
@@ -93,9 +116,33 @@ layui.define(function(exports){
             var data = checkStatus.data;
             var id = data[0].id;
 
-            layer.confirm('确认取消此订单?', function(index){
-              cancel(id);
-              // layer.close(index);
+            layer.prompt({
+              formType: 2,
+              title: '请先为此订单添加留言'
+            },function(value,index){
+              layer.close(index);
+              $.ajax({
+                type: 'POST',
+                // url: '/api/feedback?orderId=' + id + '&content=' + value,
+                url: '/message/save?orderId='+ id +'&type='+ 1 +'&content='+value,
+                error: function(){ // 保存错误处理
+                  layer.msg('留言失败,请稍后重试.',{
+                        icon: 5,
+                        time: 1000
+                      }, function(){
+                    layer.confirm('确认继续取消此订单?', function(index){
+                      cancel(id);
+                      order.reload();
+                    });
+                  })
+                },
+                success: function(){ // 保存成功处理
+                  layer.confirm('确认取消此订单?', function(index){
+                    cancel(id);
+                    order.reload();
+                  });
+                },
+              });
             });
           }
         break;

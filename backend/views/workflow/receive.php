@@ -227,7 +227,7 @@ layui.config({
 
         <!-- 提交按钮 -->
         <div class="layui-form-item">
-            <button class="layui-btn" lay-submit="" lay-filter="submit-support">确认</button>
+            <button class="layui-btn" lay-submit="" lay-filter="submit-support" onclick="liuyan(5)">确认</button>
         </div>
 
     </form>

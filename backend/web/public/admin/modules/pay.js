@@ -161,6 +161,7 @@ layui.define(function(exports){
         switch(obj.event){
           case 'logPay':
             console.log(data);
+
             if(deposit <= 0 || balance <= 0){
               var form = layer.open({
                 type: 1,
@@ -334,6 +335,10 @@ layui.define(function(exports){
       return false;
     })
   });
+
+
+
+
   //
   exports('receive', {});
 });
