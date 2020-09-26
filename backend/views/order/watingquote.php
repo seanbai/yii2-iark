@@ -94,12 +94,12 @@ use yii\helpers\Url; ?>
                         <input type="text" value="10000"  id="order-deposit" class="layui-input" disabled>
                     </div>
                 </div>
-                <div class="layui-form-item" style="display:none"  data-role="pay-deposit">
-                    <label class="layui-form-label">是否支付</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="pay_deposit" lay-skin="switch" lay-text="是|否">
-                    </div>
-                </div>
+<!--                <div class="layui-form-item" style="display:none"  data-role="pay-deposit">-->
+<!--                    <label class="layui-form-label">是否支付</label>-->
+<!--                    <div class="layui-input-block">-->
+<!--                        <input type="checkbox" name="pay_deposit" lay-skin="switch" lay-text="是|否">-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <!-- 应收尾款% -->
                 <div class="layui-form-item" style="display:none" data-role="pay-balance">
@@ -120,7 +120,7 @@ use yii\helpers\Url; ?>
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item" style="display:none"  data-role="pay-balance">
+                <div class="layui-form-item" style="display:none"  data-role="pay-balance2">
                     <label class="layui-form-label">是否支付</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="pay_balance" lay-skin="switch" lay-text="是|否">

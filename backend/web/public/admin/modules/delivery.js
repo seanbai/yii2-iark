@@ -126,7 +126,9 @@ layui.define(function(exports){
               type: 1,
               title: '填写物流信息',
               area: ['90%', '80%'],
-              content: $('#information')
+              content: $('#payOrderForm'),
+              success: function(layero, index){
+              }
             })
           }
           break;
@@ -135,23 +137,78 @@ layui.define(function(exports){
 
     // 表单提交
     form.on('submit(payOrderForm)',function(data, id){
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        data: data.field,
-        url: 'transport-update',
-        error: function(){
-          layer.msg('系统错误,请稍后重试.');
-        },
-        success: function(res){
-          if(res.code == 0){
-            layer.msg("保存运输信息成功");
-            layer.closeAll();
-            workflow.reload();
-          }else{
-            layer.msg(res.errMsg);
-          }
-        }
+      var deliveryId =  $("#orderId").val();
+      layer.prompt({
+        formType: 2,
+        title: '请先为此订单添加留言'
+      },function(value,index){
+        layer.close(index);
+        $.ajax({
+          type: 'POST',
+          // url: '/api/feedback?orderId=' + id + '&content=' + value,
+          url: '/message/save?type='+ 200 +'&delivery='+ deliveryId +'&content='+value,
+          error: function(){ // 保存错误处理
+            layer.msg('留言失败,请稍后重试.',{
+              icon: 5,
+              time: 1000
+            }, function(){
+              layer.confirm('确认信息无误后保存?', function(index){
+                $.ajax({
+                  type: 'post',
+                  dataType: 'json',
+                  data: data.field,
+                  url: 'transport-update',
+                  error: function(){
+                    layer.msg('系统错误,请稍后重试.',{
+                      icon: 5,
+                      time: 1000
+                    });
+                  },
+                  success: function(res){
+                    if(res.code == 0){
+                      layer.msg('保存运输信息成功',{
+                        icon: 0,
+                        time: 1000
+                      });
+                      layer.closeAll();
+                      workflow.reload();
+                    }else{
+                      layer.msg(res.errMsg);
+                    }
+                  }
+                });
+              });
+            })
+          },
+          success: function(){ // 保存成功处理
+            layer.confirm('确认信息无误后保存?', function(index){
+              $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: data.field,
+                url: 'transport-update',
+                error: function(){
+                  layer.msg('系统错误,请稍后重试.',{
+                    icon: 5,
+                    time: 1000
+                  });
+                },
+                success: function(res){
+                  if(res.code == 0){
+                    layer.msg('保存运输信息成功',{
+                      icon: 0,
+                      time: 1000
+                    });
+                    layer.closeAll();
+                    workflow.reload();
+                  }else{
+                    layer.msg(res.errMsg);
+                  }
+                }
+              });
+            });
+          },
+        });
       });
       return false;
     })
@@ -224,5 +281,5 @@ layui.define(function(exports){
     }
   });
   //
-  exports('watingquote', {});
+  exports('delivery', {});
 });

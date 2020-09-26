@@ -160,6 +160,7 @@ layui.define(function(exports){
           } else {
             var id = data[0].id;
             console.log(id);
+
             layer.open({
               type: 1,
               title: '项目名称 - ' + "",
@@ -183,33 +184,87 @@ layui.define(function(exports){
 
     // 表单提交
     form.on('submit(submit-support)',function(data,id){
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        data: data.field,
-        url: 'create-supprot',
-        error: function(){
-          layer.msg('系统错误,请稍后重试.');
-        },
-        success: function(response){
-          if(response.errCode == 0){
-            layer.msg(response.errMsg, {
-              icon: 1,
-              time: 2000 //2秒关闭（如果不配置，默认是3秒）
-            }, function () {
-              layer.closeAll();
-              order.reload();
-              $('#supportForm')[0].reset();
-            });
-          }else{
-            layer.msg(response.errMsg, {
+
+
+      layer.prompt({
+        formType: 2,
+        title: '请先为此订单添加留言'
+      },function(value,index){
+        layer.close(index);
+        $.ajax({
+          type: 'POST',
+          // url: '/api/feedback?orderId=' + id + '&content=' + value,
+          url: '/message/save?orderId='+ orderId +'&type='+ 6 +'&content='+value,
+          error: function(){ // 保存错误处理
+            layer.msg('留言失败,请稍后重试.',{
               icon: 5,
-              time: 2000 //2秒关闭（如是果不配置，默认3秒）
-            }, function () {
-              layer.close(itemsbox);
+              time: 1000
+            }, function(){
+              layer.confirm('确定收到订单金额吗?', function(index){
+                $.ajax({
+                  type: 'post',
+                  dataType: 'json',
+                  data: data.field,
+                  url: 'create-supprot',
+                  error: function(){
+                    layer.msg('系统错误,请稍后重试.');
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        order.reload();
+                        $('#supportForm')[0].reset();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如是果不配置，默认3秒）
+                      }, function () {
+                        layer.close(itemsbox);
+                      });
+                    }
+                  }
+                });
+              });
+            })
+          },
+          success: function(){ // 保存成功处理
+            layer.confirm('确定收到订单金额吗?', function(index){
+              $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: data.field,
+                url: 'create-supprot',
+                error: function(){
+                  layer.msg('系统错误,请稍后重试.');
+                },
+                success: function(response){
+                  if(response.errCode == 0){
+                    layer.msg(response.errMsg, {
+                      icon: 1,
+                      time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function () {
+                      layer.closeAll();
+                      order.reload();
+                      $('#supportForm')[0].reset();
+                    });
+                  }else{
+                    layer.msg(response.errMsg, {
+                      icon: 5,
+                      time: 2000 //2秒关闭（如是果不配置，默认3秒）
+                    }, function () {
+                      layer.close(itemsbox);
+                    });
+                  }
+                }
+              });
             });
-          }
-        }
+          },
+        });
       });
       return false;
     });
@@ -280,6 +335,7 @@ layui.define(function(exports){
               content: $('#confirmPayment'),
               success: function(layero, index){
                 $('#orderId').val(id);
+                $('#orderStatus').val(7);
                 $('#total').val(total);
                 $('#deposit').val(total/2);
                 $('#balance').val(total/2).attr('disabled',true);
@@ -378,14 +434,13 @@ layui.define(function(exports){
         cols: [[
           {field: 'name', title: '提货编号'},
           {field: 'status_name', title: '状态'},
-          {field: 'wait_tax_amount', title: '应收税金', edit: 'text'},
-          {field: 'confirm_tax_amount', title: '实收税金', edit: 'text'},
-          {field: 'wait_support_amount', title: '应收服务费', edit: 'text'},
-          {field: 'confirm_supprot_amount', title: '实收服务费', edit: 'text'},
-          {field: 'desc', title: '备注', edit: 'text', width:300},
-          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 340}
+          {field: 'wait_tax_amount', title: '应收服务费', edit: 'text'},
+          {field: 'confirm_tax_amount', title: '实收服务费', edit: 'text'},
+          {field: 'desc', title: '备注', edit: 'text', width: 300},
+          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 220}
         ]]
       });
+
       //价格编辑
       table.on('edit(items)', function(obj){
         var value = obj.value;  //修改后的金额
@@ -630,23 +685,70 @@ layui.define(function(exports){
     }
     // 表单提交
     form.on('submit(confirmPayment)',function(data,id){
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        data: data.field,
-        url: 'receive-confirm',
-        error: function(){
-          layer.msg('系统错误,请稍后重试.');
-        },
-        success: function(res){
-          if(res.errCode == 0){
-            layer.msg('操作成功');
-            layer.closeAll();
-            order.reload();
-          }else{
-            layer.msg(res.errMsg);
-          }
-        }
+      var orderId = $('#orderId').val();
+      var orderStatus = $('#orderStatus').val();
+      var orderS = 5;
+      if (orderStatus == 7) { orderS = 7; }
+
+      layer.prompt({
+        formType: 2,
+        title: '请先为此订单添加留言'
+      },function(value,index){
+        layer.close(index);
+        $.ajax({
+          type: 'POST',
+          // url: '/api/feedback?orderId=' + id + '&content=' + value,
+          url: '/message/save?orderId='+ orderId +'&type='+ orderS +'&content='+value,
+          error: function(){ // 保存错误处理
+            layer.msg('留言失败,请稍后重试.',{
+              icon: 5,
+              time: 1000
+            }, function(){
+              layer.confirm('确认是否收到尾款?', function(index){
+                $.ajax({
+                  type: 'post',
+                  dataType: 'json',
+                  data: data.field,
+                  url: 'receive-confirm',
+                  error: function(){
+                    layer.msg('系统错误,请稍后重试.');
+                  },
+                  success: function(res){
+                    if(res.errCode == 0){
+                      layer.msg('操作成功');
+                      layer.closeAll();
+                      order.reload();
+                    }else{
+                      layer.msg(res.errMsg);
+                    }
+                  }
+                });
+              });
+            })
+          },
+          success: function(){ // 保存成功处理
+            layer.confirm('确认是否收到尾款?', function(index){
+              $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: data.field,
+                url: 'receive-confirm',
+                error: function(){
+                  layer.msg('系统错误,请稍后重试.');
+                },
+                success: function(res){
+                  if(res.errCode == 0){
+                    layer.msg('操作成功');
+                    layer.closeAll();
+                    order.reload();
+                  }else{
+                    layer.msg(res.errMsg);
+                  }
+                }
+              });
+            });
+          },
+        });
       });
       return false;
     })

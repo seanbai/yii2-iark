@@ -1,15 +1,16 @@
 <?php
 
-use yii\helpers\Url; ?>
+use yii\helpers\Url;
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
-    <link rel="stylesheet" href="/public/admin/ui/css/layui.css">
-    <link rel="stylesheet" href="/public/admin/css/custom.css">
+    <link rel="stylesheet" href="<?= Url::to('@web/public/admin/ui/css/layui.css',true)?>">
+    <link rel="stylesheet" href="<?= Url::to('@web/public/admin/css/custom.css',true)?>">
 </head>
 <body class="dark">
 
@@ -69,7 +70,7 @@ use yii\helpers\Url; ?>
 </div>
 
 <!-- 填写物流信息 -->
-<div style="display:none" id="information" class="layui-fluids">
+<div style="display:none" id="payOrderForm" class="layui-fluids">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">
             <form class="layui-form layui-form-pane" id="addFrom">
@@ -113,9 +114,9 @@ use yii\helpers\Url; ?>
                     </div>
                 </div>
 
-                <div class="layui-form-item layui-form-text"  data-role="subPay">
+                <div class="layui-form-item layui-form-text">
                     <input type="text" name="orderId" id="orderId" hidden>
-                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="payOrderForm">保存</button>
+                    <button type="submit"class="layui-btn" lay-submit="" lay-filter="payOrderForm">保存</button>
                 </div>
             </form>
         </div>

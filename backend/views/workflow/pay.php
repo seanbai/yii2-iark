@@ -143,35 +143,10 @@ layui.config({
         <!-- 提交按钮 -->
         <div class="layui-form-item layui-form-text">
           <input type="text" name="subOrderId" id="subOrderId" hidden>
-          <button type="submit" class="layui-btn" lay-submit="" lay-filter="confirmPay" onclick="liuyan(5)">确认付款</button>
+          <button type="submit" class="layui-btn" lay-submit="" lay-filter="confirmPay" >确认付款</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-
-
-<script>
-    function liuyan(e) {
-        layer.prompt({
-            formType: 2,
-            title: '请先为此订单添加留言'
-        },function(value,index){
-            $.ajax({
-                type: 'POST',
-                // url: '/api/feedback?orderId=' + id + '&content=' + value,
-                url: '/message/save?orderId='+ id +'&type='+ 7 +'&content='+value,
-                error: function(){ // 保存错误处理
-                    layer.msg('留言失败,请稍后重试.',{
-                        icon: 5,
-                        time: 1000
-                    }, function(){});
-                },
-                success: function(){ // 保存成功处理
-                    return true
-                }
-            });
-        });
-    }
-</script>

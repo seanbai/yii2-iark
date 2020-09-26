@@ -31,7 +31,6 @@ use yii\helpers\Url;
           </script>
           <script type="text/html" id="action">
             <a class="layui-btn layui-btn-xs" lay-event="confirm">收款确认</a>
-            <a class="layui-btn layui-btn-xs" lay-event="confirmSupprot">服务费收取清单</a>
           </script>
         </div>
       </div>
@@ -68,10 +67,8 @@ layui.config({
       <table class="items" id="items" lay-filter="items"></table>
         <!-- 行编辑 -->
         <script type="text/html" id="taxAction">
-            <a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="pleaseTax">税金申请</a>
-            <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="confirmTax">税金确认</a>
-            <a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="pleaseSupprot">服务费申请</a>
-            <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="confirmSupprot">服务费确认</a>
+            <a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="pleaseTax">服务费申请</a>
+            <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="confirmTax">服务费确认</a>
         </script>
     </div>
   </div>
@@ -101,20 +98,6 @@ layui.config({
             </div>
             <div class="layui-form-mid layui-word-aux" id="aux-balance">应收尾款10000</div>
         </div>
-<!--        <div class="layui-form-item">-->
-<!--            <label class="layui-form-label">通知支付税金</label>-->
-<!--            <div class="layui-input-inline">-->
-<!--                <input type="checkbox" lay-text="是|否" name="tax_notice" lay-skin="switch">-->
-<!--            </div>-->
-<!--            <div class="layui-form-mid layui-word-aux" id="aux-tax">应收金10000</div>-->
-<!--        </div>-->
-<!--        <div class="layui-form-item">-->
-<!--            <label class="layui-form-label">通知支付服务费</label>-->
-<!--            <div class="layui-input-inline">-->
-<!--                <input type="checkbox" lay-text="是|否" name="fuwu_notice" lay-skin="switch">-->
-<!--            </div>-->
-<!--            <div class="layui-form-mid layui-word-aux" id="aux-fuwu">应收服务费10000</div>-->
-<!--        </div>-->
         <!-- 提交按钮 -->
         <div class="layui-form-item">
             <button class="layui-btn" lay-submit="" lay-filter="receiveNotice">确认</button>
@@ -161,34 +144,7 @@ layui.config({
             <input type="text" name="receive_balance" id="receive_balance" autocomplete="off" class="layui-input">
           </div>
         </div>
-        <!-- 自动计算总金额的50% -->
-        <div class="layui-form-item">
-          <label class="layui-form-label">应收税金</label>
-          <div class="layui-input-block">
-            <input type="text" value="10000" name="tax" id="tax" class="layui-input">
-          </div>
-        </div>
-        <!-- 实际收款金额 -->
-        <div class="layui-form-item">
-          <label class="layui-form-label">实收税金</label>
-          <div class="layui-input-block">
-            <input type="text" name="receive_tax" id="receive_tax" autocomplete="off" class="layui-input">
-          </div>
-        </div>
-          <!-- 自动计算总金额的50% -->
-          <div class="layui-form-item">
-              <label class="layui-form-label">应收服务费</label>
-              <div class="layui-input-block">
-                  <input type="text" value="10000" name="fuwu" id="fuwu" class="layui-input">
-              </div>
-          </div>
-          <!-- 实际收款金额 -->
-          <div class="layui-form-item">
-              <label class="layui-form-label">实收服务费</label>
-              <div class="layui-input-block">
-                  <input type="text" name="receive_tax" id="receive_fuwu" autocomplete="off" class="layui-input">
-              </div>
-          </div>
+
         <!-- 备注说明 -->
         <!--<div class="layui-form-item layui-form-text">
           <label class="layui-form-label">收款备注</label>
@@ -198,7 +154,8 @@ layui.config({
         </div>-->
         <!-- 提交按钮 -->
         <div class="layui-form-item layui-form-text">
-          <input type="text" name="orderId" id="orderId" hidden>
+            <input type="text" name="orderId" id="orderId" hidden/>
+            <input type="text" name="orderStatus" id="orderStatus" hidden/>
           <button type="submit" class="layui-btn" lay-submit="" lay-filter="confirmPayment">确认收款</button>
         </div>
       </form>
@@ -227,7 +184,7 @@ layui.config({
 
         <!-- 提交按钮 -->
         <div class="layui-form-item">
-            <button class="layui-btn" lay-submit="" lay-filter="submit-support" onclick="liuyan(5)">确认</button>
+            <button class="layui-btn" lay-submit="" lay-filter="submit-support" >确认</button>
         </div>
 
     </form>

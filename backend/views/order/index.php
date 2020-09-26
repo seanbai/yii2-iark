@@ -105,12 +105,38 @@ use yii\helpers\Url;
       <table class="items" id="items" lay-filter="items"></table>
         <!-- 行编辑 -->
         <script type="text/html" id="taxAction">
-            <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="confirmTax">税金已支付</a>
-            <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="confirmSupprot">服务费已支付</a>
+            <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="confirmTax">服务费已支付</a>
+            <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="confirmSupprot">凭证上传</a>
         </script>
     </div>
     <!-- 顶部工具栏 -->
     <script type="text/html" id="showItemsBar">
     </script>
   </div>
+</div>
+
+
+<div style="display:none" id="showPay" class="layui-fluid">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <form class="layui-form layui-form-pane">
+                <!-- 实际收款金额 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">服务费凭证</label>
+                    <!--支付凭证上传-->
+                    <div class="pay-upload">
+                        <input type="hidden" id="deposit-upload-file" name="deposit-upload-file" />
+                        <div class="layui-upload" id="deposit-upload" style="margin: 20px 20px;">
+                            <button type="button" class="layui-btn" id="deposit-img">上传付款凭证</button>
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img" style=" width: 105px;height: 105px;margin: 0 10px 10px 0;"
+                                     id="pay-file-deposit">
+                                <p id="demoText-deposit"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

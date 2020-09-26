@@ -375,22 +375,22 @@ layui.define(function(exports){
                   $('#order-deposit').val(total/2);
                   $('#order-balance').val( total/2);
                   $('[data-role="pay-deposit"]').show();
-                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
+                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":false});
                   $('[data-role="pay-balance"]').show();
+                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":false});
                   $('[data-role="pay-fuwu"]').hide();
                   $('[data-role="pay-tax"]').hide();
                 }
                 if(order_status == 14){
                   $('#order-deposit').val(total/2);
                   $('#order-balance').val( total/2);
-                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
-                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":true});
-
+                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":false});
+                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":false});
                   $('#order-tax').val(order_data[0].tax);
-                  $('[data-role="pay-deposit"]').show();
-                  $('[data-role="pay-balance"]').show();
+                  $('[data-role="pay-deposit"]').hide();
+                  $('[data-role="pay-balance"]').hide();
                   $('[data-role="pay-fuwu"]').hide();
-                  $('[data-role="pay-tax"]').show();
+                  $('[data-role="pay-tax"]').hide();
                 }
 
                 if(order_status == 202){
@@ -398,9 +398,9 @@ layui.define(function(exports){
                   $('#order-balance').val( total/2);
                   $('#order-tax').val(order_data[0].tax);
                   $('#order-fuwu').val(order_data[0].fuwu);
-                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":true});
-                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":true});
-                  $('input[name="pay_tax"]').attr({'checked':true,"disabled":true});
+                  $('input[name="pay_deposit"]').attr({'checked':true,"disabled":false});
+                  $('input[name="pay_balance"]').attr({'checked':true,"disabled":false});
+                  $('input[name="pay_tax"]').attr({'checked':true,"disabled":false});
 
                   $('[data-role="pay-deposit"]').show();
                   $('[data-role="pay-balance"]').show();
@@ -483,22 +483,63 @@ layui.define(function(exports){
       }
     // 表单提交
     form.on('submit(payOrderForm)',function(data, id){
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        data: data.field,
-        url: 'order-pay',
-        error: function(){
-          layer.msg('系统错误,请稍后重试.');
-        },
-        success: function(res){
-          if(res.code == 200){
-            layer.closeAll();
-            workflow.reload();
-          }else{
-            layer.msg('操作失败，稍后再试');
-          }
-        }
+      var orderId = $('#orderId').val();
+      layer.prompt({
+        formType: 2,
+        title: '请先为此订单添加留言'
+      },function(value,index){
+        layer.close(index);
+        $.ajax({
+          type: 'POST',
+          url: '/message/save?orderId='+ orderId +'&type='+ 6 +'&content='+value,
+          error: function(){ // 保存错误处理
+            layer.msg('留言失败,请稍后重试.',{
+              icon: 5,
+              time: 1000
+            }, function(){
+              layer.confirm('确认继续支付尾款?', function(index){
+                $.ajax({
+                  type: 'post',
+                  dataType: 'json',
+                  data: data.field,
+                  url: 'order-pay',
+                  error: function(){
+                    layer.msg('系统错误,请稍后重试.');
+                  },
+                  success: function(res){
+                    if(res.code == 200){
+                      layer.closeAll();
+                      workflow.reload();
+                    }else{
+                      layer.msg('操作失败，稍后再试');
+                    }
+                  }
+                });
+              });
+            })
+          },
+          success: function(){ // 保存成功处理
+            layer.confirm('确认继续支付尾款?', function(index){
+              $.ajax({
+                type: 'post',
+                dataType: 'json',
+                data: data.field,
+                url: 'order-pay',
+                error: function(){
+                  layer.msg('系统错误,请稍后重试.');
+                },
+                success: function(res){
+                  if(res.code == 200){
+                    layer.closeAll();
+                    workflow.reload();
+                  }else{
+                    layer.msg('操作失败，稍后再试');
+                  }
+                }
+              });
+            });
+          },
+        });
       });
       return false;
     })

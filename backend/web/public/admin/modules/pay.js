@@ -137,7 +137,7 @@ layui.define(function(exports){
               }
               return  '';
             }},
-          {field: 'depositdate', title: '定金支付时间'},
+          // {field: 'depositdate', title: '定金支付时间'},
           {field: 'balance', title: '尾款'},
           {field: 'balance_file', title: '尾款付款凭证',templet: function(d){
               if(d.balance_file){
@@ -145,7 +145,7 @@ layui.define(function(exports){
               }
               return  '';
             }},
-          {field: 'balancedate', title: '尾款支付时间'},
+          // {field: 'balancedate', title: '尾款支付时间'},
           {fixed: 'right', title:'操作', toolbar: '#logPay', width:100}
         ]]
       });
@@ -314,24 +314,24 @@ layui.define(function(exports){
 
     // 表单提交
     form.on('submit(confirmPay)',function(data,id){
-      $.ajax({
-        type: 'post',
-        dataType: 'json',
-        data: data.field,
-        url: 'payment', //todo
-        error: function(){
-          layer.msg('系统错误,请稍后重试.');
-        },
-        success: function(res){
-          if(res.errCode == 0){
-            layer.msg('操作成功');
-            layer.closeAll();
-            order.reload();
-          }else{
-            layer.msg(res.errMsg);
+        $.ajax({
+          type: 'post',
+          dataType: 'json',
+          data: data.field,
+          url: 'payment', //todo
+          error: function(){
+            layer.msg('系统错误,请稍后重试.');
+          },
+          success: function(res){
+            if(res.errCode == 0){
+              layer.msg('操作成功');
+              layer.closeAll();
+              order.reload();
+            }else{
+              layer.msg(res.errMsg);
+            }
           }
-        }
-      });
+        });
       return false;
     })
   });
