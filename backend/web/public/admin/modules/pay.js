@@ -124,7 +124,7 @@ layui.define(function(exports){
         cols: [[ //表头
           {field: 'supplier_name', title: '供货商'},
           {field: 'quote_time', title: '报价时间'},
-          {field: 'total', title: '价格'},
+          {field: 'original_price', title: '价格'},
           {field: 'total', title: '出厂价'},
           {field: 'deposit', title: '定金'},
           {field: 'deposit_file', title: '定金付款凭证',
