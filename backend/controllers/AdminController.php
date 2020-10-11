@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\AdminLog;
+use backend\models\Menu;
 use common\helpers\Helper;
 use Yii;
 use backend\models\Admin;
@@ -212,5 +213,35 @@ class AdminController extends Controller
 
         AdminLog::create(AdminLog::TYPE_DELETE, $ids, $this->pk . '=' . $ids);
         return $this->success($arrIds, $message);
+    }
+
+    /**
+     * 重置密码
+     */
+    public function actionReset()
+    {
+        return $this->render('reset', [
+            'uid' => Yii::$app->user->id
+        ]);
+    }
+
+    public function actionResetPassword()
+    {
+        $old = $_POST['old'];
+        $id = $_POST['id'];
+        $admin = Admin::findOne(['id' => $id]);
+        if (!password_verify($old, $admin->password_hash)){
+            return $this->error(201,'旧密码错误');
+        }
+        if ($_POST['new'] !== $_POST['new2']) {
+            return $this->error(201, '请检查新密码是否一致');
+        }
+
+        $admin->setPassword($_POST['new']);
+        if (!$admin->save()){
+            return $this->error( 203, '重置密码失败,请稍后再重试');
+        }
+
+        return $this->success();
     }
 }

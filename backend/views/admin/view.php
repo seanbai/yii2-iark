@@ -31,27 +31,11 @@ $this->registerJsFile($url.'/js/validate.message.js', $depends);
 
 ?>
 <div class="clearfix">
-    <div class="pull-left alert alert-success no-margin">
-        <button data-dismiss="alert" class="close" type="button">
-            <i class="ace-icon fa fa-times"></i>
-        </button>
-        <i class="ace-icon fa fa-umbrella bigger-120 blue"></i>
-        点击下面的图片或配置文件领域来编辑 ...
-    </div>
-
     <div class="pull-right">
         <span class="green middle bolder">选择配置文件: &nbsp;</span>
         <div class="btn-toolbar inline middle no-margin">
             <div class="btn-group no-margin" data-toggle="buttons">
                 <label class="btn btn-sm btn-yellow active">
-                    <span class="bigger-110">1</span>
-                    <input type="radio" value="1">
-                </label>
-                <label class="btn btn-sm btn-yellow">
-                    <span class="bigger-110">2</span>
-                    <input type="radio" value="2">
-                </label>
-                <label class="btn btn-sm btn-yellow">
                     <span class="bigger-110">3</span>
                     <input type="radio" value="3">
                 </label>

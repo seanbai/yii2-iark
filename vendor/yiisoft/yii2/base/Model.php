@@ -725,7 +725,9 @@ class Model extends Component implements StaticInstanceInterface, IteratorAggreg
      */
     public function setAttributes($values, $safeOnly = true)
     {
+
         if (is_array($values)) {
+
             $attributes = array_flip($safeOnly ? $this->safeAttributes() : $this->attributes());
             foreach ($values as $name => $value) {
                 if (isset($attributes[$name])) {
@@ -853,9 +855,10 @@ class Model extends Component implements StaticInstanceInterface, IteratorAggreg
     public function load($data, $formName = null)
     {
         $scope = $formName === null ? $this->formName() : $formName;
+
+
         if ($scope === '' && !empty($data)) {
             $this->setAttributes($data);
-
             return true;
         } elseif (isset($data[$scope])) {
             $this->setAttributes($data[$scope]);

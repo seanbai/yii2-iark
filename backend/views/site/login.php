@@ -9,28 +9,45 @@ use yii\bootstrap\ActiveForm;
 $this->title = Yii::t('app', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php $form = ActiveForm::begin(); ?>
-<fieldset>
-    <label class="block clearfix">
-        <span class="block input-icon input-icon-right">
-            <?= $form->field($model, 'username')->textInput(['placeholder' => $model->getAttributeLabel('username')])->label(false) ?>
-            <i class="ace-icon fa fa-user"></i>
-        </span>
-    </label>
 
-    <label class="block clearfix">
-        <span class="block input-icon input-icon-right">
-            <?= $form->field($model, 'password')->passwordInput(['placeholder' => $model->getAttributeLabel('password')])->label(false) ?>
-            <i class="ace-icon fa fa-lock"></i>
-        </span>
-    </label>
-    <div class="space"></div>
-    <div class="clearfix">
-        <label class="inline">
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
-        </label>
-        <?= Html::submitButton('登录', ['class' => 'btn bg-olive btn-block width-35 pull-right btn btn-sm btn-primary']) ?>
+<?php $form = ActiveForm::begin(); ?>
+<div class="layui-form" id="login">
+    <div class="layui-form-item" wid100>
+        <div class="layui-input-block">
+            <?= $form->field($model, 'username')->textInput(['placeholder' => $model->getAttributeLabel('username'),'class'=> 'layui-input'])->label(false) ?>
+        </div>
     </div>
-    <div class="space-4"></div>
-</fieldset>
+    <div class="layui-form-item" wid100>
+        <div class="layui-input-block">
+            <?= $form->field($model, 'password')->passwordInput(['placeholder' => $model->getAttributeLabel('password'),'class'=> 'layui-input'])->label(false) ?>
+        </div>
+    </div>
+    <div class="layui-form-item" wid100>
+        <div class="layui-input-block">
+            <?= Html::submitButton(' Log In', ['class' => 'layui-btn layui-btn-fluid layui-btn-lg']) ?>
+        </div>
+    </div>
+<!--    <div class="layui-form-item" wid100>-->
+<!--        <div class="layui-input-block">-->
+<!--            <span id="zhuce" style="float: right;">注册</span>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $(function(){
+        $(document).on('click', '#zhuce', function () {
+            $('#reg').attr('style','display:block');
+            $('#login').attr('style','display:none');
+        })
+
+    });
+</script>
+
+
+
 <?php ActiveForm::end(); ?>

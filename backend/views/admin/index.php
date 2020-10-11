@@ -68,19 +68,6 @@ $this->registerJsFile($url.'/js/chosen.jquery.min.js', $depends);
                         "bViews": false
                     },
                     {
-                        "title": "头像", "data": "face", "sName": "face", "isHide": true,
-                        "edit": {
-                            "type": "file",
-                            options: {
-                                "id": "file",
-                                "name": "UploadForm[face]",
-                                "input-name": "face",
-                                "input-type": "ace_file",
-                                "file-name": "face"
-                            }
-                        }
-                    },
-                    {
                         "title": "邮箱",
                         "data": "email",
                         "sName": "email",
@@ -98,6 +85,58 @@ $this->registerJsFile($url.'/js/chosen.jquery.min.js', $depends);
                         "createdCell": function(td, data) {
                             $(td).html(aRoles[data] ? aRoles[data] : data);
                         }
+                    },
+                    {
+                        "title": "供货商名称",
+                        "data": "name",
+                        "sName": "name",
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "联系人",
+                        "data": "contact",
+                        "sName": "contact",
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "联系电话",
+                        "data": "phone",
+                        "sName": "phone",
+                        "value": aRoles,
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "所在城市",
+                        "data": "phone",
+                        "sName": "phone",
+                        "value": aRoles,
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
+                    },
+                    {
+                        "title": "详细地址",
+                        "data": "address",
+                        "sName": "address",
+                        "isHide": true,
+                        "edit": {"type": "text", "rangelength": "[2, 20]"},
+                        "bSortable": false,
+                        "defaultContent": "",
+                        "bViews": false
                     },
                     {
                         "title": "状态", "data": "status", "sName": "status", "value": aStatus,

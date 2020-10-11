@@ -1,0 +1,26 @@
+{
+  "code" : 0,
+  "msg" : "",
+  "count" : 7,
+  "data" : [{
+    "id" : 1,
+    "brand" : "Ditre",
+    "model": "客厅 st.tropez休闲椅（P10M0）",
+    "image": "/upload/1.jpg",
+    "size": "800x830 h.760",
+    "material" : "surcharge Maxi:Milano 550",
+    "qty": "2",
+    "package": "",
+    "des": ""
+  },{
+    "id" : 2,
+    "brand" : "Ditre",
+    "model": "次卧床 Kanaha",
+    "image": "/upload/2.jpg",
+    "size": "2100x2460 h.830",
+    "material" : "Soft Sidney 109",
+    "qty": "2",
+    "package": "",
+    "des": ""
+  }]
+}
