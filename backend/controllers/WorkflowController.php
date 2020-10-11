@@ -650,6 +650,13 @@ class WorkflowController extends Controller
         //            'balanceDate' //尾款支付时间
         //        ];
 
+        foreach ($childOrders as $key=>$item){
+            $originalPrice = 0;
+            $total = OrderItem::find()->where(['order_id' => $item['order_id'], 'supplier_id' => $item['supplier_id']])->asArray()->all();
+            if ($total) $originalPrice = $this->handleOrderPrice($total);
+            $childOrders[$key]['original_price'] = $originalPrice;
+        }
+
         \Yii::$app->response->format = 'json';
         return [
             'code' => 0,
@@ -657,6 +664,16 @@ class WorkflowController extends Controller
             'data'  => $childOrders
         ];
     }
+
+    protected function handleOrderPrice($items)
+    {
+        $total = 0;
+        foreach ($items as $item) {
+            $total += $item['origin_price'];
+        }
+        return $total;
+    }
+
 
     /**
      * 订单详情
