@@ -573,7 +573,7 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: '备注'},
-          {field: 'origin_price', title: '产品单价(欧元)'},
+          {field: 'origin_price', title: '价格(欧元)'},
           {field: 'disc_price', title: '采购折扣价 (欧元)'}
         ]]
       });

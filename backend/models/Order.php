@@ -59,7 +59,7 @@ class Order extends \yii\db\ActiveRecord
             'payment_method' => 'Payment Method',
             'create_time' => 'Create Time',
             'order_status' => '订单状态',
-            'product_amount' => '报价金额',
+            'product_amount' => '价格',
             'deposit_file' => '定金支付凭证',
             'balance_file' => '尾款支付凭证',
             'deposit_amount' => '订金金额',

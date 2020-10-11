@@ -125,7 +125,7 @@ layui.define(function (exports) {
                             }
                         }
                     },
-                    {field: 'origin_price', title: '单价(欧元)'},
+                    {field: 'origin_price', title: '价格(欧元)'},
                     {
                         field: 'quote_type', title: '报价方', templet: function (d) {
                             if (d.quote_type == 0) {

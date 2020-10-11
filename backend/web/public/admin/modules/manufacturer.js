@@ -34,7 +34,7 @@ layui.define(function(exports){
         {field: 'status', title: '账户状态', templet:'#userStatus'},
         {field: 'city', title: '城市',templet:'<div>{{d.city}}</div>'},
         {field: 'address', title: '提货地址',templet:'<div>{{d.address}}</div>'},
-        {field: 'off', title: '供货折扣',templet:'<div>{{d.off}}</div>'},
+        {field: 'off', title: '出厂价',templet:'<div>{{d.off}}</div>'},
         {field: 'contract', title: '签约时间',templet:'<div>{{d.time}}</div>'},
         {fixed: 'right', title:'操作', toolbar: '#editTool', width:140}
       ]]

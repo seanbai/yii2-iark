@@ -26,7 +26,7 @@ layui.define(function(exports){
         {field: 'id', title: 'ID', width:80, sort: true},
         {field: 'num', title: '订单号',templet:'<div>{{d.order_number}}</div>'},
         {field: 'status', title: '订单状态',templet:'#orderStatus'},
-        {field: 's_price', title: '报价金额', sort: true, templet:'<div>{{d.product_amount}}</div>'},
+        {field: 's_price', title: '价格', sort: true, templet:'<div>{{d.product_amount}}</div>'},
         {field: 'dj', title: '税金和运费', templet:'<div>{{d.tax}}</div>'},
         {field: 'orderDate', title: '创建时间', templet:'<div>{{d.create_time}}</div>'},
         {field: 'date', title: '期望交付时间', templet:'<div>{{d.date}}</div>'},

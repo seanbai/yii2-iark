@@ -107,9 +107,9 @@ layui.define(function(exports){
           },
           {field: 'supplier_name', title: '供货商'},
           {field: 'desc', title: '备注'},
-          {field: 'origin_price', title: '单价(欧元)',
+          {field: 'origin_price', title: '价格(欧元)',
             totalRow: true},
-          {field: 'price', title: '供货折扣价(欧元)',
+          {field: 'price', title: '出厂价(欧元)',
             totalRow: true},
           {field: 'disc_price', title: '采购折扣价(欧元)',
             totalRow: true}
@@ -127,8 +127,8 @@ layui.define(function(exports){
         cols: [[ //表头
           {field: 'supplier_name', title: '供货商'},
           {field: 'quote_time', title: '报价时间'},
-          {field: 'total', title: '报价金额'},
-          {field: 'total', title: '供货折扣价'},
+          {field: 'total', title: '价格'},
+          {field: 'total', title: '出厂价'},
           {field: 'deposit', title: '定金'},
           {field: 'deposit_file', title: '定金付款凭证',
             templet: function(d){

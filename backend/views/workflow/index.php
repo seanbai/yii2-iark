@@ -57,7 +57,7 @@
                                         <td colspan="12">报价时间：</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4">报价金额：</td>
+                                        <td colspan="4">价格：</td>
                                         <td colspan="4">币种：</td>
                                         <td colspan="4">汇率：</td>
                                     </tr>

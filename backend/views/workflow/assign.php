@@ -83,7 +83,7 @@ layui.config({
         </div>
 
         <div class="layui-form-item" id="priceInput">
-          <label class="layui-form-label">单价(欧元)</label>
+          <label class="layui-form-label">价格(欧元)</label>
           <div class="layui-input-block">
             <input type="text" name="title" autocomplete="off" placeholder="请输入金额" class="layui-input">
           </div>

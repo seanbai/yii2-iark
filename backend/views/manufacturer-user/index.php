@@ -105,7 +105,7 @@
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">供货折扣</label>
+                <label class="layui-form-label">出厂价</label>
                 <div class="layui-input-block">
                     <input type="number" name="off" autocomplete="off" placeholder="折扣指百分比OFF，只填写数字不加%"
                            class="layui-input">
