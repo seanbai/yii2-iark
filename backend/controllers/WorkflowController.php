@@ -1267,7 +1267,6 @@ class WorkflowController extends Controller
         $search['limit'] = $_GET['limit'];
         $search['offset'] = ($_GET['page'] - 1) * 10;
         $search['where'] = ['u.designer' => $userId];
-
         // 查询数据
         $query = $this->getQuery($search['where'])->leftJoin(
             'admin u',
@@ -1277,7 +1276,7 @@ class WorkflowController extends Controller
         $total = $query->count();
 
         if ($total) {
-            $columns = ['order.*','u.username as owner'];
+            $columns = ['order.*','u.username as owner','u.designer as designer'];
             $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
         } else {
