@@ -110,12 +110,13 @@ class WorkflowController extends Controller
         // 查询数据条数
         $total = $query->count();
         if ($total) {
-            $columns = ['order.*','u.username as owner'];
+            $columns = ['order.*','u.username as owner', 'u.designer as designer'];
             $array = $query->select($columns)->offset($search['offset'])->limit($search['limit'])->orderBy($search['orderBy'])->all();
             if ($array) $this->afterSearch($array);
         } else {
             $array = [];
         }
+
 
         $data['code'] = 0;
         $data['count'] = $total;
@@ -1282,9 +1283,6 @@ class WorkflowController extends Controller
         } else {
             $array = [];
         }
-
-        printf($array);
-        die;
 
         $orderStatusArr = OrderStatus::get();
         if (!empty($array)) {
