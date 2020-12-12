@@ -61,6 +61,8 @@ class WorkflowController extends Controller
             $search['where'] = ['user'=> yii::$app->user->identity->id ];
         }
 
+        print_r($search);
+        die;
         // 查询数据
         $query = $this->getQuery($search['where']);
         if (YII_DEBUG) $this->arrJson['other'] = $query->createCommand()->getRawSql();
