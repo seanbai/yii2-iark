@@ -102,6 +102,7 @@ class WorkflowController extends Controller
         $search['offset'] = ($_GET['page'] - 1) * 10;
         $search['where'] = ['order_status'=> 1];
         // 查询数据
+        $loginId = yii::$app->user->identity->id;
         $query = $this->getQuery($search['where'])->leftJoin(
             'admin u',
             "u.id = order.user"
@@ -116,9 +117,15 @@ class WorkflowController extends Controller
             $array = [];
         }
 
+        foreach ($array as $key => $item) {
+            if ($item['designer'] != $loginId) {
+                unset($array[$key]);
+            }
+        }
+
 
         $data['code'] = 0;
-        $data['count'] = $total;
+        $data['count'] = count($array);
         $data['data'] = $array;
         return json_encode($data);
     }
