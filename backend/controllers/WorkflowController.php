@@ -123,7 +123,6 @@ class WorkflowController extends Controller
             }
         }
 
-
         $data['code'] = 0;
         $data['count'] = count($array);
         $data['data'] = $array;

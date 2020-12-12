@@ -67,7 +67,6 @@ layui.define(function (exports) {
                 {field: 'package', title: '包装要求'},
                 {field: 'name', title: '提货联系人'},
                 {field: 'address', title: '交付地址'},
-                {field: 'quote', title: '报价', sort: true}
             ]]
         });
         // 表格菜单事件
