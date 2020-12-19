@@ -25,6 +25,7 @@ use yii\db\StaleObjectException;
  * @property string $product_supplier
  * @property string $production_status
  * @property string $packing_number
+ * @property int $quote_status
  * Class SupplierOrder
  * @package backend\models
  */

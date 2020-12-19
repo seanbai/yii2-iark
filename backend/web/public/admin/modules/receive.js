@@ -704,7 +704,7 @@ layui.define(function(exports){
               icon: 5,
               time: 1000
             }, function(){
-              layer.confirm('确认是否收到尾款?', function(index){
+              layer.confirm('确认是否收到正确的金额款项?', function(index){
                 $.ajax({
                   type: 'post',
                   dataType: 'json',
@@ -727,7 +727,7 @@ layui.define(function(exports){
             })
           },
           success: function(){ // 保存成功处理
-            layer.confirm('确认是否收到尾款?', function(index){
+            layer.confirm('确认是否收到正确的金额款项?', function(index){
               $.ajax({
                 type: 'post',
                 dataType: 'json',

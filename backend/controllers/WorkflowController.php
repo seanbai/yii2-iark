@@ -924,6 +924,11 @@ class WorkflowController extends Controller
             if (!$model->save()) {
                 return $this->error($model->getErrors());
             }
+
+            // 提货完成后修改提货商品状态
+            $item = SupplierOrderItem::findOne(['id' => $datum]);
+            $item->quote_status = 2;
+            $item->save();
         }
 
         $orderData = $this->array_group_by($data, 'order_id');
