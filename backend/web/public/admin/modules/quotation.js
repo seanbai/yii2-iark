@@ -40,6 +40,7 @@ layui.define(function(exports){
             var data = checkStatus.data;
             var id = data[0].id;
             var num = data[0].order_number;
+            console.log(data);
             // 打开产品列表弹层
             var itemsbox = layer.open({
               type: 1,
@@ -51,7 +52,7 @@ layui.define(function(exports){
               yes: function(){
                 layer.confirm('The quotation has been completed and verified?', {
                       title:'Message',
-                      btn: ['OK','No']
+                      btn: ['Yes','No']
                     },
                    function(index){
                   $.ajax({
@@ -127,7 +128,7 @@ layui.define(function(exports){
           },
           {field: 'desc', title: 'Remarks'},
           {field: 'price', title: 'Price(EUR)'},
-          {field: 'origin_price', title: 'Quote Price (EUR)',  totalRow: true, edit: 'text'}
+          {field: 'origin_price', title: 'Quote Price (EUR)', totalRow: true, edit: 'text', }
         ]]
       });
       // 价格编辑

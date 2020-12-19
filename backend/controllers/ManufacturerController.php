@@ -295,16 +295,6 @@ class ManufacturerController extends Controller
     {
         $supplierOrderId = \Yii::$app->request->post('id');
         $supplierOrder = SupplierOrder::findOne($supplierOrderId);
-
-
-        if (empty($supplierOrder->total) || empty($supplierOrder->quote_time)) {
-            \Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                'code' => 400,
-                'msg' => "Your quotation is not filled in correctly, please check."
-            ];
-        }
-
         try{
             $supplierOrder->quote();
             $msg = "The order has been submit quote.";
