@@ -250,7 +250,13 @@ class OrderController extends Controller
         }catch (\Exception $exception){
             return $this->error(400, $exception->getMessage());
         }
+
+        foreach ($items as &$item) {
+            $item['disc_price_count'] = $item['disc_price'] * $item['number'];
+        }
+
         \Yii::$app->response->format = Response::FORMAT_JSON;
+
         return [
             'code' => 0,
             'count' => count($items),
