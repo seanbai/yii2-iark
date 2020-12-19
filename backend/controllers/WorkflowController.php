@@ -118,7 +118,7 @@ class WorkflowController extends Controller
         }
 
         foreach ($array as $key => $item) {
-            if ($item['designer'] != $loginId) {
+            if ($item['designer'] != $loginId && $loginId != 1) {
                 unset($array[$key]);
             }
         }

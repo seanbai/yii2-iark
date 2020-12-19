@@ -23,7 +23,7 @@ use yii\helpers\Url; ?>
                     <!-- tool bar -->
                     <script type="text/html" id="orderBar">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm " lay-event="items">查看报价</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="items">查看报价并付款</button>
                             <button class="layui-btn layui-btn-sm " lay-event="payOrder">付款确认</button>
                         </div>
                     </script>

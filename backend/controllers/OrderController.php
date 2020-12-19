@@ -78,7 +78,7 @@ class OrderController extends Controller
         return $this->success($strategy->handleResponse($array, $total));
     }
 
-    public function actionIndex()
+    public function watingquote()
     {
         $data = [
             'user' => Admin::getUser(),
