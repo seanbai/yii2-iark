@@ -19,6 +19,7 @@ use yii\db\Exception;
  * @property string $create_time
  * @property string $quote_time
  * @property float  $total
+ * @property float  $disc_total
  * Class SupplierOrder
  * @package backend\models
  */
@@ -137,15 +138,19 @@ class SupplierOrder extends ActiveRecord
      */
     public function quote()
     {
-        $total = 0;
+        $total = $disc_total = 0;
         $items = $this->items();
         foreach ($items as $item){
             /* @var $item SupplierOrderItem */
-            $price = (float) $item->price*$item->number;
+            $price = (float) $item->price * $item->number;
             $total += $price;
+
+            $disc_price = (float) $item->origin_price * $item->number;
+            $disc_total += $disc_price;
         }
         $orderStatus = 41; //子订单完成报价
         $this->total = $total;
+        $this->disc_total = $disc_total;
         $this->quote_time = date('Y-m-d H:i:s');
         $this->setStatus($orderStatus); //所有子订单报价完成，更改主订单的状态为‘报价完成’
     }

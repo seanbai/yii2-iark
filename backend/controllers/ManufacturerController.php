@@ -118,7 +118,7 @@ class ManufacturerController extends Controller
             });
             $data['code'] = 0;
         } else {
-            $array        = [];
+            $array = [];
             $data['code'] = 0;
         }
 
