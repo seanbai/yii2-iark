@@ -436,7 +436,7 @@ class OrderController extends Controller
 
         //计算出商品总价，采购折扣价，供货折扣价
         $amount = $this->getProductAmount($id);
-        $model->quote = $amount['productAmount'];       //商品总价格
+        $model->quote = (string) $amount['productAmount'];       //商品总价格
         $model->off_quote = (string) $amount['offAmount'];  //供货折扣总金额
         $model->desc_quote = (string) $amount['depositAmount'];  //采购折扣总金额
         if (!$model->save()) return $this->error(201, $model->getErrors());
@@ -449,9 +449,9 @@ class OrderController extends Controller
         $products = OrderItem::find()->where(['order_id' => $id])->asArray()->all();
         $depositAmount = $productAmount = $offAmount = 0;
         foreach ($products as $item) {
-            $depositAmount += $item['disc_price'];
-            $productAmount += $item['price'];
-            $offAmount += $item['origin_price'];
+            $depositAmount += $item['disc_price'] * $item['number'];
+            $productAmount += $item['price'] * $item['number'];
+            $offAmount += $item['origin_price'] * $item['number'];
         }
 
         return [
