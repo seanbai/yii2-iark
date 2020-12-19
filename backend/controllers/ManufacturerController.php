@@ -177,9 +177,16 @@ class ManufacturerController extends Controller
                     ];
                 }else{
                     $user = Admin::findOne($order->supplier_id);
+                    // 供货商折扣价
                     $rate = (float) ($user->off / 100);
                     $rate = (1 - $rate);
                     $price = $value * $rate;
+
+                    // 采购商折扣价
+                    $disc_rate = (float) ($user->discount / 100);
+                    $disc_rate = (1 - $disc_rate);
+                    $disc_price = $value * $disc_rate;
+
                     $supplierOrderItem->setAttribute('price', ($price == 0) ? $value : $price); //折扣后价格
                     $supplierOrderItem->setAttribute('origin_price', $value); //原价
                     $supplierOrderItem->save();
@@ -187,6 +194,7 @@ class ManufacturerController extends Controller
                     $orderItem = OrderItem::findOne($supplierOrderItem->order_item_id);
                     $orderItem->setAttribute('price',($price == 0) ? $value : $price);
                     $orderItem->setAttribute('origin_price', $value);
+                    $orderItem->setAttribute('disc_price', ($disc_price == 0) ? $value : $disc_price);
                     $orderItem->save();
                     $data = [
                         'code' => 200,

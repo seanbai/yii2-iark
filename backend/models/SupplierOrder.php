@@ -138,7 +138,7 @@ class SupplierOrder extends ActiveRecord
      */
     public function quote()
     {
-        $total = $disc_total = 0;
+        $total = 0;
         $items = $this->items();
         foreach ($items as $item){
             /* @var $item SupplierOrderItem */
