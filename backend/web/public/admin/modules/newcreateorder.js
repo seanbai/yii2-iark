@@ -184,7 +184,7 @@ layui.define(function(exports){
         if (res.code == 200) {
           //将图片添加到input
           $('#att').attr('value',res.data);
-          $('#file-name').attr('value',res.data);
+          $('#file-name').html(res.data);
         } else {
           layer.msg('上传失败');
         }
