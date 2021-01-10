@@ -165,7 +165,7 @@ $this->title = 'Create New Order';
                     <div class="layui-input-block">
                         <input type="hidden" name="att" id="att">
                         <button type="button" class="layui-btn layui-btn-primary" id="attachment"><i class="layui-icon"></i>上传附件</button>
-                        <small>仅支持 zip|rar|7z 格式压缩包文件</small>
+                        <small id="file-name">仅支持 zip|rar|7z 格式压缩包文件</small>
                     </div>
                 </div>
             </div>
