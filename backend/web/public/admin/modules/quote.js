@@ -120,7 +120,7 @@ layui.define(function (exports) {
                     {field: 'desc', title: '备注'},
                     {field: 'origin_price', title: '报价(欧元)'},
                     {field: 'price', title: '出厂价(欧元)'},
-                    {field: 'disc_price', title: '采购折扣价(欧元)'}
+                    // {field: 'disc_price', title: '采购折扣价(欧元)'}
                 ]]
             });
         }
