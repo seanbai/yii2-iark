@@ -27,7 +27,8 @@ layui.define(function(exports){
             }
             return  '';
           }},
-        {field: 'balance_file', title: '尾款付款凭证',templet: function(d){
+        {field: 'balance_file', title: '尾款付款凭证',
+          templet: function(d){
             if(d.balance_file){
               return '<div onclick="showImg(this)"><img src="'+d.balance_file+'"></div>'
             }
@@ -109,7 +110,7 @@ layui.define(function(exports){
               title: '订单号: ' + num,
               area: ['99%', '98%'],
               content: $('#showItems'),
-              btn: ['确认报价', '拒绝报价', '取消'],
+              btn: ['确认采购', '取消采购', '取消'],
               success: showItems(id),
               yes: function(){
                 layer.open({
@@ -143,7 +144,6 @@ layui.define(function(exports){
                             icon: 5,
                             time: 1000
                           }, function(){
-                            layer.confirm('是否继续确认报价?', function(index){
                               $.ajax({
                                 type: 'POST',
                                 url: 'confirm-quote-pay-deposit', //确认报价支付订单
@@ -169,7 +169,6 @@ layui.define(function(exports){
                                     });
                                   }
                                 }
-                              });
                             });
                           });
                         },
@@ -407,10 +406,10 @@ layui.define(function(exports){
                   $('[data-role="pay-tax"]').show();
                   $('[data-role="pay-fuwu"]').show();
                }
-                  if(data.balance_file){
-                      $('#balance-img').hide();
-                      $('#pay-file-balance').attr('src', data.balance_file);
-                  }
+                // if(data.balance_file){
+                //     $('#balance-img').hide();
+                //     $('#pay-file-balance').attr('src', data.balance_file);
+                // }
                 form.render();
               }
             });
