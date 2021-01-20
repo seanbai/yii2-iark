@@ -306,7 +306,7 @@ layui.define(function (exports) {
                         });
                     },
                     success: function(){ // 保存成功处理
-                        layer.confirm('请仔细核对后金额后进行提交！！！', function(index){
+                        layer.confirm('请仔细核对信息无误后进行提交！！！', function(index){
                             $.ajax({
                                 type: 'GET',
                                 url: 'update-status?id=' + id + '&status=3',
@@ -336,10 +336,6 @@ layui.define(function (exports) {
                     }
                 });
             });
-
-
-
-
         }
     });
     //
