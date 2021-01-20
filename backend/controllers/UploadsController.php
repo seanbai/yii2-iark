@@ -62,13 +62,14 @@ class UploadsController extends Controller
             return '';
         }
         $type = $ext;
-        $new_name = $this->getRand(12,"Aa_").uniqid().'.'.$type;
+        $new_name = $this->getRand(6,"File_").uniqid().'.'.$type;
         $up_dir = $img_root.$path;
         if (!is_dir($up_dir)) {
             mkdir($up_dir, 0777, true);
         }
         if (move_uploaded_file($files['tmp_name'], $img_root.$path.'/'.$new_name)) {
             return $path.'/'.$new_name;
+//            return $new_name;
         }
         return '';
     }
@@ -82,7 +83,7 @@ class UploadsController extends Controller
             return '';
         }
         $type = $ext;
-        $new_name = $this->getRand(12,"Aa_").uniqid().'.'.$type;
+        $new_name = $this->getRand(8,"Az_").uniqid().'.'.$type;
         $up_dir = $img_root.$path;
         if (!is_dir($up_dir)) {
             mkdir($up_dir, 0777, true);

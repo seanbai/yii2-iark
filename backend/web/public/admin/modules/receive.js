@@ -652,7 +652,7 @@ layui.define(function(exports){
               if(!att){
                 return ''
               }else{
-                return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
+                return '<div><a href="'+d.att+'">Download</a></div>'
               }
             }
           },

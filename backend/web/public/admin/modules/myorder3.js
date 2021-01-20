@@ -127,7 +127,7 @@ layui.define(function(exports){
                         templet: function(d){
                             var att = d.att;
                             if(att){
-                                return '<div><a href="'+d.att+'">'+d.att+'</a></div>'
+                                return '<div><a href="'+d.att+'">Download</a></div>'
                             }else{
                                 return ''
                             }

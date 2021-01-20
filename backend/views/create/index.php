@@ -139,7 +139,7 @@ $this->title = 'Create New Order';
             </div>
             <!-- 型号 -->
             <div class="layui-form-item">
-                <label class="layui-form-label">型号*</label>
+                <label class="layui-form-label">型号</label>
                 <div class="layui-input-block">
                     <input type="text" name="model" autocomplete="off" class="layui-input">
                 </div>
