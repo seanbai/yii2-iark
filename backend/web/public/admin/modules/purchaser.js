@@ -11,7 +11,6 @@ layui.define(function(exports){
       height: 'full-115',
       toolbar: '#toolbar',
       url: 'list', //数据接口
-      where: {limit: 10},
       cellMinWidth: 100,
       page: true, //开启分页
       skin: 'row',
