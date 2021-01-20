@@ -41,7 +41,7 @@ $this->title = 'Create New Order';
             <input type="text" name="package" placeholder="包装要求" autocomplete="off" class="layui-input">
           </div>
           <div class="layui-col-md3">
-            <input type="text" name="contact" placeholder="提货联系人" autocomplete="off" class="layui-input">
+            <input type="text" name="contact" placeholder="请输入联系人姓名" autocomplete="off" class="layui-input">
           </div>
           <div class="layui-col-md12">
             <input type="text" name="address" placeholder="交付地址" autocomplete="off" class="layui-input">
@@ -141,7 +141,7 @@ $this->title = 'Create New Order';
             <div class="layui-form-item">
                 <label class="layui-form-label">型号*</label>
                 <div class="layui-input-block">
-                    <input type="text" name="model" lay-verify="required" autocomplete="off" class="layui-input">
+                    <input type="text" name="model" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <!-- 产品尺寸 -->
