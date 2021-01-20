@@ -182,6 +182,7 @@ layui.define(function(exports){
         // 上传完成后关闭 Loading
         layer.closeAll('loading');
         if (res.code == 200) {
+          console.log(res);
           //将图片添加到input
           $('#att').attr('value',res.data);
           $('#file-name').html(res.data);
