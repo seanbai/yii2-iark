@@ -247,10 +247,35 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
-          {field: 'origin_price', title: 'Origin Price(EUR)'},
-          {field: 'price', title: 'Price (EUR)'}
+          {field: 'origin_price', title: 'Origin Price(EUR)', edit: 'text'}
         ]]
       });
+      // 价格编辑
+      table.on('edit(items)', function(obj){
+        // 取到修改的价格字段值
+        var value = obj.value;
+        // 取到被修改的产品数据id
+        var data = obj.data;
+        var itemId = data.id;
+
+        // 改动完即同步数据库
+        $.ajax({
+          type: 'POST',
+          // 同步接口，传数据ID和修改后的金额值
+          url: 'quote-item?id=' + itemId + '&price=' + value,
+          success: function(response){
+            if(response.code == 200){
+              layer.msg('Quote has been saved!', {icon: 1});
+              table.reload('items',{}); // 重载数据表格
+            }else {
+              layer.msg(response.msg,{icon: 5});
+            }
+          },
+          error: function(){
+            layer.msg('Error');
+          }
+        })
+      })
     }
 
     // 产品图片预览
