@@ -69,13 +69,46 @@ layui.define(function(exports){
             var id = data[0].id;
             var num = data[0].order_number;
             // 打开产品列表弹层
-            layer.open({
+            var itemsbox = layer.open({
               type: 1,
               title: 'Order Number: ' + num,
               area: ['95%', '65%'],
               content: $('#showItems'),
+              btn: ['Submit Quote','Cancel'],
               resize: false,
-              success: showItems(id)
+              success: showItems(id),
+              yes: function(){
+                $.ajax({
+                  type: 'POST',
+                  url: 'submit-quote',
+                  data: {
+                    id: id
+                  },
+                  error: function(){
+                    layer.msg('the request error!',{icon: 5});
+                  },
+                  success: function(response){
+                    if(response.code == 200){
+                      layer.msg(response.msg, {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function(){
+                        layer.closeAll();
+                      });
+                    }else{
+                      // 关闭弹层
+                      layer.msg(response.msg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function(){
+                        layer.closeAll();
+                      });
+                    }
+                    layer.close(itemsbox);
+                    workflow.reload();
+                  }
+                });
+              }
             });
           }
           break;
