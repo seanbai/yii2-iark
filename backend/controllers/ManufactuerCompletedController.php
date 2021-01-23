@@ -28,8 +28,7 @@ class ManufactuerCompletedController extends Controller
     {
         //用户过滤
         $userId = \Yii::$app->user->id;
-        $query = SupplierOrder::find()->select('supplier_order.*,o.name,o.package,o.project_name,o.address')
-            ->where('supplier_order.order_status = :order_status', [':order_status' => 201]);
+        $query = SupplierOrder::find()->select('supplier_order.*,o.name,o.package,o.project_name,o.address');
         if(!$this->isAdministrator()){
             $query->andWhere('supplier_id = :supplier_id', [':supplier_id' => $userId]);
         }

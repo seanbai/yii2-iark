@@ -431,7 +431,7 @@ class ManufacturerController extends Controller
         //  91 => '生产中',//当子订单确认收到了定金后，便更改子订单状态为生产中，当第一个子订单状态变为生产中，
         //          则主订单状态变为生产中
         //  101 => '生产完成',//子订单状态一定是从生产中变为生产完成，完成后才能去确认收取尾款
-        $orderStatus = [81, 91 , 101,131];
+        $orderStatus = [31, 81, 91 , 101, 131];
 
         //用户过滤
         $userId = \Yii::$app->user->id;
