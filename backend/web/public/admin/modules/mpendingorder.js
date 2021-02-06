@@ -26,10 +26,11 @@ layui.define(function(exports){
         layer.closeAll('loading');
         if (res.code == 200) {
           //将图片添加到input
-          $('#att').val(res.data);
-          $('#fileName').html(res.data)
+          $('#ghs-upload-file').val(res.data);
+          $('#ghs-file-tmp').html(res.data)
+          layer.msg('上传成功');
         } else {
-          layer.msg('上传失败');
+          layer.msg('上传失败,文件太大!!!');
         }
       }
     });

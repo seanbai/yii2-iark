@@ -75,12 +75,12 @@
 
 <!--供货商附件上传-->
 <div class="ghs-upload" id="ghs-upload" style="display: none;">
-    <input type="hidden" id="deposit-upload-file" />
+    <input type="hidden" id="ghs-upload-file" />
     <div class="layui-upload" id="deposit-upload" style="margin: 20px 20px;">
         <button type="button" class="layui-btn" id="deposit-img">上传附件</button>
-        <span class="layui-upload-img" id="deposit-img-tmp" ></span>
     </div>
     <div class="layui-card">
+        <div class="layui-upload-img" id="ghs-file-tmp" ></div>
         <div class="layui-card-body">上传附件后，请确认无误后再点击“确认”</div>
     </div>
 </div>
