@@ -30,6 +30,7 @@
                     <!-- row action -->
                     <script type="text/html" id="action">
                         <a class="layui-btn layui-btn-xs" lay-event="file-uploads">附件上传</a>
+                        <input type="file" name="image" class="hidden" value="" />
                     </script>
                 </div>
             </div>
@@ -72,3 +73,4 @@
         </div>
     </div>
 </div>
+

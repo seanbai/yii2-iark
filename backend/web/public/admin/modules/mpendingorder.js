@@ -252,7 +252,7 @@ layui.define(function(exports){
     }
 
     window.showItems = function(id){
-      table.render({
+      var ProductList = table.render({
         elem: '#items',
         url: 'items?id='+id, //数据接口
         toolbar: '#itemsBar',
@@ -280,9 +280,19 @@ layui.define(function(exports){
             }
           },
           {field: 'desc', title: 'Remarks'},
-          {field: 'uploads', title: 'Origin Price(EUR)', },
+          {field: 'uploads', title: 'Origin Price(EUR)' },
           {field: 'origin_price', title: 'Origin Price(EUR)', edit: 'text'},
-          {fixed: 'right', title:'附件操作', toolbar: '#action', width:100}
+          {field: 'ghs_file', title: '供货商附件',
+            templet: function(d){
+              var ghs_file = d.ghs_file;
+              if(!ghs_file){
+                return ''
+              }else{
+                return '<div><a href="'+d.ghs_file+'">Download</a></div>'
+              }
+            }
+          },
+          {fixed: 'action', title:'附件上传', toolbar: '#action', width:100}
         ]]
       });
       // 价格编辑
@@ -310,7 +320,63 @@ layui.define(function(exports){
             layer.msg('Error');
           }
         })
-      })
+      });
+      // 附件上传
+      table.on('tool(items)', function(obj){
+        var data = obj.data;
+        var id = data.id;
+        var title = data.title;
+        // 显示子订单
+        switch(obj.event){
+          case 'file-uploads':
+            layer.open({
+              type: 1,
+              title: title + ' — 商品,供货商附件上传',
+              area: ['99%', '98%'],
+              content: $('#ghs-upload'),
+              success: function(){
+                $('#deposit-img-tmp').attr('src', null);
+              },
+              btn: ['确认', '取消'],
+              yes: function () {
+                var deposit_file = $("#deposit-upload-file").val();
+                if(!deposit_file){
+                  layer.msg('请上传附件后进行保存',{icon:5});
+                  return false;
+                }
+
+                $.ajax({
+                  type: 'POST',
+                  url: 'upload-ghx-file', //确认报价支付订单
+                  data:{id: id, deposit_file: deposit_file},
+                  error: function(){
+                    layer.msg('系统异常...',{icon:5});
+                  },
+                  success: function(response){
+                    if(response.errCode == 0){
+                      layer.msg(response.errMsg, {
+                        icon: 1,
+                        time: 900 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                        ProductList.reload();
+                      });
+                    }else{
+                      layer.msg(response.errMsg, {
+                        icon: 5,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                      }, function () {
+                        layer.closeAll();
+                      });
+                    }
+                  }
+                });
+              }
+            });
+            break;
+          default:
+        }
+      });
     }
 
     // 产品图片预览

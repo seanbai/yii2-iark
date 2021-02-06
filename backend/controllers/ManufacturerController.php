@@ -471,4 +471,28 @@ class ManufacturerController extends Controller
         $role = \Yii::$app->user->id;
         return $role == 1;
     }
+
+
+    public function actionUploadGhxFile()
+    {
+        $id = \Yii::$app->request->post('id', null);
+        $deposit_file = \Yii::$app->request->post('deposit_file', null);
+        if(empty($id)){
+            return $this->error(400, '产品Id不存在，请重试');
+        }
+        $depositRealPath = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR .$deposit_file;
+        if(!file_exists($depositRealPath)){
+            return $this->error(400, '供货商附件上传失败，请重试');
+        }
+
+        // 供货商附件保存
+        $model = OrderItem::findOne(['id' => $id]);
+        $model->ghs_file = $deposit_file;
+        if($model->save()){
+            return $this->success();
+        }else{
+            return $this->error(400, Helper::arrayToString($model->getErrors()));
+        }
+    }
+
 }
