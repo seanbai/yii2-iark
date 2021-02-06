@@ -351,7 +351,7 @@ layui.define(function(exports){
         })
       });
       // 附件上传
-      table.on('toolbar(items)', function(obj){
+      table.on('tool(items)', function(obj){
         // 取到被修改的产品数据id
         var data = obj.data;
         var itemId = data.id;
