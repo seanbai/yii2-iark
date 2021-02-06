@@ -148,6 +148,9 @@ class OrderController extends Controller
 
         $model = OrderItem::find()->where(['order_id' => $orderId])->asArray()->all();
         Yii::$app->response->format = 'json';
+
+        $model = $this->handleOrderItem($orderId, $model);
+
         return [
             'code' => 0,
             'count' => count($model),

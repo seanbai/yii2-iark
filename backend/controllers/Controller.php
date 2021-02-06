@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\helpers\OrderStatus;
 use backend\models\AdminLog;
 use backend\models\Order;
 use backend\models\SupplierOrder;
@@ -550,5 +551,34 @@ class Controller extends \common\controllers\UserController
             'data'  => $orders
         ];
         return $data;
+    }
+
+    public function handleOrderItem($orderId, $orders)
+    {
+        $model = Order::findOne(['id'=>$orderId]);
+        $model->order_status;
+
+        foreach ($orders as &$order) {
+            if ($model->order_status < OrderStatus::ONE) {
+                $order['origin_price'] = 0;
+                $order['disc_price'] = 0;
+                $order['price'] = 0;
+            }
+        }
+        return $orders;
+    }
+
+    public function handleSupOrderItem($orderId, $orders)
+    {
+        $model = SupplierOrder::findOne(['id'=>$orderId]);
+        $model->order_status;
+
+        foreach ($orders as &$order) {
+            if ($model->order_status < OrderStatus::TWO) {
+                $order['origin_price'] = 0;
+                $order['price'] = 0;
+            }
+        }
+        return $orders;
     }
 }

@@ -4,6 +4,9 @@ namespace backend\helpers;
 
 class OrderStatus
 {
+    const ONE = 5;
+    const TWO = 41;
+
     /**
      * 主订单状态
      *

@@ -122,6 +122,8 @@ class OrderItemController extends Controller
         $model = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->all();
         $count = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->count();
 
+        $model = $this->handleOrderItem($orderId, $model);
+
         $data['code'] = 0;
         $data['count'] = $count;
         $data['data'] = $model;

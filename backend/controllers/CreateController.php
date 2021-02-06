@@ -371,6 +371,8 @@ class CreateController extends Controller
 
         $products = OrderItem::find()->where(['order_id' => $id])->asArray()->all();
 
+        $products = $this->handleOrderItem($id, $products);
+
         return $this->render('update', [
             'order' => $order,
             'products' => $products
@@ -392,6 +394,8 @@ class CreateController extends Controller
             ->where(['order_id' => $id])
             ->asArray()
             ->all();
+
+        $items = $this->handleOrderItem($id, $items);
 
         foreach ($items as $key => &$item){
             $item['pid'] = $item['id'];

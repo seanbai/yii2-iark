@@ -183,6 +183,9 @@ class WorkflowController extends Controller
             if (empty($value['supplier_id'])) $model[$key]['supplier_id'] = ' ';
             if (empty($value['supplier_name'])) $model[$key]['supplier_name'] = ' ';
         }
+
+        $model = $this->handleOrderItem($orderId, $model);
+
         $data['data'] = $model;
 
         return json_encode($data);
@@ -662,6 +665,8 @@ class WorkflowController extends Controller
             if ($total) $originalPrice = $this->handleOrderPrice($total);
             $childOrders[$key]['original_price'] = $originalPrice;
         }
+
+
 
         \Yii::$app->response->format = 'json';
         return [

@@ -244,6 +244,8 @@ class ManufacturerController extends Controller
 
         //$model = OrderItem::find()->where(['order_id'=>$orderId])->asArray()->all();
         $model = SupplierOrderItem::find()->where(['supplier_order_id'=>$orderId])->asArray()->all();
+        $model = $this->handleSupOrderItem($orderId, $model);
+
         return $this->render('products', [
             'products' => $model,
         ]);
