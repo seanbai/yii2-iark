@@ -258,6 +258,8 @@ class OrderController extends Controller
             $item['disc_price_count'] = $item['disc_price'] * $item['number'];
         }
 
+        $items = $this->handleOrderItem($orderId, $items);
+
         \Yii::$app->response->format = Response::FORMAT_JSON;
 
         return [
