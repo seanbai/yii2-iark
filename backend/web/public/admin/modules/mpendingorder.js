@@ -331,8 +331,8 @@ layui.define(function(exports){
           case 'file-uploads':
             layer.open({
               type: 1,
-              title: title + ' — 商品,供货商附件上传',
-              area: ['80%', '60%'],
+              title: '供货商附件上传',
+              area: ['40%', '60%'],
               content: $('#ghs-upload'),
               success: function(){
                 $('#deposit-img-tmp').attr('src', null);
@@ -395,6 +395,32 @@ layui.define(function(exports){
       });
     }
 
+    // 附件上传事件
+    upload.render({
+      elem: '#deposit-img',
+      url: '/uploads/uploads?',
+      // 只允许压缩包格式
+      accept: 'file',
+      exts: 'zip|rar|7z',
+      choose: function(obj){
+        // 上传时加载 Loading
+        layer.load();
+      },
+      data: {
+        "_csrf": $('meta[name=csrf-token]').attr('content')
+      },
+      done: function(res){
+        // 上传完成后关闭 Loading
+        layer.closeAll('loading');
+        if (res.code == 200) {
+          //将图片添加到input
+          $('#att').val(res.data);
+          $('#fileName').html(res.data)
+        } else {
+          layer.msg('上传失败');
+        }
+      }
+    });
   });
   //
   exports('production', {});
