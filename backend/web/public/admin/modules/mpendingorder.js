@@ -5,6 +5,33 @@ layui.define(function(exports){
     var products = layui.table;
     var $ = layui.jquery;
     var form = layui.form;
+
+    // 附件上传事件
+    var uploadInst = upload.render({
+      elem: '#deposit-img',
+      url: '/uploads/uploads?',
+      // 只允许压缩包格式
+      accept: 'file',
+      exts: 'zip|rar|7z',
+      choose: function(obj){
+        // 上传时加载 Loading
+        layer.load();
+      },
+      data: {
+        "_csrf": $('meta[name=csrf-token]').attr('content')
+      },
+      done: function(res){
+        // 上传完成后关闭 Loading
+        layer.closeAll('loading');
+        if (res.code == 200) {
+          //将图片添加到input
+          $('#att').val(res.data);
+          $('#fileName').html(res.data)
+        } else {
+          layer.msg('上传失败');
+        }
+      }
+    });
     //
     var workflow = table.render({
       elem: '#myOrder',
@@ -394,33 +421,6 @@ layui.define(function(exports){
         content: '<div style="text-align:center"><img width="500" src="' + $(t).attr('src') + '" /></div>'
       });
     }
-
-    // 附件上传事件
-    upload.render({
-      elem: '#deposit-img',
-      url: '/uploads/uploads?',
-      // 只允许压缩包格式
-      accept: 'file',
-      exts: 'zip|rar|7z',
-      choose: function(obj){
-        // 上传时加载 Loading
-        layer.load();
-      },
-      data: {
-        "_csrf": $('meta[name=csrf-token]').attr('content')
-      },
-      done: function(res){
-        // 上传完成后关闭 Loading
-        layer.closeAll('loading');
-        if (res.code == 200) {
-          //将图片添加到input
-          $('#att').val(res.data);
-          $('#fileName').html(res.data)
-        } else {
-          layer.msg('上传失败');
-        }
-      }
-    });
   });
   //
   exports('production', {});
