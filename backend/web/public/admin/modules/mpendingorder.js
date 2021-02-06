@@ -332,7 +332,7 @@ layui.define(function(exports){
             layer.open({
               type: 1,
               title: title + ' — 商品,供货商附件上传',
-              area: ['99%', '98%'],
+              area: ['80%', '60%'],
               content: $('#ghs-upload'),
               success: function(){
                 $('#deposit-img-tmp').attr('src', null);
@@ -374,7 +374,6 @@ layui.define(function(exports){
               }
             });
             break;
-          default:
         }
       });
     }
