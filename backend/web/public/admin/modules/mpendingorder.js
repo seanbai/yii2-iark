@@ -351,10 +351,10 @@ layui.define(function(exports){
         })
       });
       // 附件上传
-      table.on('tool(items)', function(obj){
+      table.on('toolbar(items)', function(obj){
+        // 取到被修改的产品数据id
         var data = obj.data;
-        var id = data.id;
-        var title = data.title;
+        var itemId = data.id;
         // 显示子订单
         switch(obj.event){
           case 'file-uploads':
@@ -377,7 +377,7 @@ layui.define(function(exports){
                 $.ajax({
                   type: 'POST',
                   url: 'upload-ghx-file', //确认报价支付订单
-                  data:{id: id, deposit_file: deposit_file},
+                  data:{id: itemId, deposit_file: deposit_file},
                   error: function(){
                     layer.msg('系统异常...',{icon:5});
                   },
