@@ -486,13 +486,21 @@ class ManufacturerController extends Controller
         }
 
         // 供货商附件保存
-        $model = OrderItem::findOne(['id' => $id]);
+        $model = SupplierOrderItem::findOne(['id' => $id]);
+        $orderItemId = $model->order_item_id;
         $model->ghs_file = $deposit_file;
         if($model->save()){
-            return $this->success();
+            $model2 = OrderItem::findOne(['id' => $orderItemId]);
+            $model2->ghs_file = $deposit_file;
+            if($model2->save()){
+                return $this->success();
+            }
         }else{
             return $this->error(400, Helper::arrayToString($model->getErrors()));
         }
+
+
+
     }
 
 }

@@ -281,7 +281,7 @@ layui.define(function(exports){
     }
 
     window.showItems = function(id){
-      var ProductList = table.render({
+      table.render({
         elem: '#items',
         url: 'items?id='+id, //数据接口
         toolbar: '#itemsBar',
