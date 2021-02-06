@@ -368,7 +368,7 @@ layui.define(function(exports){
               },
               btn: ['确认', '取消'],
               yes: function () {
-                var deposit_file = $("#deposit-upload-file").val();
+                var deposit_file = $("#ghs-upload-file").val();
                 if(!deposit_file){
                   layer.msg('请上传附件后进行保存',{icon:5});
                   return false;
