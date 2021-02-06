@@ -3,7 +3,8 @@ layui.define(function(exports){
   layui.use(['table','jquery','form', 'upload'], function(){
     var table = layui.table;
     var $ = layui.jquery;
-    var form = layui.form, upload = layui.upload;
+    var form = layui.form,
+        upload = layui.upload;
     //
     var workflow = table.render({
       elem: '#myOrder',

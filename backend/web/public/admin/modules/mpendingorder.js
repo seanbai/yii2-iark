@@ -5,9 +5,10 @@ layui.define(function(exports){
     var products = layui.table;
     var $ = layui.jquery;
     var form = layui.form;
+    var upload = layui.upload;
 
     // 附件上传事件
-    var uploadInst = upload.render({
+    upload.render({
       elem: '#deposit-img',
       url: '/uploads/uploads?',
       // 只允许压缩包格式
