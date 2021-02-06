@@ -498,9 +498,6 @@ class ManufacturerController extends Controller
         }else{
             return $this->error(400, Helper::arrayToString($model->getErrors()));
         }
-
-
-
     }
 
 }

@@ -80,7 +80,7 @@
         <button type="button" class="layui-btn" id="deposit-img">上传附件</button>
     </div>
     <div class="layui-card">
-        <div class="layui-upload-img" id="ghs-file-tmp" ></div>
+        <div class="layui-card-body" id="ghs-file-tmp" ></div>
         <div class="layui-card-body">上传附件后，请确认无误后再点击“确认”</div>
     </div>
 </div>

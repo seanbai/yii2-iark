@@ -365,6 +365,7 @@ layui.define(function(exports){
               content: $('#ghs-upload'),
               success: function(){
                 $('#deposit-img-tmp').attr('src', null);
+                $('#ghs-file-tmp').html('');
               },
               btn: ['确认', '取消'],
               yes: function () {
