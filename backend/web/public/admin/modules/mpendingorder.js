@@ -281,7 +281,8 @@ layui.define(function(exports){
           },
           {field: 'desc', title: 'Remarks'},
           {field: 'uploads', title: 'Origin Price(EUR)', },
-          {field: 'origin_price', title: 'Origin Price(EUR)', edit: 'text'}
+          {field: 'origin_price', title: 'Origin Price(EUR)', edit: 'text'},
+          {fixed: 'right', title:'附件操作', toolbar: '#action', width:100}
         ]]
       });
       // 价格编辑

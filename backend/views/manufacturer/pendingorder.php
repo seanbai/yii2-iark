@@ -27,6 +27,10 @@
                             <button class="layui-btn layui-btn-sm" lay-event="status">Change Order Status</button>
                         </div>
                     </script>
+                    <!-- row action -->
+                    <script type="text/html" id="action">
+                        <a class="layui-btn layui-btn-xs" lay-event="file-uploads">附件上传</a>
+                    </script>
                 </div>
             </div>
 
