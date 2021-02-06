@@ -30,7 +30,6 @@
                     <!-- row action -->
                     <script type="text/html" id="action">
                         <a class="layui-btn layui-btn-xs" lay-event="file-uploads">附件上传</a>
-                        <input type="file" name="image" class="hidden" value="" />
                     </script>
                 </div>
             </div>
@@ -79,10 +78,7 @@
     <input type="hidden" id="deposit-upload-file" />
     <div class="layui-upload" id="deposit-upload" style="margin: 20px 20px;">
         <button type="button" class="layui-btn" id="deposit-img">上传附件</button>
-        <div class="layui-upload-list">
-            <img class="layui-upload-img" style=" width: 105px;height: 105px;margin: 0 10px 10px 0;" id="deposit-img-tmp">
-            <p id="demoText"></p>
-        </div>
+        <span class="layui-upload-img" id="deposit-img-tmp" ></span>
     </div>
     <div class="layui-card">
         <div class="layui-card-body">上传附件后，请确认无误后再点击“确认”</div>

@@ -292,7 +292,7 @@ layui.define(function(exports){
               }
             }
           },
-          {fixed: 'action', title:'附件上传', toolbar: '#action', width:100}
+          {field: 'action', title:'附件上传', toolbar: '#action', width:100}
         ]]
       });
       // 价格编辑
