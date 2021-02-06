@@ -556,15 +556,15 @@ class Controller extends \common\controllers\UserController
     public function handleOrderItem($orderId, $orders)
     {
         $model = Order::findOne(['id'=>$orderId]);
-        $model->order_status;
 
         foreach ($orders as &$order) {
-            if ($model->order_status < OrderStatus::ONE) {
+            if ($model->order_status <= OrderStatus::ONE) {
                 $order['origin_price'] = 0;
                 $order['disc_price'] = 0;
                 $order['price'] = 0;
             }
         }
+
         return $orders;
     }
 
@@ -574,7 +574,7 @@ class Controller extends \common\controllers\UserController
         $model->order_status;
 
         foreach ($orders as &$order) {
-            if ($model->order_status < OrderStatus::TWO) {
+            if ($model->order_status <= OrderStatus::TWO) {
                 $order['origin_price'] = 0;
                 $order['price'] = 0;
             }
