@@ -1,6 +1,6 @@
 layui.define(function(exports){
   //
-  layui.use(['table','jquery','form'], function(){
+  layui.use(['table','jquery','form', 'upload'], function(){
     var table = layui.table;
     var products = layui.table;
     var $ = layui.jquery;
