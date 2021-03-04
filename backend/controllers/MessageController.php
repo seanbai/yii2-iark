@@ -39,7 +39,7 @@ class MessageController extends Controller
     }
 
 
-    public function actionGetMessages()
+    public function actionOrder()
     {
         $orderId = $_GET['order_id'];
 

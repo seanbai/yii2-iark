@@ -771,7 +771,7 @@ layui.define(function(exports){
       $.ajax({
         type: 'POST',
         //同步接口，传数据ID和修改后的金额值
-        url: '/message/getMessage?order_id='+id,
+        url: '/message/order?order_id='+id,
         success: function(response){
 
           console.log(response);
