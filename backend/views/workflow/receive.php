@@ -27,6 +27,7 @@ use yii\helpers\Url;
                 <button class="layui-btn layui-btn-sm " lay-event="details">查看商品清单</button>
                 <button class="layui-btn layui-btn-sm " lay-event="receiveNotice">发送收款通知</button>
                 <button class="layui-btn layui-btn-sm " lay-event="goodslist">提货清单</button>
+                <button class="layui-btn layui-btn-sm " lay-event="comments">查看评论跟踪</button>
             </div>
           </script>
           <script type="text/html" id="action">
@@ -104,6 +105,7 @@ layui.config({
         </div>
     </form>
 </div>
+
 <!-- 确认收款表单 -->
 <div style="display:none" id="confirmPayment" class="layui-fluids">
   <div class="layui-row layui-col-space10">
@@ -192,3 +194,26 @@ layui.config({
 
 
 <!-- 确认收款服务费表单 -->
+<!-- 查看评论 --->
+<div style="display:none" id="comments" class="layui-fluid">
+    <ul class="layui-timeline" id="layui_message">
+
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+            <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">8月18日</h3>
+                <p>这是一条订单的评论</p>
+            </div>
+        </li>
+
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+            <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">8月20日</h3>
+                <p>这是一条订单的评论</p>
+            </div>
+        </li>
+
+
+    </ul>
+</div>

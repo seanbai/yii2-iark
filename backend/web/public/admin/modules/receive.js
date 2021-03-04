@@ -159,11 +159,11 @@ layui.define(function(exports){
             layer.msg("您需要先选择一条数据", {icon:0});
           } else {
             var id = data[0].id;
-            console.log(id);
+            var project = data[0].project_name;
 
             layer.open({
               type: 1,
-              title: '项目名称 - ' + "",
+              title: '项目名称 - ' + project,
               area: ['90%', '70%'],
               content: $('#showItems'),
               btn: ['提交'],
@@ -171,6 +171,22 @@ layui.define(function(exports){
             });
           }
           break;
+        case 'comments':
+          if(checkStatus.data.length === 0){
+            layer.msg("您需要先选择一条数据", {icon:0});
+          }else{
+            // 取订单ID 和 项目名称
+            var id = data[0].id;
+            var project = data[0].project_name;
+            layer.open({
+              type: 1,
+              title: '项目名称 - ' + project,
+              area: ['640px', 'auto'],
+              content: $('#comments'),
+              resize: false,
+              success: getMessage(id)
+            });
+          }
       }
     });
     // 判断报价方式的开关状态
@@ -184,8 +200,6 @@ layui.define(function(exports){
 
     // 表单提交
     form.on('submit(submit-support)',function(data,id){
-
-
       layer.prompt({
         formType: 2,
         title: '请先为此订单添加留言'
@@ -752,6 +766,26 @@ layui.define(function(exports){
       });
       return false;
     })
+
+    window.getMessage = function (id) {
+
+      $.ajax({
+        type: 'POST',
+        //同步接口，传数据ID和修改后的金额值
+        url: '/message/getMessage?order_id='+id,
+        success: function(response){
+
+          console.log('获取留言信息成功');
+
+
+        },
+        error: function(){
+          layer.msg('系统异常，请联系管理人员');
+        }
+      })
+
+
+    }
   });
   //
   exports('receive', {});

@@ -39,5 +39,11 @@ class MessageController extends Controller
     }
 
 
+    public function getMessages()
+    {
+        $orderId = $_GET['order_id'];
+
+        return '留言信息';
+    }
 
 }
