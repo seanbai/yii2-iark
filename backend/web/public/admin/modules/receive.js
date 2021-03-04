@@ -184,10 +184,7 @@ layui.define(function(exports){
               area: ['640px', 'auto'],
               content: $('#comments'),
               resize: false,
-              // success: getMessage(id)
-              success: function () {
-                console.log('2222333');
-              }
+              success: getMessage(id)
             });
           }
       }
@@ -771,32 +768,13 @@ layui.define(function(exports){
     })
 
     window.getMessage = function (id) {
-      var items = table.render({
-        id: 'itemsList',
-        elem: '#items',
-        url: 'goods-list?id='+id, //数据接口
-        toolbar: '#showItemsBar',
-        totalRow: true,
-        skin: 'row',
-        even: true,
-        cols: [[
-          {field: 'name', title: '提货编号'},
-          {field: 'status_name', title: '状态'},
-          {field: 'wait_tax_amount', title: '应收服务费', edit: 'text'},
-          {field: 'confirm_tax_amount', title: '实收服务费', edit: 'text'},
-          {field: 'desc', title: '备注', edit: 'text', width: 300},
-          {fixed: 'right', title: '操作', toolbar: '#taxAction', width: 220}
-        ]]
-      });
-
-
       $.ajax({
         type: 'POST',
         //同步接口，传数据ID和修改后的金额值
         url: '/message/getMessage?order_id='+id,
         success: function(response){
 
-          console.log('获取留言信息成功');
+          console.log(response);
 
 
         },
