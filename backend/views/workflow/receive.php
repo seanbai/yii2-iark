@@ -197,7 +197,5 @@ layui.config({
 <!-- 查看评论 --->
 <div style="display:none" id="comments" class="layui-fluid">
     <ul class="layui-timeline" id="layui_message">
-
-
     </ul>
 </div>

@@ -181,7 +181,7 @@ layui.define(function(exports){
             layer.open({
               type: 1,
               title: '项目名称 - ' + project,
-              area: ['640px', 'auto'],
+              area: ['640px', '600px'],
               content: $('#comments'),
               resize: false,
               success: getMessage(id)
