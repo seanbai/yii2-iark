@@ -772,18 +772,14 @@ layui.define(function(exports){
         type: 'POST',
         //同步接口，传数据ID和修改后的金额值
         url: '/message/order?order_id='+id,
-        success: function(response){
-
-          console.log(response);
-
-
+        success: function(html){
+          console.log(html);
+          $("#layui_message").html(html);
         },
         error: function(){
           layer.msg('系统异常，请联系管理人员');
         }
       })
-
-
     }
   });
   //

@@ -198,22 +198,6 @@ layui.config({
 <div style="display:none" id="comments" class="layui-fluid">
     <ul class="layui-timeline" id="layui_message">
 
-        <li class="layui-timeline-item">
-            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-            <div class="layui-timeline-content layui-text">
-                <h3 class="layui-timeline-title">8月18日</h3>
-                <p>这是一条订单的评论</p>
-            </div>
-        </li>
-
-        <li class="layui-timeline-item">
-            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-            <div class="layui-timeline-content layui-text">
-                <h3 class="layui-timeline-title">8月20日</h3>
-                <p>这是一条订单的评论</p>
-            </div>
-        </li>
-
 
     </ul>
 </div>

@@ -42,8 +42,13 @@ class MessageController extends Controller
     public function actionOrder()
     {
         $orderId = $_GET['order_id'];
+        $model = Message::findAll(['order_id'=>$orderId]);
 
-        return '留言信息';
+        $html = '';
+        foreach ($model as $item) {
+            $html .= '<li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis">&#xe63f;</i><div class="layui-timeline-content layui-text"><h3 class="layui-timeline-title">'.$item['created_at'].'</h3><p>'.$item['text'].'</p></div></li>';
+        }
+        return $html;
     }
 
 }
