@@ -24,6 +24,7 @@ use yii\helpers\Url; ?>
                     <script type="text/html" id="orderBar">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" lay-event="items">进行提货操作</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="comments">查看评论跟踪</button>
                         </div>
                     </script>
                 </div>
@@ -65,4 +66,9 @@ use yii\helpers\Url; ?>
         <script type="text/html" id="showOrderItemsBar">
     </script>
     </div>
+</div>
+
+<!-- 查看评论 --->
+<div style="display:none" id="comments" class="layui-fluid">
+    <ul class="layui-timeline" id="layui_message"></ul>
 </div>

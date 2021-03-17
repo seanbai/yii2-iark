@@ -10,6 +10,7 @@
                     <script type="text/html" id="newOrderBar">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm " lay-event="details">查看产品清单</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="comments">查看评论跟踪</button>
                         </div>
                     </script>
                 </div>
@@ -40,4 +41,9 @@
         <script type="text/html" id="showItemsBar">
     </script>
     </div>
+</div>
+
+<!-- 查看评论 --->
+<div style="display:none" id="comments" class="layui-fluid">
+    <ul class="layui-timeline" id="layui_message"></ul>
 </div>

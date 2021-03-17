@@ -28,6 +28,7 @@ use yii\helpers\Url;
                 <button class="layui-btn layui-btn-sm " lay-event="cancel">取消采购</button>
                 <button style="display: none" class="layui-btn layui-btn-sm " lay-event="status">订单状态变更</button>
                 <button class="layui-btn layui-btn-sm " lay-event="goodslist">提货清单</button>
+                <button class="layui-btn layui-btn-sm " lay-event="comments">查看评论跟踪</button>
             </div>
           </script>
         </div>
@@ -139,4 +140,9 @@ use yii\helpers\Url;
             </form>
         </div>
     </div>
+</div>
+
+<!-- 查看评论 --->
+<div style="display:none" id="comments" class="layui-fluid">
+    <ul class="layui-timeline" id="layui_message"></ul>
 </div>

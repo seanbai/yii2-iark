@@ -187,6 +187,7 @@ layui.define(function(exports){
               success: getMessage(id)
             });
           }
+          break;
       }
     });
     // 判断报价方式的开关状态

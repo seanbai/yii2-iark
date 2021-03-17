@@ -24,7 +24,8 @@ use yii\helpers\Url;
           <!-- tool bar -->
           <script type="text/html" id="quoteBar">
             <div class="layui-btn-container">
-              <button class="layui-btn layui-btn-sm " lay-event="details">查看报价明细并操作</button>
+                <button class="layui-btn layui-btn-sm " lay-event="details">查看报价明细并操作</button>
+                <button class="layui-btn layui-btn-sm " lay-event="comments">查看评论跟踪</button>
             </div>
           </script>
         </div>
@@ -61,4 +62,10 @@ layui.config({
       <table class="items" id="subOrder" lay-filter="subOrder"></table>
     </div>
   </div>
+</div>
+
+
+<!-- 查看评论 --->
+<div style="display:none" id="comments" class="layui-fluid">
+    <ul class="layui-timeline" id="layui_message"></ul>
 </div>

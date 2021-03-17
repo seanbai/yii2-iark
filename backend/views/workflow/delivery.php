@@ -26,6 +26,7 @@ use yii\helpers\Url;
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm " lay-event="items">产品数据</button>
                             <button class="layui-btn layui-btn-sm" lay-event="add">填写运输信息</button>
+                            <button class="layui-btn layui-btn-sm " lay-event="comments">查看评论跟踪</button>
                         </div>
                     </script>
                 </div>
@@ -121,4 +122,9 @@ use yii\helpers\Url;
             </form>
         </div>
     </div>
+</div>
+
+<!-- 查看评论 --->
+<div style="display:none" id="comments" class="layui-fluid">
+    <ul class="layui-timeline" id="layui_message"></ul>
 </div>

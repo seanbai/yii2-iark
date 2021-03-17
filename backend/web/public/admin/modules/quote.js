@@ -78,6 +78,24 @@ layui.define(function (exports) {
                         });
                     }
                     break;
+                // 查看留言
+                case 'comments':
+                    if(checkStatus.data.length === 0){
+                        layer.msg("您需要先选择一条数据", {icon:0});
+                    }else{
+                        // 取订单ID 和 项目名称
+                        var id = data[0].id;
+                        var project = data[0].project_name;
+                        layer.open({
+                            type: 1,
+                            title: '项目名称 - ' + project,
+                            area: ['640px', '600px'],
+                            content: $('#comments'),
+                            resize: false,
+                            success: getMessage(id)
+                        });
+                    }
+                    break;
             }
             ;
         });
@@ -218,6 +236,20 @@ layui.define(function (exports) {
                 });
             });
 
+        }
+
+        window.getMessage = function (id) {
+            $.ajax({
+                type: 'POST',
+                //同步接口，传数据ID和修改后的金额值
+                url: '/message/order?order_id='+id,
+                success: function(html){
+                    $("#layui_message").html(html);
+                },
+                error: function(){
+                    layer.msg('系统异常，请联系管理人员');
+                }
+            })
         }
     });
     //

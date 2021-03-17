@@ -105,7 +105,7 @@ layui.define(function (exports) {
                             success: getMessage(id)
                         });
                     }
-
+                    break;
             }
             ;
         });
