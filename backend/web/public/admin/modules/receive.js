@@ -773,7 +773,6 @@ layui.define(function(exports){
         //同步接口，传数据ID和修改后的金额值
         url: '/message/order?order_id='+id,
         success: function(html){
-          console.log(html);
           $("#layui_message").html(html);
         },
         error: function(){

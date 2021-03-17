@@ -24,7 +24,8 @@ use yii\helpers\Url;
           <!-- tool bar -->
           <script type="text/html" id="quoteBar">
             <div class="layui-btn-container">
-              <button class="layui-btn layui-btn-sm " lay-event="details">操作产品清单</button>
+                <button class="layui-btn layui-btn-sm " lay-event="details">操作产品清单</button>
+                <button class="layui-btn layui-btn-sm " lay-event="comments">查看评论跟踪</button>
             </div>
           </script>
         </div>
@@ -88,8 +89,14 @@ layui.config({
             <input type="text" name="title" autocomplete="off" placeholder="请输入金额" class="layui-input">
           </div>
         </div>
-
       </form>
     </div>
   </div>
+</div>
+
+
+<!-- 确认收款服务费表单 -->
+<!-- 查看评论 --->
+<div style="display:none" id="comments" class="layui-fluid">
+    <ul class="layui-timeline" id="layui_message"></ul>
 </div>
